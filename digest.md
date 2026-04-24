@@ -23,9 +23,13 @@ Search the sources below for content published in the **last 7 days**. For each 
 - Write a **2-sentence UX impact summary**: what changed, and how it affects UX work specifically
 - If no new content was found for a source this week, skip it silently
 
-Organise everything into the 3 sections below. When done, do two things:
+Organise everything into the 3 sections below. When done, do three things:
 1. Append the digest to the Google Doc: `https://docs.google.com/document/d/1H_Sec7iPUkGR9SyGg-iHieUNwsaS2P4PKrHVZiyn650/edit`
 2. Update `/Users/ymin/digest/index.html` with the new week's content, replacing the previous week's items while keeping the same HTML structure and styles
+3. Push the updated HTML to GitHub by running:
+   ```
+   cd ~/digest && git add index.html && git commit -m "Digest: Week of [Monday's date]" && git push
+   ```
 
 Format the heading as: `## Week of [Monday's date]`
 
