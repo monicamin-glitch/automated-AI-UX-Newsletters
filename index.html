@@ -71,9 +71,7 @@
     }
 
     /* Section */
-    .section {
-      margin-bottom: 56px;
-    }
+    .section { margin-bottom: 56px; }
     .section-header {
       display: flex;
       align-items: baseline;
@@ -108,9 +106,7 @@
     }
 
     /* Source group */
-    .source-group {
-      margin-bottom: 32px;
-    }
+    .source-group { margin-bottom: 32px; }
     .source-name {
       font-size: 11px;
       font-weight: 600;
@@ -122,12 +118,12 @@
       border-bottom: 1px solid #e8e8e8;
     }
 
-    /* Card */
+    /* Full card */
     .card {
       background: #fff;
       border: 1px solid #e8e8e8;
       border-radius: 10px;
-      padding: 18px 20px;
+      overflow: hidden;
       margin-bottom: 10px;
       transition: box-shadow 0.15s, border-color 0.15s;
     }
@@ -135,6 +131,7 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.07);
       border-color: #d0d0d0;
     }
+    .card-body { padding: 18px 20px; }
     .card-top {
       display: flex;
       align-items: flex-start;
@@ -148,14 +145,8 @@
       color: #1a1a1a;
       line-height: 1.4;
     }
-    .card-title a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .card-title a:hover {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
+    .card-title a { color: inherit; text-decoration: none; }
+    .card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
     .card-meta {
       font-size: 11px;
       color: #aaa;
@@ -163,17 +154,149 @@
       flex-shrink: 0;
       margin-top: 2px;
     }
-    .card-impact {
-      font-size: 13px;
-      color: #555;
-      line-height: 1.55;
+    .card-impact { font-size: 13px; color: #555; line-height: 1.55; }
+    .card-impact strong { color: #1a1a1a; font-weight: 600; }
+
+    /* Hero image on full cards */
+    .card-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #f0f0f0;
+      position: relative;
+      overflow: hidden;
+      display: block;
     }
-    .card-impact strong {
-      color: #1a1a1a;
-      font-weight: 600;
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.35s;
+    }
+    .card-image.loading img { opacity: 0; }
+    .card-image.loading::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position:  200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    /* Podcast/square image — display full cover without cropping */
+    .card .card-image[data-accept-any] {
+      aspect-ratio: unset;
+      height: auto;
+      min-height: unset;
+      max-height: none;
+      overflow: visible;
+      background: #f9f5f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 0;
+      position: relative;
+    }
+    .card .card-image[data-accept-any] img {
+      width: 55%;
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+    }
+    .card-image .img-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 32px 20px 14px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .card-image .img-overlay-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.2px;
+    }
+    .card-image .img-overlay-sub {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
     }
 
-    /* Link row for multi-item sources */
+    /* Text card — designed title hero when no image available */
+    .card-image.text-card {
+      aspect-ratio: 21/9;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 24px;
+    }
+    .card-image.text-card .text-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      max-width: 480px;
+    }
+    .card-image.text-card .text-card-source {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 8px;
+    }
+    .card-image.fallback img { display: none; }
+    .card-image.fallback::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      animation: none !important;
+    }
+    .card-image.fallback .fallback-label {
+      position: absolute;
+      bottom: 16px; left: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      z-index: 2;
+    }
+    .card-image.fallback-a { background: linear-gradient(135deg, #1a3a5c 0%, #2d6db5 60%, #4ba3e3 100%); }
+    .card-image.fallback-b { background: linear-gradient(135deg, #1a3a2c 0%, #1a7a3c 60%, #4bc87a 100%); }
+    .card-image.fallback-c { background: linear-gradient(135deg, #2d1a4e 0%, #6b3fa0 60%, #a67ce0 100%); }
+    /* Play overlay for YouTube */
+    .card-image.is-video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.18);
+      animation: none !important;
+    }
+    .card-image.is-video::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px; height: 56px;
+      background: rgba(0,0,0,0.7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") center/28px no-repeat;
+      border-radius: 50%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .card-image:hover img { transform: scale(1.02); transition: transform 0.4s, opacity 0.35s; }
+
+    /* Link row */
     .link-row {
       background: #fff;
       border: 1px solid #e8e8e8;
@@ -182,53 +305,76 @@
       margin-bottom: 10px;
     }
     .link-item {
-      padding: 14px 20px;
+      padding: 13px 16px;
       border-bottom: 1px solid #f0f0f0;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 10px;
     }
     .link-item:last-child { border-bottom: none; }
     .link-dot {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       border-radius: 50%;
       background: #ccc;
       flex-shrink: 0;
-      margin-top: 6px;
     }
     .link-dot-a { background: #1a6db5; }
     .link-dot-b { background: #1a7a3c; }
     .link-dot-c { background: #6b3fa0; }
-    .link-content {}
-    .link-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 3px;
-    }
-    .link-title a {
-      color: #1a1a1a;
-      text-decoration: none;
-    }
-    .link-title a:hover {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-    .link-desc {
-      font-size: 12px;
-      color: #666;
-      line-height: 1.5;
-    }
+    .link-content { flex: 1; min-width: 0; }
+    .link-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+    .link-title a { color: #1a1a1a; text-decoration: none; }
+    .link-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .link-desc { font-size: 12px; color: #666; line-height: 1.5; }
     .link-tag {
       display: inline-block;
-      font-size: 10px;
-      font-weight: 600;
+      font-size: 10px; font-weight: 600;
       padding: 2px 6px;
       border-radius: 4px;
-      background: #f0f0f0;
-      color: #777;
+      background: #f0f0f0; color: #777;
       margin-right: 6px;
       vertical-align: middle;
+    }
+
+    /* Thumbnail on link-row items */
+    .link-thumb {
+      width: 88px; min-width: 88px; height: 58px;
+      border-radius: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #f0f0f0;
+      position: relative;
+    }
+    .link-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.3s;
+    }
+    .link-thumb.loading img { opacity: 0; }
+    .link-thumb.loading::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    .link-thumb.fallback { background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%); }
+    .link-thumb.fallback::after { display: none; }
+    .link-thumb.fallback img { display: none; }
+    .link-thumb.brand-icon {
+      background: #f8f8f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .link-thumb.brand-icon::after { display: none; }
+    .link-thumb.brand-icon img {
+      width: 36px; height: 36px;
+      object-fit: contain;
+      border-radius: 4px;
+      opacity: 1;
     }
 
     /* Footer */
@@ -244,6 +390,7 @@
       header h1 { font-size: 22px; }
       .card-top { flex-direction: column; gap: 4px; }
       .card-meta { white-space: normal; }
+      .link-thumb { width: 72px; min-width: 72px; height: 48px; }
     }
   </style>
 </head>
@@ -252,7 +399,7 @@
 <header>
   <div class="label">Auto-generated by Claude Code · Every Monday 9am</div>
   <h1>Weekly AI & Design Digest</h1>
-  <div class="week">Week of March 26 – April 2, 2026</div>
+  <div class="week">Week of May 12, 2026</div>
 </header>
 
 <nav>
@@ -274,28 +421,40 @@
     <!-- Anthropic -->
     <div class="source-group">
       <div class="source-name">Anthropic / Claude</div>
+
       <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://support.claude.com/en/articles/12138966-release-notes" target="_blank">Release Notes — Claude Help Center</a>
+        <a href="https://www.anthropic.com/news/claude-design-anthropic-labs" target="_blank">
+          <div class="card-image" data-section="a" data-label="Anthropic">
+            <img src="https://image.thum.io/get/width/1200/crop/675/https://www.anthropic.com/news/claude-design-anthropic-labs" alt="Claude Design" loading="lazy" />
           </div>
-          <div class="card-meta">March 2026</div>
-        </div>
-        <div class="card-impact">
-          Memory across sessions now available for all users (March 2), inline chart and diagram creation (March 12), improved Excel &amp; PowerPoint add-ins with shared context (March 11).
-          <br><br><strong>UX impact:</strong> Claude now remembers your project context week to week — no more re-explaining your design system or team conventions at the start of every session.
+        </a>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-title"><a href="https://www.anthropic.com/news/claude-design-anthropic-labs" target="_blank">Introducing Claude Design</a></div>
+            <div class="card-meta">Apr 17</div>
+          </div>
+          <div class="card-impact">
+            Claude Design lets you create polished visuals — prototypes, slides, one-pagers, and marketing collateral — through conversational prompts, with fine-grained editing controls and brand asset integration.
+            <br><br><strong>UX impact:</strong> Non-designers (PMs, founders, marketers) can now generate design-quality outputs without Figma skills — expect this to shift expectations around who "does design" on your team.
+          </div>
         </div>
       </div>
+
       <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://claude.com/blog-category/announcements" target="_blank">Claude can now run on your personal computer</a>
+        <a href="https://tygartmedia.com/claude-updates-may-2026/" target="_blank">
+          <div class="card-image" data-section="a" data-label="Anthropic">
+            <img src="https://image.thum.io/get/width/1200/crop/675/https://www.anthropic.com/news/claude-opus-4-7" alt="Claude Opus 4.7" loading="lazy" />
           </div>
-          <div class="card-meta">March 23</div>
-        </div>
-        <div class="card-impact">
-          Claude runs locally on Mac — faster responses, works offline.
-          <br><br><strong>UX impact:</strong> Useful during design sprints or when presenting without reliable internet — no cloud dependency needed.
+        </a>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-title"><a href="https://tygartmedia.com/claude-updates-may-2026/" target="_blank">Claude Opus 4.7: Enhanced Vision, Task Budgets Beta</a></div>
+            <div class="card-meta">Apr 2026</div>
+          </div>
+          <div class="card-impact">
+            Vision resolution jumps to 2,576px (~3.75MP), improving how Claude reads screenshots and design files. Task Budgets (public beta) adds token spend guidance for longer agentic runs.
+            <br><br><strong>UX impact:</strong> Better image analysis means more accurate feedback when sharing UI screenshots with Claude for review or annotation tasks.
+          </div>
         </div>
       </div>
     </div>
@@ -304,34 +463,34 @@
     <div class="source-group">
       <div class="source-name">OpenAI</div>
       <div class="link-row">
+
         <div class="link-item">
           <div class="link-dot link-dot-a"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://openai.com/index/gpt-5-3-instant-system-card/" target="_blank">GPT-5.3 Instant System Card</a> <span class="link-tag">March 3</span></div>
-            <div class="link-desc">Faster responses, more natural conversational flow. Less robotic phrasing when generating microcopy or onboarding text.</div>
+            <div class="link-title"><a href="https://9to5mac.com/2026/05/05/gpt-5-5-instant-makes-chatgpt-more-accurate-while-nixing-gratuitous-emojis/" target="_blank">GPT-5.5 Instant is now ChatGPT's default</a> <span class="link-tag">May 5</span></div>
+            <div class="link-desc">Clearer, more concise answers with fewer hallucinations. Memory sources show users which past chats informed each response.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://9to5mac.com/2026/05/05/gpt-5-5-instant-makes-chatgpt-more-accurate-while-nixing-gratuitous-emojis/" data-domain="openai.com"><img alt="" loading="lazy" /></div>
         </div>
+
         <div class="link-item">
           <div class="link-dot link-dot-a"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://openai.com/index/gpt-5-4-thinking-system-card" target="_blank">GPT-5.4 Thinking System Card</a> <span class="link-tag">March 5</span></div>
-            <div class="link-desc">Reasoning-focused model for complex problems — synthesising user research, evaluating design trade-offs, mapping edge cases in user flows.</div>
+            <div class="link-title"><a href="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" target="_blank">Voice Intelligence API: Real-time voice + translation</a> <span class="link-tag">May 7</span></div>
+            <div class="link-desc">GPT-Realtime-2 for natural conversations and real-time translation across 70+ input languages. Opens the door to multilingual voice interfaces and accessibility-first experiences.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" data-domain="openai.com"><img alt="" loading="lazy" /></div>
         </div>
+
         <div class="link-item">
           <div class="link-dot link-dot-a"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://openai.com/index/introducing-the-adoption-news-channel/" target="_blank">Introducing the Adoption News Channel</a> <span class="link-tag">March 5</span></div>
-            <div class="link-desc">Business frameworks for AI adoption. Useful when making a case for AI tools to your team or stakeholders.</div>
+            <div class="link-title"><a href="https://www.techradar.com/ai-platforms-assistants/chatgpt/openai-finally-fixed-the-most-annoying-thing-about-chatgpt-and-im-already-noticing-the-difference" target="_blank">Memory Sources: Transparency into what ChatGPT remembers</a> <span class="link-tag">May 6</span></div>
+            <div class="link-desc">Users can see and edit which context shaped a response. A strong AI product UX pattern — transparency + user control over memory — worth borrowing in your own work.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://www.techradar.com/ai-platforms-assistants/chatgpt/openai-finally-fixed-the-most-annoying-thing-about-chatgpt-and-im-already-noticing-the-difference" data-domain="openai.com"><img alt="" loading="lazy" /></div>
         </div>
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank">ChatGPT UI Refresh</a> <span class="link-tag">March 2026</span></div>
-            <div class="link-desc">Improved sidebar, composer bar, and responsiveness. A real-world case study in iterating AI product UI worth studying as a UX reference.</div>
-          </div>
-        </div>
+
       </div>
     </div>
 
@@ -339,34 +498,43 @@
     <div class="source-group">
       <div class="source-name">Figma</div>
       <div class="link-row">
+
         <div class="link-item">
           <div class="link-dot link-dot-a"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://www.figma.com/release-notes/" target="_blank">Slots — Open Beta</a> <span class="link-tag">March 5</span></div>
-            <div class="link-desc">Add dynamic content to component instances without detaching. Build more flexible design system components that editors can extend without breaking your library.</div>
+            <div class="link-title"><a href="https://www.figma.com/release-notes/" target="_blank">AI Agent Integration in Figma</a> <span class="link-tag">May 2026</span></div>
+            <div class="link-desc">AI agents can now co-design with you — advancing vibe-coded prototypes, connecting design systems to code, and accelerating ideation.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://www.figma.com/release-notes/" data-domain="figma.com" data-yt-id="QJIgDWol5CE"><img alt="" loading="lazy" /></div>
         </div>
+
         <div class="link-item">
           <div class="link-dot link-dot-a"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://www.figma.com/release-notes/" target="_blank">GitHub Copilot Integration via MCP</a> <span class="link-tag">March 6</span></div>
-            <div class="link-desc">Push Figma UI to VS Code as editable frames; pull design context into code. Tighter design-to-dev handoff with one shared source of truth.</div>
+            <div class="link-title"><a href="https://www.creativeainews.com/blog/figma-make-zapier-connector-voice-prompts/" target="_blank">Figma Make: Voice prompts + Zapier connector</a> <span class="link-tag">May 2026</span></div>
+            <div class="link-desc">Dictate prompts directly in Make and connect to 9,000+ apps via Zapier. Faster prototyping and integration with real data sources out of the box.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://www.creativeainews.com/blog/figma-make-zapier-connector-voice-prompts/" data-domain="figma.com"><img alt="" loading="lazy" /></div>
         </div>
+
         <div class="link-item">
           <div class="link-dot link-dot-a"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://www.figma.com/release-notes/" target="_blank">Apps in Figma Community</a> <span class="link-tag">March 10</span></div>
-            <div class="link-desc">Third-party AI apps now live alongside plugins. Expect AI-powered tools for accessibility checking, content generation, and asset management.</div>
+            <div class="link-title"><a href="https://www.createwith.com/tool/figma/updates/figma-launches-make-kits-to-ground-prototypes-in-real-project-work" target="_blank">Make Kits + Make Attachments</a> <span class="link-tag">May 2026</span></div>
+            <div class="link-desc">Prebuilt kits for building and demoing design systems; anchor prototypes inside real design files to keep AI-generated work in project context.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://www.createwith.com/tool/figma/updates/figma-launches-make-kits-to-ground-prototypes-in-real-project-work" data-domain="figma.com"><img alt="" loading="lazy" /></div>
         </div>
+
         <div class="link-item">
           <div class="link-dot link-dot-a"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://www.figma.com/release-notes/" target="_blank">AI Credits for Teams</a> <span class="link-tag">March 11</span></div>
-            <div class="link-desc">Admins can buy AI credits in bulk or pay-as-you-go. Easier to scale Figma Make and AI features across your team without hitting limits.</div>
+            <div class="link-title"><a href="https://www.figma.com/release-notes/" target="_blank">Figma Draw: Text on Path + Auto Layout</a> <span class="link-tag">May 2026</span></div>
+            <div class="link-desc">Add text to any path or circle without leaving Draw; auto layout now available without switching to Design mode.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://www.figma.com/release-notes/" data-domain="figma.com"><img alt="" loading="lazy" /></div>
         </div>
+
       </div>
     </div>
 
@@ -374,50 +542,19 @@
     <div class="source-group">
       <div class="source-name">Google Stitch</div>
       <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/" target="_blank">Design UI using AI with Stitch from Google Labs</a>
+        <a href="https://www.nxcode.io/resources/news/google-stitch-complete-guide-vibe-design-2026" target="_blank">
+          <div class="card-image" data-section="a" data-label="Google Stitch">
+            <img src="https://image.thum.io/get/width/1200/crop/675/https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/" alt="Google Stitch" loading="lazy" />
           </div>
-          <div class="card-meta">March 19</div>
-        </div>
-        <div class="card-impact">
-          Major update introducing Vibe Design, DESIGN.md, Agent Manager, voice commands, and MCP integration with Claude Code, Gemini CLI, and Cursor.
-        </div>
-      </div>
-      <div class="link-row">
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title">Vibe Design</div>
-            <div class="link-desc">Start from a business goal or user emotion — not a wireframe. Speeds up early ideation in workshops before committing to layouts.</div>
+        </a>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-title"><a href="https://www.nxcode.io/resources/news/google-stitch-complete-guide-vibe-design-2026" target="_blank">Google Stitch: Infinite Canvas + Interactive Prototyping</a></div>
+            <div class="card-meta">May 2026</div>
           </div>
-        </div>
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title">DESIGN.md</div>
-            <div class="link-desc">Portable design rules in a markdown file — export between Stitch, Figma, and code. A step toward tool-agnostic design systems.</div>
-          </div>
-        </div>
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title">Agent Manager</div>
-            <div class="link-desc">AI tracks full project history and explores multiple directions simultaneously. Reduces context loss on long or complex projects.</div>
-          </div>
-        </div>
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title">Voice Commands on Canvas</div>
-            <div class="link-desc">Give real-time design instructions by voice. Lower friction during iteration or when your hands are occupied in a client meeting.</div>
-          </div>
-        </div>
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title">MCP Integration</div>
-            <div class="link-desc">Stitch connects to Claude Code, Gemini CLI, and Cursor. Designs flow directly into production code with less manual translation.</div>
+          <div class="card-impact">
+            Stitch now supports an infinite canvas for large design systems, interactive prototyping with transitions and user journey preview, and voice canvas for real-time critique during sessions.
+            <br><br><strong>UX impact:</strong> Stitch is closing the gap on Figma's core features while keeping its AI-first approach — worth revisiting if you dismissed it as too limited in earlier releases.
           </div>
         </div>
       </div>
@@ -435,41 +572,85 @@
     <!-- YouTube -->
     <div class="source-group">
       <div class="source-name">YouTube</div>
+
       <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://www.youtube.com/watch?v=DEsxUXlXv5M" target="_blank">Claude Code designs for me in Figma — No MCP needed</a>
+        <a href="https://www.youtube.com/watch?v=X4vAlWtsJD4" target="_blank">
+          <div class="card-image is-video" data-yt-id="X4vAlWtsJD4">
+            <img src="https://img.youtube.com/vi/X4vAlWtsJD4/maxresdefault.jpg" alt="Anthropic Head of Design" loading="lazy" />
           </div>
-          <div class="card-meta">Tutorial</div>
-        </div>
-        <div class="card-impact">
-          Connect Claude Code to Figma Desktop in under a minute — no API key required, works on free Figma accounts.
-          <br><br><strong>UX impact:</strong> The lowest-friction way to start using Claude Code with Figma — a practical starting point if you want to explore AI-assisted design without complex setup.
+        </a>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-title"><a href="https://www.youtube.com/watch?v=X4vAlWtsJD4" target="_blank">Anthropic's Head of Design Just Killed The Old Process</a></div>
+            <div class="card-meta">Apr 2026</div>
+          </div>
+          <div class="card-impact">
+            Anthropic's design lead walks through how Claude Design was built and how it reshapes the design process — from prompt to polished visual without a traditional design tool.
+            <br><br><strong>UX impact:</strong> A candid look at how AI is changing the craft of design at Anthropic itself — useful for framing the same conversations with your own team.
+          </div>
         </div>
       </div>
+
       <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://www.youtube.com/watch?v=ZTcebK6Xuic" target="_blank">How to use Claude Code — Setting up Figma and code integration</a>
+        <a href="https://www.youtube.com/watch?v=QJIgDWol5CE" target="_blank">
+          <div class="card-image is-video" data-yt-id="QJIgDWol5CE">
+            <img src="https://img.youtube.com/vi/QJIgDWol5CE/maxresdefault.jpg" alt="Figma Release Notes May 2026" loading="lazy" />
           </div>
-          <div class="card-meta">Tutorial</div>
-        </div>
-        <div class="card-impact">
-          Full two-way MCP setup: Figma designs to code and back. Step-by-step guide covering Node.js install, MCP config, and verification.
-          <br><br><strong>UX impact:</strong> Keeps Figma as the source of truth while enabling developers to pull design context directly into code.
+        </a>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-title"><a href="https://www.youtube.com/watch?v=QJIgDWol5CE" target="_blank">Release Notes 2026: May Edition | Figma</a></div>
+            <div class="card-meta">May 2026</div>
+          </div>
+          <div class="card-impact">
+            Official Figma livestream covering all May updates: AI agents, Make Kits, voice prompts in Make, Draw improvements, and desktop app performance.
+            <br><br><strong>UX impact:</strong> The fastest way to get up to speed on everything Figma shipped this month — skip reading changelogs and watch the 20-minute highlights instead.
+          </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://www.youtube.com/watch?v=1ClbYm_mgpk" target="_blank">AI Tools for UX Designers: My Complete 2026 Design Workflow</a>
+    </div>
+
+    <!-- Medium / Community -->
+    <div class="source-group">
+      <div class="source-name">Medium / Community</div>
+      <div class="link-row">
+
+        <div class="link-item">
+          <div class="link-dot link-dot-b"></div>
+          <div class="link-content">
+            <div class="link-title"><a href="https://medium.com/design-bootcamp/emotional-ux-design-in-the-age-of-ai-2fdf29ed8173" target="_blank">Emotional UX Design in the Age of AI</a> <span class="link-tag">Design Bootcamp · May 2026</span></div>
+            <div class="link-desc">Explores why emotionally comfortable UX matters more as AI-generated interfaces become the norm. Useful framework for evaluating whether your AI-generated designs still carry emotional resonance.</div>
           </div>
-          <div class="card-meta">Jan 2, 2026</div>
+          <div class="link-thumb loading" data-url="https://medium.com/design-bootcamp/emotional-ux-design-in-the-age-of-ai-2fdf29ed8173" data-domain="medium.com"><img alt="" loading="lazy" /></div>
         </div>
-        <div class="card-impact">
-          Covers AI tools across the full UX process — research, ideation, wireframing, UI design, writing, and iteration.
-          <br><br><strong>UX impact:</strong> Good for mapping which AI tools to use at each stage — useful if you're building or refining your own AI-assisted design process.
+
+        <div class="link-item">
+          <div class="link-dot link-dot-b"></div>
+          <div class="link-content">
+            <div class="link-title"><a href="https://medium.com/design-bootcamp/the-open-tab-syndrome-why-i-feel-like-a-ux-beginner-every-48-hours-d11998ec5e32" target="_blank">I Feel Like a UX Beginner Every 48 Hours</a> <span class="link-tag">Design Bootcamp · May 2026</span></div>
+            <div class="link-desc">A candid exploration of the overwhelm designers feel as AI tools evolve faster than they can learn them. Relevant for team leads thinking about pacing AI tool adoption.</div>
+          </div>
+          <div class="link-thumb loading" data-url="https://medium.com/design-bootcamp/the-open-tab-syndrome-why-i-feel-like-a-ux-beginner-every-48-hours-d11998ec5e32" data-domain="medium.com"><img alt="" loading="lazy" /></div>
         </div>
+
+        <div class="link-item">
+          <div class="link-dot link-dot-b"></div>
+          <div class="link-content">
+            <div class="link-title"><a href="https://medium.com/design-bootcamp/claude-design-launch-the-reasons-behind-designers-fear-of-ai-b3b16b5bb6a3" target="_blank">Claude Design Launch: Why Designers Fear AI</a> <span class="link-tag">Design Bootcamp · Apr 2026</span></div>
+            <div class="link-desc">Analysis of how Claude Design's launch triggered anxiety among designers about AI replacing creative roles. Good conversation starter for team discussions about AI as collaborator vs. replacement.</div>
+          </div>
+          <div class="link-thumb loading" data-url="https://medium.com/design-bootcamp/claude-design-launch-the-reasons-behind-designers-fear-of-ai-b3b16b5bb6a3" data-domain="medium.com"><img alt="" loading="lazy" /></div>
+        </div>
+
+        <div class="link-item">
+          <div class="link-dot link-dot-b"></div>
+          <div class="link-content">
+            <div class="link-title"><a href="https://medium.com/design-bootcamp/frontend-code-literacy-for-designers-in-the-ai-era-a-6-week-syllabus-ae7030588f82" target="_blank">Frontend Code Literacy for Designers — 6-Week Syllabus</a> <span class="link-tag">Design Bootcamp · Apr 2026</span></div>
+            <div class="link-desc">A structured plan for designers to build code confidence alongside AI tools. Practical for teams wanting designers to better understand and direct AI-generated code output.</div>
+          </div>
+          <div class="link-thumb loading" data-url="https://medium.com/design-bootcamp/frontend-code-literacy-for-designers-in-the-ai-era-a-6-week-syllabus-ae7030588f82" data-domain="medium.com"><img alt="" loading="lazy" /></div>
+        </div>
+
       </div>
     </div>
 
@@ -477,48 +658,25 @@
     <div class="source-group">
       <div class="source-name">Newsletters</div>
       <div class="link-row">
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://sidebar.io/" target="_blank">Why AI-generated UX still feels off</a> <span class="link-tag">Sidebar · March 13</span></div>
-            <div class="link-desc">The "uncanny valley" of AI-designed interfaces — and what human skills fix it. A clear articulation of where your judgement remains irreplaceable.</div>
-          </div>
-        </div>
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://sidebar.io/category/ai/hjSk5zzZkcKSjNJvs" target="_blank">The new UX Toolkit: data, context, and evals</a> <span class="link-tag">Sidebar</span></div>
-            <div class="link-desc">Designing AI model behaviour, not just screens. Essential reframing if you work on AI-powered products.</div>
-          </div>
-        </div>
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://aidesignfeeds.com/" target="_blank">AI Design Feeds — Shape of disruption</a> <span class="link-tag">March 29</span></div>
-            <div class="link-desc">AI democratising design tools — what it means for professional designers. Good for career planning and team positioning.</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- UX Collective -->
-    <div class="source-group">
-      <div class="source-name">UX Collective</div>
-      <div class="link-row">
         <div class="link-item">
           <div class="link-dot link-dot-b"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://newsletter.uxdesign.cc/p/google-says-vibe-design-is-here-but" target="_blank">Google says "Vibe Design" is here, but...</a> <span class="link-tag">March 28</span></div>
-            <div class="link-desc">A critical look at Google Stitch's "vibe design" launch — what it gets right and where its limits lie. Read alongside Google's own post for a balanced view.</div>
+            <div class="link-title"><a href="https://newsletter.uxdesign.cc/p/the-beginning-of-a-fantastic-voyage" target="_blank">The beginning of a fantastic voyage?</a> <span class="link-tag">UX Collective · May 11</span></div>
+            <div class="link-desc">Fabricio Teixeira's latest curated edition exploring the transformative potential (and hype) of AI-driven design tools — a pulse-check on how the broader UX community is feeling.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://newsletter.uxdesign.cc/p/the-beginning-of-a-fantastic-voyage" data-domain="uxdesign.cc"><img alt="" loading="lazy" /></div>
         </div>
+
         <div class="link-item">
           <div class="link-dot link-dot-b"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://newsletter.uxdesign.cc/p/the-hidden-cost-of-ai-prototypes" target="_blank">The hidden cost of AI prototypes that are made to die</a> <span class="link-tag">Feb 23</span></div>
-            <div class="link-desc">What gets lost when prototypes are throwaway. Worth reading before your team fully adopts AI prototyping tools.</div>
+            <div class="link-title"><a href="https://newsletter.uxdesign.cc/p/collected-consciousness" target="_blank">Collected consciousness</a> <span class="link-tag">UX Collective · May 4</span></div>
+            <div class="link-desc">Examines what AI-generated content consistently misses — emotional resonance and real context — and why human connection in design communication remains irreplaceable.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://newsletter.uxdesign.cc/p/collected-consciousness" data-domain="uxdesign.cc"><img alt="" loading="lazy" /></div>
         </div>
+
       </div>
     </div>
   </section>
@@ -535,37 +693,47 @@
     <div class="source-group">
       <div class="source-name">Nielsen Norman Group</div>
       <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://www.nngroup.com/articles/" target="_blank">GenUI vs. Vibe Coding: Who's Designing?</a>
+        <a href="https://www.nngroup.com/articles/" target="_blank">
+          <div class="card-image" data-section="c" data-label="Nielsen Norman Group">
+            <img src="https://image.thum.io/get/width/1200/crop/675/https://www.nngroup.com/articles/ux-maturity-model/" alt="NNG UX Maturity" loading="lazy" />
           </div>
-          <div class="card-meta">March 27</div>
-        </div>
-        <div class="card-impact">
-          Examines the tension between AI-generated UI (model designs) and vibe coding (user prompts outcomes) — and what this means for the designer's role.
-          <br><br><strong>UX impact:</strong> One of the most important strategic questions in the field right now. Worth reading as a team and discussing where you draw the line between AI generation and design intent.
+        </a>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-title"><a href="https://www.nngroup.com/articles/" target="_blank">UX Maturity Model — Stages & User-Driven Design</a></div>
+            <div class="card-meta">Recent</div>
+          </div>
+          <div class="card-impact">
+            NNG's updated UX maturity model covers all six stages from absent to user-driven, with accompanying posters and the second edition of the UX Careers report showing where the field is heading.
+            <br><br><strong>UX impact:</strong> A useful framework for assessing where your team sits and making the case for more user research investment — especially relevant in AI product contexts where UX maturity is uneven.
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Brad Frost -->
     <div class="source-group">
-      <div class="source-name">Brad Frost</div>
+      <div class="source-name">Brad Frost / ShopTalk Show</div>
       <div class="link-row">
+
         <div class="link-item">
           <div class="link-dot link-dot-c"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://bradfrost.com/blog/post/a-designers-thoughts-about-this-moment-in-ai/" target="_blank">A Designer's Thoughts About This Moment in AI</a> <span class="link-tag">March 9</span></div>
-            <div class="link-desc">Personal reflection on navigating AI as a designer. Grounding read if you're feeling disoriented by the pace of change — craft, judgement, and systems thinking remain core.</div>
+            <div class="link-title"><a href="https://www.podchaser.com/podcasts/shoptalk-412559/episodes/713-ai-design-systems-with-bra-293758490" target="_blank">AI + Design Systems with Brad and Ian Frost</a> <span class="link-tag">ShopTalk · May 4</span></div>
+            <div class="link-desc">Brad Frost on integrating AI into design system building, maintaining quality, and framing AI as a "sophisticated linter" — not a designer.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://www.podchaser.com/podcasts/shoptalk-412559/episodes/713-ai-design-systems-with-bra-293758490" data-domain="shoptalkshow.com"><img alt="" loading="lazy" /></div>
         </div>
+
         <div class="link-item">
           <div class="link-dot link-dot-c"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://bradfrost.com/blog/post/real-time-ui/" target="_blank">Real-Time UI</a> <span class="link-tag">March 2</span></div>
-            <div class="link-desc">Live prototypes over static decks — showing beats describing. Still the highest-fidelity communication tool, now faster than ever with AI.</div>
+            <div class="link-title"><a href="https://bradfrost.com/blog/post/mouth-coding/" target="_blank">Mouth Coding</a> <span class="link-tag">Brad Frost · Apr 20</span></div>
+            <div class="link-desc">Frost's process of building websites through conversation — a practical framework that mirrors how designers now prompt-engineer with Claude and Figma Make.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://bradfrost.com/blog/post/mouth-coding/" data-domain="bradfrost.com"><img alt="" loading="lazy" /></div>
         </div>
+
       </div>
     </div>
 
@@ -573,36 +741,44 @@
     <div class="source-group">
       <div class="source-name">Lenny's Newsletter</div>
       <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://www.lennysnewsletter.com/p/state-of-the-product-job-market-in-ee9" target="_blank">State of the product job market in early 2026</a>
+        <a href="https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-how-notions" target="_blank">
+          <div class="card-image loading" data-section="c" data-label="Lenny's Newsletter" data-url="https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-how-notions" data-accept-any="true">
+            <img alt="Lenny's Newsletter — Notion Design Team" loading="lazy" />
+            <div class="img-overlay">
+              <span class="img-overlay-title">How I AI Podcast</span>
+              <span class="img-overlay-sub">Brian Lovin · Notion Design Team</span>
+            </div>
           </div>
-          <div class="card-meta">March 24</div>
-        </div>
-        <div class="card-impact">
-          AI roles surging, PM and engineering job openings at their highest in years, overall tech hiring up.
-          <br><br><strong>UX impact:</strong> Useful for career planning — understanding where the market is heading helps you decide which AI competencies to develop next.
+        </a>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-title"><a href="https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-how-notions" target="_blank">How Notion's Design Team Uses Claude Code to Prototype</a></div>
+            <div class="card-meta">May 2026</div>
+          </div>
+          <div class="card-impact">
+            Brian Lovin shares how Notion's design team uses Claude Code to transform Figma designs into functional code for real-time testing and iteration.
+            <br><br><strong>UX impact:</strong> A concrete case study of a design team integrating AI into their daily prototyping workflow — with lessons on what works and what doesn't.
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Google Design -->
-    <div class="source-group">
-      <div class="source-name">Google Design</div>
       <div class="link-row">
         <div class="link-item">
           <div class="link-dot link-dot-c"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://design.google/library/reimagining-google-fonts/" target="_blank">Reimagining Google Fonts</a> <span class="link-tag">March 2026</span></div>
-            <div class="link-desc">Updated font directory — easier to explore typefaces, highlights type designers. Practical for day-to-day design work.</div>
+            <div class="link-title"><a href="https://www.lennysnewsletter.com/p/why-cultivating-agency-matters-more" target="_blank">Cultivating agency over skills in the AI era</a> <span class="link-tag">Max Schoening, Notion · May 2026</span></div>
+            <div class="link-desc">Agency — the drive to take initiative — matters more than specific skills as AI handles more execution. A reframe for UX career growth and team development.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://www.lennysnewsletter.com/p/why-cultivating-agency-matters-more" data-domain="lennysnewsletter.com"><img alt="" loading="lazy" /></div>
         </div>
+
         <div class="link-item">
           <div class="link-dot link-dot-c"></div>
           <div class="link-content">
-            <div class="link-title"><a href="https://design.google/library/leading-by-design" target="_blank">Leading by Design</a> <span class="link-tag">March 2026</span></div>
-            <div class="link-desc">How Google structures and values its design practice. Useful reference for design leadership conversations.</div>
+            <div class="link-title"><a href="https://www.lennysnewsletter.com/p/building-ai-product-sense-part-2" target="_blank">Building AI Product Sense, Part 2</a> <span class="link-tag">Marily Nika · May 2026</span></div>
+            <div class="link-desc">A weekly ritual framework for understanding and designing trustworthy AI products. Practical for designers moving into AI product roles who need structured evaluation methods.</div>
           </div>
+          <div class="link-thumb loading" data-url="https://www.lennysnewsletter.com/p/building-ai-product-sense-part-2" data-domain="lennysnewsletter.com"><img alt="" loading="lazy" /></div>
         </div>
       </div>
     </div>
@@ -611,7 +787,7 @@
 </main>
 
 <footer>
-  Generated by Claude Code &nbsp;·&nbsp; Every Monday at 9:00 AM &nbsp;·&nbsp; Next run: April 7, 2026
+  Generated by Claude Code &nbsp;·&nbsp; Every Monday at 9:00 AM &nbsp;·&nbsp; Next run: May 18, 2026
 </footer>
 
 <script>
@@ -626,6 +802,153 @@
     navLinks.forEach(a => {
       a.classList.toggle('active', a.getAttribute('href') === '#' + current);
     });
+  });
+
+  // YouTube: fall back from maxresdefault → hqdefault if missing
+  document.querySelectorAll('.card-image[data-yt-id] img').forEach(img => {
+    const id = img.closest('[data-yt-id]').dataset.ytId;
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    };
+  });
+
+  // Fallback for thum.io card images — show branded gradient if screenshot fails
+  document.querySelectorAll('.card-image:not([data-yt-id]):not([data-url]) img').forEach(img => {
+    img.onerror = () => {
+      const container = img.closest('.card-image');
+      const section = container.dataset.section || 'a';
+      container.classList.add('fallback', `fallback-${section}`);
+      const label = container.dataset.label;
+      if (label) {
+        const span = document.createElement('span');
+        span.className = 'fallback-label';
+        span.textContent = label;
+        container.appendChild(span);
+      }
+    };
+  });
+
+  // Dynamic card images (microlink → branded gradient fallback)
+  document.querySelectorAll('.card-image[data-url]').forEach(async container => {
+    const url = container.dataset.url;
+    const section = container.dataset.section || 'a';
+    const label = container.dataset.label;
+    const acceptAny = container.dataset.acceptAny === 'true';
+    const img = container.querySelector('img');
+
+    try {
+      const res = await fetch(`https://api.microlink.io?url=${encodeURIComponent(url)}`);
+      const json = await res.json();
+      const src = json?.data?.image?.url;
+
+      if (src) {
+        if (acceptAny) {
+          // Use the image as-is (e.g. podcast episode cover)
+          img.src = src;
+          img.onload = () => container.classList.remove('loading');
+          img.onerror = () => cardFallback(container, section, label);
+        } else {
+          // Validate minimum size (reject tiny logos/avatars)
+          const test = new Image();
+          test.onload = () => {
+            if (test.naturalWidth >= 300) {
+              img.src = src;
+              img.onload = () => container.classList.remove('loading');
+              img.onerror = () => cardFallback(container, section, label);
+            } else {
+              cardFallback(container, section, label);
+            }
+          };
+          test.onerror = () => cardFallback(container, section, label);
+          test.src = src;
+        }
+      } else {
+        cardFallback(container, section, label);
+      }
+    } catch {
+      cardFallback(container, section, label);
+    }
+  });
+
+  function cardFallback(container, section, label) {
+    container.classList.remove('loading');
+    container.classList.add('fallback', `fallback-${section}`);
+    if (label) {
+      const span = document.createElement('span');
+      span.className = 'fallback-label';
+      span.textContent = label;
+      container.appendChild(span);
+    }
+  }
+
+  // Fallback for link-row thumbnails — show neutral gradient if screenshot fails
+  document.querySelectorAll('.link-thumb:not([data-url]) img').forEach(img => {
+    img.onerror = () => {
+      img.closest('.link-thumb').classList.add('fallback');
+    };
+  });
+
+  // Smart thumbnail loader: YouTube → OG image → Brand icon
+  document.querySelectorAll('.link-thumb[data-url]').forEach(async container => {
+    const url = container.dataset.url;
+    const domain = container.dataset.domain;
+    const ytId = container.dataset.ytId;
+    const img = container.querySelector('img');
+
+    // Priority 1: YouTube thumbnail (if data-yt-id is set)
+    if (ytId) {
+      img.src = `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
+      img.onload = () => container.classList.remove('loading');
+      img.onerror = () => tryMicrolink();
+      return;
+    }
+
+    // Priority 2: Microlink OG image
+    tryMicrolink();
+
+    async function tryMicrolink() {
+      try {
+        const res = await fetch(`https://api.microlink.io?url=${encodeURIComponent(url)}`);
+        const json = await res.json();
+        const src = json?.data?.image?.url;
+        if (src) {
+          // Validate it's not tiny (reject logos/avatars < 200px)
+          const test = new Image();
+          test.onload = () => {
+            if (test.naturalWidth >= 200) {
+              img.src = src;
+              img.onload = () => container.classList.remove('loading');
+              img.onerror = () => showBrandIcon();
+            } else {
+              showBrandIcon();
+            }
+          };
+          test.onerror = () => showBrandIcon();
+          test.src = src;
+        } else {
+          showBrandIcon();
+        }
+      } catch {
+        showBrandIcon();
+      }
+    }
+
+    // Priority 3: Brand icon via Clearbit Logo API
+    function showBrandIcon() {
+      if (domain) {
+        container.classList.remove('loading');
+        container.classList.add('brand-icon');
+        img.src = `https://logo.clearbit.com/${domain}?size=72`;
+        img.onerror = () => {
+          container.classList.remove('brand-icon');
+          container.classList.add('fallback');
+        };
+      } else {
+        container.classList.remove('loading');
+        container.classList.add('fallback');
+      }
+    }
   });
 </script>
 
