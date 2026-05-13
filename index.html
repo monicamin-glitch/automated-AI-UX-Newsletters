@@ -3,966 +3,219 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Weekly AI & Design Digest</title>
+  <title>AI UX Weekly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #2563EB;
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --secondary: #A855F7;
+      --tertiary: #06B6D4;
+      --neutral: #64748B;
+      --bg: #f0f4ff;
+      --bg-sidebar: rgba(255, 255, 255, 0.85);
+      --bg-content: #f5f8ff;
+      --card-bg: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border: rgba(37, 99, 235, 0.08);
+      --glow-primary: rgba(37, 99, 235, 0.15);
+      --glow-secondary: rgba(168, 85, 247, 0.12);
+      --glow-tertiary: rgba(6, 182, 212, 0.12);
+      --radius: 12px;
+      --radius-lg: 20px;
+      --sidebar-width: 260px;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f5f5f3;
-      color: #1a1a1a;
-      line-height: 1.6;
-    }
-
-    /* Header */
-    header {
-      background: #1a1a1a;
-      color: #fff;
-      padding: 48px 24px 40px;
-      text-align: center;
-    }
-    header .label {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #888;
-      margin-bottom: 12px;
-    }
-    header h1 {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-    }
-    header .week {
-      font-size: 14px;
-      color: #888;
-    }
-
-    /* Nav */
-    nav {
-      background: #fff;
-      border-bottom: 1px solid #e8e8e8;
-      padding: 0 24px;
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      justify-content: center;
-    }
-    nav a {
-      display: inline-block;
-      padding: 16px 20px;
-      font-size: 13px;
-      font-weight: 500;
-      color: #666;
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      white-space: nowrap;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    nav a:hover { color: #1a1a1a; }
-    nav a.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
-
-    /* Layout */
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px 24px 80px;
-    }
-
-    /* Section */
-    .section { margin-bottom: 56px; }
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 6px;
-    }
-    .section-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .badge-a { background: #e8f4fd; color: #1a6db5; }
-    .badge-b { background: #e8f7ee; color: #1a7a3c; }
-    .badge-c { background: #f3eeff; color: #6b3fa0; }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-    .section-subtitle {
-      font-size: 13px;
-      color: #888;
-      margin-bottom: 24px;
-      padding-left: 36px;
-    }
-
-    /* Source group */
-    .source-group { margin-bottom: 32px; }
-    .source-name {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #999;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #e8e8e8;
-    }
-
-    /* Full card */
-    .card {
-      background: #fff;
-      border: 1px solid #e8e8e8;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 10px;
-      transition: box-shadow 0.15s, border-color 0.15s;
-    }
-    .card:hover {
-      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-      border-color: #d0d0d0;
-    }
-    .card-body { padding: 18px 20px; }
-    .card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1a1a1a;
-      line-height: 1.4;
-    }
-    .card-title a { color: inherit; text-decoration: none; }
-    .card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
-    .card-meta {
-      font-size: 11px;
-      color: #aaa;
-      white-space: nowrap;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .card-impact { font-size: 13px; color: #555; line-height: 1.55; }
-    .card-impact strong { color: #1a1a1a; font-weight: 600; }
-
-    /* Hero image on full cards */
-    .card-image {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: #f0f0f0;
-      position: relative;
-      overflow: hidden;
-      display: block;
-    }
-    .card-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: opacity 0.35s;
-    }
-    .card-image.loading img { opacity: 0; }
-    .card-image.loading::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.4s infinite;
-    }
-    @keyframes shimmer {
-      0%   { background-position:  200% 0; }
-      100% { background-position: -200% 0; }
-    }
-    /* Podcast/square image — display full cover without cropping */
-    .card .card-image[data-accept-any] {
-      aspect-ratio: unset;
-      height: auto;
-      min-height: unset;
-      max-height: none;
-      overflow: visible;
-      background: #f9f5f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 0;
-      position: relative;
-    }
-    .card .card-image[data-accept-any] img {
-      width: 55%;
-      height: auto;
-      max-height: none;
-      object-fit: contain;
-      display: block;
-      border-radius: 8px;
-    }
-    .card-image .img-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 32px 20px 14px;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .card-image .img-overlay-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.2px;
-    }
-    .card-image .img-overlay-sub {
-      font-size: 11px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.75);
-    }
-
-    /* Text card — designed title hero when no image available */
-    .card-image.text-card {
-      aspect-ratio: 21/9;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 20px 24px;
-    }
-    .card-image.text-card .text-card-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.3;
-      letter-spacing: -0.3px;
-      max-width: 480px;
-    }
-    .card-image.text-card .text-card-source {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      margin-top: 8px;
-    }
-    .card-image.fallback img { display: none; }
-    .card-image.fallback::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      animation: none !important;
-    }
-    .card-image.fallback .fallback-label {
-      position: absolute;
-      bottom: 16px; left: 20px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      z-index: 2;
-    }
-    .card-image.fallback-a { background: linear-gradient(135deg, #1a3a5c 0%, #2d6db5 60%, #4ba3e3 100%); }
-    .card-image.fallback-b { background: linear-gradient(135deg, #1a3a2c 0%, #1a7a3c 60%, #4bc87a 100%); }
-    .card-image.fallback-c { background: linear-gradient(135deg, #2d1a4e 0%, #6b3fa0 60%, #a67ce0 100%); }
-    /* Play overlay for YouTube */
-    .card-image.is-video::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.18);
-      animation: none !important;
-    }
-    .card-image.is-video::before {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 56px; height: 56px;
-      background: rgba(0,0,0,0.7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") center/28px no-repeat;
-      border-radius: 50%;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .card-image:hover img { transform: scale(1.02); transition: transform 0.4s, opacity 0.35s; }
-
-    /* Link row */
-    .link-row {
-      background: #fff;
-      border: 1px solid #e8e8e8;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .link-item {
-      padding: 13px 16px;
-      border-bottom: 1px solid #f0f0f0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .link-item:last-child { border-bottom: none; }
-    .link-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #ccc;
-      flex-shrink: 0;
-    }
-    .link-dot-a { background: #1a6db5; }
-    .link-dot-b { background: #1a7a3c; }
-    .link-dot-c { background: #6b3fa0; }
-    .link-content { flex: 1; min-width: 0; }
-    .link-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
-    .link-title a { color: #1a1a1a; text-decoration: none; }
-    .link-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
-    .link-desc { font-size: 12px; color: #666; line-height: 1.5; }
-    .link-tag {
-      display: inline-block;
-      font-size: 10px; font-weight: 600;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: #f0f0f0; color: #777;
-      margin-right: 6px;
-      vertical-align: middle;
-    }
-
-    /* Thumbnail on link-row items */
-    .link-thumb {
-      width: 88px; min-width: 88px; height: 58px;
-      border-radius: 6px;
-      overflow: hidden;
-      flex-shrink: 0;
-      background: #f0f0f0;
-      position: relative;
-    }
-    .link-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: opacity 0.3s;
-    }
-    .link-thumb.loading img { opacity: 0; }
-    .link-thumb.loading::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.4s infinite;
-    }
-    .link-thumb.fallback { background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%); }
-    .link-thumb.fallback::after { display: none; }
-    .link-thumb.fallback img { display: none; }
-    .link-thumb.brand-icon {
-      background: #f8f8f8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .link-thumb.brand-icon::after { display: none; }
-    .link-thumb.brand-icon img {
-      width: 36px; height: 36px;
-      object-fit: contain;
-      border-radius: 4px;
-      opacity: 1;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 32px 24px;
-      font-size: 12px;
-      color: #aaa;
-      border-top: 1px solid #e8e8e8;
-    }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 22px; }
-      .card-top { flex-direction: column; gap: 4px; }
-      .card-meta { white-space: normal; }
-      .link-thumb { width: 72px; min-width: 72px; height: 48px; }
-    }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse at 20% 20%, var(--glow-primary) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, var(--glow-tertiary) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, var(--glow-secondary) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+    body::after { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: 0; }
+    .layout { display: flex; min-height: 100vh; position: relative; z-index: 1; }
+    .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-width); background: var(--bg-sidebar); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-right: 1px solid var(--border); padding: 32px 20px; display: flex; flex-direction: column; overflow-y: auto; z-index: 100; transition: transform 0.3s ease; }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; padding: 0 8px; }
+    .sidebar-logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--tertiary)); border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px var(--glow-primary); }
+    .sidebar-logo-icon svg { width: 20px; height: 20px; fill: white; }
+    .sidebar-logo-text { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--text-primary); }
+    .sidebar-logo-sub { font-size: 10px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+    .nav-section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 0 12px; margin-bottom: 8px; margin-top: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease; text-decoration: none; position: relative; margin-bottom: 2px; }
+    .nav-item:hover { background: rgba(37, 99, 235, 0.06); color: var(--primary); }
+    .nav-item.active { background: rgba(37, 99, 235, 0.1); color: var(--primary); font-weight: 600; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1), 0 2px 8px var(--glow-primary); }
+    .nav-item.active::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; background: var(--primary); border-radius: 0 3px 3px 0; }
+    .nav-icon { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; opacity: 0.7; }
+    .nav-item.active .nav-icon { opacity: 1; }
+    .nav-spacer { flex: 1; }
+    .nav-divider { height: 1px; background: var(--border); margin: 12px 8px; }
+    .main { margin-left: var(--sidebar-width); flex: 1; padding: 32px 40px 80px; max-width: 1100px; }
+    .hero { position: relative; border-radius: var(--radius-lg); padding: 48px 40px; margin-bottom: 32px; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 30%, #7c3aed 70%, #06b6d4 100%); box-shadow: 0 20px 60px rgba(37, 99, 235, 0.2), 0 0 0 1px rgba(255,255,255,0.1) inset; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(168, 85, 247, 0.2) 0%, transparent 40%); animation: heroGlow 8s ease-in-out infinite alternate; }
+    @keyframes heroGlow { 0% { opacity: 0.6; transform: scale(1); } 100% { opacity: 1; transform: scale(1.05); } }
+    .hero::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 40px 40px; }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+    .hero-title { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }
+    .hero-subtitle { font-size: 15px; color: rgba(255,255,255,0.8); font-weight: 400; max-width: 500px; }
+    .hero-week-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.9); margin-top: 16px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; padding: 4px 0; }
+    .filter-chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--text-secondary); background: var(--card-bg); border: 1px solid var(--border); cursor: pointer; transition: all 0.2s ease; user-select: none; }
+    .filter-chip:hover { border-color: var(--primary-light); color: var(--primary); box-shadow: 0 2px 8px var(--glow-primary); transform: translateY(-1px); }
+    .filter-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 12px var(--glow-primary); }
+    .filter-chip .chip-count { background: rgba(0,0,0,0.08); border-radius: 10px; padding: 1px 6px; font-size: 10px; font-weight: 600; }
+    .filter-chip.active .chip-count { background: rgba(255,255,255,0.25); }
+    .articles-list { display: flex; flex-direction: column; gap: 16px; }
+    .article-card { display: flex; gap: 20px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: inherit; }
+    .article-card:hover { border-color: rgba(37, 99, 235, 0.15); box-shadow: 0 8px 32px var(--glow-primary), 0 0 0 1px rgba(37, 99, 235, 0.08); transform: translateY(-2px); }
+    .article-card-image { display: none; }
+    .article-card-body { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+    .article-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .article-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.03em; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
+    .tag-ai-news { background: #dbeafe; color: #1d4ed8; }
+    .tag-deep-thinking { background: #ede9fe; color: #6d28d9; }
+    .tag-workflow { background: #ccfbf1; color: #0d9488; }
+    .tag-design-systems { background: #fce7f3; color: #be185d; }
+    .tag-tools { background: #e0e7ff; color: #4338ca; }
+    .article-card-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; line-height: 1.4; letter-spacing: -0.2px; }
+    .article-card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+    .article-card-meta { display: flex; align-items: center; gap: 12px; margin-top: 10px; font-size: 11px; color: var(--text-muted); }
+    .article-card-meta span { display: flex; align-items: center; gap: 4px; }
+    .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .article-card-grid { display: flex; flex-direction: column; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: inherit; }
+    .article-card-grid:hover { border-color: rgba(37, 99, 235, 0.15); box-shadow: 0 12px 40px var(--glow-primary), 0 0 0 1px rgba(37, 99, 235, 0.08); transform: translateY(-3px); }
+    .article-card-grid .article-grid-image { display: none; }
+    .article-card-grid .article-grid-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+    .article-card-grid .article-card-title { font-size: 14px; margin-bottom: 8px; }
+    .article-card-grid .article-card-desc { font-size: 12px; -webkit-line-clamp: 4; }
+    .week-picker { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .week-picker-label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .week-picker select { padding: 8px 32px 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); font-size: 13px; font-weight: 500; color: var(--text-primary); appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; transition: all 0.2s ease; }
+    .week-picker select:hover { border-color: var(--primary-light); }
+    .page { display: none; }
+    .page.active { display: block; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(37, 99, 235, 0.15); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(37, 99, 235, 0.25); }
+    @media (max-width: 900px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } .main { margin-left: 0; padding: 20px; } .hero { padding: 32px 24px; } .hero-title { font-size: 24px; } .mobile-toggle { display: flex !important; } }
+    .mobile-toggle { display: none; position: fixed; top: 16px; left: 16px; z-index: 200; width: 40px; height: 40px; border-radius: 10px; background: var(--card-bg); border: 1px solid var(--border); align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .article-card, .article-card-grid { animation: fadeIn 0.4s ease forwards; }
+    .article-card:nth-child(1) { animation-delay: 0s; } .article-card:nth-child(2) { animation-delay: 0.05s; } .article-card:nth-child(3) { animation-delay: 0.1s; } .article-card:nth-child(4) { animation-delay: 0.15s; } .article-card:nth-child(5) { animation-delay: 0.2s; } .article-card:nth-child(6) { animation-delay: 0.25s; } .article-card:nth-child(7) { animation-delay: 0.3s; } .article-card:nth-child(8) { animation-delay: 0.35s; }
   </style>
 </head>
 <body>
+<div class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><div class="sidebar-logo-text">AI UX Weekly</div><div class="sidebar-logo-sub">Design + Intelligence</div></div></div>
+    <div class="nav-section-label">Browse</div>
+    <a class="nav-item active" data-page="latest" onclick="showPage('latest', this)"><span class="nav-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></span>Latest Week</a>
+    <div class="nav-divider" id="archive-divider" style="display:none;"></div>
+    <div class="nav-section-label" id="archive-label" style="display:none;">Archive</div>
+    <div id="archive-nav-items"></div>
+    <div class="nav-spacer"></div>
+    <div class="nav-divider"></div>
+    <a class="nav-item" data-page="all" onclick="showPage('all', this)"><span class="nav-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>All Articles</a>
+  </aside>
 
-<header>
-  <div class="label">Auto-generated by Claude Code &middot; Every Monday 9am</div>
-  <h1>Weekly AI & Design Digest</h1>
-  <div class="week">Week of May 12, 2026</div>
-</header>
-
-<nav>
-  <a href="#section-a" class="active">A &middot; Product Updates</a>
-  <a href="#section-b">B &middot; Workflows</a>
-  <a href="#section-c">C &middot; Deeper Thinking</a>
-</nav>
-
-<main>
-
-  <!-- SECTION A -->
-  <section class="section" id="section-a">
-    <div class="section-header">
-      <span class="section-badge badge-a">A</span>
-      <h2 class="section-title">Product & Release Updates</h2>
-    </div>
-    <p class="section-subtitle">What tools and features are newly available</p>
-
-    <!-- Anthropic -->
-    <div class="source-group">
-      <div class="source-name">Anthropic / Claude</div>
-
-      <div class="card">
-        <a href="https://www.anthropic.com/news/claude-design-anthropic-labs" target="_blank">
-          <div class="card-image" data-section="a" data-label="Anthropic">
-            <img src="https://image.thum.io/get/width/1200/crop/675/https://www.anthropic.com/news/claude-design-anthropic-labs" alt="Claude Design" loading="lazy" />
-          </div>
-        </a>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="card-title"><a href="https://www.anthropic.com/news/claude-design-anthropic-labs" target="_blank">Introducing Claude Design</a></div>
-            <div class="card-meta">Apr 17</div>
-          </div>
-          <div class="card-impact">
-            Claude Design lets you create polished visuals — prototypes, slides, one-pagers, and marketing collateral — through conversational prompts, with fine-grained editing controls and brand asset integration.
-            <br><br><strong>UX impact:</strong> Non-designers (PMs, founders, marketers) can now generate design-quality outputs without Figma skills — expect this to shift expectations around who "does design" on your team.
-          </div>
-        </div>
+  <main class="main">
+    <!-- LATEST WEEK PAGE (Week 20: May 12-18, 2026) -->
+    <div class="page active" id="page-latest" data-week="week20">
+      <div class="hero"><div class="hero-content"><div class="hero-label">This Week's Collection</div><h1 class="hero-title">Week 20 — AI UX Weekly</h1><p class="hero-subtitle">Curated insights on AI tools, design workflows, and the future of user experience.</p><div class="hero-week-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>May 12 – May 18, 2026</div></div></div>
+      <div class="filters">
+        <span class="filter-chip active" onclick="filterArticles('all', this)">All <span class="chip-count">8</span></span>
+        <span class="filter-chip" onclick="filterArticles('deep-thinking', this)">Deep Thinking</span>
+        <span class="filter-chip" onclick="filterArticles('workflow', this)">Workflows</span>
+        <span class="filter-chip" onclick="filterArticles('ai-news', this)">Industry News</span>
+        <span class="filter-chip" onclick="filterArticles('tools', this)">AI Tools</span>
+        <span class="filter-chip" onclick="filterArticles('design-systems', this)">Design Systems</span>
       </div>
-
-      <div class="card">
-        <a href="https://tygartmedia.com/claude-updates-may-2026/" target="_blank">
-          <div class="card-image" data-section="a" data-label="Anthropic">
-            <img src="https://image.thum.io/get/width/1200/crop/675/https://www.anthropic.com/news/claude-opus-4-7" alt="Claude Opus 4.7" loading="lazy" />
-          </div>
-        </a>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="card-title"><a href="https://tygartmedia.com/claude-updates-may-2026/" target="_blank">Claude Opus 4.7: Enhanced Vision, Task Budgets Beta</a></div>
-            <div class="card-meta">Apr 2026</div>
-          </div>
-          <div class="card-impact">
-            Vision resolution jumps to 2,576px (~3.75MP), improving how Claude reads screenshots and design files. Task Budgets (public beta) adds token spend guidance for longer agentic runs.
-            <br><br><strong>UX impact:</strong> Better image analysis means more accurate feedback when sharing UI screenshots with Claude for review or annotation tasks.
-          </div>
-        </div>
+      <div class="articles-list">
+        <a class="article-card" href="https://techcrunch.com/2026/05/12/google-brings-agentic-ai-and-vibe-coded-widgets-to-android/" target="_blank" data-tags="ai-news tools"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-ai-news">Industry News</span><span class="article-tag tag-tools">AI Tools</span></div><h3 class="article-card-title">Google I/O: Stitch Becomes AI-Native Design Canvas</h3><p class="article-card-desc">At Google I/O, Stitch evolved from a prototyping tool into a full AI-native software design canvas. Users can now create high-fidelity UI from natural language, use voice commands for real-time design critiques, and export directly to developer tools. Combined with Gemini's new agentic capabilities that can browse, fill forms, and complete tasks autonomously, Google is positioning AI as a true design collaborator rather than just a generator. A major shift in the competitive landscape for AI design tools.</p><div class="article-card-meta"><span>TechCrunch / Google</span><span>May 12</span></div></div></a>
+        <a class="article-card" href="https://claude.com/blog/new-in-claude-managed-agents" target="_blank" data-tags="ai-news tools"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-ai-news">Industry News</span><span class="article-tag tag-tools">AI Tools</span></div><h3 class="article-card-title">Claude Managed Agents: Dreaming, Outcomes & Multiagent Orchestration</h3><p class="article-card-desc">Anthropic's managed agents can now "dream" — autonomously reviewing past sessions to refine their memories and improve over time. Outcomes let agents grade their own work against success criteria, and multiagent orchestration enables task delegation to specialist subagents. For UX designers, this means designing interfaces for AI systems that self-improve, need transparency controls for memory updates, and require progress visibility across multiple parallel agents. A new class of UX challenges is emerging.</p><div class="article-card-meta"><span>Anthropic</span><span>May 7</span></div></div></a>
+        <a class="article-card" href="https://www.figma.com/release-notes/" target="_blank" data-tags="tools workflow"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><path d="M12 2a3 3 0 0 0-3 3v4a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-tools">AI Tools</span><span class="article-tag tag-workflow">Workflows</span></div><h3 class="article-card-title">Figma Release Notes Livestream: Co-Designing with AI Agents</h3><p class="article-card-desc">Figma's May livestream showcased live demos of product teams co-designing with AI agents using MCP skills and "write to canvas" features. The session covered vibe-coded prototypes, connecting design systems to code, and rapid idea deployment. FigJam also gained new MCP skills — generate_diagram, figma-use-figjam, and get_figjam — turning it into a whiteboard for coding agents. This is the clearest signal yet that Figma sees AI agents as first-class collaborators, not just assistants.</p><div class="article-card-meta"><span>Figma</span><span>May 5</span></div></div></a>
+        <a class="article-card" href="https://www.techradar.com/ai-platforms-assistants/chatgpt/openai-finally-fixed-the-most-annoying-thing-about-chatgpt-and-im-already-noticing-the-difference" target="_blank" data-tags="ai-news tools"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-ai-news">Industry News</span><span class="article-tag tag-tools">AI Tools</span></div><h3 class="article-card-title">GPT-5.5 Instant + Memory Sources — OpenAI's New Default</h3><p class="article-card-desc">OpenAI replaced GPT-5.3 with GPT-5.5 Instant as ChatGPT's default model, reducing hallucinations by 52.5% and producing shorter, more focused outputs. A new "memory sources" feature lets users see exactly which past conversations and files influenced a response. For UX writers and content designers, this means more reliable microcopy generation and transparent AI reasoning — you can finally verify why the AI made a particular suggestion rather than blindly trusting it.</p><div class="article-card-meta"><span>TechRadar / OpenAI</span><span>May 5-7</span></div></div></a>
+        <a class="article-card" href="https://music.amazon.com/podcasts/254b02ca-720d-495a-b0e4-b359fc52befd/episodes/59310feb-c64e-459a-af05-624985d723ed/wireframe-by-design-systems-house-spicy-chicken-w-brad-frost-wireframe-live" target="_blank" data-tags="deep-thinking design-systems"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-deep-thinking">Deep Thinking</span><span class="article-tag tag-design-systems">Design Systems</span></div><h3 class="article-card-title">Brad Frost on Wireframe Live: Quality Gates for AI in Design Systems</h3><p class="article-card-desc">Brad Frost joins Donnie D'Amato to discuss how AI is reshaping design system creation and governance. The key insight: design systems must evolve into machine-readable infrastructures while maintaining quality gates that prevent "AI slop" from shipping. Frost argues the question isn't whether to use AI, but what guardrails ensure generated output meets your team's quality bar. Practical framing for any design system team navigating AI adoption — the system itself becomes the constraint layer.</p><div class="article-card-meta"><span>Wireframe Live / Brad Frost</span><span>May 8</span></div></div></a>
+        <a class="article-card" href="https://www.listennotes.com/podcasts/lennys-podcast/why-cultivating-agency-ArNLxSXDWHM/" target="_blank" data-tags="deep-thinking"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-deep-thinking">Deep Thinking</span></div><h3 class="article-card-title">Why Cultivating Agency Matters More Than Skills in the AI Era</h3><p class="article-card-desc">Max Schoening (Head of Product, Notion) argues on Lenny's Podcast that as AI automates execution, the most valuable trait becomes agency — the belief you can shape your environment, not just react to it. He introduces "malleable software" where tools adapt to individual needs, and warns against feature bloat by focusing on a product's "tiny core." For designers, this reframes career development: invest in strategic thinking, problem framing, and taste rather than tool proficiency alone.</p><div class="article-card-meta"><span>Lenny's Podcast</span><span>May 3</span></div></div></a>
+        <a class="article-card" href="https://newsletter.uxdesign.cc/p/collected-consciousness" target="_blank" data-tags="deep-thinking"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-deep-thinking">Deep Thinking</span></div><h3 class="article-card-title">Collected Consciousness — The Limits of AI in Creative Work</h3><p class="article-card-desc">UX Collective editor Fabricio Teixeira examines why AI-generated content still falls short on emotional connection and meaningful context. AI can mimic tone but not lived experience. The newsletter also features "The forgotten conversation problem in AI chat" — a critical look at persistent context in AI interfaces — and "Output isn't design," challenging whether generating artifacts equals doing design work. Essential reading for teams debating where AI assistance ends and human craft begins.</p><div class="article-card-meta"><span>UX Collective</span><span>May 4</span></div></div></a>
+        <a class="article-card" href="https://www.figma.com/blog/figjam/" target="_blank" data-tags="workflow tools"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" x2="7" y1="2" y2="22"/><line x1="17" x2="17" y1="2" y2="22"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-workflow">Workflows</span><span class="article-tag tag-tools">AI Tools</span></div><h3 class="article-card-title">FigJam as a Whiteboard for Coding Agents</h3><p class="article-card-desc">FigJam gains new MCP skills that let AI coding agents read from and write to boards, create architecture diagrams with ERD support, and summarize board contents. Teams can now use FigJam as a shared planning surface where both humans and AI agents collaborate visually — agents can generate diagrams from codebases, draft next steps, and translate technical docs into interactive visuals. Bridges the gap between rapid code changes and design team visibility.</p><div class="article-card-meta"><span>Figma Blog</span><span>May 2026</span></div></div></a>
       </div>
     </div>
 
-    <!-- OpenAI -->
-    <div class="source-group">
-      <div class="source-name">OpenAI</div>
-      <div class="link-row">
+    <!-- ALL ARTICLES PAGE -->
+    <div class="page" id="page-all">
+      <div class="hero"><div class="hero-content"><div class="hero-label">Complete Archive</div><h1 class="hero-title">All Articles</h1><p class="hero-subtitle">Browse every article from every week — filter by category or time period.</p></div></div>
+      <div class="week-picker"><span class="week-picker-label">Week:</span><select id="all-week-select" onchange="filterAllArticles()"><option value="all">All Weeks</option><option value="week20">Week 20 (May 12)</option><option value="week19">Week 19 (May 5)</option><option value="week18">Week 18 (Apr 28)</option><option value="week17">Week 17 (Apr 21)</option><option value="week16">Week 16 (Apr 14)</option></select></div>
+      <div class="filters" id="all-filters"><span class="filter-chip active" onclick="filterAllByTag('all', this)">All</span><span class="filter-chip" onclick="filterAllByTag('deep-thinking', this)">Deep Thinking</span><span class="filter-chip" onclick="filterAllByTag('workflow', this)">Workflows</span><span class="filter-chip" onclick="filterAllByTag('ai-news', this)">Industry News</span><span class="filter-chip" onclick="filterAllByTag('tools', this)">AI Tools</span><span class="filter-chip" onclick="filterAllByTag('design-systems', this)">Design Systems</span></div>
+      <div class="articles-grid" id="all-articles-grid"></div>
+    </div>
 
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://9to5mac.com/2026/05/05/gpt-5-5-instant-makes-chatgpt-more-accurate-while-nixing-gratuitous-emojis/" target="_blank">GPT-5.5 Instant is now ChatGPT's default</a> <span class="link-tag">May 5</span></div>
-            <div class="link-desc">Clearer, more concise answers with fewer hallucinations. Memory sources show users which past chats informed each response.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://9to5mac.com/2026/05/05/gpt-5-5-instant-makes-chatgpt-more-accurate-while-nixing-gratuitous-emojis/" data-domain="openai.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" target="_blank">Voice Intelligence API: Real-time voice + translation</a> <span class="link-tag">May 7</span></div>
-            <div class="link-desc">GPT-Realtime-2 for natural conversations and real-time translation across 70+ input languages. Opens the door to multilingual voice interfaces and accessibility-first experiences.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" data-domain="openai.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://www.techradar.com/ai-platforms-assistants/chatgpt/openai-finally-fixed-the-most-annoying-thing-about-chatgpt-and-im-already-noticing-the-difference" target="_blank">Memory Sources: Transparency into what ChatGPT remembers</a> <span class="link-tag">May 6</span></div>
-            <div class="link-desc">Users can see and edit which context shaped a response. A strong AI product UX pattern — transparency + user control over memory — worth borrowing in your own work.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://www.techradar.com/ai-platforms-assistants/chatgpt/openai-finally-fixed-the-most-annoying-thing-about-chatgpt-and-im-already-noticing-the-difference" data-domain="openai.com"><img alt="" loading="lazy" /></div>
-        </div>
-
+    <!-- WEEK 19: May 5-11 -->
+    <div class="page" id="page-week19" data-week="week19" data-week-label="Week 19" data-week-date="May 5">
+      <div class="hero"><div class="hero-content"><div class="hero-label">Weekly Archive</div><h1 class="hero-title">Week 19</h1><p class="hero-subtitle">May 5 – May 11, 2026</p></div></div>
+      <div class="filters"><span class="filter-chip active" onclick="filterArticles('all', this)">All</span><span class="filter-chip" onclick="filterArticles('deep-thinking', this)">Deep Thinking</span><span class="filter-chip" onclick="filterArticles('workflow', this)">Workflows</span><span class="filter-chip" onclick="filterArticles('ai-news', this)">Industry News</span><span class="filter-chip" onclick="filterArticles('tools', this)">AI Tools</span><span class="filter-chip" onclick="filterArticles('design-systems', this)">Design Systems</span></div>
+      <div class="articles-list">
+        <a class="article-card" href="https://newsletter.uxdesign.cc/p/the-beginning-of-a-fantastic-voyage" target="_blank" data-tags="deep-thinking"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-deep-thinking">Deep Thinking</span></div><h3 class="article-card-title">The Beginning of a Fantastic Voyage?</h3><p class="article-card-desc">The evolving role of product design in the age of AI — encouraging designers to reframe their influence within and beyond organizations. As AI takes over execution tasks, designers must shift toward systems thinking, strategic facilitation, and shaping the intent behind products. A thought-provoking piece for anyone navigating what it means to be a designer when AI can generate screens faster than you can critique them.</p><div class="article-card-meta"><span>UX Collective</span><span>May 5</span></div></div></a>
+        <a class="article-card" href="https://www.figma.com/blog/product-updates/" target="_blank" data-tags="tools workflow"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="1.5"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-tools">AI Tools</span><span class="article-tag tag-workflow">Workflows</span></div><h3 class="article-card-title">Figma Vectorize — AI-Powered Raster to Vector</h3><p class="article-card-desc">Convert raster images into editable vector formats directly within Figma — no more tracing in Illustrator. The AI-powered tool analyzes pixel data and produces clean, scalable vector paths. Particularly useful for converting screenshots, sketches, or low-fidelity mockups into production-ready vector assets. Saves significant time in the asset creation pipeline, especially for icon and illustration workflows.</p><div class="article-card-meta"><span>Figma</span><span>May 7</span></div></div></a>
+        <a class="article-card" href="https://support.claude.com/en/articles/12138966-release-notes" target="_blank" data-tags="tools workflow"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-tools">AI Tools</span><span class="article-tag tag-workflow">Workflows</span></div><h3 class="article-card-title">Claude Cowork — Now GA on macOS & Windows</h3><p class="article-card-desc">Claude Cowork generally available through the Desktop app with Analytics API. Run AI-assisted workflows on your computer without browser dependencies. Designers can have Claude running alongside Figma, analyzing designs and generating content without switching tabs. The Analytics API also opens up possibilities for tracking how your team uses AI in their workflow — useful data for design ops.</p><div class="article-card-meta"><span>Anthropic</span><span>May 5</span></div></div></a>
       </div>
     </div>
 
-    <!-- Figma -->
-    <div class="source-group">
-      <div class="source-name">Figma</div>
-      <div class="card">
-        <div class="card-top">
-          <div class="card-title">
-            <a href="https://www.figma.com/release-notes/" target="_blank">Release Notes May '26 Livestream: Co-designing with AI Agents</a>
-          </div>
-          <div class="card-meta">May 5</div>
-        </div>
-        <div class="card-impact">
-          Figma hosted a major livestream covering AI agent integration, MCP skills, "write to canvas" features, and connecting design systems directly to code.
-          <br><br><strong>UX impact:</strong> AI agents can now co-design alongside you in Figma &mdash; this changes the collaboration model from "designer uses tool" to "designer directs AI collaborator." Worth watching as a team.
-        </div>
-      </div>
-      <div class="link-row">
-
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://www.figma.com/release-notes/" target="_blank">AI Agent Integration in Figma</a> <span class="link-tag">May 2026</span></div>
-            <div class="link-desc">AI agents can now co-design with you — advancing vibe-coded prototypes, connecting design systems to code, and accelerating ideation.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://www.figma.com/release-notes/" data-domain="figma.com" data-yt-id="QJIgDWol5CE"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://www.creativeainews.com/blog/figma-make-zapier-connector-voice-prompts/" target="_blank">Figma Make: Voice prompts + Zapier connector</a> <span class="link-tag">May 2026</span></div>
-            <div class="link-desc">Dictate prompts directly in Make and connect to 9,000+ apps via Zapier. Faster prototyping and integration with real data sources out of the box.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://www.creativeainews.com/blog/figma-make-zapier-connector-voice-prompts/" data-domain="figma.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://www.createwith.com/tool/figma/updates/figma-launches-make-kits-to-ground-prototypes-in-real-project-work" target="_blank">Make Kits + Make Attachments</a> <span class="link-tag">May 2026</span></div>
-            <div class="link-desc">Prebuilt kits for building and demoing design systems; anchor prototypes inside real design files to keep AI-generated work in project context.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://www.createwith.com/tool/figma/updates/figma-launches-make-kits-to-ground-prototypes-in-real-project-work" data-domain="figma.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-a"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://www.figma.com/release-notes/" target="_blank">Figma Draw: Text on Path + Auto Layout</a> <span class="link-tag">May 2026</span></div>
-            <div class="link-desc">Add text to any path or circle without leaving Draw; auto layout now available without switching to Design mode.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://www.figma.com/release-notes/" data-domain="figma.com"><img alt="" loading="lazy" /></div>
-        </div>
-
+    <!-- WEEK 18: Apr 28-May 4 -->
+    <div class="page" id="page-week18" data-week="week18" data-week-label="Week 18" data-week-date="Apr 28">
+      <div class="hero"><div class="hero-content"><div class="hero-label">Weekly Archive</div><h1 class="hero-title">Week 18</h1><p class="hero-subtitle">April 28 – May 4, 2026</p></div></div>
+      <div class="filters"><span class="filter-chip active" onclick="filterArticles('all', this)">All</span><span class="filter-chip" onclick="filterArticles('deep-thinking', this)">Deep Thinking</span><span class="filter-chip" onclick="filterArticles('workflow', this)">Workflows</span><span class="filter-chip" onclick="filterArticles('ai-news', this)">Industry News</span><span class="filter-chip" onclick="filterArticles('tools', this)">AI Tools</span><span class="filter-chip" onclick="filterArticles('design-systems', this)">Design Systems</span></div>
+      <div class="articles-list">
+        <a class="article-card" href="https://newsletter.uxdesign.cc/p/we-become-what-we-behold" target="_blank" data-tags="deep-thinking"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-deep-thinking">Deep Thinking</span></div><h3 class="article-card-title">We Become What We Behold</h3><p class="article-card-desc">How AI is rapidly shaping the design industry — critically assess the tools you use and their impact on your creative process. The article draws on media theory to argue that the tools we adopt shape how we think about design itself. When AI generates layouts, typography, and content, designers risk optimizing for what AI does well rather than what users actually need. A call to stay intentional about tool adoption.</p><div class="article-card-meta"><span>UX Collective</span><span>Apr 28</span></div></div></a>
+        <a class="article-card" href="https://bradfrost.com/blog/" target="_blank" data-tags="workflow design-systems"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="1.5"><path d="M16 18l2-2-2-2M8 6L6 8l2 2"/><path d="M14.5 4l-5 16"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-workflow">Workflows</span><span class="article-tag tag-design-systems">Design Systems</span></div><h3 class="article-card-title">Mouth Coding — Non-Designers Creating UI with AI</h3><p class="article-card-desc">Non-technical team members verbally describe product features, and AI generates UI from the organization's design system. Brad Frost explores how this changes collaboration dynamics — the design system becomes the constraint layer that ensures quality regardless of who initiates the design. Implications for design governance are significant.</p><div class="article-card-meta"><span>Brad Frost</span><span>Apr 30</span></div></div></a>
+        <a class="article-card" href="https://www.figma.com/blog/introducing-figma-make-embeds/" target="_blank" data-tags="tools workflow"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" x2="7" y1="2" y2="22"/><line x1="17" x2="17" y1="2" y2="22"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-tools">AI Tools</span><span class="article-tag tag-workflow">Workflows</span></div><h3 class="article-card-title">Figma Make Embeds — Prototypes Everywhere</h3><p class="article-card-desc">Embed Figma Make prototypes into Design, FigJam, and Slides. Show interactive AI-generated prototypes directly in your FigJam brainstorm boards or Slides presentations — no more switching between tools during stakeholder reviews. The embed updates live, so changes in Figma Make are reflected everywhere instantly.</p><div class="article-card-meta"><span>Figma Blog</span><span>Apr 29</span></div></div></a>
       </div>
     </div>
 
-    <!-- Google -->
-    <div class="source-group">
-      <div class="source-name">Google</div>
-      <div class="card">
-        <a href="https://www.nxcode.io/resources/news/google-stitch-complete-guide-vibe-design-2026" target="_blank">
-          <div class="card-image" data-section="a" data-label="Google Stitch">
-            <img src="https://image.thum.io/get/width/1200/crop/675/https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/" alt="Google Stitch" loading="lazy" />
-          </div>
-        </a>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="card-title"><a href="https://www.nxcode.io/resources/news/google-stitch-complete-guide-vibe-design-2026" target="_blank">Google Stitch: Infinite Canvas + Interactive Prototyping</a></div>
-            <div class="card-meta">May 2026</div>
-          </div>
-          <div class="card-impact">
-            Stitch now supports an infinite canvas for large design systems, interactive prototyping with transitions and user journey preview, and voice canvas for real-time critique during sessions.
-            <br><br><strong>UX impact:</strong> Stitch is closing the gap on Figma's core features while keeping its AI-first approach — worth revisiting if you dismissed it as too limited in earlier releases.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION B -->
-  <section class="section" id="section-b">
-    <div class="section-header">
-      <span class="section-badge badge-b">B</span>
-      <h2 class="section-title">Practical Workflows & Examples</h2>
-    </div>
-    <p class="section-subtitle">How designers are actually using these tools day-to-day</p>
-
-    <!-- YouTube -->
-    <div class="source-group">
-      <div class="source-name">YouTube</div>
-
-      <div class="card">
-        <a href="https://www.youtube.com/watch?v=X4vAlWtsJD4" target="_blank">
-          <div class="card-image is-video" data-yt-id="X4vAlWtsJD4">
-            <img src="https://img.youtube.com/vi/X4vAlWtsJD4/maxresdefault.jpg" alt="Anthropic Head of Design" loading="lazy" />
-          </div>
-        </a>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="card-title"><a href="https://www.youtube.com/watch?v=X4vAlWtsJD4" target="_blank">Anthropic's Head of Design Just Killed The Old Process</a></div>
-            <div class="card-meta">Apr 2026</div>
-          </div>
-          <div class="card-impact">
-            Anthropic's design lead walks through how Claude Design was built and how it reshapes the design process — from prompt to polished visual without a traditional design tool.
-            <br><br><strong>UX impact:</strong> A candid look at how AI is changing the craft of design at Anthropic itself — useful for framing the same conversations with your own team.
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <a href="https://www.youtube.com/watch?v=QJIgDWol5CE" target="_blank">
-          <div class="card-image is-video" data-yt-id="QJIgDWol5CE">
-            <img src="https://img.youtube.com/vi/QJIgDWol5CE/maxresdefault.jpg" alt="Figma Release Notes May 2026" loading="lazy" />
-          </div>
-        </a>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="card-title"><a href="https://www.youtube.com/watch?v=QJIgDWol5CE" target="_blank">Release Notes 2026: May Edition | Figma</a></div>
-            <div class="card-meta">May 2026</div>
-          </div>
-          <div class="card-impact">
-            Official Figma livestream covering all May updates: AI agents, Make Kits, voice prompts in Make, Draw improvements, and desktop app performance.
-            <br><br><strong>UX impact:</strong> The fastest way to get up to speed on everything Figma shipped this month — skip reading changelogs and watch the 20-minute highlights instead.
-          </div>
-        </div>
+    <!-- WEEK 17: Apr 21-27 -->
+    <div class="page" id="page-week17" data-week="week17" data-week-label="Week 17" data-week-date="Apr 21">
+      <div class="hero"><div class="hero-content"><div class="hero-label">Weekly Archive</div><h1 class="hero-title">Week 17</h1><p class="hero-subtitle">April 21 – April 27, 2026</p></div></div>
+      <div class="filters"><span class="filter-chip active" onclick="filterArticles('all', this)">All</span><span class="filter-chip" onclick="filterArticles('deep-thinking', this)">Deep Thinking</span><span class="filter-chip" onclick="filterArticles('workflow', this)">Workflows</span><span class="filter-chip" onclick="filterArticles('ai-news', this)">Industry News</span><span class="filter-chip" onclick="filterArticles('tools', this)">AI Tools</span><span class="filter-chip" onclick="filterArticles('design-systems', this)">Design Systems</span></div>
+      <div class="articles-list">
+        <a class="article-card" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank" data-tags="ai-news tools"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-ai-news">Industry News</span><span class="article-tag tag-tools">AI Tools</span></div><h3 class="article-card-title">ChatGPT Images 2.0 — "Images with Thinking"</h3><p class="article-card-desc">Model plans and refines outputs before generating. The "thinking" step means the model considers composition, color harmony, and context before producing an image — resulting in more intentional outputs. For designers, this is a step closer to AI that understands visual intent rather than just following literal instructions.</p><div class="article-card-meta"><span>OpenAI</span><span>Apr 21</span></div></div></a>
+        <a class="article-card" href="https://bradfrost.com/blog/category/post/" target="_blank" data-tags="deep-thinking"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-deep-thinking">Deep Thinking</span></div><h3 class="article-card-title">The Creative Infinite — AI as Design Material</h3><p class="article-card-desc">Brad Frost coins "The Creative Infinite" — a framework for thinking about AI's expansive potential as a design material. Instead of viewing AI as a threat to creativity, Frost argues it expands the possibility space infinitely. The key skill becomes curation and judgment — knowing which of AI's infinite outputs to pursue. A philosophical but practical reframe for designers feeling overwhelmed by the pace of change.</p><div class="article-card-meta"><span>Brad Frost</span><span>Apr 23</span></div></div></a>
       </div>
     </div>
 
-    <!-- Medium / Community -->
-    <div class="source-group">
-      <div class="source-name">Medium / Community</div>
-      <div class="link-row">
-
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://medium.com/design-bootcamp/emotional-ux-design-in-the-age-of-ai-2fdf29ed8173" target="_blank">Emotional UX Design in the Age of AI</a> <span class="link-tag">Design Bootcamp · May 2026</span></div>
-            <div class="link-desc">Explores why emotionally comfortable UX matters more as AI-generated interfaces become the norm. Useful framework for evaluating whether your AI-generated designs still carry emotional resonance.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://medium.com/design-bootcamp/emotional-ux-design-in-the-age-of-ai-2fdf29ed8173" data-domain="medium.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://medium.com/design-bootcamp/the-open-tab-syndrome-why-i-feel-like-a-ux-beginner-every-48-hours-d11998ec5e32" target="_blank">I Feel Like a UX Beginner Every 48 Hours</a> <span class="link-tag">Design Bootcamp · May 2026</span></div>
-            <div class="link-desc">A candid exploration of the overwhelm designers feel as AI tools evolve faster than they can learn them. Relevant for team leads thinking about pacing AI tool adoption.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://medium.com/design-bootcamp/the-open-tab-syndrome-why-i-feel-like-a-ux-beginner-every-48-hours-d11998ec5e32" data-domain="medium.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://medium.com/design-bootcamp/claude-design-launch-the-reasons-behind-designers-fear-of-ai-b3b16b5bb6a3" target="_blank">Claude Design Launch: Why Designers Fear AI</a> <span class="link-tag">Design Bootcamp · Apr 2026</span></div>
-            <div class="link-desc">Analysis of how Claude Design's launch triggered anxiety among designers about AI replacing creative roles. Good conversation starter for team discussions about AI as collaborator vs. replacement.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://medium.com/design-bootcamp/claude-design-launch-the-reasons-behind-designers-fear-of-ai-b3b16b5bb6a3" data-domain="medium.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://medium.com/design-bootcamp/frontend-code-literacy-for-designers-in-the-ai-era-a-6-week-syllabus-ae7030588f82" target="_blank">Frontend Code Literacy for Designers — 6-Week Syllabus</a> <span class="link-tag">Design Bootcamp · Apr 2026</span></div>
-            <div class="link-desc">A structured plan for designers to build code confidence alongside AI tools. Practical for teams wanting designers to better understand and direct AI-generated code output.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://medium.com/design-bootcamp/frontend-code-literacy-for-designers-in-the-ai-era-a-6-week-syllabus-ae7030588f82" data-domain="medium.com"><img alt="" loading="lazy" /></div>
-        </div>
-
+    <!-- WEEK 16: Apr 14-20 -->
+    <div class="page" id="page-week16" data-week="week16" data-week-label="Week 16" data-week-date="Apr 14">
+      <div class="hero"><div class="hero-content"><div class="hero-label">Weekly Archive</div><h1 class="hero-title">Week 16</h1><p class="hero-subtitle">April 14 – April 20, 2026</p></div></div>
+      <div class="filters"><span class="filter-chip active" onclick="filterArticles('all', this)">All</span><span class="filter-chip" onclick="filterArticles('deep-thinking', this)">Deep Thinking</span><span class="filter-chip" onclick="filterArticles('workflow', this)">Workflows</span><span class="filter-chip" onclick="filterArticles('ai-news', this)">Industry News</span><span class="filter-chip" onclick="filterArticles('tools', this)">AI Tools</span><span class="filter-chip" onclick="filterArticles('design-systems', this)">Design Systems</span></div>
+      <div class="articles-list">
+        <a class="article-card" href="https://support.claude.com/en/articles/12138966-release-notes" target="_blank" data-tags="ai-news tools"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-ai-news">Industry News</span><span class="article-tag tag-tools">AI Tools</span></div><h3 class="article-card-title">Claude Opus 4.7 — Enhanced Coding & Vision</h3><p class="article-card-desc">Major model upgrade with improved software engineering and higher-resolution image processing at 2,576px. For designers using Claude with Figma MCP, this means more accurate code generation from visual references — Claude can now parse complex layouts, nested components, and subtle spacing differences from a single screenshot with significantly higher fidelity.</p><div class="article-card-meta"><span>Anthropic</span><span>Apr 16</span></div></div></a>
+        <a class="article-card" href="https://bradfrost.com/blog/post/agentic-design-systems-in-2026/" target="_blank" data-tags="deep-thinking design-systems"><div class="article-card-image"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div></div><div class="article-card-body"><div class="article-card-tags"><span class="article-tag tag-deep-thinking">Deep Thinking</span><span class="article-tag tag-design-systems">Design Systems</span></div><h3 class="article-card-title">Agentic Design Systems in 2026</h3><p class="article-card-desc">Design systems must adapt into machine-readable infrastructures for AI agents that assemble user interfaces autonomously. The next generation of design systems won't just serve human developers — they'll serve AI agents that compose, test, and ship UI independently. Token naming, component APIs, and documentation all need to be optimized for machine consumption. A blueprint for future-proofing your design system.</p><div class="article-card-meta"><span>Brad Frost</span><span>Apr 15</span></div></div></a>
       </div>
     </div>
 
-    <!-- Community & Newsletters -->
-    <div class="source-group">
-      <div class="source-name">Community &amp; Newsletters</div>
-      <div class="link-row">
-
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://newsletter.uxdesign.cc/p/the-beginning-of-a-fantastic-voyage" target="_blank">The beginning of a fantastic voyage?</a> <span class="link-tag">UX Collective · May 11</span></div>
-            <div class="link-desc">Fabricio Teixeira's latest curated edition exploring the transformative potential (and hype) of AI-driven design tools — a pulse-check on how the broader UX community is feeling.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://newsletter.uxdesign.cc/p/the-beginning-of-a-fantastic-voyage" data-domain="uxdesign.cc"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-b"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://newsletter.uxdesign.cc/p/collected-consciousness" target="_blank">Collected consciousness</a> <span class="link-tag">UX Collective · May 4</span></div>
-            <div class="link-desc">Examines what AI-generated content consistently misses — emotional resonance and real context — and why human connection in design communication remains irreplaceable.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://newsletter.uxdesign.cc/p/collected-consciousness" data-domain="uxdesign.cc"><img alt="" loading="lazy" /></div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION C -->
-  <section class="section" id="section-c">
-    <div class="section-header">
-      <span class="section-badge badge-c">C</span>
-      <h2 class="section-title">Deeper Thinking & Case Studies</h2>
-    </div>
-    <p class="section-subtitle">Strategic reads worth sharing with your team</p>
-
-    <!-- NN/g -->
-    <div class="source-group">
-      <div class="source-name">Nielsen Norman Group</div>
-      <div class="card">
-        <a href="https://www.nngroup.com/articles/" target="_blank">
-          <div class="card-image" data-section="c" data-label="Nielsen Norman Group">
-            <img src="https://image.thum.io/get/width/1200/crop/675/https://www.nngroup.com/articles/ux-maturity-model/" alt="NNG UX Maturity" loading="lazy" />
-          </div>
-        </a>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="card-title"><a href="https://www.nngroup.com/articles/" target="_blank">UX Maturity Model — Stages & User-Driven Design</a></div>
-            <div class="card-meta">Recent</div>
-          </div>
-          <div class="card-impact">
-            NNG's updated UX maturity model covers all six stages from absent to user-driven, with accompanying posters and the second edition of the UX Careers report showing where the field is heading.
-            <br><br><strong>UX impact:</strong> A useful framework for assessing where your team sits and making the case for more user research investment — especially relevant in AI product contexts where UX maturity is uneven.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Brad Frost -->
-    <div class="source-group">
-      <div class="source-name">Brad Frost / ShopTalk Show</div>
-      <div class="link-row">
-
-        <div class="link-item">
-          <div class="link-dot link-dot-c"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://www.podchaser.com/podcasts/shoptalk-412559/episodes/713-ai-design-systems-with-bra-293758490" target="_blank">AI + Design Systems with Brad and Ian Frost</a> <span class="link-tag">ShopTalk · May 4</span></div>
-            <div class="link-desc">Brad Frost on integrating AI into design system building, maintaining quality, and framing AI as a "sophisticated linter" — not a designer.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://www.podchaser.com/podcasts/shoptalk-412559/episodes/713-ai-design-systems-with-bra-293758490" data-domain="shoptalkshow.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-c"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://bradfrost.com/blog/post/mouth-coding/" target="_blank">Mouth Coding</a> <span class="link-tag">Brad Frost · Apr 20</span></div>
-            <div class="link-desc">Frost's process of building websites through conversation — a practical framework that mirrors how designers now prompt-engineer with Claude and Figma Make.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://bradfrost.com/blog/post/mouth-coding/" data-domain="bradfrost.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Lenny's -->
-    <div class="source-group">
-      <div class="source-name">Lenny's Newsletter</div>
-      <div class="card">
-        <a href="https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-how-notions" target="_blank">
-          <div class="card-image loading" data-section="c" data-label="Lenny's Newsletter" data-url="https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-how-notions" data-accept-any="true">
-            <img alt="Lenny's Newsletter — Notion Design Team" loading="lazy" />
-            <div class="img-overlay">
-              <span class="img-overlay-title">How I AI Podcast</span>
-              <span class="img-overlay-sub">Brian Lovin · Notion Design Team</span>
-            </div>
-          </div>
-        </a>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="card-title"><a href="https://www.lennysnewsletter.com/p/this-week-on-how-i-ai-how-notions" target="_blank">How Notion's Design Team Uses Claude Code to Prototype</a></div>
-            <div class="card-meta">May 2026</div>
-          </div>
-          <div class="card-impact">
-            Brian Lovin shares how Notion's design team uses Claude Code to transform Figma designs into functional code for real-time testing and iteration.
-            <br><br><strong>UX impact:</strong> A concrete case study of a design team integrating AI into their daily prototyping workflow — with lessons on what works and what doesn't.
-          </div>
-        </div>
-      </div>
-
-      <div class="link-row">
-        <div class="link-item">
-          <div class="link-dot link-dot-c"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://www.lennysnewsletter.com/p/why-cultivating-agency-matters-more" target="_blank">Cultivating agency over skills in the AI era</a> <span class="link-tag">Max Schoening, Notion · May 2026</span></div>
-            <div class="link-desc">Agency — the drive to take initiative — matters more than specific skills as AI handles more execution. A reframe for UX career growth and team development.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://www.lennysnewsletter.com/p/why-cultivating-agency-matters-more" data-domain="lennysnewsletter.com"><img alt="" loading="lazy" /></div>
-        </div>
-
-        <div class="link-item">
-          <div class="link-dot link-dot-c"></div>
-          <div class="link-content">
-            <div class="link-title"><a href="https://www.lennysnewsletter.com/p/building-ai-product-sense-part-2" target="_blank">Building AI Product Sense, Part 2</a> <span class="link-tag">Marily Nika · May 2026</span></div>
-            <div class="link-desc">A weekly ritual framework for understanding and designing trustworthy AI products. Practical for designers moving into AI product roles who need structured evaluation methods.</div>
-          </div>
-          <div class="link-thumb loading" data-url="https://www.lennysnewsletter.com/p/building-ai-product-sense-part-2" data-domain="lennysnewsletter.com"><img alt="" loading="lazy" /></div>
-        </div>
-      </div>
-    </div>
-
-  </section>
-</main>
-
-<footer>
-  Generated by Claude Code &nbsp;·&nbsp; Every Monday at 9:00 AM &nbsp;·&nbsp; Next run: May 18, 2026
-</footer>
+  </main>
+</div>
 
 <script>
-  // Highlight active nav link on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 80) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
-  });
+  function showPage(pageId, navEl) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById('page-' + pageId).classList.add('active'); if (navEl) navEl.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); document.querySelector('.sidebar').classList.remove('open'); }
 
-  // YouTube: fall back from maxresdefault → hqdefault if missing
-  document.querySelectorAll('.card-image[data-yt-id] img').forEach(img => {
-    const id = img.closest('[data-yt-id]').dataset.ytId;
-    img.onerror = () => {
-      img.onerror = null;
-      img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-    };
-  });
+  function filterArticles(tag, chipEl) { const container = chipEl.closest('.page'); container.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active')); chipEl.classList.add('active'); container.querySelectorAll('.article-card, .article-card-grid').forEach(card => { if (tag === 'all') { card.style.display = ''; } else { card.style.display = (card.getAttribute('data-tags') || '').includes(tag) ? '' : 'none'; } }); }
 
-  // Fallback for thum.io card images — show branded gradient if screenshot fails
-  document.querySelectorAll('.card-image:not([data-yt-id]):not([data-url]) img').forEach(img => {
-    img.onerror = () => {
-      const container = img.closest('.card-image');
-      const section = container.dataset.section || 'a';
-      container.classList.add('fallback', `fallback-${section}`);
-      const label = container.dataset.label;
-      if (label) {
-        const span = document.createElement('span');
-        span.className = 'fallback-label';
-        span.textContent = label;
-        container.appendChild(span);
-      }
-    };
-  });
+  function buildArchiveNav() { const latestPage = document.getElementById('page-latest'); const latestWeekId = latestPage ? latestPage.getAttribute('data-week') : null; const archiveContainer = document.getElementById('archive-nav-items'); let archiveItems = []; document.querySelectorAll('.page[data-week]').forEach(page => { const weekId = page.getAttribute('data-week'); if (weekId === latestWeekId) return; if (page.querySelectorAll('.article-card').length === 0) return; archiveItems.push({ weekId, weekLabel: page.getAttribute('data-week-label'), weekDate: page.getAttribute('data-week-date'), weekNum: parseInt(weekId.replace('week', '')) }); }); archiveItems.sort((a, b) => b.weekNum - a.weekNum); archiveItems.slice(0, 5).forEach(item => { const navItem = document.createElement('a'); navItem.className = 'nav-item'; navItem.setAttribute('data-page', item.weekId); navItem.onclick = function() { showPage(item.weekId, this); }; navItem.innerHTML = '<span class="nav-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>' + item.weekLabel + ' <span style="color:var(--text-muted);font-size:11px;margin-left:auto;">' + item.weekDate + '</span>'; archiveContainer.appendChild(navItem); }); if (archiveItems.length > 0) { document.getElementById('archive-divider').style.display = ''; document.getElementById('archive-label').style.display = ''; } }
+  buildArchiveNav();
 
-  // Dynamic card images (microlink → branded gradient fallback)
-  document.querySelectorAll('.card-image[data-url]').forEach(async container => {
-    const url = container.dataset.url;
-    const section = container.dataset.section || 'a';
-    const label = container.dataset.label;
-    const acceptAny = container.dataset.acceptAny === 'true';
-    const img = container.querySelector('img');
+  function hideEmptyFilters() { document.querySelectorAll('.page').forEach(page => { const cards = page.querySelectorAll('.article-card, .article-card-grid'); page.querySelectorAll('.filter-chip').forEach(chip => { const match = (chip.getAttribute('onclick') || '').match(/filterArticles\('([^']+)'/); if (!match || match[1] === 'all') return; if (!Array.from(cards).some(c => (c.getAttribute('data-tags') || '').includes(match[1]))) chip.style.display = 'none'; }); }); }
+  hideEmptyFilters();
 
-    try {
-      const res = await fetch(`https://api.microlink.io?url=${encodeURIComponent(url)}`);
-      const json = await res.json();
-      const src = json?.data?.image?.url;
+  function buildAllArticlesGrid() { const grid = document.getElementById('all-articles-grid'); document.querySelectorAll('.page[data-week]').forEach(page => { const weekId = page.getAttribute('data-week'); page.querySelectorAll('.article-card').forEach(card => { const g = document.createElement('a'); g.className = 'article-card-grid'; g.href = card.href; g.target = '_blank'; g.setAttribute('data-tags', card.getAttribute('data-tags') || ''); g.setAttribute('data-week', weekId); const title = card.querySelector('.article-card-title'); const desc = card.querySelector('.article-card-desc'); const tags = card.querySelector('.article-card-tags'); const meta = card.querySelector('.article-card-meta'); g.innerHTML = '<div class="article-grid-body">' + (tags ? tags.outerHTML : '') + '<h3 class="article-card-title">' + (title ? title.textContent : '') + '</h3><p class="article-card-desc">' + (desc ? desc.textContent : '') + '</p>' + (meta ? '<div class="article-card-meta">' + meta.innerHTML + '</div>' : '') + '</div>'; grid.appendChild(g); }); }); }
 
-      if (src) {
-        if (acceptAny) {
-          // Use the image as-is (e.g. podcast episode cover)
-          img.src = src;
-          img.onload = () => container.classList.remove('loading');
-          img.onerror = () => cardFallback(container, section, label);
-        } else {
-          // Validate minimum size (reject tiny logos/avatars)
-          const test = new Image();
-          test.onload = () => {
-            if (test.naturalWidth >= 300) {
-              img.src = src;
-              img.onload = () => container.classList.remove('loading');
-              img.onerror = () => cardFallback(container, section, label);
-            } else {
-              cardFallback(container, section, label);
-            }
-          };
-          test.onerror = () => cardFallback(container, section, label);
-          test.src = src;
-        }
-      } else {
-        cardFallback(container, section, label);
-      }
-    } catch {
-      cardFallback(container, section, label);
-    }
-  });
-
-  function cardFallback(container, section, label) {
-    container.classList.remove('loading');
-    container.classList.add('fallback', `fallback-${section}`);
-    if (label) {
-      const span = document.createElement('span');
-      span.className = 'fallback-label';
-      span.textContent = label;
-      container.appendChild(span);
-    }
-  }
-
-  // Fallback for link-row thumbnails — show neutral gradient if screenshot fails
-  document.querySelectorAll('.link-thumb:not([data-url]) img').forEach(img => {
-    img.onerror = () => {
-      img.closest('.link-thumb').classList.add('fallback');
-    };
-  });
-
-  // Smart thumbnail loader: YouTube → OG image → Brand icon
-  document.querySelectorAll('.link-thumb[data-url]').forEach(async container => {
-    const url = container.dataset.url;
-    const domain = container.dataset.domain;
-    const ytId = container.dataset.ytId;
-    const img = container.querySelector('img');
-
-    // Priority 1: YouTube thumbnail (if data-yt-id is set)
-    if (ytId) {
-      img.src = `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
-      img.onload = () => container.classList.remove('loading');
-      img.onerror = () => tryMicrolink();
-      return;
-    }
-
-    // Priority 2: Microlink OG image
-    tryMicrolink();
-
-    async function tryMicrolink() {
-      try {
-        const res = await fetch(`https://api.microlink.io?url=${encodeURIComponent(url)}`);
-        const json = await res.json();
-        const src = json?.data?.image?.url;
-        if (src) {
-          // Validate it's not tiny (reject logos/avatars < 200px)
-          const test = new Image();
-          test.onload = () => {
-            if (test.naturalWidth >= 200) {
-              img.src = src;
-              img.onload = () => container.classList.remove('loading');
-              img.onerror = () => showBrandIcon();
-            } else {
-              showBrandIcon();
-            }
-          };
-          test.onerror = () => showBrandIcon();
-          test.src = src;
-        } else {
-          showBrandIcon();
-        }
-      } catch {
-        showBrandIcon();
-      }
-    }
-
-    // Priority 3: Brand icon via Clearbit Logo API
-    function showBrandIcon() {
-      if (domain) {
-        container.classList.remove('loading');
-        container.classList.add('brand-icon');
-        img.src = `https://logo.clearbit.com/${domain}?size=72`;
-        img.onerror = () => {
-          container.classList.remove('brand-icon');
-          container.classList.add('fallback');
-        };
-      } else {
-        container.classList.remove('loading');
-        container.classList.add('fallback');
-      }
-    }
-  });
+  let currentWeekFilter = 'all', currentTagFilter = 'all';
+  function filterAllArticles() { currentWeekFilter = document.getElementById('all-week-select').value; applyAllFilters(); }
+  function filterAllByTag(tag, chipEl) { currentTagFilter = tag; document.querySelectorAll('#all-filters .filter-chip').forEach(c => c.classList.remove('active')); chipEl.classList.add('active'); applyAllFilters(); }
+  function applyAllFilters() { document.querySelectorAll('#all-articles-grid .article-card-grid').forEach(card => { const wm = (currentWeekFilter === 'all') || (card.getAttribute('data-week') === currentWeekFilter); const tm = (currentTagFilter === 'all') || (card.getAttribute('data-tags') || '').includes(currentTagFilter); card.style.display = (wm && tm) ? '' : 'none'; }); }
+  buildAllArticlesGrid();
 </script>
-
 </body>
 </html>
