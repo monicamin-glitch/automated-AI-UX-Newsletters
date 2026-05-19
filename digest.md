@@ -79,6 +79,33 @@ The website uses a **two-column layout** with a sidebar and multi-page architect
 </a>
 ```
 
+### Slack Spotlight card HTML format:
+
+Slack cards use a `<div>` (not `<a>`) and store full content in data attributes for the modal:
+
+```html
+<div class="article-card article-card--slack" data-tags="slack"
+     data-slack-title="[Title]"
+     data-slack-channel="[#channel-name]"
+     data-slack-date="[Date]"
+     data-slack-content="[Full HTML summary with inline links — HTML-encoded]">
+  <div class="article-card-image" data-section="d" data-label="Slack"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div></div>
+  <div class="article-card-body">
+    <div class="article-card-tags"><span class="article-tag tag-slack">Slack Spotlight</span></div>
+    <h3 class="article-card-title">[Title]</h3>
+    <p class="article-card-desc">[Truncated preview — auto-clamped to 5 lines by CSS]</p>
+    <div class="article-card-meta"><span>[#channel-name]</span><span>[Date]</span><span class="slack-modal-hint">Click to read more</span></div>
+  </div>
+</div>
+```
+
+**Slack card rules:**
+- No author attribution — only channel name and date
+- `data-slack-content` holds the full summary as HTML (use `&lt;` `&gt;` `&amp;` `&quot;` for encoding)
+- Inline links in the content use `<a href="..." target="_blank">` tags
+- The card description (`article-card-desc`) is a short preview; the modal shows the full text
+- Clicking the card opens a modal — it does NOT navigate to an external URL
+
 ### Allowed tags (use these EXACT names):
 
 | Tag value (for `data-tags`) | Display name (for `<span>`) | CSS class |
@@ -86,6 +113,7 @@ The website uses a **two-column layout** with a sidebar and multi-page architect
 | `product` | Product & Release Updates | `tag-product` |
 | `workflows` | Practical Workflows & Examples | `tag-workflows` |
 | `thinking` | Deeper Thinking & Case Studies | `tag-thinking` |
+| `slack` | Slack Spotlight | `tag-slack` |
 
 **Important:** Each article gets exactly ONE tag. The tag display name MUST match the filter chip name exactly.
 
@@ -93,6 +121,7 @@ The website uses a **two-column layout** with a sidebar and multi-page architect
 - Product & Release Updates: `stroke="#6366f1"` (indigo)
 - Practical Workflows & Examples: `stroke="#0d9488"` (teal)
 - Deeper Thinking & Case Studies: `stroke="#7c3aed"` (purple)
+- Slack Spotlight: `stroke="#d97706"` (amber)
 
 ### Filters section format:
 
@@ -105,7 +134,7 @@ The website uses a **two-column layout** with a sidebar and multi-page architect
 </div>
 ```
 
-Note: Filters with no matching articles are automatically hidden by JavaScript — include all 3 filters in the HTML regardless.
+Note: Filters with no matching articles are automatically hidden by JavaScript — include all 4 filters in the HTML regardless.
 
 ### Hero section format for Latest Week:
 

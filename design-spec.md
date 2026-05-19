@@ -156,8 +156,23 @@ Two variants:
 | `product` | Product & Release Updates | `#dbeafe` | `#1d4ed8` |
 | `workflows` | Practical Workflows & Examples | `#ccfbf1` | `#0d9488` |
 | `thinking` | Deeper Thinking & Case Studies | `#ede9fe` | `#6d28d9` |
+| `slack` | Slack Spotlight | `#fef3c7` | `#b45309` |
 
 Tags appear as small rounded pills (6px border-radius, 3px 8px padding). Each article has exactly one tag.
+
+### Slack Spotlight Modal
+
+Slack Spotlight cards open a modal instead of navigating to an external URL:
+
+- **Trigger:** Click on any Slack Spotlight card (amber-tagged)
+- **Overlay:** Dark semi-transparent backdrop with blur (rgba(15, 23, 42, 0.6))
+- **Container:** White, rounded 16px, max-width 640px, max-height 80vh, scrollable
+- **Header:** Tag pill + channel name
+- **Content:** Title (22px, bold), date, full summary with inline links
+- **Close:** X button (top-right), click overlay, or Escape key
+- **Animation:** Fade in + slide up (0.25s ease)
+- **Mobile:** Bottom sheet style (rounded top corners, full width)
+- **No author attribution** — only channel name and date shown
 
 ### Week Picker (All Articles page)
 
@@ -289,6 +304,7 @@ Each article card has a placeholder icon colored by section:
 | Product & Release Updates | `#6366f1` (indigo) |
 | Practical Workflows & Examples | `#0d9488` (teal) |
 | Deeper Thinking & Case Studies | `#7c3aed` (purple) |
+| Slack Spotlight | `#d97706` (amber) |
 
 ---
 
