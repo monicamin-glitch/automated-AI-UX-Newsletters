@@ -28,24 +28,6 @@ These are the sources searched each week, organised by section.
 
 ---
 
-## Section D — Slack Spotlight
-*Goal: Surface useful resources and discussions shared by the team in Slack.*
-
-| Source | Channel |
-|---|---|
-| Design | #design |
-| Design Systems | #design-systems |
-| Design Language | #design-language |
-
-**Rules:**
-- No author attribution — summarize the concept, not who shared it
-- Include inline links if URLs were shared in the message
-- Content displays in a modal (no external article URL)
-- Only include items relevant to UX: tools, techniques, resources, case studies
-- Skip casual chat, scheduling, and off-topic threads
-
----
-
 ## Section C — Deeper Thinking & Case Studies
 *Goal: Strategic reads worth discussing as a team.*
 
@@ -58,3 +40,14 @@ These are the sources searched each week, organised by section.
 | Pinterest Engineering | medium.com/pinterest-engineering |
 | Airbnb Design | airbnb.design |
 | Spotify Design | spotify.design |
+
+---
+
+## Section D — Slack Spotlight
+*Goal: Surface useful resources and discussions shared by the team in Slack.*
+
+| Source | Channel |
+|---|---|
+| Design | #design |
+| Design Systems | #design-systems |
+| Design Language | #design-language |

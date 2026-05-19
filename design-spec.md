@@ -174,6 +174,13 @@ Slack Spotlight cards open a modal instead of navigating to an external URL:
 - **Mobile:** Bottom sheet style (rounded top corners, full width)
 - **No author attribution** — only channel name and date shown
 
+**Content rules:**
+- No author attribution — summarize the concept, not who shared it
+- Include inline links if URLs were shared in the message
+- Content displays in a modal (no external article URL)
+- Only include items relevant to UX: tools, techniques, resources, case studies
+- Skip casual chat, scheduling, and off-topic threads
+
 ### Week Picker (All Articles page)
 
 - Label "Week:" + dropdown select
