@@ -22,18 +22,72 @@ Search the sources in [`sources.md`](sources.md) for content published in the **
 - Include the **source name** and **date**
 - Write a **4-5 sentence UX impact description**: what changed, how it affects UX work, and why designers should care
 - Assign **exactly one tag** from the allowed tag list below
-- If no new content was found for a source this week, skip it silently
+- If no new content was found for a source this week, do not publish filler content; include the skipped source in the run summary coverage note
 
 ### When done, do these things:
 
 1. Append the digest to the Google Doc: `https://docs.google.com/document/d/1H_Sec7iPUkGR9SyGg-iHieUNwsaS2P4PKrHVZiyn650/edit`
 
-2. Update the `index.html` file following the **HTML Structure Rules** below
+2. Update the `index.html` file following the **HTML Structure Rules** and **Weekly Archive Logic** below
 
 3. Push the updated HTML to GitHub by running:
    ```
-   cd "/Users/zwang5/Claude Code Projects/automated-AI-UX-Newsletters" && git add index.html && git commit -m "Digest: Week of [Monday's date]" && git push
+   cd "/Users/ymin/claude_project/UX AI newslettler/digest" && git add index.html && git commit -m "Digest: Week of [Monday's date]" && git push
    ```
+
+---
+
+## Fetch Rules
+
+### Link priority
+Always link to the **official source URL** (e.g. `anthropic.com/news/...`, `openai.com/blog/...`, `figma.com/release-notes/`). Use third-party sites (TechCrunch, TechRadar, etc.) only to discover what was released — never as the link destination.
+
+### Search strategy
+For each source, search the official URL first (e.g. `site:openai.com/blog`). If no results, broaden to general web. Always trace back to the original announcement.
+
+For newsletter and Substack-style sources, check the RSS feed and archive page before using search snippets. For Lenny's Newsletter specifically, audit `https://www.lennysnewsletter.com/feed` and the archive for the target date range so "How I AI" episodes, community posts, and case studies are not missed.
+
+### Items per source
+Include all relevant items found per source, up to 5. Do not pick just 1 highlight — if a source published 3 relevant updates this week, include all 3.
+
+### Source coverage audit
+Before writing the digest, read every source row in `sources.md` and create a working coverage checklist for the exact week being updated. For each source row:
+- Search the exact source locations listed in `sources.md` first.
+- Search or filter the target week date range with the source name and product name.
+- Check every relevant feed/archive entry whose published date falls inside that week, not only the newest item from that source.
+- Mark the source as `included`, `no new UX-relevant update`, `access blocked`, or `needs manual review`.
+- If an item is included, use the original/official URL whenever possible.
+- If a source has no qualifying item, do not create filler content, but mention the skipped source in the run summary so the user can see coverage.
+
+Do not silently skip defined sources. The final run summary should include a compact "Source coverage" note listing included sources and sources with no relevant update.
+
+### Date bucketing
+Every article card must live in the week that matches its published date.
+
+- Confirm the card date falls inside the page hero date range before publishing.
+- Do not use a post from a different week to satisfy source coverage for the current week.
+- If an item has only a month-level date, verify the exact published day before placing it in a weekly archive. If the day cannot be verified, exclude it or mark it for manual review.
+- When backfilling archives, audit each retained week independently instead of copying the latest-week results backward or forward.
+
+### Link and summary validation
+Before publishing or preserving a fetched item, verify that the URL and card content point to the same thing.
+
+- Open or fetch every public `href` and confirm the page title, metadata, or visible page text matches the card title and summary.
+- For YouTube links, verify the video ID resolves to the expected video title. Do not keep placeholder or unrelated video IDs.
+- For Slack Spotlight cards, verify the Slack permalink opens the intended message or thread and that the card title/summary reflects the actual message.
+- Prefer exact article/help/changelog URLs over generic landing pages. Use a generic release-notes page only when the relevant entry is present on that page and there is no stable direct anchor.
+- If the page blocks automated fetch but search/browser validation confirms the page title and claims, mark it as manually validated in the run notes.
+- If a URL cannot be validated or the summary describes different content, fix the URL or summary. If neither can be made reliable, remove the card instead of leaving a misleading archive item.
+
+### Minimum content threshold
+Each section must meet this minimum. If under threshold, search harder with different queries before giving up:
+- **Section A:** At least 1 item per active source; skip a source only if truly nothing new
+- **Section B:** At least 2 YouTube videos, 3 Medium/Community articles, and 2 newsletter items
+- **Section C:** At least 2 sources represented with content
+- **Section D:** Include Slack Spotlight items only when a valid Slack export/input is available
+
+### Display rules
+Use the article card formats below. Do not reintroduce old compact link-row cards; the current site uses standard article cards, YouTube video cards, and Slack Spotlight modal cards.
 
 ---
 
@@ -46,6 +100,48 @@ The website uses a **two-column layout** with a sidebar and multi-page architect
 - Right content area with multiple "pages" switched via JavaScript
 - The `page-latest` section always shows the current week
 - Archive weeks are separate `<div class="page">` sections
+- Past weeks remain stored inside `index.html` so the website can be revisited by week
+
+### Weekly Archive Logic
+
+The website is the archive. Every digest run must preserve previous fetched news so readers can revisit older weeks from the sidebar and the "Explore All" page.
+
+For the current demo, week numbers are the May archive sequence, not calendar/ISO week numbers. Treat May 5-11, 2026 as `Week 1` / `week1`, May 12-18 as `Week 2` / `week2`, and May 19-25 as `Week 3` / `week3`. Do not reintroduce April fetched content or use calendar labels such as `Week 21` unless the user explicitly changes the demo scope.
+
+1. **Never replace history with only the newest week.**
+   - Do not delete existing `page-weekXX` archive sections.
+   - Do not remove older article cards unless the user explicitly asks for cleanup.
+   - Keep older Slack Spotlight cards and their modal data intact.
+
+2. **Detect whether this is a new week or a rerun.**
+   - If the Monday date for the new digest is the same as the current `page-latest` date range, update `page-latest` in place.
+   - If the Monday date is newer than the current `page-latest`, archive the current `page-latest` before writing the new one.
+   - If the target week already exists as `page-weekXX`, update that existing week instead of creating a duplicate.
+
+3. **Archive the old latest week before creating the new latest week.**
+   - Convert the old `page-latest` into a normal archive page.
+   - Give it a unique ID like `id="page-weekXX"`.
+   - Add `data-week="weekXX"`, `data-week-label="Week XX"`, and `data-week-date="Mon DD"`.
+   - Remove `active` from its class list.
+   - Change the hero to the archive format: label `Previously`, title `Week XX`, subtitle with the date range.
+
+4. **Create the new latest week as the only active page.**
+   - Keep `id="page-latest"` for the newest week only.
+   - Set `data-week="weekXX"`, `data-week-label="Week XX"`, and `data-week-date="Mon DD"` so the archive and Explore All picker can read the week metadata.
+   - Add `class="page active"`.
+   - Use the latest hero format: label `New This Week`, title `Week XX — ✨ Fresh Picks`, subtitle with the date range.
+   - Update the "All" filter chip count to the total number of cards in that latest week.
+
+5. **Let JavaScript rebuild navigation and all-article views.**
+   - Do not manually edit the sidebar archive links.
+   - Do not manually edit the "Explore All" week picker or grid.
+   - The existing JavaScript reads every `.page[data-week]` and generates archive navigation, week picker options, and all-article cards automatically.
+
+6. **Keep week IDs stable.**
+   - Do not renumber old weeks after they are published.
+   - If a week label/date is wrong, correct that specific page's metadata without shifting other archive IDs.
+   - For this May demo archive, keep using the sequential May week IDs (`week1`, `week2`, `week3`, etc.) instead of calendar week IDs.
+   - Use the same `weekXX` value in the page ID, `data-week`, archive nav, and week picker.
 
 ### To add a new week's articles:
 
@@ -57,7 +153,7 @@ The website uses a **two-column layout** with a sidebar and multi-page architect
 
 2. **Create new "Latest" content:**
    - Update the hero section with the new week number and date range
-   - Update the `data-week="weekXX"` attribute on the `page-latest` div
+   - Update the `data-week="weekXX"`, `data-week-label="Week XX"`, and `data-week-date="Mon DD"` attributes on the `page-latest` div
    - Add article cards in the `articles-list` div
    - Update the "All" chip count to match total article count
 
@@ -74,8 +170,8 @@ The website uses a **two-column layout** with a sidebar and multi-page architect
 ### Standard article card:
 
 ```html
-<a class="article-card" href="[URL]" target="_blank" data-tags="[tag]">
-  <div class="article-card-image" data-section="[a|b|c]" data-label="[Source Name]"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="[ICON_COLOR]" stroke-width="1.5">[SVG_PATH]</svg></div></div>
+<a class="article-card" href="[URL]" target="_blank" rel="noopener noreferrer" data-tags="[tag]">
+  <div class="article-card-image" data-section="[a|b|c|d]" data-label="[Source Name]" data-img="[optional direct image URL]"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="[ICON_COLOR]" stroke-width="1.5">[SVG_PATH]</svg></div></div>
   <div class="article-card-body">
     <div class="article-card-tags"><span class="article-tag tag-[tag]">[Tag Display Name]</span></div>
     <h3 class="article-card-title">[Title]</h3>
@@ -90,13 +186,20 @@ The website uses a **two-column layout** with a sidebar and multi-page architect
 Same as standard but with `data-yt-id` on the image div (enables thumbnail + play button):
 
 ```html
-<a class="article-card" href="https://www.youtube.com/watch?v=[VIDEO_ID]" target="_blank" data-tags="[tag]">
+<a class="article-card" href="https://www.youtube.com/watch?v=[VIDEO_ID]" target="_blank" rel="noopener noreferrer" data-tags="[tag]">
   <div class="article-card-image" data-yt-id="[VIDEO_ID]"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="[ICON_COLOR]" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
   <div class="article-card-body">
     ...same structure as standard...
   </div>
 </a>
 ```
+
+### Media requirements:
+
+- Every `.article-card-image` must include `data-section` and `data-label`.
+- Use `data-img` when you can identify a stable direct image or OG image URL during fetching.
+- If only the article URL is known, the site will show a generated branded visual quickly, then upgrade to Microlink OG image or thum.io screenshot when those services return a usable image.
+- Do not use old `.card-image` or `.link-thumb` selectors; the current site uses `.article-card-image` and generated `.article-grid-image` blocks.
 
 ### Slack Spotlight card:
 

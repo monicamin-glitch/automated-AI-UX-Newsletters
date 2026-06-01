@@ -1,81 +1,70 @@
 # Media & Image Strategy
 
-Every item on the website **must** have a corresponding image or visual. Use the following priority system:
+Every website item should render an effective visual. The current site uses `.article-card-image` on weekly cards and generates `.article-grid-image` blocks for Explore All.
 
 ---
 
-## Full cards (hero images)
+## Runtime Priority
 
-These are the large image areas on featured items (Section A highlights, Section C deep reads).
+For each card image, the JavaScript loader tries this order:
 
-| Priority | Method | When to use |
-|----------|--------|-------------|
-| 1 | **YouTube thumbnail** | If the item has a related YouTube video, use `https://img.youtube.com/vi/[VIDEO_ID]/maxresdefault.jpg` with `hqdefault.jpg` as onerror fallback |
-| 2 | **thum.io screenshot** | For blogs/articles: `https://image.thum.io/get/width/1200/crop/675/[article-url]` — takes a screenshot of the actual page |
-| 3 | **Microlink OG image** | Add `data-url="[article-url]"` — JS fetches the og:image at runtime via `api.microlink.io`. Reject images < 300px wide |
-| 4 | **Branded gradient fallback** | If all above fail: show a gradient in the section color (blue/green/purple) with a source label |
+| Priority | Method | Required attribute |
+|---|---|---|
+| 1 | Explicit direct image URL | `data-img="[image-url]"` |
+| 2 | YouTube thumbnail | `data-yt-id="[VIDEO_ID]"` |
+| 3 | Microlink OG image | parent card `href` or image `data-url` |
+| 4 | thum.io page screenshot | parent card `href` or image `data-url` |
+| 5 | Generated branded visual | `data-section` + `data-label` |
 
-**Important notes:**
-- thum.io does NOT work for Substack (returns black) — use microlink or podcast cover for those
-- For podcast episodes (e.g. Lenny's), add `data-accept-any="true"` to accept square cover art regardless of dimensions. Display with `width: 55%`, centered on a warm background, padded
-- Add `.img-overlay` with podcast name + guest name when displaying podcast covers
+The generated visual is intentional: if external image services are slow, rate-limited, or blocked, the card still shows a polished source-specific image instead of a blank or plain gradient.
 
 ---
 
-## Link-row thumbnails (88×58px)
+## Required Attributes
 
-These are small thumbnails on the right side of link-row items.
+Every image block should include:
 
-| Priority | Method | When to use |
-|----------|--------|-------------|
-| 1 | **YouTube thumbnail** | If `data-yt-id` is set, use `img.youtube.com/vi/[id]/mqdefault.jpg` |
-| 2 | **Microlink OG image** | Fetch via `api.microlink.io` — reject if < 200px wide (tiny logos/avatars) |
-| 3 | **Brand icon** | Use `https://logo.clearbit.com/[domain]?size=72` — a clean square logo centered on light gray |
-| 4 | **Gray gradient** | Neutral fallback |
-
----
-
-## HTML data attributes reference
+```html
+<div class="article-card-image"
+     data-section="a"
+     data-label="OpenAI"
+     data-img="https://optional-direct-image-url.jpg">
+```
 
 | Attribute | On | Purpose |
-|-----------|-----|---------|
-| `data-url` | `.card-image`, `.link-thumb` | URL to fetch OG image from via microlink |
-| `data-yt-id` | `.card-image`, `.link-thumb` | YouTube video ID for thumbnail |
-| `data-section` | `.card-image` | Section letter (a/b/c) for gradient fallback color |
-| `data-label` | `.card-image` | Source name shown on gradient fallback |
-| `data-domain` | `.link-thumb` | Domain for Clearbit brand icon fallback |
-| `data-accept-any` | `.card-image` | Accept any image size (for podcast covers) |
+|---|---|---|
+| `data-section` | `.article-card-image`, `.article-grid-image` | Section color: `a` product, `b` workflows, `c` thinking, `d` Slack |
+| `data-label` | `.article-card-image`, `.article-grid-image` | Source label used in fallback/generated visuals |
+| `data-img` | `.article-card-image`, `.article-grid-image` | Optional stable direct image/OG image URL |
+| `data-url` | `.article-card-image`, `.article-grid-image` | Optional URL for OG/screenshot lookup; auto-filled from card `href` |
+| `data-yt-id` | `.article-card-image`, `.article-grid-image` | YouTube thumbnail ID |
+
+Do not use old `.card-image` or `.link-thumb` selectors. They belong to the previous site structure.
 
 ---
 
-## Web search tool
+## Fetching Guidance
 
-Use `mcp__web-search__web_search` (Toolbox MCP) for all searches. Built-in WebSearch and subagent tools do not work in this environment.
-
----
-
-## CSS card types
-
-| Class | Description |
-|-------|-------------|
-| `.card-image` | Standard 16:9 hero image |
-| `.card-image.is-video` | YouTube card with play button overlay |
-| `.card-image[data-accept-any]` | Podcast/square cover — adapts frame to image |
-| `.card-image.fallback.fallback-a/b/c` | Branded gradient when no image loads |
-| `.card-image.text-card` | Title-as-image card (for articles with no usable media) |
-| `.link-thumb` | Small 88×58px thumbnail in link rows |
-| `.link-thumb.brand-icon` | Square logo centered on light background |
+- For the published/latest week, prefer checked-in local media assets under `assets/weekXX/` and wire them with `data-img`. This avoids blank cards when external image services are slow, blocked, or rate-limited.
+- Prefer official article images or stable OG images when available.
+- For YouTube, set `data-yt-id` so the loader can use YouTube thumbnails.
+- For Substack/newsletter sources, prefer `data-img` from the OG image because screenshot services often return poor results.
+- For Slack Spotlight cards, use `data-section="d"` and `data-label="Slack"`; the generated visual is acceptable unless a specific shared image is available.
+- Avoid depending on Microlink or thum.io as the only visual path. They are runtime enhancement services and can be rate-limited.
 
 ---
 
-## Website file
+## Explore All
 
-**Path:** `/Users/ymin/claude_project/UX AI newslettler/digest/index.html`
+The Explore All grid is generated from weekly `.article-card` elements. Do not manually edit grid cards. The script clones each weekly card image into `.article-grid-image`, then runs the same media loader so all views have matching visuals.
 
-The site is a single static HTML file with:
-- 3-section layout: A (Product), B (Workflows), C (Deeper Thinking)
-- Tab navigation
-- Responsive design (mobile breakpoint at 600px)
-- CSS shimmer loading animation
-- Client-side JavaScript for image loading (microlink + fallbacks)
-- YouTube thumbnail fallback chain (maxresdefault → hqdefault)
+---
+
+## Verification
+
+After updating `index.html`, run a browser check and confirm:
+
+- Latest cards with images equals latest card count.
+- Explore All grid cards with images equals Explore All card count.
+- YouTube cards show either a thumbnail or generated YouTube visual.
+- Slack cards show a generated Slack visual if no direct media exists.

@@ -13,6 +13,14 @@ These are the sources searched each week, organised by section.
 | OpenAI | openai.com/blog · help.openai.com/en/articles/6825453-chatgpt-release-notes |
 | Figma | figma.com/release-notes · figma.com/blog |
 | Google Stitch | blog.google (search: Stitch) · labs.google |
+| Cursor | cursor.com/blog · changelog.cursor.com |
+| Vercel v0 | v0.dev/blog · vercel.com/blog (search: v0) |
+| Bolt | bolt.new/blog · docs.bolt.new/changelog |
+| Framer | framer.com/updates |
+| Uizard | uizard.io/blog |
+| GitHub Copilot | github.blog (search: Copilot) |
+| Google NotebookLM | blog.google (search: NotebookLM) · notebooklm.google |
+| Google Gemini | blog.google/technology/google-deepmind · gemini.google.com |
 
 ---
 
@@ -35,7 +43,7 @@ These are the sources searched each week, organised by section.
 |---|---|
 | Nielsen Norman Group | nngroup.com/articles |
 | Brad Frost | bradfrost.com/blog |
-| Lenny's Newsletter | lennysnewsletter.com |
+| Lenny's Newsletter | lennysnewsletter.com/feed · lennysnewsletter.com/archive · search terms: "How I AI", "Claude", "Codex", "AI design", "product builders" |
 | Google Design | design.google/library |
 | Pinterest Engineering | medium.com/pinterest-engineering |
 | Airbnb Design | airbnb.design |
