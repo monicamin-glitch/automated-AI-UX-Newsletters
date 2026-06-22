@@ -37,6 +37,41 @@ Search the sources in [`sources.md`](sources.md) for content published in the **
 
 ---
 
+## Monday Auto-Refresh Logic
+
+The newsletter website is intended to refresh once per week on Monday after the previous week is complete.
+
+### Schedule
+
+- Run the digest workflow every Monday.
+- Use the user's local timezone unless another timezone is explicitly configured.
+- Recommended run window: Monday morning after sources have had time to publish weekly recaps.
+- A website refresh means: fetch sources, validate links and summaries, update `index.html`, preserve the archive, commit the changed files, and push to GitHub so the hosted site can redeploy.
+
+### Target date range
+
+- On each Monday run, generate the digest for the completed 7-day window that just ended, using the date-bucketing convention already established for the site.
+- For a normal ongoing schedule, use the previous Monday-Sunday window and publish it on the following Monday.
+- For the current May demo archive, keep the existing May week sequence and labels unless the user explicitly asks to switch to strict calendar weeks.
+- Do not include new Monday items from the next week unless the user explicitly asks for a same-day breaking update.
+- The page subtitle must show the exact covered range, e.g. `May 26 – Jun 1, 2026`.
+
+### Refresh behavior
+
+- If the target Monday date matches the current `page-latest` week, refresh that existing latest page in place.
+- If the target Monday date is newer than the current `page-latest`, archive the current latest page first, then create a new `page-latest`.
+- If the target week already exists as an archive page, update that archive page instead of creating a duplicate.
+- If no validated UX-relevant updates are found after completing the source coverage audit, do not publish filler cards. Leave the current site as-is and record the no-update result in the run summary.
+
+### Deployment requirements
+
+- Include all changed website files in the commit, not only `index.html`. This can include `assets/`, `digest.md`, `sources.md`, `media-strategy.md`, `design-spec.md`, and `update-notes.md` when they were changed.
+- The commit message should use the covered week, e.g. `Digest: Week of May 26`.
+- After pushing, confirm the hosted site URL loads and that the latest page, archive navigation, Explore All view, links, and media render correctly.
+- This markdown defines the workflow. A real unattended refresh still requires a scheduler such as Codex automation, GitHub Actions, Vercel cron, or another Monday job that runs these instructions.
+
+---
+
 ## Fetch Rules
 
 ### Link priority
@@ -275,10 +310,10 @@ For YouTube cards, use `data-yt-id="[VIDEO_ID]"` instead of `data-section`/`data
 ```html
 <div class="filters">
   <span class="filter-chip active" onclick="filterArticles('all', this)">All <span class="chip-count">[TOTAL]</span></span>
-  <span class="filter-chip" onclick="filterArticles('product', this)">Product Updates</span>
   <span class="filter-chip" onclick="filterArticles('workflows', this)">Workflows</span>
   <span class="filter-chip" onclick="filterArticles('thinking', this)">Deeper Thinking</span>
   <span class="filter-chip" onclick="filterArticles('slack', this)">Slack Spotlights</span>
+  <span class="filter-chip" onclick="filterArticles('product', this)">Product Updates</span>
 </div>
 ```
 
