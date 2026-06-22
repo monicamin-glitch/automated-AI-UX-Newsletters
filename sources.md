@@ -52,10 +52,16 @@ These are the sources searched each week, organised by section.
 ---
 
 ## Section D — Slack Spotlight
-*Goal: Surface useful resources and discussions shared by the team in Slack.*
+*Goal: Surface useful AI-related resources and discussions shared by the team in Slack.*
 
 | Source | Channel |
 |---|---|
 | Design | #design |
 | Design Systems | #design-systems |
 | Design Language | #design-language |
+| AI Design Curriculum | #ai-design-curriculum |
+| AI for UX | #ai-for-ux |
+| AI Engineering | #mp-ai-engineering |
+| UX Writing GenAI | #uxw-genai |
+| AI UXers of Fintech | #ai-uxers-of-fintech |
+| Conversational AI Traveller UX | #conversational-ai-traveller-all-ux |

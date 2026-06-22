@@ -114,12 +114,18 @@ Slack cards open a modal (no external URL):
 - **Modal:** White, rounded 16px, max 640px wide, max 80vh tall, scrollable
 - **Header:** Tag pill ("Slack Spotlights")
 - **Title:** Large bold heading
-- **Meta line:** Channel name + date (same line, spaced)
-- **Body:** Full summary with inline links
+- **Author section:** Real Slack profile name (bold) + date + initials on amber gradient (40px, rounded 8px). Author name and message are fetched from Slack using the Toolbox Slack MCP tools based on the permalink URL.
+- **Highlighted quote:** The full original Slack message. Styled as a blockquote (amber left border 3px, warm `#fffbeb` background, rounded right corners 10px, italic text). Must be the author's actual words — not rewritten. Links from the original message should be preserved as clickable `<a>` tags.
+- **Channel name:** Shown below the quote as context (e.g. "#design"), muted text
 - **Footer:** "View in Slack" button (white background, blue text, blue border). Opens permalink in new tab. Hidden if no `data-slack-link` attribute.
 - **Close:** X button (turns blue on hover), overlay click, or Escape key
 - **Mobile:** Bottom sheet style
-- **No author attribution** — only channel and date
+
+Data attributes per Slack card: `data-slack-author`, `data-slack-avatar` (optional URL), `data-slack-quote` (key excerpt).
+
+**Important:** The `data-slack-quote` must contain the **full original message** from the Slack author — not a rewritten or summarized version. Fetch the message from Slack using the Toolbox Slack MCP (`slack_slack_read_channel` or `slack_slack_read_thread` with channel_id and timestamp from the permalink). Preserve all links from the original message as clickable HTML `<a href="..." target="_blank">` tags. Use `slack_slack_read_user_profile` to get the real author name for `data-slack-author`.
+
+**AI relevance required:** Only include Slack messages that are directly about AI in the context of UX/design work — such as new AI tools or platforms, AI skills or workflows, AI-related documentation, or AI community initiatives. Do not include general design discussions (e.g. data visualization patterns, accessibility, design system components) that are not specifically about AI.
 
 ---
 

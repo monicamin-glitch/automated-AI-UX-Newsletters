@@ -211,7 +211,9 @@ Uses a `<div>` (not `<a>`) — clicking opens a modal, not a URL:
      data-slack-channel="[#channel-name]"
      data-slack-date="[Date]"
      data-slack-link="[Slack permalink URL]"
-     data-slack-content="[Full HTML summary — HTML-encoded]">
+     data-slack-author="[Real Slack profile name]"
+     data-slack-quote="[Original message — cropped to highlights if long — HTML-encoded]"
+     data-slack-content="[Rewritten summary for the card preview — HTML-encoded]">
   <div class="article-card-image" data-section="d" data-label="Slack"><div class="placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div></div>
   <div class="article-card-body">
     <div class="article-card-tags"><span class="article-tag tag-slack">Slack Spotlights</span></div>
@@ -223,11 +225,22 @@ Uses a `<div>` (not `<a>`) — clicking opens a modal, not a URL:
 ```
 
 **Slack card rules:**
-- No author attribution anywhere — only channel name and date
+
+**Content filter — AI relevance required:** Only include Slack messages that are directly related to AI and UX work. The message must be about one of:
+- A new AI-powered tool, platform, or product (e.g. AI Page Builder, AI design assistants)
+- A new AI skill, workflow, or integration for designers
+- AI-related documentation, guidelines, or best practices
+- AI community channels, events focused on AI in design
+- Updates to how the team uses AI in their work
+
+Do NOT include messages about general design patterns, non-AI tools, or topics that happen to be discussed in AI-adjacent channels but are not themselves about AI. If a message is about data visualization, design systems, or UX patterns without an AI connection, it does not qualify.
+
+**Data attributes:**
+- `data-slack-author`: Real Slack profile name — fetched via Toolbox Slack MCP (`slack_slack_read_user_profile`)
+- `data-slack-quote`: The **original Slack message** (cropped to key highlights if long). Must be the author's actual words, HTML-encoded. Fetched via `slack_slack_read_channel` or `slack_slack_read_thread` using channel_id and timestamp from the permalink URL.
+- `data-slack-content`: Rewritten summary shown on the card in the list view (auto-clamped to 5 lines by CSS)
 - `data-slack-link`: Slack permalink (`https://workspace.slack.com/archives/CHANNEL_ID/pTIMESTAMP`). If provided, the modal shows a "View in Slack" button. If unavailable, omit the attribute entirely.
-- `data-slack-content`: Full summary as HTML-encoded string (`&lt;` `&gt;` `&amp;` `&quot;`)
-- Inline links use `<a href="..." target="_blank">` tags
-- Clicking the card opens a modal — it does NOT navigate to an external URL
+- Clicking the card opens a modal showing the original message — it does NOT navigate to an external URL
 
 ---
 
