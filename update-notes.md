@@ -2,6 +2,12 @@
 
 ## 2026-06-22
 
+### Slack fetch rules
+
+- Refined `digest.md` Slack Spotlight rules so future runs include AI tool operations that materially affect UX work: cost caps, usage budgets, model-selection guidance, access/governance, approved tooling, usage dashboards, statusline/cost tracking, and setup constraints.
+- Added a thread-review rule: parent posts that look like policy, cost, or access updates can qualify when replies contain practical guidance that changes how UX teams plan, track, justify, or execute AI-assisted work.
+- Updated `sources.md` Section D goal to include operational changes, not only shared resources and discussions.
+
 ### Week 7 Slack backfill
 
 - Rechecked all Slack source channels defined in `sources.md` for Jun 16-Jun 22, 2026 after the Slack connector was refreshed.

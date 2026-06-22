@@ -267,8 +267,11 @@ Uses a `<div>` (not `<a>`) — clicking opens a modal, not a URL:
 - AI-related documentation, guidelines, or best practices
 - AI community channels, events focused on AI in design
 - Updates to how the team uses AI in their work
+- AI tool operations that materially affect UX work, such as cost caps, usage budgets, credits, model-selection guidance, access/permission changes, governance rules, security constraints, approved tooling, usage dashboards, statusline/cost tracking, or setup requirements for Claude Code, Codex, Cursor, Figma AI, MCPs, or similar tools
 
-Do NOT include messages about general design patterns, non-AI tools, or topics that happen to be discussed in AI-adjacent channels but are not themselves about AI. If a message is about data visualization, design systems, or UX patterns without an AI connection, it does not qualify.
+For Slack threads, inspect the parent message and replies before deciding. A parent post that looks like policy, access, or cost management can qualify if the thread contains practical guidance that changes how UX teams plan, track, justify, or execute AI-assisted work. Summarize the practical UX implication, not only the administrative announcement.
+
+Do NOT include messages about general design patterns, non-AI tools, or topics that happen to be discussed in AI-adjacent channels but are not themselves about AI. Pure admin FYIs, outages, or policy notes do not qualify unless they materially affect UX usage of AI tools or include a concrete workflow/action for designers.
 
 **Data attributes:**
 - `data-slack-author`: Real Slack profile name — fetched via Toolbox Slack MCP (`slack_slack_read_user_profile`)
@@ -344,8 +347,9 @@ Only include items relevant to at least one of these:
 - Prototyping and design-to-dev handoff
 - Product design strategy and career
 - AI product design (designing AI-powered experiences)
+- AI tool adoption operations that change UX practice, including cost management, access/governance, model selection, usage tracking, approved workflows, or setup constraints for AI tools used by designers, researchers, writers, or design-system teams
 
-Skip items about: finance, legal, hardware specs, unrelated industries.
+Skip items about: finance, legal, hardware specs, unrelated industries, unless the item directly changes how UX teams can use AI tools in their work.
 
 ---
 

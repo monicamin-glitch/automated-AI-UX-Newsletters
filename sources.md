@@ -52,7 +52,7 @@ These are the sources searched each week, organised by section.
 ---
 
 ## Section D — Slack Spotlight
-*Goal: Surface useful AI-related resources and discussions shared by the team in Slack.*
+*Goal: Surface useful AI-related resources, workflows, and operational changes that affect how UX teams use AI tools in Slack.*
 
 | Source | Channel |
 |---|---|
