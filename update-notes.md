@@ -2,6 +2,13 @@
 
 ## 2026-06-22
 
+### Week 7 Slack backfill
+
+- Rechecked all Slack source channels defined in `sources.md` for Jun 16-Jun 22, 2026 after the Slack connector was refreshed.
+- Added four validated AI/UX Slack Spotlight cards to Week 7: Figma comments MCP, Claude prototype collaboration models, AI fundamentals for UX prompting, and AI-assisted Android XML-to-BUI Compose migration.
+- Checked but skipped sources without a qualifying AI/UX update for this week: #design-systems, #design-language, #ai-design-curriculum, #uxw-genai, and #ai-uxers-of-fintech.
+- Kept Product Updates last by relying on the existing weekly and Explore All tab-order sorting: Workflows, Deeper Thinking, Slack Spotlights, then Product Updates.
+
 ### GitHub sync
 
 - Integrated collaborator commits `a813cab` and `fd2b111` before publishing local changes, preserving the Week 7 latest digest and Slack Spotlight modal updates.
