@@ -2,6 +2,17 @@
 
 ## 2026-06-22
 
+### Slack Spotlight modal redesign
+
+- Redesigned Slack card modals to show real author names with avatar initials instead of generic icons.
+- Added highlighted original messages as blockquotes inside the modal, preserving the author's full words.
+- Updated `design-spec.md`, `digest.md`, `sources.md`, and `index.html` to support the new modal structure.
+- Added content filtering rules so only AI-related Slack discussions qualify for Spotlight cards.
+
+### Vercel Connect card
+
+- Added a Vercel Connect card to the Week 7 Product Updates section (total cards now 15).
+
 ### Slack fetch rules
 
 - Refined `digest.md` Slack Spotlight rules so future runs include AI tool operations that materially affect UX work: cost caps, usage budgets, model-selection guidance, access/governance, approved tooling, usage dashboards, statusline/cost tracking, and setup constraints.
