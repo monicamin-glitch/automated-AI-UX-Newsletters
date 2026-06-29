@@ -1,5 +1,17 @@
 # Update Notes
 
+## 2026-06-29
+
+### Week 8 manual refresh
+
+- Refreshed the latest website week for Jun 23-Jun 29, 2026 and rebuilt Week 8 with 12 validated cards.
+- Added official source updates from Figma Config 2026, Anthropic Claude Tag / Claude release notes, OpenAI ChatGPT and Codex release notes, and Lenny's Newsletter.
+- Added validated Slack Spotlight items for AI for UX prompt training, Quest Signal beta, scheduled agents, Claude Assistant skill integration, and the Figma + Claude Config watch party.
+- Preserved collaborator updates already on GitHub, including the Week 7 Vercel Connect card and related update notes.
+- Removed the previous local Jun 18 Claude draft card from Week 8 because it fell outside the Jun 23-Jun 29 date bucket.
+- Fixed the existing Week 4 archive chip count so its filter count matches the actual number of cards.
+- OpenAI Help Center links returned 403 to command-line fetch but were manually validated via browser-accessible release notes.
+
 ## 2026-06-22
 
 ### Slack Spotlight modal redesign
