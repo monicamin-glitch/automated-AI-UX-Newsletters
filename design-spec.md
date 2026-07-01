@@ -99,12 +99,15 @@ All hero banners use the same compact format: label, title, and date range.
 - Mobile: stacks vertically (image on top, 160px tall)
 - Gap between cards: 16px
 - YouTube cards show a play button overlay (bottom-left corner, dark circle with white triangle)
+- Visible summaries use two stacked labels on every card: `What is the update:` and `Why it's valuable for UXers:`. Labels are bold primary text; explanations stay secondary text.
+- Slack Spotlight cards also include a source row below the meta line: `Source: Slack #channel` plus a `View Slack message` link when `data-slack-link` is present.
 
 ### Article Cards — Grid View (All Articles)
 
 - Auto-fill grid, min 280px columns, 20px gap
 - Vertical layout with 160px image header
 - Smaller text (title 14px, desc 12px, max 4 lines)
+- Explore All preserves the same labeled summary markup and Slack source row from the weekly card.
 
 ### Slack Spotlights Modal
 

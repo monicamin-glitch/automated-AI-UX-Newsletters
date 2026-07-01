@@ -1,5 +1,14 @@
 # Update Notes
 
+## 2026-07-01
+
+### Internal AI source merge
+
+- Merged the internal AI weekly-refresh sources into the active Slack Spotlight source category instead of keeping a separate Internal AI tab/category.
+- Added priority Slack sources, stable UX reference sources, completion gates, include/exclude signals, scoring rules, and summary-format rules to `sources.md` and `digest.md`.
+- Updated the website so all cards render with `What is the update:` and `Why it's valuable for UXers:` labels, and Slack cards show source attribution plus original-message links.
+- Updated `design-spec.md` to document the labeled card summaries and Slack source rows.
+
 ## 2026-06-29
 
 ### Week 8 manual refresh

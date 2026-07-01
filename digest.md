@@ -115,6 +115,8 @@ Before writing the digest, read every source row in `sources.md` and create a wo
 
 Do not silently skip defined sources. The final run summary should include a compact "Source coverage" note listing included sources and sources with no relevant update.
 
+For internal AI sources, apply the completion gate from `sources.md` before scoring: the item should be launched/released/available, packaged as a reusable artifact, piloted with learnings, attached to an owner or next step, or documented as a completed UX AI case. Then check for UX relevance. Do not include broad AI discussion, raw backend/platform notes, or model/version announcements unless there is a concrete UX workflow, product experience, research, prototyping, design-system, content, trust, or feasibility implication.
+
 ### Date bucketing
 Every article card must live in the week that matches its published date.
 
@@ -142,6 +144,10 @@ Each section must meet this minimum. If under threshold, search harder with diff
 
 ### Display rules
 Use the article card formats below. Do not reintroduce old compact link-row cards; the current site uses standard article cards, YouTube video cards, and Slack Spotlight modal cards.
+
+Every visible card summary should be short and split into two audience-facing labels:
+- `What is the update:` explains what changed, shipped, launched, became available, or was learned.
+- `Why it's valuable for UXers:` explains the concrete value for designers, researchers, UX writers, design technologists, design-system teams, or UX-facing product work.
 
 ---
 
@@ -229,7 +235,7 @@ For the current demo, week numbers are the May archive sequence, not calendar/IS
   <div class="article-card-body">
     <div class="article-card-tags"><span class="article-tag tag-[tag]">[Tag Display Name]</span></div>
     <h3 class="article-card-title">[Title]</h3>
-    <p class="article-card-desc">[4-5 sentence UX impact description]</p>
+    <p class="article-card-desc">Update: [what changed]. UX value: [why UXers should care].</p>
     <div class="article-card-meta"><span>[Source Name]</span><span>[Date]</span></div>
   </div>
 </a>
@@ -291,6 +297,48 @@ Uses a `<div>` (not `<a>`) — clicking opens a modal, not a URL:
 For Slack threads, inspect the parent message and replies before deciding. A parent post that looks like policy, access, or cost management can qualify if the thread contains practical guidance that changes how UX teams plan, track, justify, or execute AI-assisted work. Summarize the practical UX implication, not only the administrative announcement.
 
 Do NOT include messages about general design patterns, non-AI tools, or topics that happen to be discussed in AI-adjacent channels but are not themselves about AI. Pure admin FYIs, outages, or policy notes do not qualify unless they materially affect UX usage of AI tools or include a concrete workflow/action for designers.
+
+**Internal AI source rules:** Treat internal AI sources as a prioritized lens within Slack Spotlight, not as a separate content section. Most weekly-refresh internal sources are Slack channels, so deduplicate them against the normal Slack Spotlight scan. Do not copy full internal posts into the public newsletter. Select only the items that are completed enough and useful to UX readers, then rewrite them as concise Slack Spotlight summaries.
+
+Current internal AI sources to check are listed in `sources.md` and include China AI Workstream Bot, GenAI Engineering AI Weekly Digest, Marketplace TPCH AI Guild Weekly, AI for UX, AI Studio Updates, AI Gateway Updates, AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study.
+
+Use the internal AI lens this way:
+- Weekly refresh Slack watchlist: China AI Workstream Bot, GenAI Engineering AI Weekly Digest, Marketplace TPCH AI Guild Weekly, AI for UX, AI Studio Updates, and AI Gateway Updates.
+- Stable UX reference sources: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study.
+- If the same Slack item appears in both the general Slack scan and the internal AI watchlist, publish it once as a Slack Spotlight card with the strongest source attribution and original Slack permalink.
+
+Apply this completion gate before scoring:
+- Shipped or available: launched, released, available now, rolled out, enabled, published, recorded, or open for sign-up.
+- Reusable artifact exists: playbook, deck, recording, prompt, skill, profile, gem, MCP setup, Figma file, template, dashboard, demo, or source thread.
+- Pilot has learning: early users, adoption notes, before/after workflow impact, feedback, evaluation results, or a known limitation.
+- Clear owner or next action: team, owner, support channel, install step, workshop date, or concrete follow-up.
+- UX case completed: a real UX/research/design workflow changed after AI, especially with measurable time saved, quality improvement, or reusable practice.
+
+Include internal AI items with at least one completion signal and at least one of these UX-facing signals:
+- Design workflow impact: AI skills, agents, profiles, plugins, prompts, or setup bundles that improve critique, prototyping, design QA, research synthesis, content generation, or handoff.
+- Product experience relevance: changes that affect AI assistants, automation, recommendations, search, support, decisioning, or other user-facing AI experiences.
+- UX research value: experiments, evaluations, adoption signals, user feedback, benchmarks, failure cases, or learnings about how people use or trust AI.
+- Design-system or UI engineering relevance: component generation, accessibility checks, frontend coding agents, UI testing, BUI/design-system migration, or design-to-code workflows.
+- Responsible AI and trust: privacy, data retention, explainability, compliance, hallucination risk, safety controls, model governance, or human-review implications.
+- Hands-on opportunity: betas, demos, workshops, recordings, templates, playbooks, installable tools, or pilots UX readers can try.
+
+For Drive-based internal sources, use a stricter publishing bar than Slack discovery. Drive docs and decks can enrich a Slack card or validate a trend, but should become standalone newsletter cards only when they are a completed UX AI case study, reusable playbook/template, workshop recording/deck, or shipped workflow artifact. General policy, experimentation, procurement, or governance documents should stay in the run notes unless they include a concrete UX-facing action, artifact, or case outcome readers can reuse.
+
+Exclude or down-rank internal AI items that are backend-only, routine version/auth/dependency updates, raw model/version announcements, duplicate coverage, speculative ideas without evidence, or internal implementation details with no clear UX decision value.
+
+Score internal AI candidates from 0-10 before publishing:
+- 3 pts UX relevance
+- 2 pts actionability
+- 2 pts evidence
+- 1 pt novelty
+- 1 pt China/APAC or local team relevance
+- 1 pt clarity
+
+Publish 8-10 as a highlight-style Slack Spotlight card, 5-7 as a short Slack Spotlight card when useful, keep 3-4 for watchlist/run notes, and exclude 0-2.
+
+For generated cards from internal digest/release sources, use the source name in `data-slack-author`, the source channel in `data-slack-channel`, and the original Slack permalink in `data-slack-link` when available. Use visible titles such as `[Source name] — [UX-facing takeaway]`. In `data-slack-quote`, state that the content is curated from the internal source and list only the selected UX-relevant signals. In `data-slack-content`, lead with why UX teams should care.
+
+For Drive-based internal sources such as AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study, use them to enrich or validate a Slack Spotlight card when possible. If a Drive item itself becomes the story, render it as a standard article card only when it can be safely summarized without exposing internal-only details.
 
 **Data attributes:**
 - `data-slack-author`: Real Slack profile name — fetched via Toolbox Slack MCP (`slack_slack_read_user_profile`)
