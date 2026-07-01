@@ -10,17 +10,10 @@ These are the sources searched each week, organised by section.
 | Source | Where to look |
 |---|---|
 | Anthropic / Claude | anthropic.com/news · support.claude.com/en/articles/12138966-release-notes |
-| OpenAI | openai.com/blog · help.openai.com/en/articles/6825453-chatgpt-release-notes |
 | Figma | figma.com/release-notes · figma.com/blog |
 | Google Stitch | blog.google (search: Stitch) · labs.google |
-| Cursor | cursor.com/blog · changelog.cursor.com |
-| Vercel v0 | v0.dev/blog · vercel.com/blog (search: v0) |
+| Miro | miro.com/blog/ai · miro.com/newsroom |
 | Bolt | bolt.new/blog · docs.bolt.new/changelog |
-| Framer | framer.com/updates |
-| Uizard | uizard.io/blog |
-| GitHub Copilot | github.blog (search: Copilot) |
-| Google NotebookLM | blog.google (search: NotebookLM) · notebooklm.google |
-| Google Gemini | blog.google/technology/google-deepmind · gemini.google.com |
 
 ---
 
@@ -29,9 +22,7 @@ These are the sources searched each week, organised by section.
 
 | Source | Where to look |
 |---|---|
-| YouTube | Search: "apply Claude Code to Figma design", "UX design AI tools 2026", "AI and UX", "Figma AI workflow", "Google Stitch tutorial" |
-| X / Twitter (best effort) | @figma · @steveschoger · @darylginn · @uiuxwren · @emilkowalski_ |
-| Newsletters | sidebar.io · densediscovery.com · aidesignfeeds.com |
+| YouTube | Search: "Claude Code Figma MCP tutorial", "Figma Make design tutorial", "Figma Make AI prototype", "Google Stitch design tutorial", "Miro AI workflow tutorial" |
 | Community | newsletter.uxdesign.cc · medium.com/design-bootcamp |
 
 ---
@@ -42,12 +33,9 @@ These are the sources searched each week, organised by section.
 | Source | Where to look |
 |---|---|
 | Nielsen Norman Group | nngroup.com/articles |
-| Brad Frost | bradfrost.com/blog |
-| Lenny's Newsletter | lennysnewsletter.com/feed · lennysnewsletter.com/archive · search terms: "How I AI", "Claude", "Codex", "AI design", "product builders" |
+| Lenny's Newsletter | lennysnewsletter.com/feed · lennysnewsletter.com/archive |
 | Google Design | design.google/library |
-| Pinterest Engineering | medium.com/pinterest-engineering |
-| Airbnb Design | airbnb.design |
-| Spotify Design | spotify.design |
+| Google PAIR | pair.withgoogle.com |
 
 ---
 

@@ -4,7 +4,7 @@ Generate a weekly digest of the latest AI and design news, filtered for UX relev
 
 ## Who this is for
 
-A UX design team that wants to stay current on AI tools (Claude, OpenAI, Figma, Google Stitch) and design thinking — without spending time manually searching. The digest is written for designers, not developers: every item explains **how it impacts UX work**, not just what it is.
+A UX design team that wants to stay current on AI tools (Claude, Gemini, Figma, Google Stitch) and design thinking — without spending time manually searching. The digest is written for designers, not developers: every item explains **how it impacts UX work**, not just what it is.
 
 ## Usage
 
