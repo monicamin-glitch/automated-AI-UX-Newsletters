@@ -70,6 +70,25 @@ The newsletter website is intended to refresh once per week on Monday after the 
 - After pushing, confirm the hosted site URL loads and that the latest page, archive navigation, Explore All view, links, and media render correctly.
 - This markdown defines the workflow. A real unattended refresh still requires a scheduler such as Codex automation, GitHub Actions, Vercel cron, or another Monday job that runs these instructions.
 
+### B.Pages publishing
+
+The newsletter is also published on B.Pages for internal Booking access.
+
+- URL: `https://bpages.booking.com/048eM/ai-ux-newsletter`
+- Artifact ID: `4de2388206`
+- Name: `ai-ux-newsletter`
+- Access: `booking`
+- Package command:
+  ```
+  cd "/Users/ymin/claude_project/UX AI newslettler/digest" && zip -r /private/tmp/ux-ai-newsletter-bpages.zip index.html assets -x '*/.DS_Store'
+  ```
+- Update command:
+  ```
+  bpages upload /private/tmp/ux-ai-newsletter-bpages.zip --id 4de2388206
+  ```
+
+Use the artifact ID above for future B.Pages refreshes so the same URL stays live.
+
 ---
 
 ## Fetch Rules
