@@ -587,7 +587,9 @@
     'https://www.nngroup.com/articles/lean-design-system-teams/': 'assets/external/lean-design-system-teams.jpg',
     'https://newsletter.uxdesign.cc/p/be-like-water-rethinking-the-design': 'assets/external/be-like-water-ai-design-process.jpg',
     'https://claude.com/blog/new-in-claude-managed-agents': 'assets/external/claude-managed-agents.jpg',
-    'https://www.nngroup.com/articles/designing-ai-agents/': 'assets/external/designing-ai-agents-qwen.jpg'
+    'https://www.nngroup.com/articles/designing-ai-agents/': 'assets/external/designing-ai-agents-qwen.jpg',
+    'https://www.lennysnewsletter.com/p/essential-books-for-product-builderspart-611': 'assets/external/essential-books-product-builders-part-2.jpg',
+    'https://www.lennysnewsletter.com/p/how-top-pms-increase-their-leverage': 'assets/external/top-pms-leverage-ai.jpg'
   };
 
   function normalizePreviewUrl(url) {
@@ -656,7 +658,34 @@
   }
 
   function loadUrlImage(container, url, section, label) {
-    loadBrandImage(container, url, section, label);
+    loadMicrolink(container, url, section, label, function() {
+      const isSubstack = url.includes('substack.com') || url.includes('lennysnewsletter.com') || url.includes('newsletter.uxdesign.cc');
+      if (!isSubstack) {
+        const thumUrl = 'https://image.thum.io/get/width/600/crop/340/' + url;
+        tryImage(container, thumUrl, function() {
+          loadBrandImage(container, url, section, label);
+        });
+      } else {
+        loadBrandImage(container, url, section, label);
+      }
+    });
+  }
+
+  function loadMicrolink(container, url, section, label, onFallback) {
+    let didFallback = false;
+    const timeout = setTimeout(function() { didFallback = true; onFallback(); }, 2200);
+    fetch('https://api.microlink.io?url=' + encodeURIComponent(url))
+      .then(r => r.json())
+      .then(data => {
+        clearTimeout(timeout);
+        const imgUrl = data && data.data && data.data.image && data.data.image.url;
+        if (imgUrl && data.data.image.width > 300) {
+          tryImage(container, imgUrl, function() { if (!didFallback) onFallback(); });
+        } else if (!didFallback) {
+          onFallback();
+        }
+      })
+      .catch(() => { clearTimeout(timeout); if (!didFallback) onFallback(); });
   }
 
   function loadBrandImage(container, url, section, label) {
