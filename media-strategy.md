@@ -4,6 +4,46 @@ Every website item should render an effective visual. The current site uses `.ar
 
 ---
 
+## Media Prepare Step
+
+Run the media prepare step before publishing a weekly update:
+
+```bash
+node scripts/prepare-media.mjs --write-manifest
+```
+
+This checks every public update card in `index.html`, confirms the card resolves to a checked-in local image, and writes `assets/media-manifest.json` with the source URL, selected local media, dimensions, file size, and any quality warnings.
+
+Treat the script as a pre-publish quality gate:
+
+- **Errors must be fixed before publishing**: missing local media, broken asset paths, blocked/login screenshots, unsupported files, or cards that would rely on Microlink/thum.io/runtime fallback.
+- **Warnings should be reviewed**: unusual aspect ratio, tiny logo-like files, very small images, or large files that may push B.Pages over the upload limit.
+- **Slack Spotlight cards are intentionally excluded** from the public-card media gate because their generated internal-source visual is acceptable unless a reviewed internal image is explicitly available.
+
+The value of this step is consistency: the public website should show the same relevant, high-quality media on local preview, GitHub Pages, and B.Pages. Runtime thumbnail services can remain as backup for unknown future links, but current published cards should use local, validated media.
+
+### Media Selection Priority
+
+When adding new cards, choose media in this order:
+
+| Priority | Use | Why |
+|---|---|---|
+| 1 | Existing `assets/weekXX/` image via `data-img` | Most stable for weekly product/release cards |
+| 2 | Cached source-native image in `assets/external/` via `localPreviewImagesByUrl` | Best for articles/newsletters where the source has a useful hero or OG image |
+| 3 | Cached YouTube thumbnail | Better than runtime YouTube dependency for important workflow videos |
+| 4 | Generated branded fallback | Acceptable for internal/Slack cards or when no good source image exists |
+| 5 | Microlink/thum.io runtime fetch | Backup only; do not rely on this for published cards |
+
+### Source-Specific Rules
+
+- **Figma**: prefer Figma Blog, Config, product, or event visuals. Avoid investor-page and help-center screenshots when they produce logos, blocked pages, or generic support UI.
+- **Lenny's Newsletter, UX Collective, Substack**: cache the Substack/OG hero image locally; do not depend on runtime CDN preview fetching.
+- **Nielsen Norman Group**: cache article or video thumbnail media from the source page.
+- **YouTube**: cache the thumbnail locally for high-priority workflow cards; `data-yt-id` is acceptable only as a fallback.
+- **Slack/internal updates**: use the generated Slack/internal visual by default. Only use real internal images when reviewed for publication.
+
+---
+
 ## Runtime Priority
 
 For each card image, the JavaScript loader tries this order:
