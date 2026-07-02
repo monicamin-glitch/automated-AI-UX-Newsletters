@@ -659,23 +659,6 @@
     loadBrandImage(container, url, section, label);
   }
 
-  function loadMicrolink(container, url, section, label, onFallback) {
-    let didFallback = false;
-    const timeout = setTimeout(function() { didFallback = true; onFallback(); }, 2200);
-    fetch('https://api.microlink.io?url=' + encodeURIComponent(url))
-      .then(r => r.json())
-      .then(data => {
-        clearTimeout(timeout);
-        const imgUrl = data && data.data && data.data.image && data.data.image.url;
-        if (imgUrl && data.data.image.width > 300) {
-          tryImage(container, imgUrl, function() { if (!didFallback) onFallback(); });
-        } else if (!didFallback) {
-          onFallback();
-        }
-      })
-      .catch(() => { clearTimeout(timeout); if (!didFallback) onFallback(); });
-  }
-
   function loadBrandImage(container, url, section, label) {
     let domain = '';
     try { domain = new URL(url).hostname.replace(/^www\./, ''); } catch (e) {}
