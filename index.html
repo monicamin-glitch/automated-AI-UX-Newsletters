@@ -579,10 +579,47 @@
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSlackModal(); });
 
   // Image loading system (per media-strategy.md)
+  const localPreviewImagesByUrl = {
+    'https://blog.google/products-and-platforms/platforms/android/gemini-intelligence/': 'assets/external/gemini-intelligence-android.png',
+    'https://www.figma.com/blog/what-the-design-to-code-loop-unlocks/': 'assets/external/figma-design-to-code-loop.png',
+    'https://styles.refero.design/': 'assets/external/design-md-supply.png',
+    'https://styles.refero.design': 'assets/external/design-md-supply.png',
+    'https://www.nngroup.com/articles/lean-design-system-teams/': 'assets/external/lean-design-system-teams.png',
+    'https://newsletter.uxdesign.cc/p/be-like-water-rethinking-the-design': 'assets/external/be-like-water-ai-design-process.jpg',
+    'https://claude.com/blog/new-in-claude-managed-agents': 'assets/external/claude-managed-agents.jpg',
+    'https://www.nngroup.com/articles/designing-ai-agents/': 'assets/external/designing-ai-agents-qwen.png'
+  };
+
+  function normalizePreviewUrl(url) {
+    try {
+      const parsed = new URL(url);
+      parsed.hash = '';
+      return parsed.href;
+    } catch (e) {
+      return url || '';
+    }
+  }
+
+  function getLocalPreviewImage(url) {
+    const normalized = normalizePreviewUrl(url);
+    if (localPreviewImagesByUrl[normalized]) return localPreviewImagesByUrl[normalized];
+    const withoutSlash = normalized.replace(/\/$/, '');
+    return localPreviewImagesByUrl[withoutSlash] || '';
+  }
+
+  function resolveAssetSrc(src) {
+    if (!src || /^(https?:|data:|\/)/.test(src)) return src;
+    if (location.hostname === 'bpages.booking.com' && src.indexOf('assets/') === 0) {
+      const parts = location.pathname.split('/').filter(Boolean);
+      if (parts.length >= 2) return '/' + parts.slice(0, 2).join('/') + '/' + src;
+    }
+    return src;
+  }
+
   function loadCardImages() {
     document.querySelectorAll('.article-card-image, .article-grid-image').forEach(container => {
-      const directImg = container.getAttribute('data-img');
       const url = container.getAttribute('data-url');
+      const directImg = container.getAttribute('data-img') || getLocalPreviewImage(url);
       const ytId = container.getAttribute('data-yt-id');
       const section = container.getAttribute('data-section') || 'a';
       const label = container.getAttribute('data-label') || '';
@@ -619,17 +656,7 @@
   }
 
   function loadUrlImage(container, url, section, label) {
-    loadMicrolink(container, url, section, label, function() {
-      const isSubstack = url.includes('substack.com');
-      if (!isSubstack) {
-        const thumUrl = 'https://image.thum.io/get/width/600/crop/340/' + url;
-        tryImage(container, thumUrl, function() {
-          loadBrandImage(container, url, section, label);
-        });
-      } else {
-        loadBrandImage(container, url, section, label);
-      }
-    });
+    loadBrandImage(container, url, section, label);
   }
 
   function loadMicrolink(container, url, section, label, onFallback) {
@@ -678,7 +705,7 @@
     container.classList.remove('has-generated-image');
     container.querySelectorAll('img, .fallback-label').forEach(el => el.remove());
     container.insertBefore(img, container.firstChild);
-    img.src = src;
+    img.src = resolveAssetSrc(src);
   }
 
   function tryImage(container, src, onError, minWidth, mode) {
@@ -710,7 +737,7 @@
     if (container.classList.contains('has-image') && !container.classList.contains('has-generated-image')) return;
     if (mode === 'generated' && container.classList.contains('has-image')) return;
     const img = document.createElement('img');
-    img.src = src;
+    img.src = resolveAssetSrc(src);
     img.alt = '';
     img.loading = src.startsWith('data:image') ? 'eager' : 'lazy';
     container.classList.add('has-image');
