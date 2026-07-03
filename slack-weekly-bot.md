@@ -29,6 +29,8 @@ Use the channel ID instead of the channel name so posting stays stable if the ch
 
 ## Weekly Workflow
 
+The main newsletter website refresh runs every Monday at 10:00. Generate the Slack highlights draft only after that refresh has completed, so your manual picks come from the newly updated website. The recommended Slack draft window is Monday around 11:00.
+
 1. Prepare the website media first:
 
 ```bash
@@ -68,10 +70,10 @@ node scripts/publish-slack-weekly.mjs --dry-run drafts/slack-weekly-highlights-Y
 node scripts/publish-slack-weekly.mjs --post drafts/slack-weekly-highlights-YYYY-MM-DD.json
 ```
 
-Or schedule for Monday:
+Or schedule the approved post for later on Monday:
 
 ```bash
-node scripts/publish-slack-weekly.mjs --schedule-at 2026-07-06T09:00:00+08:00 drafts/slack-weekly-highlights-YYYY-MM-DD.json
+node scripts/publish-slack-weekly.mjs --schedule-at 2026-07-06T15:00:00+08:00 drafts/slack-weekly-highlights-YYYY-MM-DD.json
 ```
 
 The publisher refuses to post or schedule unless `approved` is `true`.

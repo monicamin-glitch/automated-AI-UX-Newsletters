@@ -49,7 +49,7 @@ if (!token) {
 if (options.scheduleAt) {
   const postAt = Math.floor(new Date(options.scheduleAt).getTime() / 1000);
   if (!Number.isFinite(postAt) || postAt <= Math.floor(Date.now() / 1000)) {
-    throw new Error('--schedule-at must be a future ISO date/time, for example 2026-07-06T09:00:00+08:00');
+    throw new Error('--schedule-at must be a future ISO date/time, for example 2026-07-06T15:00:00+08:00');
   }
   payload.post_at = postAt;
   await callSlackApi('chat.scheduleMessage', payload, token);
@@ -152,7 +152,7 @@ function printHelp() {
 Usage:
   node scripts/publish-slack-weekly.mjs --dry-run drafts/slack-weekly-highlights-YYYY-MM-DD.json
   node scripts/publish-slack-weekly.mjs --post drafts/slack-weekly-highlights-YYYY-MM-DD.json
-  node scripts/publish-slack-weekly.mjs --schedule-at 2026-07-06T09:00:00+08:00 drafts/slack-weekly-highlights-YYYY-MM-DD.json
+  node scripts/publish-slack-weekly.mjs --schedule-at 2026-07-06T15:00:00+08:00 drafts/slack-weekly-highlights-YYYY-MM-DD.json
 
 Environment:
   SLACK_BOT_TOKEN   Bot User OAuth token with chat:write
