@@ -615,8 +615,7 @@
   function resolveAssetSrc(src) {
     if (!src || /^(https?:|data:|\/)/.test(src)) return src;
     if (location.hostname === 'bpages.booking.com' && src.indexOf('assets/') === 0) {
-      const parts = location.pathname.split('/').filter(Boolean);
-      if (parts.length >= 2) return '/' + parts.slice(0, 2).join('/') + '/' + src;
+      return 'https://monicamin-glitch.github.io/automated-AI-UX-Newsletters/' + src;
     }
     return src;
   }

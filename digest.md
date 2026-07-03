@@ -78,16 +78,19 @@ The newsletter is also published on B.Pages for internal Booking access.
 - Artifact ID: `4de2388206`
 - Name: `ai-ux-newsletter`
 - Access: `booking`
-- Package command:
+- Media: B.Pages loads prepared media from the GitHub Pages asset base to avoid the B.Pages artifact size limit while keeping media consistent with the GitHub/local prepared assets.
+- Validate the latest week bucket before publishing:
   ```
-  cd "/Users/ymin/claude_project/UX AI newslettler/digest" && zip -r /private/tmp/ux-ai-newsletter-bpages.zip index.html assets -x '*/.DS_Store'
+  cd "/Users/ymin/claude_project/UX AI newslettler/digest" && node scripts/validate-week-buckets.mjs
   ```
-- Update command:
+- Push the latest `index.html` and `assets/` changes to GitHub first, then update the existing B.Pages artifact in place:
   ```
-  bpages upload /private/tmp/ux-ai-newsletter-bpages.zip --id 4de2388206
+  /Users/ymin/.bpages/bin/bpages update 4de2388206 --content "/Users/ymin/claude_project/UX AI newslettler/digest/index.html"
   ```
 
-Use the artifact ID above for future B.Pages refreshes so the same URL stays live.
+This preserves the same B.Pages URL and access settings. Use `bpages login` first if the CLI asks for SSO authentication.
+
+If a self-contained B.Pages artifact is needed later, create an optimized package first; uploading the full `assets/` folder can exceed B.Pages request-size limits.
 
 ---
 
