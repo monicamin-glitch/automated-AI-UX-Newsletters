@@ -216,6 +216,47 @@ export function buildMarkdownPreview(draft) {
   return lines.join('\n');
 }
 
+export function buildCanvasMarkdown(draft) {
+  const internal = selectedItems(draft.internal);
+  const external = selectedItems(draft.external);
+  const digestUrl = draft.publish?.digestUrl || defaultDigestUrl;
+  const weekLabel = [draft.week?.label, draft.week?.date].filter(Boolean).join(' - ');
+  const lines = [
+    `# AI x UX Weekly Highlights`,
+    '',
+    weekLabel ? `Curated highlights from the refreshed weekly digest: **${escapeCanvas(weekLabel)}**.` : 'Curated highlights from the refreshed weekly digest.',
+    '',
+    '::: {.callout}',
+    'Review the full website digest for the complete set of updates. This Canvas is intentionally short: top internal signals plus top external AI/design updates.',
+    ':::',
+    '',
+    '---',
+    '',
+    '## Top highlights',
+    '',
+    '::: {.layout}',
+    '::: {.column}',
+    '### Internal Slack updates',
+    '',
+    ...canvasItems(internal, 'internal'),
+    ':::',
+    '::: {.column}',
+    '### External AI updates',
+    '',
+    ...canvasItems(external, 'external'),
+    ':::',
+    ':::',
+    '',
+    '---',
+    '',
+    '## Full digest',
+    '',
+    `[Open the full AI x UX weekly digest](${digestUrl})`,
+  ];
+
+  return lines.join('\n');
+}
+
 function itemBlocks(items, category) {
   if (!items.length) {
     return [sectionBlock('_No items selected yet._')];
@@ -224,6 +265,21 @@ function itemBlocks(items, category) {
     const title = linkText(item.link, `${index + 1}. ${item.title}`);
     const sourceLabel = category === 'internal' ? `Source: ${item.source}` : `Source: ${item.source}`;
     return sectionBlock(`*${title}*\n${escapeSlack(item.why)}\n_${escapeSlack(sourceLabel)}_`);
+  });
+}
+
+function canvasItems(items, category) {
+  if (!items.length) return ['_No items selected._', ''];
+  return items.flatMap((item, index) => {
+    const source = category === 'internal' ? `Slack ${item.source}` : item.source;
+    return [
+      `**${index + 1}. [${escapeCanvas(item.title)}](${item.link})**`,
+      '',
+      `${escapeCanvas(item.why)}`,
+      '',
+      `_${escapeCanvas(source)}_`,
+      '',
+    ];
   });
 }
 
@@ -334,4 +390,8 @@ function escapeSlack(value) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+function escapeCanvas(value) {
+  return String(value || '').replace(/[\[\]]/g, '\\$&');
 }

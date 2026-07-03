@@ -7,6 +7,8 @@ The Slack post is intentionally shorter than the website. It is split into two c
 - **Internal Slack updates**: selected Slack Spotlight items with source channel and direct Slack permalink.
 - **External AI updates**: selected public AI/design updates with source link.
 
+For a richer output like a Slack doc/canvas, generate **Canvas-flavored Markdown** from the approved draft. A Canvas is better when you want a persistent newsletter-style page with headings, sections, columns, and richer formatting. A normal Slack message is better when you want a short announcement in the channel.
+
 ---
 
 ## One-Time Setup
@@ -77,6 +79,48 @@ node scripts/publish-slack-weekly.mjs --schedule-at 2026-07-06T15:00:00+08:00 dr
 ```
 
 The publisher refuses to post or schedule unless `approved` is `true`.
+
+---
+
+## Canvas Output
+
+The linked HITL example is a Slack Canvas. It uses Canvas-flavored Markdown, especially:
+
+```markdown
+::: {.layout}
+::: {.column}
+### Column one
+Content here
+:::
+::: {.column}
+### Column two
+Content here
+:::
+:::
+```
+
+Generate a Canvas-ready version of the approved weekly draft:
+
+```bash
+node scripts/generate-slack-weekly-canvas.mjs drafts/slack-weekly-highlights-YYYY-MM-DD.json
+```
+
+This creates:
+
+```text
+drafts/slack-weekly-highlights-YYYY-MM-DD.canvas.md
+```
+
+The generated Canvas has:
+
+- a short intro
+- a callout linking the Canvas back to the full website digest
+- a two-column layout:
+  - Internal Slack updates
+  - External AI updates
+- clickable source links for each selected item
+
+Use this when the weekly Slack output should look like a lightweight internal newsletter doc instead of a compact channel post.
 
 ---
 
