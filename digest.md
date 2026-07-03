@@ -124,6 +124,8 @@ Every article card must live in the week that matches its published date.
 - Do not use a post from a different week to satisfy source coverage for the current week.
 - If an item has only a month-level date, verify the exact published day before placing it in a weekly archive. If the day cannot be verified, exclude it or mark it for manual review.
 - When backfilling archives, audit each retained week independently instead of copying the latest-week results backward or forward.
+- Before publishing the latest week, run `node scripts/validate-week-buckets.mjs`. This checks the latest page's hero date range against static cards and backfilled card arrays so next-week items cannot slip into the current Monday-Sunday digest.
+- Use `node scripts/validate-week-buckets.mjs --all` only when intentionally auditing or cleaning historical archive pages.
 
 ### Link and summary validation
 Before publishing or preserving a fetched item, verify that the URL and card content point to the same thing.

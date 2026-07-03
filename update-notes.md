@@ -1,5 +1,14 @@
 # Update Notes
 
+## 2026-07-03
+
+### Week 8 date-bucket repair
+
+- Restored the latest Week 8 page range to Jun 23-Jun 29, 2026.
+- Removed Jun 30 and Jul 1 items from Week 8 so they can be considered for the next weekly update published on Jul 6.
+- Added `scripts/validate-week-buckets.mjs` and documented it in `digest.md` as a pre-publish guard for the latest week.
+- Verified the repaired latest week has 16 cards and no Jun 30/Jul 1 items.
+
 ## 2026-07-01
 
 ### Internal AI source merge
