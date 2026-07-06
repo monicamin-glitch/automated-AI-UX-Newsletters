@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T09:03:00.291Z",
+  "generatedAt": "2026-07-06T03:34:18.929Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,15 +15,80 @@
     ]
   },
   "summary": {
-    "cards": 50,
+    "cards": 55,
     "errors": 0,
     "warnings": 1,
     "counts": {
-      "data-img": 38,
+      "data-img": 43,
       "localPreviewImagesByUrl": 12
     }
   },
   "entries": [
+    {
+      "title": "How Top PMs Increase Their Leverage with AI",
+      "source": "Lenny's Newsletter",
+      "date": "Jun 30",
+      "url": "https://www.lennysnewsletter.com/p/how-top-pms-increase-their-leverage",
+      "mediaSource": "data-img",
+      "localImage": "assets/external/top-pms-leverage-ai.jpg",
+      "youtubeId": "",
+      "dimensions": "700x393",
+      "sizeBytes": 41428,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Sonnet 5 Review Turns Model Choice into a Repeatable AI Bench",
+      "source": "Lenny's Newsletter / How I AI",
+      "date": "Jun 30",
+      "url": "https://www.lennysnewsletter.com/p/sonnet-5-review-i-ran-64-generations",
+      "mediaSource": "data-img",
+      "localImage": "assets/week9/01-sonnet-5-review-ai-bench.jpg",
+      "youtubeId": "yJ-1LB2hF-Q",
+      "dimensions": "480x360",
+      "sizeBytes": 19613,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Crafting AI Explanations for Every Enterprise Role",
+      "source": "Nielsen Norman Group",
+      "date": "Jul 3",
+      "url": "https://www.nngroup.com/articles/crafting-ai-explanations/",
+      "mediaSource": "data-img",
+      "localImage": "assets/week9/02-ai-explanations-roles.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 99445,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Stop Reporting UX Activity and Report Business Outcomes",
+      "source": "Nielsen Norman Group",
+      "date": "Jul 3",
+      "url": "https://www.nngroup.com/articles/reporting-ux-business-outcomes/",
+      "mediaSource": "data-img",
+      "localImage": "assets/week9/03-ux-business-outcomes.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 74101,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Anthropic Introduces Claude Sonnet 5",
+      "source": "Anthropic / Claude",
+      "date": "Jun 30",
+      "url": "https://www.anthropic.com/news/claude-sonnet-5",
+      "mediaSource": "data-img",
+      "localImage": "assets/week9/04-claude-sonnet-5.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 2198,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Figma Config 2026 — Code Layers, Motion, Shaders, and AI Agents",
       "source": "Figma",

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Sonnet 5</title>
+  <desc id="desc">A warm product visual for the Claude Sonnet 5 update.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5efe7"/>
+      <stop offset="0.52" stop-color="#e9d7c4"/>
+      <stop offset="1" stop-color="#c85f3d"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff8ef" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#f4c8aa" stop-opacity="0.82"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#6d321f" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1010" cy="92" r="160" fill="#fff1d7" opacity="0.38"/>
+  <circle cx="178" cy="542" r="220" fill="#8f3f2b" opacity="0.18"/>
+  <g filter="url(#shadow)">
+    <rect x="120" y="110" width="960" height="410" rx="46" fill="url(#panel)"/>
+  </g>
+  <g transform="translate(190 160)">
+    <rect width="160" height="160" rx="36" fill="#d97745"/>
+    <path d="M80 31c34 0 57 22 57 50s-23 50-57 50-57-22-57-50 23-50 57-50Z" fill="#fff8ef" opacity="0.92"/>
+    <path d="M80 50c18 0 31 13 31 31s-13 31-31 31-31-13-31-31 13-31 31-31Z" fill="#d97745"/>
+  </g>
+  <text x="390" y="245" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="72" font-weight="800" fill="#1f1713">Claude Sonnet 5</text>
+  <text x="392" y="310" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="31" font-weight="650" fill="#6f3a25">Coding, agents, and professional work</text>
+  <g transform="translate(390 365)" fill="#1f1713" opacity="0.72" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="24" font-weight="650">
+    <text y="0">Stronger model capability for AI prototyping</text>
+    <text y="42">Better baseline for design-to-code experiments</text>
+  </g>
+</svg>

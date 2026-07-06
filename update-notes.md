@@ -1,5 +1,15 @@
 # Update Notes
 
+## 2026-07-06
+
+### Week 9 manual refresh
+
+- Manually refreshed the latest digest for Jun 30-Jul 6, 2026 after the scheduled Monday automation blocked on source-fetch network approval.
+- Added Week 9 public updates from Anthropic, Lenny's Newsletter / How I AI, and Nielsen Norman Group.
+- Added validated Slack Spotlight updates from #ai-for-ux, #dev-china, #ai-gateway-updates, and #mp-ai-engineering, including China AI Workstream Bot's weekly digest.
+- Archived the prior Week 8 latest page unchanged and kept Product Updates last.
+- Prepared local media assets for Week 9 so B.Pages can display the public-card images consistently.
+
 ## 2026-07-03
 
 ### Week 8 date-bucket repair
