@@ -1,11 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const repoRoot = path.resolve(__dirname, '..');
 export const indexPath = path.join(repoRoot, 'index.html');
 export const defaultDigestUrl = 'https://bpages.booking.com/048eM/ai-ux-newsletter';
+export const defaultMediaBaseUrl = 'https://raw.githubusercontent.com/monicamin-glitch/automated-AI-UX-Newsletters/main';
 
 export function readHtml() {
   return fs.readFileSync(indexPath, 'utf8');
@@ -27,14 +29,16 @@ export function parseLatestWeek(html) {
   };
 }
 
-export function parseCards(pageHtml) {
+export function parseCards(pageHtml, options = {}) {
+  const weekId = options.weekId || '';
+  const fullHtml = options.fullHtml || '';
   return {
-    internal: parseSlackCards(pageHtml),
-    external: parseExternalCards(pageHtml),
+    internal: parseSlackCards(pageHtml, fullHtml, weekId),
+    external: parseExternalCards(pageHtml, fullHtml, weekId),
   };
 }
 
-export function parseSlackCards(pageHtml) {
+export function parseSlackCards(pageHtml, fullHtml = '', weekId = '') {
   const cards = [];
   const pattern = /<div class="article-card article-card--slack"([\s\S]*?)<\/div><\/div><\/div>/g;
   let match;
@@ -51,16 +55,37 @@ export function parseSlackCards(pageHtml) {
       author: attrs['data-slack-author'] || '',
       date: attrs['data-slack-date'] || '',
       link: attrs['data-slack-link'] || '',
+      image: cardImageUrl(block),
       update: summary.update,
       why: summary.why,
       score: scoreCandidate({ title: attrs['data-slack-title'] || '', desc, source: attrs['data-slack-channel'] || '', internal: true }),
       selected: false,
     });
   }
+  extractBackfilledArray(fullHtml, 'backfilledSlackCards')
+    .filter(card => !weekId || card.week === weekId)
+    .forEach(card => {
+      const desc = card.desc || textContent(card.content || '');
+      const summary = splitSummary(desc);
+      cards.push({
+        id: makeId(card.title),
+        title: card.title || '',
+        category: 'internal',
+        source: card.channel || '',
+        author: card.author || '',
+        date: card.date || '',
+        link: card.link || '',
+        image: '',
+        update: summary.update,
+        why: summary.why,
+        score: scoreCandidate({ title: card.title || '', desc, source: card.channel || '', internal: true }),
+        selected: false,
+      });
+    });
   return dedupeByLink(cards);
 }
 
-export function parseExternalCards(pageHtml) {
+export function parseExternalCards(pageHtml, fullHtml = '', weekId = '') {
   const cards = [];
   const pattern = /<a class="article-card"([\s\S]*?)<\/a>/g;
   let match;
@@ -79,6 +104,7 @@ export function parseExternalCards(pageHtml) {
       source,
       date,
       link: attrs.href || '',
+      image: cardImageUrl(block) || localPreviewImageForUrl(fullHtml, attrs.href || ''),
       update: summary.update,
       why: summary.why,
       tags: attrs['data-tags'] || '',
@@ -86,6 +112,26 @@ export function parseExternalCards(pageHtml) {
       selected: false,
     });
   }
+  extractBackfilledArray(fullHtml, 'backfilledPublicCards')
+    .filter(card => !weekId || card.week === weekId)
+    .forEach(card => {
+      const desc = card.desc || '';
+      const summary = splitSummary(desc);
+      cards.push({
+        id: makeId(card.title),
+        title: card.title || '',
+        category: 'external',
+        source: card.source || '',
+        date: card.date || '',
+        link: card.link || '',
+        image: card.image || localPreviewImageForUrl(fullHtml, card.link || ''),
+        update: summary.update,
+        why: summary.why,
+        tags: card.tags || '',
+        score: scoreCandidate({ title: card.title || '', desc, source: card.source || '', internal: false }),
+        selected: false,
+      });
+    });
   return dedupeByLink(cards);
 }
 
@@ -159,6 +205,46 @@ export function buildFallbackText(draft) {
   return lines.join('\n');
 }
 
+export function buildPickerMessage(draft) {
+  return buildPickerMessageParts(draft).join('\n');
+}
+
+export function buildPickerMessageParts(draft) {
+  const digestUrl = draft.publish?.digestUrl || defaultDigestUrl;
+  const weekLabel = [draft.week?.label, draft.week?.date].filter(Boolean).join(' - ');
+  const header = [
+    '**AI x UX weekly highlights picker**',
+    weekLabel ? `Website refresh: ${weekLabel}` : 'Website refresh: latest digest',
+    '',
+    'Please pick the top highlights for the UX channel.',
+    'Reply in this format:',
+    '`Internal: 1, 3, 6`',
+    '`External: 2, 4, 5`',
+    '`Output: message` or `Output: canvas`',
+    '',
+    `Full website digest: [Open digest](${digestUrl})`,
+    '',
+  ].join('\n');
+
+  return [
+    header,
+    ['**Internal Slack updates**', ...pickerItems(draft.internal, 'Slack')].join('\n'),
+    ['**External AI updates**', ...pickerItems(draft.external, '')].join('\n'),
+  ];
+}
+
+export function buildPickerMessageChunks(draft, maxLength = 4500) {
+  const [header, internal, external] = buildPickerMessageParts(draft);
+  const chunks = [];
+  appendChunk(chunks, `${header}\n\n${internal}`, maxLength);
+  appendChunk(chunks, external, maxLength);
+  return chunks.map((chunk, index) => (
+    chunks.length > 1
+      ? `**Picker preview ${index + 1}/${chunks.length}**\n\n${chunk}`
+      : chunk
+  ));
+}
+
 export function selectedItems(items) {
   return (items || []).filter(item => item.selected);
 }
@@ -222,12 +308,11 @@ export function buildCanvasMarkdown(draft) {
   const digestUrl = draft.publish?.digestUrl || defaultDigestUrl;
   const weekLabel = [draft.week?.label, draft.week?.date].filter(Boolean).join(' - ');
   const lines = [
-    `# AI x UX Weekly Highlights`,
-    '',
-    weekLabel ? `Curated highlights from the refreshed weekly digest: **${escapeCanvas(weekLabel)}**.` : 'Curated highlights from the refreshed weekly digest.',
+    weekLabel ? `Top picks from the refreshed digest for **${escapeCanvas(weekLabel)}**.` : 'Top picks from the refreshed weekly digest.',
+    'Internal workflows to reuse; external AI shifts to watch.',
     '',
     '::: {.callout}',
-    'Review the full website digest for the complete set of updates. This Canvas is intentionally short: top internal signals plus top external AI/design updates.',
+    'Use this as a quick weekly scan: what internal teams are already doing with AI, and what external AI/design updates may change UX practice.',
     ':::',
     '',
     '---',
@@ -257,6 +342,18 @@ export function buildCanvasMarkdown(draft) {
   return lines.join('\n');
 }
 
+export function buildCanvasTitle(draft) {
+  const internal = selectedItems(draft.internal);
+  const external = selectedItems(draft.external);
+  const weekLabel = draft.week?.label || 'Weekly';
+  if (internal.length && external.length) {
+    return `SH ${weekLabel} AI x UX Highlights: what to try and watch`;
+  }
+  if (internal.length) return `SH ${weekLabel} AI x UX Highlights: internal workflows to try`;
+  if (external.length) return `SH ${weekLabel} AI x UX Highlights: AI shifts to watch`;
+  return `SH ${weekLabel} AI x UX Highlights`;
+}
+
 function itemBlocks(items, category) {
   if (!items.length) {
     return [sectionBlock('_No items selected yet._')];
@@ -272,15 +369,90 @@ function canvasItems(items, category) {
   if (!items.length) return ['_No items selected._', ''];
   return items.flatMap((item, index) => {
     const source = category === 'internal' ? `Slack ${item.source}` : item.source;
+    const mediaUrl = absoluteImageUrl(item.image || fallbackCanvasImage(item), item.mediaBaseUrl);
+    const sourceLinkLabel = category === 'internal' ? 'Open Slack message' : 'Open source';
+    const links = mediaUrl
+      ? `[${sourceLinkLabel}](${item.link}) · [Media preview](${mediaUrl})`
+      : `[${sourceLinkLabel}](${item.link})`;
     return [
-      `**${index + 1}. [${escapeCanvas(item.title)}](${item.link})**`,
+      `**${index + 1}. [${escapeCanvas(canvasItemTitle(item, category))}](${item.link})**`,
       '',
-      `${escapeCanvas(item.why)}`,
+      `**Why UXers care:** ${escapeCanvas(canvasWhyUxersCare(item))}`,
+      '',
+      links,
       '',
       `_${escapeCanvas(source)}_`,
       '',
     ];
   });
+}
+
+function canvasItemTitle(item, category) {
+  const title = String(item.title || '');
+  if (/China AI Workstream Bot/i.test(title)) return 'China AI digest: reusable agent workflow patterns';
+  if (/Agents Can Publish Results Directly to Bpages/i.test(title)) return 'agents.booking.com: publish AI outputs to B.Pages';
+  if (/AI for UX Prompt Session Recording/i.test(title)) return 'AI for UX: prompt session recording is available';
+  if (/How Top PMs Increase Their Leverage with AI/i.test(title)) return "Lenny's: AI leverage playbook for UXers";
+  if (/Figma Config 2026/i.test(title)) return 'Figma Config: design-to-build AI workspace';
+  if (/Claude Tag/i.test(title)) return 'Claude Tag: AI delegation inside Slack';
+  if (category === 'internal') return title.replace(/\b(Updates?|Adds?|Is Available)\b/gi, '').trim() || title;
+  return title;
+}
+
+function canvasWhyUxersCare(item) {
+  const title = String(item.title || '');
+  if (/China AI Workstream Bot/i.test(title)) return 'UX technologists can reuse proven internal AI workflow patterns faster.';
+  if (/Agents Can Publish Results Directly to Bpages/i.test(title)) return 'UX teams can turn recurring research or prototype summaries into shareable pages.';
+  if (/AI for UX Prompt Session Recording/i.test(title)) return 'Designers, writers, and researchers get a shared prompting baseline.';
+  if (/How Top PMs Increase Their Leverage with AI/i.test(title)) return 'It helps UXers shift toward AI-builder habits: framing, delegation, and judgment.';
+  if (/Figma Config 2026/i.test(title)) return 'Design and build work is moving into one AI-assisted canvas.';
+  return firstSentence(item.why);
+}
+
+function fallbackCanvasImage(item) {
+  const title = String(item.title || '');
+  if (/How Top PMs Increase Their Leverage with AI/i.test(title)) return 'assets/external/top-pms-leverage-ai.jpg';
+  if (/Figma Config 2026/i.test(title)) return 'assets/week8/00-figma-config-2026-code-layers-motion.png';
+  return '';
+}
+
+function firstSentence(value) {
+  const sentence = splitSentences(String(value || ''))[0] || String(value || '');
+  return sentence.replace(/\s+/g, ' ').trim();
+}
+
+function pickerItems(items, sourcePrefix) {
+  if (!items?.length) return ['_No candidates found._'];
+  return items.flatMap((item, index) => {
+    const source = [sourcePrefix, item.source].filter(Boolean).join(' ');
+    const recommended = item.recommended ? ' Recommended' : '';
+    return [
+      `${index + 1}. [${item.title}](${item.link})${recommended}`,
+      `   Why UXers care: ${item.why}`,
+      `   Source: ${source || 'Unknown source'}`,
+      '',
+    ];
+  });
+}
+
+function appendChunk(chunks, text, maxLength) {
+  if (text.length <= maxLength) {
+    chunks.push(text);
+    return;
+  }
+
+  const paragraphs = text.split(/\n\n+/);
+  let current = '';
+  paragraphs.forEach(paragraph => {
+    const next = current ? `${current}\n\n${paragraph}` : paragraph;
+    if (next.length > maxLength && current) {
+      chunks.push(current);
+      current = paragraph;
+    } else {
+      current = next;
+    }
+  });
+  if (current) chunks.push(current);
 }
 
 function sectionBlock(text) {
@@ -320,6 +492,59 @@ function textContent(source) {
   return decodeHtml(String(source || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
 }
 
+function cardImageUrl(block) {
+  const attrs = parseAttrs(firstMatch(block, /<div class="article-card-image"([^>]*)>/));
+  return attrs['data-img'] || '';
+}
+
+function absoluteImageUrl(image, mediaBaseUrl = defaultMediaBaseUrl) {
+  if (!image) return '';
+  if (/^https?:\/\//i.test(image)) return image;
+  return `${mediaBaseUrl.replace(/\/$/, '')}/${String(image).replace(/^\//, '')}`;
+}
+
+function localPreviewImageForUrl(html, url) {
+  if (!html || !url) return '';
+  const images = extractObjectLiteral(html, 'localPreviewImagesByUrl');
+  return images[url] || images[normalizeUrl(url)] || '';
+}
+
+function normalizeUrl(url) {
+  try {
+    const parsed = new URL(url);
+    parsed.hash = '';
+    return parsed.href;
+  } catch {
+    return url || '';
+  }
+}
+
+function extractBackfilledArray(html, variableName) {
+  if (!html) return [];
+  const pattern = new RegExp(`const\\s+${variableName}\\s*=\\s*(\\[[\\s\\S]*?\\]);`);
+  const match = html.match(pattern);
+  if (!match) return [];
+  try {
+    const value = vm.runInNewContext(match[1], Object.freeze({}), { timeout: 1000 });
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
+
+function extractObjectLiteral(html, variableName) {
+  if (!html) return {};
+  const pattern = new RegExp(`const\\s+${variableName}\\s*=\\s*(\\{[\\s\\S]*?\\n\\s*\\});`);
+  const match = html.match(pattern);
+  if (!match) return {};
+  try {
+    const value = vm.runInNewContext(`(${match[1]})`, Object.freeze({}), { timeout: 1000 });
+    return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  } catch {
+    return {};
+  }
+}
+
 function splitSummary(desc) {
   const text = desc.trim();
   const compactMatch = text.match(/^Update:\s*(.*?)\s+(?:UX value|Why it(?:'|&#x27;)?s valuable for UXers|Why it is valuable for UXers):\s*(.*)$/i);
@@ -346,7 +571,8 @@ function scoreCandidate({ title, desc, source, internal }) {
     'launch', 'launched', 'available', 'recording', 'materials', 'template',
     'workflow', 'prototype', 'research', 'figma', 'claude', 'agent', 'agents',
     'evaluation', 'accessibility', 'governance', 'cost', 'prompt', 'mcp',
-    'bpages', 'multilingual', 'design system', 'ux'
+    'bpages', 'multilingual', 'design system', 'ux', 'ai builder', 'builder',
+    'product work', 'pm', 'pms', 'leverage', 'practice model', 'judgment'
   ].forEach(term => {
     if (text.includes(term)) score += 1;
   });

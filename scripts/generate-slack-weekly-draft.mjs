@@ -11,11 +11,15 @@ import {
   writeJson,
   writeMarkdownPreview,
 } from './slack-weekly-lib.mjs';
+import { assertRefreshReady } from './weekly-refresh-status.mjs';
 
 const options = parseArgs(process.argv.slice(2));
+if (!options.skipRefreshGuard) {
+  assertRefreshReady();
+}
 const html = readHtml();
 const week = parseLatestWeek(html);
-const cards = parseCards(week.html);
+const cards = parseCards(week.html, { fullHtml: html, weekId: week.id });
 
 const internal = pickCandidates(cards.internal, options.candidates, options.internalCount);
 const external = pickCandidates(cards.external, options.candidates, options.externalCount);
@@ -43,8 +47,9 @@ const draft = {
     date: week.date,
   },
   publish: {
-    target: 'internal UX Slack channel',
-    channelId: process.env.SLACK_CHANNEL_ID || '',
+    target: '#china-ux-group-internal',
+    channelId: process.env.SLACK_CHANNEL_ID || 'C03NSF0EGFQ',
+    output: 'canvas',
     digestUrl: options.digestUrl,
     maxInternal: options.internalCount,
     maxExternal: options.externalCount,
@@ -65,12 +70,13 @@ console.log(`node scripts/publish-slack-weekly.mjs --dry-run ${path.relative(rep
 
 function parseArgs(args) {
   const options = {
-    candidates: 8,
+    candidates: 50,
     internalCount: 3,
     externalCount: 3,
     digestUrl: defaultDigestUrl,
     out: '',
     date: '',
+    skipRefreshGuard: false,
   };
 
   for (let index = 0; index < args.length; index += 1) {
@@ -94,6 +100,8 @@ function parseArgs(args) {
     } else if (arg === '--date') {
       options.date = next;
       index += 1;
+    } else if (arg === '--skip-refresh-guard') {
+      options.skipRefreshGuard = true;
     } else if (arg === '--help' || arg === '-h') {
       printHelp();
       process.exit(0);
@@ -115,11 +123,12 @@ Usage:
   node scripts/generate-slack-weekly-draft.mjs [options]
 
 Options:
-  --candidates <n>       Number of candidates per category to include. Default: 8
+  --candidates <n>       Number of candidates per category to include. Default: 50
   --internal-count <n>   Recommended internal selections. Default: 3
   --external-count <n>   Recommended external selections. Default: 3
   --digest-url <url>     Full digest URL. Default: ${defaultDigestUrl}
   --date <YYYY-MM-DD>    Date used in the draft filename. Default: today
   --out <path>           Output JSON path. Default: drafts/slack-weekly-highlights-<date>.json
+  --skip-refresh-guard   Generate from local index.html even if the published refresh status is missing or failed.
 `);
 }

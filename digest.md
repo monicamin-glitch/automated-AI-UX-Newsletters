@@ -30,9 +30,9 @@ Search the sources in [`sources.md`](sources.md) for content published in the **
 
 2. Update the `index.html` file following the **HTML Structure Rules** and **Weekly Archive Logic** below
 
-3. Push the updated HTML to GitHub by running:
+3. Finalize the refresh through the guarded publish script:
    ```
-   cd "/Users/ymin/claude_project/UX AI newslettler/digest" && git add index.html && git commit -m "Digest: Week of [Monday's date]" && git push
+   cd "/Users/ymin/claude_project/UX AI newslettler/digest" && node scripts/finalize-weekly-refresh.mjs --commit --push --publish-bpages --notify
    ```
 
 ---
@@ -68,6 +68,8 @@ The newsletter website is intended to refresh once per week on Monday after the 
 - Include all changed website files in the commit, not only `index.html`. This can include `assets/`, `digest.md`, `sources.md`, `media-strategy.md`, `design-spec.md`, and `update-notes.md` when they were changed.
 - The commit message should use the covered week, e.g. `Digest: Week of May 26`.
 - After pushing, confirm the hosted site URL loads and that the latest page, archive navigation, Explore All view, links, and media render correctly.
+- End every successful refresh by running `node scripts/finalize-weekly-refresh.mjs --commit --push --publish-bpages --notify`. This script runs media/date/summary/link structure checks, commits only scoped refresh files, pushes, updates B.Pages, and writes `automation-status/weekly-refresh-status.json`.
+- If finalization fails, the status file is written with `status: "failed"` and the Slack picker must not run.
 - This markdown defines the workflow. A real unattended refresh still requires a scheduler such as Codex automation, GitHub Actions, Vercel cron, or another Monday job that runs these instructions.
 
 ### B.Pages publishing
@@ -79,11 +81,11 @@ The newsletter is also published on B.Pages for internal Booking access.
 - Name: `ai-ux-newsletter`
 - Access: `booking`
 - Media: B.Pages loads prepared media from the GitHub Pages asset base to avoid the B.Pages artifact size limit while keeping media consistent with the GitHub/local prepared assets.
-- Validate the latest week bucket before publishing:
+- The finalizer is the preferred B.Pages publish path:
   ```
-  cd "/Users/ymin/claude_project/UX AI newslettler/digest" && node scripts/validate-week-buckets.mjs
+  cd "/Users/ymin/claude_project/UX AI newslettler/digest" && node scripts/finalize-weekly-refresh.mjs --commit --push --publish-bpages --notify
   ```
-- Push the latest `index.html` and `assets/` changes to GitHub first, then update the existing B.Pages artifact in place:
+- For manual emergency publishing only, push the latest `index.html` and `assets/` changes to GitHub first, then update the existing B.Pages artifact in place:
   ```
   /Users/ymin/.bpages/bin/bpages update 4de2388206 --content "/Users/ymin/claude_project/UX AI newslettler/digest/index.html"
   ```
@@ -127,7 +129,7 @@ Every article card must live in the week that matches its published date.
 - Do not use a post from a different week to satisfy source coverage for the current week.
 - If an item has only a month-level date, verify the exact published day before placing it in a weekly archive. If the day cannot be verified, exclude it or mark it for manual review.
 - When backfilling archives, audit each retained week independently instead of copying the latest-week results backward or forward.
-- Before publishing the latest week, run `node scripts/validate-week-buckets.mjs`. This checks the latest page's hero date range against static cards and backfilled card arrays so next-week items cannot slip into the current Monday-Sunday digest.
+- Before publishing the latest week, run `node scripts/finalize-weekly-refresh.mjs` or at minimum `node scripts/validate-week-buckets.mjs`. The finalizer checks the latest page's hero date range, media manifest, summary labels, Slack source links, and whitespace/conflict markers before any publish status can be marked ready.
 - Use `node scripts/validate-week-buckets.mjs --all` only when intentionally auditing or cleaning historical archive pages.
 
 ### Link and summary validation

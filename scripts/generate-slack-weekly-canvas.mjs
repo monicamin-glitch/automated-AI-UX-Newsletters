@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   buildCanvasMarkdown,
+  buildCanvasTitle,
   repoRoot,
   validateApprovedDraft,
 } from './slack-weekly-lib.mjs';
@@ -31,7 +32,7 @@ fs.writeFileSync(outPath, `${canvasMarkdown}\n`);
 
 console.log(`Created ${path.relative(repoRoot, outPath)}`);
 console.log('\nCanvas title suggestion:');
-console.log(`AI x UX Weekly Highlights - ${[draft.week?.label, draft.week?.date].filter(Boolean).join(' ')}`);
+console.log(buildCanvasTitle(draft));
 console.log('\nCanvas markdown preview:');
 console.log('---');
 console.log(canvasMarkdown);

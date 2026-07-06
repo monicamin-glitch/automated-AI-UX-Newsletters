@@ -22,22 +22,31 @@ Invite the bot to the target internal UX channel, then keep these values outside
 
 ```bash
 export SLACK_BOT_TOKEN="xoxb-..."
-export SLACK_CHANNEL_ID="C..."
+export SLACK_CHANNEL_ID="C03NSF0EGFQ"
+export SLACK_REVIEWER_ID="U07UFBBSZ9D"
 ```
 
+The current target channel is `#china-ux-group-internal` (`C03NSF0EGFQ`).
 Use the channel ID instead of the channel name so posting stays stable if the channel is renamed.
+Use the reviewer ID for the private approval picker before the final channel share is created.
 
 ---
 
 ## Weekly Workflow
 
-The main newsletter website refresh runs every Monday at 10:00. Generate the Slack highlights draft only after that refresh has completed, so your manual picks come from the newly updated website. The recommended Slack draft window is Monday around 11:00.
+The main newsletter website refresh runs every Monday at 10:00. Generate the Slack highlights draft only after that refresh has completed and `automation-status/weekly-refresh-status.json` says `status: "published"`, so your manual picks come from the newly updated B.Pages website. The recommended Slack draft window is Monday around 11:30 to leave room for source fetching, media preparation, GitHub push, and B.Pages publishing.
 
-1. Prepare the website media first:
+For the next weekly share, use the Canvas version represented by `https://booking.enterprise.slack.com/docs/T0AMUUBC7/F0BEHNEPZT9`: two columns for Internal Slack updates and External AI updates, concise headlines, one `Why UXers care` line per item, direct Slack message links for internal items, source links/media-preview links for external items, and an `SH` title prefix.
+
+The active Codex automation for the Monday picker is `weekly-ai-ux-slack-highlights-picker`. It runs after the website refresh and sends Monica the private candidate picker. Final sharing to `#china-ux-group-internal` still requires Monica's selected item numbers and approval.
+
+1. Confirm the website refresh completed:
 
 ```bash
-node scripts/prepare-media.mjs --write-manifest
+node scripts/check-weekly-refresh-ready.mjs
 ```
+
+If this fails, do not generate a picker. Send Monica the status failure and rerun or repair the website refresh first.
 
 2. Generate the editable Slack draft:
 
@@ -52,7 +61,47 @@ drafts/slack-weekly-highlights-YYYY-MM-DD.json
 drafts/slack-weekly-highlights-YYYY-MM-DD.md
 ```
 
-3. Manually review the JSON draft:
+By default, the draft includes up to 50 candidates per category so the private picker acts as a complete weekly review list, not only a short auto-ranked shortlist. The generator reads both static website cards and cards injected from the website's backfilled source arrays.
+
+3. Send Monica a private picker message:
+
+```bash
+node scripts/generate-slack-weekly-picker.mjs --post --reviewer-id U07UFBBSZ9D drafts/slack-weekly-highlights-YYYY-MM-DD.json
+```
+
+The private picker is a simple numbered list based on all candidates fetched into the refreshed website. Monica can reply in Slack with:
+
+```text
+Internal: 1, 3, 6
+External: 2, 4, 5
+Output: message
+```
+
+Use `Output: canvas` when the final share should be a Slack Canvas instead of a compact channel message. For `#china-ux-group-internal`, Canvas is the default output format unless Monica explicitly asks for a message-only share.
+If the complete weekly picker is too long for one Slack message, the sender splits it into numbered preview parts while keeping the item numbers stable.
+
+To preview the picker locally without sending:
+
+```bash
+node scripts/generate-slack-weekly-picker.mjs --dry-run drafts/slack-weekly-highlights-YYYY-MM-DD.json
+```
+
+4. Apply Monica's picks to the draft:
+
+```bash
+node scripts/process-slack-weekly-selection.mjs --selection "Internal: 1, 3, 6 External: 2, 4, 5 Output: canvas" drafts/slack-weekly-highlights-YYYY-MM-DD.json
+```
+
+This updates:
+
+```text
+drafts/slack-weekly-highlights-YYYY-MM-DD.json
+drafts/slack-weekly-highlights-YYYY-MM-DD.md
+```
+
+For manual CLI-only selection, `scripts/apply-slack-weekly-selection.mjs` is still available, but `process-slack-weekly-selection.mjs` matches Monica's Slack reply format directly.
+
+5. If needed, manually review the JSON draft:
 
 - Keep `selected: true` only on the items you want to publish.
 - Keep up to 3 internal Slack updates.
@@ -60,13 +109,13 @@ drafts/slack-weekly-highlights-YYYY-MM-DD.md
 - Set `approved: true` only when the message is ready.
 - Optionally set `publish.channelId` if you do not want to use `SLACK_CHANNEL_ID`.
 
-4. Preview the Slack message:
+6. Preview the Slack message:
 
 ```bash
 node scripts/publish-slack-weekly.mjs --dry-run drafts/slack-weekly-highlights-YYYY-MM-DD.json
 ```
 
-5. Post immediately:
+7. Post immediately:
 
 ```bash
 node scripts/publish-slack-weekly.mjs --post drafts/slack-weekly-highlights-YYYY-MM-DD.json

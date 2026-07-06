@@ -2,6 +2,14 @@
 
 ## 2026-07-06
 
+### Automation pipeline hardening
+
+- Added `scripts/finalize-weekly-refresh.mjs` to validate media, date buckets, summary labels, Slack links, Git diff cleanliness, optional commit/push, B.Pages publishing, and refresh status writing in one final gate.
+- Added `scripts/check-weekly-refresh-ready.mjs` and wired `scripts/generate-slack-weekly-draft.mjs` to refuse picker generation unless the latest website refresh is marked `published`.
+- Added `scripts/process-slack-weekly-selection.mjs` so Monica's picker reply format can be applied directly to the weekly Slack draft.
+- Added optional Slack status notification support for refresh success/failure and ignored generated `automation-status/` files.
+- Updated `digest.md` and `slack-weekly-bot.md` so the website refresh and Slack picker automations use a gated handoff instead of two independent time-based jobs.
+
 ### Week 9 manual refresh
 
 - Manually refreshed the latest digest for Jun 30-Jul 6, 2026 after the scheduled Monday automation blocked on source-fetch network approval.
