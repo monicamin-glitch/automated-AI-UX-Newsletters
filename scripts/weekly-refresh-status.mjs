@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import {
@@ -59,6 +60,7 @@ export function buildRefreshStatus(overrides = {}) {
       updateLabels: snapshot.updateLabelCount,
       whyLabels: snapshot.whyLabelCount,
     },
+    contentFingerprint: digestFingerprint(snapshot),
     git: gitInfo(),
     bpages: {
       id: defaultBpagesId,
@@ -98,8 +100,8 @@ export function assertRefreshReady(options = {}) {
     if (status.week?.range !== snapshot.range) {
       errors.push(`Status range "${status.week?.range || '(missing)'}" does not match latest website range "${snapshot.range}".`);
     }
-    if (status.git?.head && status.git.head !== gitInfo().head) {
-      errors.push(`Status commit ${status.git.head} does not match current HEAD ${gitInfo().head}.`);
+    if (status.contentFingerprint && status.contentFingerprint !== digestFingerprint(snapshot)) {
+      errors.push('Published refresh fingerprint does not match the latest local website content.');
     }
     if (options.requireBpages !== false && !status.bpages?.updated) {
       errors.push('B.Pages update is not marked as completed.');
@@ -198,6 +200,21 @@ function firstMatch(source, pattern) {
 
 function unique(values) {
   return [...new Set(values)];
+}
+
+function digestFingerprint(snapshot) {
+  const payload = JSON.stringify({
+    week: snapshot.week.id,
+    range: snapshot.range,
+    cardCount: snapshot.cardCount,
+    internalCount: snapshot.internalCount,
+    externalCount: snapshot.externalCount,
+    slackLinkCount: snapshot.slackLinkCount,
+    updateLabelCount: snapshot.updateLabelCount,
+    whyLabelCount: snapshot.whyLabelCount,
+    html: snapshot.week.html,
+  });
+  return crypto.createHash('sha256').update(payload).digest('hex').slice(0, 16);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
