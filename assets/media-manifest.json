@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T02:54:31.055Z",
+  "generatedAt": "2026-07-13T04:05:13.858Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -17,7 +17,7 @@
   "summary": {
     "cards": 62,
     "errors": 0,
-    "warnings": 1,
+    "warnings": 3,
     "counts": {
       "data-img": 50,
       "localPreviewImagesByUrl": 12
@@ -28,12 +28,12 @@
       "title": "How Decagon Uses AI for Design System Saturation",
       "source": "Figma Blog",
       "date": "Jul 10",
-      "url": "https://www.figma.com/blog/#decagon-design-system-saturation",
+      "url": "https://www.figma.com/blog/how-decagon-uses-ai-for-design-system-saturation/",
       "mediaSource": "data-img",
-      "localImage": "assets/week10/01-figma-decagon-design-system.svg",
+      "localImage": "assets/week10/01-figma-decagon-design-system.png",
       "youtubeId": "",
       "dimensions": "1200x675",
-      "sizeBytes": 1213,
+      "sizeBytes": 487865,
       "status": "ok",
       "issues": []
     },
@@ -41,12 +41,12 @@
       "title": "Build Your Own Custom Software with AI",
       "source": "Bolt",
       "date": "Jul 9",
-      "url": "https://bolt.new/blog",
+      "url": "https://bolt.new/blog/build-custom-software-small-business-ai",
       "mediaSource": "data-img",
-      "localImage": "assets/week10/02-bolt-custom-software-ai.svg",
+      "localImage": "assets/week10/02-bolt-custom-software-ai.webp",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1257,
+      "dimensions": "900x560",
+      "sizeBytes": 35082,
       "status": "ok",
       "issues": []
     },
@@ -54,12 +54,12 @@
       "title": "Design-System Maturity: A 6-Dimension Framework",
       "source": "Nielsen Norman Group",
       "date": "Jul 10",
-      "url": "https://www.nngroup.com/articles/#design-system-maturity",
+      "url": "https://www.nngroup.com/articles/design-system-maturity/",
       "mediaSource": "data-img",
-      "localImage": "assets/week10/03-nng-design-system-maturity.svg",
+      "localImage": "assets/week10/03-nng-design-system-maturity.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1259,
+      "dimensions": "1920x1005",
+      "sizeBytes": 97509,
       "status": "ok",
       "issues": []
     },
@@ -67,12 +67,12 @@
       "title": "The 5 Qualities of Site-Specific AI Chatbots",
       "source": "Nielsen Norman Group",
       "date": "Jul 10",
-      "url": "https://www.nngroup.com/articles/#site-specific-ai-chatbots",
+      "url": "https://www.nngroup.com/articles/dimensions-of-ai-chatbots/",
       "mediaSource": "data-img",
-      "localImage": "assets/week10/04-nng-site-specific-ai-chatbots.svg",
+      "localImage": "assets/week10/04-nng-site-specific-ai-chatbots.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1300,
+      "dimensions": "1920x1005",
+      "sizeBytes": 104832,
       "status": "ok",
       "issues": []
     },
@@ -86,8 +86,10 @@
       "youtubeId": "",
       "dimensions": "1200x675",
       "sizeBytes": 1291,
-      "status": "ok",
-      "issues": []
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
     },
     {
       "title": "OpenAI Introduces ChatGPT Work and Public Sites Publishing",
@@ -99,19 +101,21 @@
       "youtubeId": "",
       "dimensions": "1200x675",
       "sizeBytes": 1460,
-      "status": "ok",
-      "issues": []
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
     },
     {
       "title": "GPT-5.6 Is Now Available in Figma Make",
       "source": "Figma Blog",
       "date": "Jul 9",
-      "url": "https://www.figma.com/blog/#gpt-5-6-figma-make",
+      "url": "https://www.figma.com/blog/gpt-5-6-is-now-available-in-figma-make/",
       "mediaSource": "data-img",
-      "localImage": "assets/week10/07-figma-make-gpt-5-6.svg",
+      "localImage": "assets/week10/07-figma-make-gpt-5-6.png",
       "youtubeId": "",
       "dimensions": "1200x675",
-      "sizeBytes": 1410,
+      "sizeBytes": 579255,
       "status": "ok",
       "issues": []
     },

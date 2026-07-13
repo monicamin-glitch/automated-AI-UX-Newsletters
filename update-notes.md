@@ -29,11 +29,14 @@
 - Verified the target week range as `Jul 7-Jul 13, 2026`, which is newer than the previous latest `Week 9` range `Jun 30-Jul 6, 2026`, so the flow archives Week 9 and creates Week 10 as the only active latest page.
 - Verified each included Slack card has a permalink, real author name, original-message quote, and public-safe summary.
 - Verified every new public card uses a checked-in local image under `assets/week10/`.
+- Media retry: compared Week 10 against Weeks 9 and 8 and found Week 10 originally used generated SVG title cards for all seven public cards, unlike prior weeks that used mostly source-native PNG/JPG media.
+- Replaced five Week 10 SVG fallback visuals with source-native checked-in media from Figma, Bolt, and NN/g, and updated their card links to exact article permalinks.
+- Added a media validator warning for generated SVG title cards so future runs distinguish acceptable local fallback media from preferred source-native public-card media.
 
 ### Known follow-ups
 
-- Figma and NN/g item links use stable source index pages (`/blog/` or `/articles/`) because the exact article permalinks were not reliably discoverable from the accessible source pages during this run.
-- Finalizer, git push, B.Pages publish, and refresh-status write are still pending until the local validation pass completes successfully.
+- Claude and OpenAI release-note cards still use generated SVG fallback media because the accessible release-note pages expose generic/support-page media rather than item-specific source-native visuals.
+- The mandatory finalizer must be rerun after this media retry so GitHub, B.Pages, and `automation-status/weekly-refresh-status.json` reflect the updated media state.
 
 ## 2026-07-06
 
