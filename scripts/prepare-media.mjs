@@ -124,6 +124,7 @@ function inspectImageFile(filePath) {
     width: dimensions.width,
     height: dimensions.height,
     suspiciousText: hasSuspiciousText(asciiHead),
+    generatedTitleCard: isGeneratedTitleCard({ filePath, format, asciiHead }),
   };
 }
 
@@ -158,6 +159,10 @@ function validateMedia({ card, mediaSource, mediaPath, local, absolutePath, file
 
   if (fileInfo.suspiciousText) {
     errors.push('Media file contains blocked/login/access-denied text.');
+  }
+
+  if (fileInfo.generatedTitleCard) {
+    warnings.push('Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards.');
   }
 
   if (fileInfo.width && fileInfo.height) {
@@ -368,6 +373,14 @@ function hasSuspiciousText(text) {
     'cloudflare',
     'captcha',
   ].some(pattern => text.includes(pattern));
+}
+
+function isGeneratedTitleCard({ filePath, format, asciiHead }) {
+  const relativePath = path.relative(repoRoot, filePath).replaceAll(path.sep, '/');
+  return format === 'svg'
+    && /^assets\/week\d+\//.test(relativePath)
+    && asciiHead.includes('<text')
+    && asciiHead.includes('font-family="arial');
 }
 
 function isKnownLowQualityPair(url, mediaPath) {
