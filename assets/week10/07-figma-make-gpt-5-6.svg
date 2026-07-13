@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#1f2937"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="982" cy="198" r="118" fill="#fda4af" fill-opacity="0.16"/>
+  <circle cx="948" cy="166" r="26" fill="#f43f5e"/>
+  <circle cx="1016" cy="166" r="26" fill="#fb7185"/>
+  <circle cx="948" cy="234" r="26" fill="#f97316"/>
+  <circle cx="1016" cy="234" r="26" fill="#facc15"/>
+  <rect x="948" y="268" width="94" height="118" rx="44" fill="#22c55e"/>
+  <text x="84" y="126" fill="#fecdd3" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">FIGMA BLOG</text>
+  <text x="84" y="236" fill="#fff1f2" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">GPT-5.6 Arrives in</text>
+  <text x="84" y="308" fill="#fff1f2" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Figma Make</text>
+  <text x="84" y="392" fill="#ffe4e6" font-family="Arial, Helvetica, sans-serif" font-size="30">Faster, stronger first drafts and iterations for prompt-based</text>
+  <text x="84" y="434" fill="#ffe4e6" font-family="Arial, Helvetica, sans-serif" font-size="30">prototyping inside Figma Make.</text>
+</svg>

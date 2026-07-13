@@ -1,5 +1,40 @@
 # Update Notes
 
+## 2026-07-13
+
+### Week 10 weekly refresh
+
+- Refreshed the latest website week to `Week 10` for `Jul 7-Jul 13, 2026` and archived the previous latest page as `Week 9` without changing older archive weeks.
+- Added 11 validated Week 10 cards with Product Updates kept last in the weekly ordering: 2 workflows, 2 deeper-thinking reads, 4 Slack Spotlights, and 3 product updates.
+- Added checked-in public media under `assets/week10/` for all new public cards so the latest week can pass the local-media gate before publishing.
+
+### Source coverage checklist
+
+- Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, Bolt.
+- Section A included: Anthropic release notes (Cowork on web/mobile + Microsoft 365 write tools), OpenAI release notes (ChatGPT Work, Sites, unified desktop app), Figma Blog (GPT-5.6 in Figma Make), Bolt Blog (custom software with AI workflow).
+- Section A skipped: Google Stitch had no fresh Jul 7-Jul 13 official update found in the configured sources; Miro AI/newsroom had no new Jul 7-Jul 13 release/update in the configured sources; Figma release notes had no new in-window release-note entry beyond blog coverage.
+- Section B checked: YouTube tutorial queries, UX Collective newsletter, Medium Design Bootcamp, Figma Blog workflow/case-study posts.
+- Section B included: Figma Blog case study on Decagon using AI for design-system saturation.
+- Section B skipped: YouTube, UX Collective, and Medium Design Bootcamp did not surface a stronger in-window UX-relevant item than the Figma case study.
+- Section C checked: Nielsen Norman Group, Lenny's Newsletter archive/feed, Google Design library, Google PAIR.
+- Section C included: NN/g's design-system maturity framework and site-specific AI chatbot qualities.
+- Section C skipped: Lenny's Newsletter had a fresh Jul 7 post, but it was workforce sentiment rather than a direct UX-relevant AI/design update; Google Design library returned no fresh library result in the configured source; PAIR surfaced no dated in-window update in the configured source.
+- Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Section D included: `#design` Claude Assistant / Dieter release, `#genai_engineering` Sourcegraph Official MCP rollout, `#ai-studio-updates` row-level PII guardrail feedback, and `#ai-design-curriculum` Session 8 videos/transcripts.
+- Section D skipped: `#dev-china` weekly digest because the strongest items duplicated direct source coverage and other Slack signals; `#ai-gateway-updates` GPT-5.6 availability because the public OpenAI/Figma coverage plus other Slack items gave a cleaner week; `#mp-ai-engineering` meetup invite because it was still pre-event; `#mp-tpch-ai-guild-weekly`, `#design-language`, and `#conversational-ai-traveller-all-ux` had no in-window messages; `#design-systems`, `#uxw-genai`, and `#ai-uxers-of-fintech` had in-window traffic but no qualifying completed UX-relevant AI update; `#ai-for-ux` had useful training and ops posts, but the selected Slack set already covered stronger reusable artifacts.
+- Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, Claude Code Case Study were treated as reference-only for this run and not published as standalone cards.
+
+### Validation notes
+
+- Verified the target week range as `Jul 7-Jul 13, 2026`, which is newer than the previous latest `Week 9` range `Jun 30-Jul 6, 2026`, so the flow archives Week 9 and creates Week 10 as the only active latest page.
+- Verified each included Slack card has a permalink, real author name, original-message quote, and public-safe summary.
+- Verified every new public card uses a checked-in local image under `assets/week10/`.
+
+### Known follow-ups
+
+- Figma and NN/g item links use stable source index pages (`/blog/` or `/articles/`) because the exact article permalinks were not reliably discoverable from the accessible source pages during this run.
+- Finalizer, git push, B.Pages publish, and refresh-status write are still pending until the local validation pass completes successfully.
+
 ## 2026-07-06
 
 ### Automation pipeline hardening

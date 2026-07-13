@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b0764"/>
+      <stop offset="100%" stop-color="#7e22ce"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="980" cy="196" r="118" fill="#d8b4fe" fill-opacity="0.14"/>
+  <path d="M932 166h96a24 24 0 0 1 24 24v62a24 24 0 0 1-24 24h-52l-34 34v-34h-10a24 24 0 0 1-24-24v-62a24 24 0 0 1 24-24z" fill="#f3e8ff" fill-opacity="0.45"/>
+  <text x="84" y="126" fill="#e9d5ff" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">NN/G</text>
+  <text x="84" y="236" fill="#faf5ff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">5 Qualities of</text>
+  <text x="84" y="308" fill="#faf5ff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Site-Specific AI Chatbots</text>
+  <text x="84" y="392" fill="#f3e8ff" font-family="Arial, Helvetica, sans-serif" font-size="30">A trust-focused checklist for proactive, transparent,</text>
+  <text x="84" y="434" fill="#f3e8ff" font-family="Arial, Helvetica, sans-serif" font-size="30">emotionally aware chatbots that hand off well.</text>
+</svg>

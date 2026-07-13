@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-06T03:34:18.929Z",
+  "generatedAt": "2026-07-13T02:54:31.055Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,15 +15,106 @@
     ]
   },
   "summary": {
-    "cards": 55,
+    "cards": 62,
     "errors": 0,
     "warnings": 1,
     "counts": {
-      "data-img": 43,
+      "data-img": 50,
       "localPreviewImagesByUrl": 12
     }
   },
   "entries": [
+    {
+      "title": "How Decagon Uses AI for Design System Saturation",
+      "source": "Figma Blog",
+      "date": "Jul 10",
+      "url": "https://www.figma.com/blog/#decagon-design-system-saturation",
+      "mediaSource": "data-img",
+      "localImage": "assets/week10/01-figma-decagon-design-system.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1213,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Build Your Own Custom Software with AI",
+      "source": "Bolt",
+      "date": "Jul 9",
+      "url": "https://bolt.new/blog",
+      "mediaSource": "data-img",
+      "localImage": "assets/week10/02-bolt-custom-software-ai.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1257,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Design-System Maturity: A 6-Dimension Framework",
+      "source": "Nielsen Norman Group",
+      "date": "Jul 10",
+      "url": "https://www.nngroup.com/articles/#design-system-maturity",
+      "mediaSource": "data-img",
+      "localImage": "assets/week10/03-nng-design-system-maturity.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1259,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "The 5 Qualities of Site-Specific AI Chatbots",
+      "source": "Nielsen Norman Group",
+      "date": "Jul 10",
+      "url": "https://www.nngroup.com/articles/#site-specific-ai-chatbots",
+      "mediaSource": "data-img",
+      "localImage": "assets/week10/04-nng-site-specific-ai-chatbots.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1300,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Claude Cowork Expands to Web and Mobile",
+      "source": "Anthropic / Claude",
+      "date": "Jul 7",
+      "url": "https://support.claude.com/en/articles/12138966-release-notes",
+      "mediaSource": "data-img",
+      "localImage": "assets/week10/05-claude-cowork-web-mobile.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1291,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "OpenAI Introduces ChatGPT Work and Public Sites Publishing",
+      "source": "OpenAI",
+      "date": "Jul 9",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "data-img",
+      "localImage": "assets/week10/06-chatgpt-work-sites.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1460,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "GPT-5.6 Is Now Available in Figma Make",
+      "source": "Figma Blog",
+      "date": "Jul 9",
+      "url": "https://www.figma.com/blog/#gpt-5-6-figma-make",
+      "mediaSource": "data-img",
+      "localImage": "assets/week10/07-figma-make-gpt-5-6.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1410,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "How Top PMs Increase Their Leverage with AI",
       "source": "Lenny's Newsletter",

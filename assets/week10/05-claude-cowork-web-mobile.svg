@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#1f2937"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="830" y="104" width="180" height="240" rx="26" fill="#bfdbfe" fill-opacity="0.18"/>
+  <rect x="900" y="172" width="150" height="250" rx="24" fill="#e0f2fe" fill-opacity="0.42"/>
+  <text x="84" y="126" fill="#bfdbfe" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">CLAUDE RELEASE NOTES</text>
+  <text x="84" y="236" fill="#eff6ff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Claude Cowork Expands</text>
+  <text x="84" y="308" fill="#eff6ff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">to Web and Mobile</text>
+  <text x="84" y="392" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="30">Remote sessions, saved files, and new Microsoft 365 write tools</text>
+  <text x="84" y="434" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="30">push Claude further into cross-device work orchestration.</text>
+</svg>

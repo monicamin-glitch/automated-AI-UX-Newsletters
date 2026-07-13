@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#172554"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="820" y="84" width="250" height="250" rx="42" fill="#93c5fd" fill-opacity="0.16"/>
+  <rect x="904" y="168" width="82" height="82" rx="18" fill="#dbeafe" fill-opacity="0.55"/>
+  <text x="84" y="126" fill="#bfdbfe" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">BOLT BLOG</text>
+  <text x="84" y="236" fill="#eff6ff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Build Custom Software</text>
+  <text x="84" y="308" fill="#eff6ff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">with AI</text>
+  <text x="84" y="392" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="30">A practical AI-builder workflow for turning domain expertise</text>
+  <text x="84" y="434" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="30">into tailored internal tools and lightweight apps.</text>
+</svg>

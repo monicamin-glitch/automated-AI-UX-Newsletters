@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <path d="M860 142h230v230H860z" fill="#c4b5fd" fill-opacity="0.14"/>
+  <path d="M910 192h130v34H910zM910 252h130v34H910zM910 312h130v34H910z" fill="#ede9fe" fill-opacity="0.48"/>
+  <text x="84" y="126" fill="#ddd6fe" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">NN/G</text>
+  <text x="84" y="236" fill="#faf5ff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Design-System Maturity</text>
+  <text x="84" y="308" fill="#faf5ff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Framework</text>
+  <text x="84" y="392" fill="#ede9fe" font-family="Arial, Helvetica, sans-serif" font-size="30">A six-dimension lens for assessing system health, alignment,</text>
+  <text x="84" y="434" fill="#ede9fe" font-family="Arial, Helvetica, sans-serif" font-size="30">adoption, governance, and readiness for AI-assisted scale.</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#065f46"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="826" y="108" width="292" height="214" rx="28" fill="#bbf7d0" fill-opacity="0.14"/>
+  <rect x="866" y="154" width="212" height="26" rx="13" fill="#ecfdf5" fill-opacity="0.55"/>
+  <rect x="866" y="210" width="212" height="26" rx="13" fill="#ecfdf5" fill-opacity="0.42"/>
+  <rect x="866" y="266" width="126" height="26" rx="13" fill="#ecfdf5" fill-opacity="0.42"/>
+  <text x="84" y="126" fill="#bbf7d0" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">OPENAI RELEASE NOTES</text>
+  <text x="84" y="236" fill="#f0fdf4" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">ChatGPT Work and</text>
+  <text x="84" y="308" fill="#f0fdf4" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Sites Land Together</text>
+  <text x="84" y="392" fill="#dcfce7" font-family="Arial, Helvetica, sans-serif" font-size="30">Long-running agent work, finished deliverables, and public</text>
+  <text x="84" y="434" fill="#dcfce7" font-family="Arial, Helvetica, sans-serif" font-size="30">site publishing converge in one ChatGPT workflow.</text>
+</svg>
