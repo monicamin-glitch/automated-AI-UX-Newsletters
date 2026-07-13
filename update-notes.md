@@ -5,7 +5,7 @@
 ### Week 10 weekly refresh
 
 - Refreshed the latest website week to `Week 10` for `Jul 7-Jul 13, 2026` and archived the previous latest page as `Week 9` without changing older archive weeks.
-- Added 13 validated Week 10 cards with Product Updates kept last in the weekly ordering: 2 workflows, 2 deeper-thinking reads, 6 Slack Spotlights, and 3 product updates.
+- Added 14 validated Week 10 cards with Product Updates kept last in the weekly ordering: 2 workflows, 3 deeper-thinking reads, 6 Slack Spotlights, and 3 product updates.
 - Added checked-in public media under `assets/week10/` for all new public cards so the latest week can pass the local-media gate before publishing.
 
 ### Source coverage checklist
@@ -17,8 +17,8 @@
 - Section B included: Figma Blog case study on Decagon using AI for design-system saturation.
 - Section B skipped: YouTube, UX Collective, and Medium Design Bootcamp did not surface a stronger in-window UX-relevant item than the Figma case study.
 - Section C checked: Nielsen Norman Group, Lenny's Newsletter archive/feed, Google Design library, Google PAIR.
-- Section C included: NN/g's design-system maturity framework and site-specific AI chatbot qualities.
-- Section C skipped: Lenny's Newsletter had a fresh Jul 7 post, but it was workforce sentiment rather than a direct UX-relevant AI/design update; Google Design library returned no fresh library result in the configured source; PAIR surfaced no dated in-window update in the configured source.
+- Section C included: NN/g's design-system maturity framework and site-specific AI chatbot qualities, plus Lenny's Newsletter's 2026 tech-worker sentiment survey as a people-and-culture signal for AI adoption in UX teams.
+- Section C skipped: Google Design library returned no fresh library result in the configured source; PAIR surfaced no dated in-window update in the configured source.
 - Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
 - Section D included: `#design` Claude Assistant / Dieter release and Figma Make prompting cheatsheet, `#genai_engineering` Sourcegraph Official MCP rollout, `#ai-studio-updates` row-level PII guardrail feedback, `#ai-design-curriculum` Session 8 videos/transcripts, and `#ai-for-ux` Session 3 model/agent landscape recording.
 - Section D skipped: `#dev-china` weekly digest because the strongest items duplicated direct source coverage and other Slack signals; `#china-ai-workstream` had deck-review and video-share traffic but no standalone completed UX update; `#ai-gateway-updates` GPT-5.6 availability because the public OpenAI/Figma coverage plus other Slack items gave a cleaner week; `#mp-ai-engineering` meetup invite because it was still pre-event and the other posts were skill-review or external-reading signals; `#mp-tpch-ai-guild-weekly`, `#design-language`, and `#conversational-ai-traveller-all-ux` had no in-window messages; `#design-systems`, `#uxw-genai`, and `#ai-uxers-of-fintech` had in-window traffic but no qualifying completed UX-relevant AI update.
@@ -29,6 +29,7 @@
 - Verified the target week range as `Jul 7-Jul 13, 2026`, which is newer than the previous latest `Week 9` range `Jun 30-Jul 6, 2026`, so the flow archives Week 9 and creates Week 10 as the only active latest page.
 - Verified each included Slack card has a permalink, real author name, original-message quote, and public-safe summary.
 - Verified every new public card uses a checked-in local image under `assets/week10/`.
+- Rechecked Lenny's Newsletter on request and added the Jul 7 workforce-sentiment survey as a Deeper Thinking card, using checked-in Substack OG media.
 - Completed a second Slack-only audit across all defined Section D channels before Slack picker handoff and added two missed reusable artifacts: the Figma Make prompting cheatsheet from `#design` and the AI for UX Session 3 recording from `#ai-for-ux`.
 - Media retry: compared Week 10 against Weeks 9 and 8 and found Week 10 originally used generated SVG title cards for all seven public cards, unlike prior weeks that used mostly source-native PNG/JPG media.
 - Replaced five Week 10 SVG fallback visuals with source-native checked-in media from Figma, Bolt, and NN/g, and updated their card links to exact article permalinks.

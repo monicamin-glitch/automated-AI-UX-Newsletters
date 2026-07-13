@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T04:20:12.315Z",
+  "generatedAt": "2026-07-13T04:39:36.889Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,11 +15,11 @@
     ]
   },
   "summary": {
-    "cards": 62,
+    "cards": 63,
     "errors": 0,
     "warnings": 3,
     "counts": {
-      "data-img": 50,
+      "data-img": 51,
       "localPreviewImagesByUrl": 12
     }
   },
@@ -73,6 +73,19 @@
       "youtubeId": "",
       "dimensions": "1920x1005",
       "sizeBytes": 104832,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "How Tech Workers Are Feeling in 2026: A Workforce Splitting in Two",
+      "source": "Lenny's Newsletter",
+      "date": "Jul 7",
+      "url": "https://www.lennysnewsletter.com/p/how-tech-workers-are-feeling-in-2026",
+      "mediaSource": "data-img",
+      "localImage": "assets/week10/08-lenny-tech-workers-ai-sentiment.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 73941,
       "status": "ok",
       "issues": []
     },
