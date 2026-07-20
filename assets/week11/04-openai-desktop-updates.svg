@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="840" y="98" width="250" height="286" rx="30" fill="#bfdbfe" fill-opacity="0.18"/>
+  <rect x="878" y="144" width="174" height="28" rx="14" fill="#eff6ff" fill-opacity="0.56"/>
+  <rect x="878" y="198" width="174" height="28" rx="14" fill="#eff6ff" fill-opacity="0.42"/>
+  <rect x="878" y="252" width="174" height="28" rx="14" fill="#eff6ff" fill-opacity="0.42"/>
+  <rect x="878" y="306" width="110" height="28" rx="14" fill="#eff6ff" fill-opacity="0.42"/>
+  <text x="84" y="126" fill="#bfdbfe" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">OPENAI RELEASE NOTES</text>
+  <text x="84" y="236" fill="#eff6ff" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">Desktop App Now</text>
+  <text x="84" y="306" fill="#eff6ff" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">Blends Chat and Work</text>
+  <text x="84" y="390" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="30">OpenAI added a clearer Chat or Work switcher, unified recents,</text>
+  <text x="84" y="432" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="30">project access, and cross-device Work continuity on desktop.</text>
+</svg>

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T04:39:36.889Z",
+  "generatedAt": "2026-07-20T02:52:04.190Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,15 +15,75 @@
     ]
   },
   "summary": {
-    "cards": 63,
+    "cards": 67,
     "errors": 0,
-    "warnings": 3,
+    "warnings": 7,
     "counts": {
-      "data-img": 51,
+      "data-img": 55,
       "localPreviewImagesByUrl": 12
     }
   },
   "entries": [
+    {
+      "title": "Bring Code-Backed Screens Onto the Canvas with Variables Attached",
+      "source": "Figma Release Notes",
+      "date": "Jul 16",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "data-img",
+      "localImage": "assets/week11/01-figma-code-backed-screens.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1311,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Out of the Chat Window, Onto the Canvas",
+      "source": "Miro Blog",
+      "date": "Jul 16",
+      "url": "https://miro.com/blog/build-the-right-thing-canvas-26/",
+      "mediaSource": "data-img",
+      "localImage": "assets/week11/02-miro-teams-agents-canvas.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1478,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "ChatGPT Desktop App Experience Updates",
+      "source": "OpenAI",
+      "date": "Jul 16",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "data-img",
+      "localImage": "assets/week11/04-openai-desktop-updates.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1567,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Build What You Couldn’t Imagine Before, with Bolt Slides",
+      "source": "Bolt Blog",
+      "date": "Jul 16",
+      "url": "https://bolt.new/blog",
+      "mediaSource": "data-img",
+      "localImage": "assets/week11/06-bolt-slides-launch.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1388,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
     {
       "title": "How Decagon Uses AI for Design System Saturation",
       "source": "Figma Blog",

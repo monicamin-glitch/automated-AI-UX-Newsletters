@@ -1,5 +1,42 @@
 # Update Notes
 
+## 2026-07-20
+
+### Week 11 weekly refresh
+
+- Refreshed the latest website week to `Week 11` for `Jul 14-Jul 20, 2026` and archived the previous latest page as `Week 10` without changing older archive weeks.
+- Added 7 validated Week 11 cards with Product Updates kept last in the weekly ordering: 1 workflow, 1 deeper-thinking read, 3 Slack Spotlights, and 2 product updates.
+- Added checked-in public media under `assets/week11/` for all new public cards so the latest week can pass the local-media gate before publishing.
+
+### Source coverage checklist
+
+- Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, Bolt.
+- Section A included: OpenAI release notes (`ChatGPT desktop app experience updates`), Figma release notes (`Bring code-backed screens onto the canvas with variables attached`), and Bolt Blog (`Build what you couldn’t imagine before, with Bolt Slides`).
+- Section A skipped: Anthropic / Claude had no fresh Jul 14-Jul 20 official update in the configured sources; Google Stitch had no fresh Jul 14-Jul 20 update in the configured sources; Miro newsroom did not surface a stronger product-launch item than the Miro blog thinking/workflow coverage already included; OpenAI's search update and Figma's AI credit export were validated but left out of the published set because the strongest latest-week cards already represented those release-note sources without reusing duplicate generic URLs.
+- Section B checked: YouTube tutorial queries, UX Collective newsletter, Medium Design Bootcamp, and source-adjacent workflow posts from Miro and Figma.
+- Section B included: Figma release notes on code-backed screens returning to the canvas with variables attached.
+- Section B skipped: YouTube did not surface a stronger in-window official or reusable tutorial artifact than the selected workflow cards; UX Collective and Medium Design Bootcamp surfaced timely opinion pieces but they were lower-signal than the selected official-source updates, so they were covered and skipped rather than used as filler.
+- Section C checked: Nielsen Norman Group, Lenny's Newsletter archive/feed, Google Design library, Google PAIR, and Miro's Jul 16 Canvas 26 blog post as a strategic workflow/collaboration read.
+- Section C included: Miro Blog (`Out of the chat window, onto the canvas`) as a strategic collaboration and judgment read for AI-enabled product teams.
+- Section C skipped: Nielsen Norman Group had no verified Jul 14-Jul 20 article in the configured source; Lenny's Newsletter archive/feed had no new in-window post after the Jul 7 item already used in Week 10; Google Design library and Google PAIR had no fresh dated Jul 14-Jul 20 update in the configured sources.
+- Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Section D included: `#ai-for-ux` Session 4 recording and handout for Claude Commands, plus `#genai_engineering` launches for Agent Fabric and the Skills MCP Server.
+- Section D skipped: `#dev-china` AI Weekly Digest was audited and used as a discovery lens but skipped because its strongest items duplicated the stronger original `#genai_engineering` launch threads; `#china-ai-workstream`, `#mp-tpch-ai-guild-weekly`, `#design`, `#ai-studio-updates`, `#ai-design-curriculum`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` returned no stronger completed in-window UX AI item than the selected set; `#ai-gateway-updates` had an OpenAI deprecation reminder but it was more operational than UX-relevant for this public digest; `#design-systems`, `#design-language`, `#uxw-genai`, and `#mp-ai-engineering` had in-window traffic but no qualifying completed UX-facing AI update worth publishing as a standalone card.
+- Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study were treated as reference-only for this run and not published as standalone cards.
+
+### Validation notes
+
+- Verified the target week range as `Jul 14-Jul 20, 2026`, which is newer than the previous latest `Week 10` range `Jul 7-Jul 13, 2026`, so the flow archives Week 10 and creates Week 11 as the only active latest page.
+- Verified each included Slack card has a permalink, real author name, original-message quote, and public-safe summary.
+- Verified every new public card uses a checked-in local image under `assets/week11/`.
+- Used official-source URLs for public cards wherever possible; Figma and OpenAI release-note cards intentionally point to the release-notes pages because the relevant entries are present there and no stable direct entry URLs were surfaced.
+- Used local generated SVG title cards for Week 11 public media so the site can pass the checked-in-media gate without relying on runtime previews or external fetch services.
+
+### Known follow-ups
+
+- Week 11 public cards currently rely on generated checked-in SVG media rather than source-native screenshots or OG assets; this passes the media gate but should be upgraded in a later polish pass if higher-fidelity source visuals are desired.
+- The mandatory finalizer must complete commit, push, B.Pages publish, and status-file update before this refresh can be treated as published.
+
 ## 2026-07-13
 
 ### Week 10 weekly refresh

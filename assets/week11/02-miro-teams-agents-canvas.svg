@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#172554"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="820" y="104" width="300" height="232" rx="28" fill="#99f6e4" fill-opacity="0.16"/>
+  <rect x="858" y="150" width="224" height="34" rx="17" fill="#f0fdfa" fill-opacity="0.54"/>
+  <rect x="858" y="208" width="224" height="34" rx="17" fill="#f0fdfa" fill-opacity="0.4"/>
+  <rect x="858" y="266" width="152" height="34" rx="17" fill="#f0fdfa" fill-opacity="0.4"/>
+  <text x="84" y="126" fill="#99f6e4" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">MIRO BLOG</text>
+  <text x="84" y="236" fill="#f0fdfa" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">Teams and Agents Need</text>
+  <text x="84" y="306" fill="#f0fdfa" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">a Shared Canvas</text>
+  <text x="84" y="390" fill="#ccfbf1" font-family="Arial, Helvetica, sans-serif" font-size="30">Miro argues AI speed only matters when teams can review, challenge,</text>
+  <text x="84" y="432" fill="#ccfbf1" font-family="Arial, Helvetica, sans-serif" font-size="30">and align on evidence together instead of inside private chat windows.</text>
+</svg>

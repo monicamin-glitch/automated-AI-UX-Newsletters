@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="842" y="108" width="250" height="190" rx="26" fill="#f5d0fe" fill-opacity="0.16"/>
+  <rect x="880" y="158" width="174" height="112" rx="22" fill="#fdf4ff" fill-opacity="0.5"/>
+  <text x="84" y="126" fill="#e9d5ff" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">FIGMA RELEASE NOTES</text>
+  <text x="84" y="236" fill="#faf5ff" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">Code-Backed Screens</text>
+  <text x="84" y="306" fill="#faf5ff" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">Now Keep Their Variables</text>
+  <text x="84" y="390" fill="#f3e8ff" font-family="Arial, Helvetica, sans-serif" font-size="30">Figma now carries colors, type, spacing, and auto layout back onto</text>
+  <text x="84" y="432" fill="#f3e8ff" font-family="Arial, Helvetica, sans-serif" font-size="30">the canvas so teams refine imported screens instead of rebuilding them.</text>
+</svg>

@@ -9,13 +9,47 @@ A UX design team that wants to stay current on AI tools (Claude, Gemini, Figma, 
 ## Usage
 
 ```
-/digest
-/digest figma          <- only Figma updates
-/digest section-b      <- only Practical Workflows
-/digest full           <- all sections (default)
+/digest                <- full pipeline (fetch + build + publish)
+/digest fetch          <- search sources, produce card JSON checkpoint
+/digest fetch-external <- Sections A/B/C only (Web Search MCP)
+/digest fetch-internal <- Section D only (Slack Toolbox MCP)
+/digest build          <- read card JSON, write HTML + prepare media
+/digest publish        <- finalize, commit, push, B.Pages, Google Doc, notify
+/digest full           <- same as /digest (explicit)
+/digest figma          <- only Figma updates (fetch + build + publish)
+/digest section-b      <- only Practical Workflows (fetch + build + publish)
 ```
 
+### Phase Architecture
+
+The digest runs as three independent phases with JSON checkpoint files between them. Each phase can be retried without re-running earlier phases.
+
+| Phase | Input | Output | Can retry independently? |
+|-------|-------|--------|--------------------------|
+| **Fetch** | `sources.md` + Web Search / Slack MCP | `drafts/weekly-cards-YYYY-MM-DD.json` | Yes — re-searches sources |
+| **Build** | `drafts/weekly-cards-YYYY-MM-DD.json` | Updated `index.html` + `assets/weekXX/` | Yes — reads from JSON |
+| **Publish** | Committed `index.html` | `automation-status/weekly-refresh-status.json` | Yes — from current tree |
+
+**Checkpoint file format** (`drafts/weekly-cards-YYYY-MM-DD.json`):
+```json
+{
+  "weekLabel": "Week 11",
+  "dateRange": "Jul 14 – Jul 20, 2026",
+  "fetchedAt": "2026-07-21T10:15:00+08:00",
+  "external": [
+    { "title": "...", "url": "...", "source": "...", "date": "...", "tag": "product", "description": "...", "image": "assets/week11/file.png", "imageStatus": "cached" }
+  ],
+  "internal": [
+    { "title": "...", "channel": "#ai-for-ux", "slackLink": "...", "date": "...", "author": "...", "quote": "...", "content": "...", "image": null, "imageStatus": "fallback-gradient" }
+  ]
+}
+```
+
+**Fetch phase splits:** External and internal fetching are independent. If Slack MCP is unavailable, run `/digest fetch-external` alone — the Build phase will produce a website with Sections A/B/C only. Internal items can be added later by running `/digest fetch-internal` and then `/digest build` again.
+
 ## Instructions
+
+### Phase 1: Fetch
 
 Search the sources in [`sources.md`](sources.md) for content published in the **last 7 days**. For each item found:
 - Write the **title** as a clickable markdown link to the original source URL
@@ -23,17 +57,36 @@ Search the sources in [`sources.md`](sources.md) for content published in the **
 - Write a **4-5 sentence UX impact description**: what changed, how it affects UX work, and why designers should care
 - Assign **exactly one tag** from the allowed tag list below
 - If no new content was found for a source this week, do not publish filler content; include the skipped source in the run summary coverage note
+- **Attempt to cache the card's image immediately** into `assets/weekXX/` and record the result in the card JSON (`"imageStatus": "cached"` or `"imageStatus": "fallback-gradient"`)
 
-### When done, do these things:
+Write all found cards to the checkpoint file: `drafts/weekly-cards-YYYY-MM-DD.json`
 
-1. Append the digest to the Google Doc: `https://docs.google.com/document/d/1H_Sec7iPUkGR9SyGg-iHieUNwsaS2P4PKrHVZiyn650/edit`
+If fetching external and internal separately:
+- `/digest fetch-external` writes `drafts/weekly-external-YYYY-MM-DD.json`
+- `/digest fetch-internal` writes `drafts/weekly-internal-YYYY-MM-DD.json`
+- `/digest fetch` merges both into `drafts/weekly-cards-YYYY-MM-DD.json`
 
-2. Update the `index.html` file following the **HTML Structure Rules** and **Weekly Archive Logic** below
+### Phase 2: Build
 
-3. Finalize the refresh through the guarded publish script:
+Read the card JSON checkpoint and:
+1. Update `index.html` following the **HTML Structure Rules** and **Weekly Archive Logic** below
+2. Run media validation (not fetching — images should already be cached from Phase 1):
+   ```
+   cd "/Users/ymin/claude_project/UX AI newslettler/digest" && node scripts/prepare-media.mjs --write-manifest
+   ```
+3. If any card has `"imageStatus": "missing"`, fix the image before proceeding to Publish
+
+### Phase 3: Publish
+
+1. Finalize the refresh through the guarded publish script:
    ```
    cd "/Users/ymin/claude_project/UX AI newslettler/digest" && node scripts/finalize-weekly-refresh.mjs --commit --push --publish-bpages --notify
    ```
+2. After successful publish, append the digest to the Google Doc (non-blocking — if this fails, the website is still live):
+   ```
+   Append to: https://docs.google.com/document/d/1H_Sec7iPUkGR9SyGg-iHieUNwsaS2P4PKrHVZiyn650/edit
+   ```
+   Log the result in `automation-status/weekly-refresh-status.json` as `"gdocAppended": true/false`.
 
 ---
 
@@ -71,6 +124,18 @@ The newsletter website is intended to refresh once per week on Monday after the 
 - End every successful refresh by running `node scripts/finalize-weekly-refresh.mjs --commit --push --publish-bpages --notify`. This script runs media/date/summary/link structure checks, commits only scoped refresh files, pushes, updates B.Pages, and writes `automation-status/weekly-refresh-status.json`.
 - If finalization fails, the status file is written with `status: "failed"` and the Slack picker must not run.
 - This markdown defines the workflow. A real unattended refresh still requires a scheduler such as Codex automation, GitHub Actions, Vercel cron, or another Monday job that runs these instructions.
+
+### Recovery
+
+If a phase fails, use these commands to retry without re-running the full pipeline:
+
+| Situation | Fix |
+|-----------|-----|
+| Fetch succeeded but Build failed (bad media) | Fix images in `assets/weekXX/`, re-run `/digest build` |
+| Build succeeded but Publish failed (B.Pages auth) | Re-run `/digest publish` after `bpages login` |
+| Publish succeeded but Google Doc failed | Append manually or re-run the Google Doc step — website is already live |
+| Stale `status: "failed"` blocking retry | Run `node scripts/finalize-weekly-refresh.mjs --reset` to clear status, then retry |
+| Slack MCP down during fetch | Run `/digest fetch-external` for Sections A-C now, add internal later with `/digest fetch-internal` + `/digest build` |
 
 ### B.Pages publishing
 
