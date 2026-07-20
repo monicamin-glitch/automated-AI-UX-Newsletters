@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T03:05:31.617Z",
+  "generatedAt": "2026-07-20T03:17:38.730Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -30,10 +30,10 @@
       "date": "Jul 16",
       "url": "https://www.figma.com/release-notes/",
       "mediaSource": "data-img",
-      "localImage": "assets/external/figma-release-notes-may-2026.jpg",
+      "localImage": "assets/week11/01-figma-code-backed-screens.png",
       "youtubeId": "",
-      "dimensions": "700x393",
-      "sizeBytes": 39808,
+      "dimensions": "542x305",
+      "sizeBytes": 237709,
       "status": "ok",
       "issues": []
     },

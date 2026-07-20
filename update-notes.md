@@ -32,7 +32,7 @@
 - Verified every new public card uses a checked-in local image, with Week 11-specific assets used where the best-quality checked-in option was available.
 - Used official-source URLs for public cards wherever possible; Figma and OpenAI release-note cards intentionally point to the release-notes pages because the relevant entries are present there and no stable direct entry URLs were surfaced.
 - Used local generated SVG title cards for Week 11 public media so the site can pass the checked-in-media gate without relying on runtime previews or external fetch services.
-- Media polish pass: replaced the Miro SVG with the official Miro Canvas 26 hero image, replaced the Bolt SVG with a brighter still extracted from Bolt's official Slides animation, replaced the Figma SVG with an existing checked-in Figma release-notes screenshot, and replaced the OpenAI SVG with the best available high-resolution checked-in OpenAI image because the help-center release-notes page still exposes only generic branding imagery.
+- Media polish pass: replaced the Miro SVG with the official Miro Canvas 26 hero image, replaced the Bolt SVG with a brighter still extracted from Bolt's official Slides animation, replaced the Figma SVG with the checked-in thumbnail inferred from the Jul 16, 2026 Figma release-notes page preload sequence, and replaced the OpenAI SVG with the best available high-resolution checked-in OpenAI image because the help-center release-notes page still exposes only generic branding imagery.
 
 ### Known follow-ups
 
