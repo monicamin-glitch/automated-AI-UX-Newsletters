@@ -7,6 +7,7 @@
 - Refreshed the latest website week to `Week 11` for `Jul 14-Jul 20, 2026` and archived the previous latest page as `Week 10` without changing older archive weeks.
 - Added 7 validated Week 11 cards with Product Updates kept last in the weekly ordering: 1 workflow, 1 deeper-thinking read, 3 Slack Spotlights, and 2 product updates.
 - Added checked-in public media under `assets/week11/` for all new public cards so the latest week can pass the local-media gate before publishing.
+- Rechecked Week 11 public media after publish and upgraded the weakest visible fallbacks with higher-fidelity checked-in assets for Figma, Miro, Bolt, and OpenAI.
 
 ### Source coverage checklist
 
@@ -28,13 +29,14 @@
 
 - Verified the target week range as `Jul 14-Jul 20, 2026`, which is newer than the previous latest `Week 10` range `Jul 7-Jul 13, 2026`, so the flow archives Week 10 and creates Week 11 as the only active latest page.
 - Verified each included Slack card has a permalink, real author name, original-message quote, and public-safe summary.
-- Verified every new public card uses a checked-in local image under `assets/week11/`.
+- Verified every new public card uses a checked-in local image, with Week 11-specific assets used where the best-quality checked-in option was available.
 - Used official-source URLs for public cards wherever possible; Figma and OpenAI release-note cards intentionally point to the release-notes pages because the relevant entries are present there and no stable direct entry URLs were surfaced.
 - Used local generated SVG title cards for Week 11 public media so the site can pass the checked-in-media gate without relying on runtime previews or external fetch services.
+- Media polish pass: replaced the Miro SVG with the official Miro Canvas 26 hero image, replaced the Bolt SVG with a brighter still extracted from Bolt's official Slides animation, replaced the Figma SVG with an existing checked-in Figma release-notes screenshot, and replaced the OpenAI SVG with the best available high-resolution checked-in OpenAI image because the help-center release-notes page still exposes only generic branding imagery.
 
 ### Known follow-ups
 
-- Week 11 public cards currently rely on generated checked-in SVG media rather than source-native screenshots or OG assets; this passes the media gate but should be upgraded in a later polish pass if higher-fidelity source visuals are desired.
+- OpenAI's Week 11 desktop-app card still lacks an item-specific official-source hero image; the current image is a pragmatic quality upgrade, not an exact source-native match.
 - The mandatory finalizer must complete commit, push, B.Pages publish, and status-file update before this refresh can be treated as published.
 
 ## 2026-07-13

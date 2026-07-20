@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T02:52:04.190Z",
+  "generatedAt": "2026-07-20T03:05:31.617Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -17,7 +17,7 @@
   "summary": {
     "cards": 67,
     "errors": 0,
-    "warnings": 7,
+    "warnings": 3,
     "counts": {
       "data-img": 55,
       "localPreviewImagesByUrl": 12
@@ -30,14 +30,12 @@
       "date": "Jul 16",
       "url": "https://www.figma.com/release-notes/",
       "mediaSource": "data-img",
-      "localImage": "assets/week11/01-figma-code-backed-screens.svg",
+      "localImage": "assets/external/figma-release-notes-may-2026.jpg",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1311,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "700x393",
+      "sizeBytes": 39808,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "Out of the Chat Window, Onto the Canvas",
@@ -45,14 +43,12 @@
       "date": "Jul 16",
       "url": "https://miro.com/blog/build-the-right-thing-canvas-26/",
       "mediaSource": "data-img",
-      "localImage": "assets/week11/02-miro-teams-agents-canvas.svg",
+      "localImage": "assets/week11/02-miro-teams-agents-canvas.jpg",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1478,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "1280x853",
+      "sizeBytes": 274736,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "ChatGPT Desktop App Experience Updates",
@@ -60,14 +56,12 @@
       "date": "Jul 16",
       "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "mediaSource": "data-img",
-      "localImage": "assets/week11/04-openai-desktop-updates.svg",
+      "localImage": "assets/week3/12-chatgpt-persistent-file-storage-documents-that-remember.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1567,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "2560x1440",
+      "sizeBytes": 199056,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "Build What You Couldn’t Imagine Before, with Bolt Slides",
@@ -75,14 +69,12 @@
       "date": "Jul 16",
       "url": "https://bolt.new/blog",
       "mediaSource": "data-img",
-      "localImage": "assets/week11/06-bolt-slides-launch.svg",
+      "localImage": "assets/week11/06-bolt-slides-launch.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1388,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "600x450",
+      "sizeBytes": 164600,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "How Decagon Uses AI for Design System Saturation",
