@@ -904,6 +904,7 @@
     let weekPickerDisplayYear = initialWeekPickerMonday.getUTCFullYear();
     let weekPickerDisplayMonth = initialWeekPickerMonday.getUTCMonth();
     let weekPickerDisplayISOYear = selectedArchiveWeek.year;
+    let weekPickerYearNavigationOrigin = null;
 
     function archiveWeekKey(year, week) {
       return year + '-W' + String(week).padStart(2, '0');
@@ -1031,6 +1032,7 @@
     }
 
     function renderMonthWeekPicker(year, month) {
+      weekPickerYearNavigationOrigin = null;
       weekPickerDisplayYear = year;
       weekPickerDisplayMonth = month;
       const grid = document.getElementById('week-picker-grid');
@@ -1112,6 +1114,12 @@
       });
     }
 
+    function renderWeekPickerYearTarget(year, month) {
+      const navigationOrigin = weekPickerYearNavigationOrigin;
+      renderMonthWeekPicker(year, month);
+      weekPickerYearNavigationOrigin = navigationOrigin;
+    }
+
     function renderWeekPicker(year) {
       renderMonthWeekPicker(year, weekPickerDisplayMonth);
     }
@@ -1138,15 +1146,25 @@
       const targetIndex = currentIndex + direction;
       if (targetIndex < 0 || targetIndex >= availableArchiveYears.length) return;
       const targetISOYear = availableArchiveYears[targetIndex];
+      if (!weekPickerYearNavigationOrigin) {
+        if (weekPickerDisplayMonth !== 11) {
+          weekPickerYearNavigationOrigin = 'same-month';
+        } else if (weekPickerDisplayYear === currentISOYear - 1) {
+          weekPickerYearNavigationOrigin = 'leading-december';
+        } else {
+          weekPickerYearNavigationOrigin = 'ordinary-december';
+        }
+      }
       weekPickerDisplayISOYear = targetISOYear;
-      if (weekPickerDisplayMonth === 11) {
+      if (weekPickerYearNavigationOrigin === 'leading-december') {
         const targetWeekOneMonday = getISOWeekRange(targetISOYear, 1).monday;
-        const targetDecemberYear = targetWeekOneMonday.getUTCMonth() === 11
-          ? targetWeekOneMonday.getUTCFullYear()
-          : targetISOYear;
-        renderMonthWeekPicker(targetDecemberYear, 11);
+        const targetMonth = targetWeekOneMonday.getUTCMonth() === 11 ? 11 : 0;
+        const targetYear = targetMonth === 11 ? targetWeekOneMonday.getUTCFullYear() : targetISOYear;
+        renderWeekPickerYearTarget(targetYear, targetMonth);
+      } else if (weekPickerYearNavigationOrigin === 'ordinary-december') {
+        renderWeekPickerYearTarget(targetISOYear, 11);
       } else {
-        renderMonthWeekPicker(targetISOYear, weekPickerDisplayMonth);
+        renderWeekPickerYearTarget(targetISOYear, weekPickerDisplayMonth);
       }
     }
 

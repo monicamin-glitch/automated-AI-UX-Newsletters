@@ -674,7 +674,7 @@ test('derives archive years from available week keys and enables synthetic secon
   assert.equal(twoYears.element('week-picker-year-next').disabled, true);
 });
 
-test('uses selected ISO years for ambiguous leading Decembers across adjacent archive years', () => {
+test('round-trips leading Week-1 December navigation across adjacent archive years', () => {
   const runtime = createCalendarRuntime({ templateKeys: ['2025-W52', '2027-W03'] });
   runtime.api.addAvailable('2026-W01');
   runtime.api.setSelected(2026, 1);
@@ -692,7 +692,7 @@ test('uses selected ISO years for ambiguous leading Decembers across adjacent ar
   assert.equal(runtime.element('week-picker-year').textContent, 2026);
 
   runtime.api.changeWeekPickerYear(1);
-  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 11 });
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 0 });
   assert.equal(runtime.element('week-picker-year').textContent, 2027);
   assert.equal(runtime.element('week-picker-year-previous').disabled, false);
   assert.equal(runtime.element('week-picker-year-next').disabled, true);
@@ -705,8 +705,30 @@ test('uses selected ISO years for ambiguous leading Decembers across adjacent ar
   assert.equal(runtime.element('week-picker-year-next').disabled, false);
   runtime.api.changeWeekPickerYear(1);
   assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 0 });
+  assert.equal(runtime.element('week-picker-year').textContent, 2027);
+  assert.equal(runtime.element('week-picker-year-previous').disabled, false);
+  assert.equal(runtime.element('week-picker-year-next').disabled, true);
   runtime.api.changeWeekPickerYear(-1);
   assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2026, month: 0 });
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
+  assert.equal(runtime.element('week-picker-year-previous').disabled, false);
+  assert.equal(runtime.element('week-picker-year-next').disabled, false);
+});
+
+test('round-trips ordinary December navigation December-to-December', () => {
+  const runtime = createCalendarRuntime({ templateKeys: ['2027-W03'] });
+
+  runtime.api.renderMonthWeekPicker(2026, 11);
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
+  assert.equal(runtime.element('week-picker-year-next').disabled, false);
+  runtime.api.changeWeekPickerYear(1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 11 });
+  assert.equal(runtime.element('week-picker-year').textContent, 2027);
+  assert.equal(runtime.element('week-picker-year-previous').disabled, false);
+  assert.equal(runtime.element('week-picker-year-next').disabled, true);
+  runtime.api.changeWeekPickerYear(-1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2026, month: 11 });
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
 });
 
 test('renders the maximum ISO year final week in December and never exposes trailing January', () => {
@@ -1386,6 +1408,14 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
       result.forwardNextDisabled = next.disabled;
       previous.click();
       result.returnDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      result.returnLabel = document.getElementById('week-picker-year').textContent;
+      renderMonthWeekPicker(2026, 11);
+      next.click();
+      result.ordinaryDecemberForwardDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      result.ordinaryDecemberForwardLabel = document.getElementById('week-picker-year').textContent;
+      previous.click();
+      result.ordinaryDecemberReturnDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      result.ordinaryDecemberReturnLabel = document.getElementById('week-picker-year').textContent;
       renderMonthWeekPicker(2027, 11);
       const finalRow = [...document.querySelectorAll('#week-picker-grid .week-picker-row')].at(-1);
       const finalDates = [...finalRow.querySelectorAll('.week-picker-date')];
@@ -1398,8 +1428,14 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
       renderMonthWeekPicker(2026, 0);
       next.click();
       result.januaryForwardDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      result.januaryForwardLabel = document.getElementById('week-picker-year').textContent;
+      result.januaryForwardPreviousEnabled = !previous.disabled;
+      result.januaryForwardNextDisabled = next.disabled;
       previous.click();
       result.januaryReturnDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      result.januaryReturnLabel = document.getElementById('week-picker-year').textContent;
+      result.januaryReturnPreviousEnabled = !previous.disabled;
+      result.januaryReturnNextEnabled = !next.disabled;
       availableArchiveYears.shift();
       availableArchiveYears.pop();
       availableArchiveWeeks.delete('2025-W52');
@@ -1410,17 +1446,28 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.equal(boundaryYears.decemberLabel, '2026');
     assert.equal(boundaryYears.decemberNextEnabled, true);
     assert.equal(boundaryYears.decemberPreviousEnabled, true);
-    assert.deepEqual(boundaryYears.forwardDisplay, [2027, 11]);
+    assert.deepEqual(boundaryYears.forwardDisplay, [2027, 0]);
     assert.equal(boundaryYears.forwardLabel, '2027');
     assert.equal(boundaryYears.forwardPreviousEnabled, true);
     assert.equal(boundaryYears.forwardNextDisabled, true);
     assert.deepEqual(boundaryYears.returnDisplay, [2025, 11]);
+    assert.equal(boundaryYears.returnLabel, '2026');
+    assert.deepEqual(boundaryYears.ordinaryDecemberForwardDisplay, [2027, 11]);
+    assert.equal(boundaryYears.ordinaryDecemberForwardLabel, '2027');
+    assert.deepEqual(boundaryYears.ordinaryDecemberReturnDisplay, [2026, 11]);
+    assert.equal(boundaryYears.ordinaryDecemberReturnLabel, '2026');
     assert.deepEqual(boundaryYears.trailingJanuaryDates, ['1', '2']);
     assert.equal(boundaryYears.trailingJanuaryDimmed, true);
     assert.equal(boundaryYears.trailingMonthDisabled, true);
     assert.deepEqual(boundaryYears.trailingMonthDisplay, [2027, 11]);
     assert.deepEqual(boundaryYears.januaryForwardDisplay, [2027, 0]);
+    assert.equal(boundaryYears.januaryForwardLabel, '2027');
+    assert.equal(boundaryYears.januaryForwardPreviousEnabled, true);
+    assert.equal(boundaryYears.januaryForwardNextDisabled, true);
     assert.deepEqual(boundaryYears.januaryReturnDisplay, [2026, 0]);
+    assert.equal(boundaryYears.januaryReturnLabel, '2026');
+    assert.equal(boundaryYears.januaryReturnPreviousEnabled, true);
+    assert.equal(boundaryYears.januaryReturnNextEnabled, true);
 
     const latest = await browser.evaluate(`(async () => {
       const cards = [...document.querySelectorAll('#page-latest .archive-slack-card')];
