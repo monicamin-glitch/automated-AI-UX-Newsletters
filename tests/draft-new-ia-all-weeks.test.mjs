@@ -591,7 +591,7 @@ test('runtime includes ISO-year spillover months and never enables a dead month 
   assert.equal(`${bounds.maximum.year}-${bounds.maximum.month}`, '2027-0');
 
   runtime.api.toggleWeekPicker(true);
-  assert.equal(runtime.element('week-picker-year').textContent, 2025);
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
   assert.equal(runtime.element('week-picker-month').textContent, 'December');
   assert.equal(runtime.element('week-picker-month-previous').disabled, true);
   assert.equal(runtime.element('week-picker-month-next').disabled, false);
@@ -602,7 +602,7 @@ test('runtime includes ISO-year spillover months and never enables a dead month 
   assert.equal(runtime.element('week-picker-month-previous').disabled, false);
 
   runtime.api.changeWeekPickerMonth(-1);
-  assert.equal(runtime.element('week-picker-year').textContent, 2025);
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
   assert.equal(runtime.element('week-picker-month').textContent, 'December');
 });
 
@@ -651,6 +651,7 @@ test('keeps week 29 as Latest while deriving the current ISO week from an inject
 
 test('derives archive years from available week keys and enables synthetic second-year navigation', () => {
   assert.match(html, /function getAvailableArchiveYears\(availableWeeks\)/);
+  assert.match(html, /function getWeekPickerISOYear\(year, month\)/);
   assert.match(html, /const availableArchiveYears = getAvailableArchiveYears\(availableArchiveWeeks\)/);
   assert.doesNotMatch(html, /availableArchiveYears = \[2026\]/);
   assert.match(html, /id="week-picker-year-previous"[^>]*disabled/);
@@ -671,6 +672,30 @@ test('derives archive years from available week keys and enables synthetic secon
   assert.equal(twoYears.api.getDisplay().year, 2027);
   assert.equal(twoYears.element('week-picker-year-previous').disabled, false);
   assert.equal(twoYears.element('week-picker-year-next').disabled, true);
+});
+
+test('uses the applicable ISO archive year for spillover-month year navigation', () => {
+  const runtime = createCalendarRuntime({ templateKeys: ['2027-W03'] });
+
+  runtime.api.renderMonthWeekPicker(2025, 11);
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
+  assert.equal(runtime.element('week-picker-year-previous').disabled, true);
+  assert.equal(runtime.element('week-picker-year-next').disabled, false);
+  runtime.api.changeWeekPickerYear(1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 0 });
+  assert.equal(runtime.element('week-picker-year').textContent, 2027);
+  assert.equal(runtime.element('week-picker-year-previous').disabled, false);
+  assert.equal(runtime.element('week-picker-year-next').disabled, true);
+  runtime.api.changeWeekPickerYear(-1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2025, month: 11 });
+
+  runtime.api.renderMonthWeekPicker(2026, 0);
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
+  assert.equal(runtime.element('week-picker-year-next').disabled, false);
+  runtime.api.changeWeekPickerYear(1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 0 });
+  runtime.api.changeWeekPickerYear(-1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2026, month: 0 });
 });
 
 test('uses the same full calendar week name across both pages', () => {
@@ -805,7 +830,15 @@ test('gives every archived external card the refreshed Read article affordance',
       assert.match(card, /class="masonry-card-action">Read article/);
     }
   }
-  assert.match(html, /\.masonry-card-action \{[^}]*font-size: 12px;[^}]*font-weight: 600/);
+  const sharedActionRule = html.match(/\.masonry-card-action, \.view-in-slack \{([^}]*)\}/)?.[1] ?? '';
+  assert.match(sharedActionRule, /padding: 3px 6px/);
+  assert.match(sharedActionRule, /border-radius: 6px/);
+  assert.match(sharedActionRule, /color: var\(--primary\)/);
+  assert.match(sharedActionRule, /font-size: 12px/);
+  assert.match(sharedActionRule, /font-weight: 600/);
+  assert.match(sharedActionRule, /line-height: 1\.4/);
+  assert.match(html, /\.masonry-card:hover \.masonry-card-action, \.view-in-slack:hover, \.view-in-slack:focus-visible \{[^}]*color: var\(--primary-dark\);[^}]*background: var\(--primary-tint\)/);
+  assert.doesNotMatch(html, /\.masonry-card-body \.masonry-card-action \{[^}]*padding-top/);
 });
 
 test('derives available archive weeks from stored templates plus Latest Week', () => {
@@ -827,6 +860,17 @@ test('gives every Week 28 archive card a real safe destination', () => {
   assert.equal(cards.length, 16);
   assert.equal(safeLinks.length, 16);
   assert.doesNotMatch(archive, /href="#"/);
+});
+
+test('keeps the rebucketed W28 Slack card in the generic Other filter', () => {
+  const archive = getArchiveTemplate('2026-W28');
+  assert.match(archive, /filterSlack\('all', this\)">All <span class="chip-count">8<\/span>/);
+  assert.match(archive, /filterSlack\('other', this\)">Others<\/span>/);
+  const slackCards = [...archive.matchAll(/<a class="slack-card"([^>]*)>/g)].map(match => match[1]);
+  assert.equal(slackCards.length, 8);
+  const genericCards = slackCards.filter(attributes => /data-cat="other"/.test(attributes));
+  assert.equal(genericCards.length, 2);
+  assert.match(genericCards[0], /p1783303790590519/);
 });
 
 test('keeps Slack filtering scoped to the active page', () => {
@@ -880,6 +924,8 @@ test('keeps seven date columns and 44px whole-row targets at 390px', () => {
   assert.match(html, /\.week-picker-calendar-columns \{[^}]*grid-template-columns: minmax\(24px, 0\.55fr\) repeat\(7, minmax\(0, 1fr\)\)/);
   assert.match(html, /\.week-picker-row \{[^}]*min-height: 44px/);
   assert.match(html, /@media \(max-width: 520px\) \{[\s\S]*?\.week-picker-calendar-columns \{[^}]*grid-template-columns: 24px repeat\(7, minmax\(0, 1fr\)\)/);
+  assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.filters \{[^}]*flex-wrap: nowrap;[^}]*overflow-x: auto/);
+  assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.filter-chip \{[^}]*flex: 0 0 auto;[^}]*min-height: 40px/);
   assert.doesNotMatch(html, /\.week-picker-grid \{ grid-template-columns: repeat\(6/);
 });
 
@@ -1291,6 +1337,45 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.match(sanitized, /<pre><code>const x = 1;<\/code><\/pre>/);
     assert.doesNotMatch(sanitized, /script|iframe|javascript:|onclick|onmouseover|style=|data-x|class=/i);
 
+    const boundaryYears = await browser.evaluate(`(() => {
+      availableArchiveWeeks.add('2027-W03');
+      availableArchiveYears.push(2027);
+      renderMonthWeekPicker(2025, 11);
+      const next = document.getElementById('week-picker-year-next');
+      const previous = document.getElementById('week-picker-year-previous');
+      const result = {
+        decemberLabel: document.getElementById('week-picker-year').textContent,
+        decemberNextEnabled: !next.disabled,
+        decemberPreviousDisabled: previous.disabled
+      };
+      next.click();
+      result.forwardDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      result.forwardLabel = document.getElementById('week-picker-year').textContent;
+      result.forwardPreviousEnabled = !previous.disabled;
+      result.forwardNextDisabled = next.disabled;
+      previous.click();
+      result.returnDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      renderMonthWeekPicker(2026, 0);
+      next.click();
+      result.januaryForwardDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      previous.click();
+      result.januaryReturnDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      availableArchiveYears.pop();
+      availableArchiveWeeks.delete('2027-W03');
+      renderMonthWeekPicker(2026, 6);
+      return result;
+    })()`);
+    assert.equal(boundaryYears.decemberLabel, '2026');
+    assert.equal(boundaryYears.decemberNextEnabled, true);
+    assert.equal(boundaryYears.decemberPreviousDisabled, true);
+    assert.deepEqual(boundaryYears.forwardDisplay, [2027, 0]);
+    assert.equal(boundaryYears.forwardLabel, '2027');
+    assert.equal(boundaryYears.forwardPreviousEnabled, true);
+    assert.equal(boundaryYears.forwardNextDisabled, true);
+    assert.deepEqual(boundaryYears.returnDisplay, [2025, 11]);
+    assert.deepEqual(boundaryYears.januaryForwardDisplay, [2027, 0]);
+    assert.deepEqual(boundaryYears.januaryReturnDisplay, [2026, 0]);
+
     const latest = await browser.evaluate(`(async () => {
       const cards = [...document.querySelectorAll('#page-latest .archive-slack-card')];
       const first = cards[0];
@@ -1382,6 +1467,48 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.equal(escapeState.closed, true);
     assert.equal(escapeState.unlocked, true);
     assert.equal(escapeState.focusRestored, true);
+
+    const mobileFiltersAndActions = await browser.evaluate(`(() => {
+      selectArchiveWeek(2026, 28);
+      const root = document.getElementById('archive-week-content');
+      const filters = root.querySelector('.filters');
+      const chips = [...filters.querySelectorAll('.filter-chip')];
+      const other = chips.find(chip => chip.textContent.trim() === 'Others');
+      const all = chips.find(chip => chip.textContent.trim().startsWith('All'));
+      const cards = [...root.querySelectorAll('.archive-slack-card')];
+      other.click();
+      const visibleAfterOther = cards.filter(card => getComputedStyle(card).display !== 'none');
+      const readAction = root.querySelector('.masonry-card-action');
+      const slackAction = root.querySelector('.view-in-slack');
+      const readStyle = getComputedStyle(readAction);
+      const slackStyle = getComputedStyle(slackAction);
+      const filterRect = filters.getBoundingClientRect();
+      const result = {
+        allCount: all.querySelector('.chip-count').textContent,
+        genericCardCount: cards.filter(card => card.dataset.cat === 'other').length,
+        visibleAfterOther: visibleAfterOther.length,
+        onlyGenericVisible: visibleAfterOther.every(card => card.dataset.cat === 'other'),
+        oneRow: getComputedStyle(filters).flexWrap === 'nowrap',
+        scrollsHorizontally: getComputedStyle(filters).overflowX === 'auto' && filters.scrollWidth > filters.clientWidth,
+        chipTouchHeight: Math.min(...chips.map(chip => chip.getBoundingClientRect().height)),
+        filtersWithinViewport: filterRect.left >= 0 && filterRect.right <= window.innerWidth,
+        actionParity: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'borderRadius', 'color', 'fontSize', 'fontWeight', 'lineHeight']
+          .every(property => readStyle[property] === slackStyle[property]),
+        noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth
+      };
+      all.click();
+      return result;
+    })()`);
+    assert.equal(mobileFiltersAndActions.allCount, '8');
+    assert.equal(mobileFiltersAndActions.genericCardCount, 2);
+    assert.equal(mobileFiltersAndActions.visibleAfterOther, 2);
+    assert.equal(mobileFiltersAndActions.onlyGenericVisible, true);
+    assert.equal(mobileFiltersAndActions.oneRow, true);
+    assert.equal(mobileFiltersAndActions.scrollsHorizontally, true);
+    assert.ok(mobileFiltersAndActions.chipTouchHeight >= 40);
+    assert.equal(mobileFiltersAndActions.filtersWithinViewport, true);
+    assert.equal(mobileFiltersAndActions.actionParity, true);
+    assert.equal(mobileFiltersAndActions.noOverflow, true);
 
     const reportChecks = await browser.evaluate(`(() => {
       const expected = [[19, 1, 6], [24, 8, 11], [28, 8, 8], [29, 6, 7]];

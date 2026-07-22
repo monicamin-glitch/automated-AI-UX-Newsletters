@@ -174,10 +174,12 @@
     .masonry-card-summary p { margin: 0; }
     .masonry-card-summary-value { margin-top: 8px !important; }
     .masonry-card-summary strong { color: var(--text-primary); font-weight: 700; }
-    .masonry-card-action { display: inline-flex; align-items: center; gap: 5px; margin-top: 13px; font-size: 12px; font-weight: 600; color: var(--primary); }
-    .masonry-card-body .masonry-card-action { margin-top: auto; padding-top: 14px; }
+    .masonry-card-action, .view-in-slack { display: inline-flex; align-items: center; gap: 4px; padding: 3px 6px; border-radius: 6px; color: var(--primary); font-size: 12px; font-weight: 600; line-height: 1.4; text-decoration: none; }
+    .masonry-card-action { width: fit-content; margin-top: 13px; }
+    .masonry-card-body .masonry-card-action { margin-top: auto; }
     .masonry-card-action svg { width: 13px; height: 13px; transition: transform 0.2s ease; }
     .masonry-card:hover .masonry-card-action svg { transform: translate(2px, -2px); }
+    .masonry-card:hover .masonry-card-action, .view-in-slack:hover, .view-in-slack:focus-visible { color: var(--primary-dark); background: var(--primary-tint); outline: none; }
 
     /* Shared Slack message dialog */
     #slack-message-dialog { width: min(680px, calc(100% - 32px)); max-height: min(82dvh, 820px); margin: auto; padding: 0; border: 0; border-radius: 18px; color: var(--text-primary); background: var(--card-bg); box-shadow: 0 28px 80px rgba(var(--shadow-rgb),0.25); overflow: hidden; }
@@ -213,8 +215,7 @@
     .slack-card.archive-slack-card { flex-direction: column; gap: 0; padding: 0; overflow: hidden; cursor: default; }
     .archive-slack-card-detail { width: 100%; display: flex; gap: 16px; padding: 24px 20px; border: 0; color: inherit; background: transparent; font: inherit; text-align: left; cursor: pointer; }
     .archive-slack-card-detail:focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.24); outline-offset: -3px; }
-    .view-in-slack { align-self: flex-end; display: inline-flex; align-items: center; gap: 4px; margin: 0 20px 18px auto; padding: 3px 6px; border-radius: 6px; color: var(--primary); font-size: 12px; font-weight: 600; line-height: 1.4; text-decoration: none; }
-    .view-in-slack:hover, .view-in-slack:focus-visible { color: var(--primary-dark); background: var(--primary-tint); outline: none; }
+    .view-in-slack { align-self: flex-end; margin: 0 20px 18px auto; }
 
     /* Resources Hub */
     .resource-page-header { margin-bottom: 28px; }
@@ -242,6 +243,9 @@
       .nav-tabs::-webkit-scrollbar { display: none; }
       .nav-tab { height: 44px; flex: none; padding: 0 14px; }
       .main { padding: 24px 16px 60px; }
+      .filters { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; }
+      .filters::-webkit-scrollbar { display: none; }
+      .filter-chip { flex: 0 0 auto; min-height: 40px; }
       .slack-card:not(.archive-slack-card), .archive-slack-card-detail { flex-direction: column; gap: 12px; }
       .slack-thread-tile { width: auto; min-width: 0; height: auto; min-height: 28px; padding: 6px 10px; border-radius: 999px; }
       .slack-thread-channel { font-size: 11px; line-height: 1.2; }
@@ -739,16 +743,16 @@
     <template id="week-report-2026-W28" data-week-start="2026-07-06" data-week-end="2026-07-12" data-week-range="July 6 to 12, 2026">
       <div class="week-report">
         <div class="section-header"><h2 class="section-title">Internal Updates</h2></div>
-        <div class="filters"><span class="filter-chip active" onclick="filterSlack('all', this)">All <span class="chip-count">7</span></span><span class="filter-chip" onclick="filterSlack('tools', this)">Tools &amp; Releases</span><span class="filter-chip" onclick="filterSlack('learning', this)">Learning &amp; Curriculum</span><span class="filter-chip" onclick="filterSlack('practices', this)">Best Practices</span><span class="filter-chip" onclick="filterSlack('others', this)">Others</span></div>
+        <div class="filters"><span class="filter-chip active" onclick="filterSlack('all', this)">All <span class="chip-count">8</span></span><span class="filter-chip" onclick="filterSlack('tools', this)">Tools &amp; Releases</span><span class="filter-chip" onclick="filterSlack('learning', this)">Learning &amp; Curriculum</span><span class="filter-chip" onclick="filterSlack('practices', this)">Best Practices</span><span class="filter-chip" onclick="filterSlack('other', this)">Others</span></div>
         <div class="slack-cards">
-          <a class="slack-card" data-slack-link="https://booking.enterprise.slack.com/archives/C0KD35Y9M/p1783303790590519" data-slack-title="China AI Workstream Bot Summarizes Sonnet 5, Fable 5, and Claude Cost Enforcement" data-slack-channel="#dev-china" data-slack-date="Jul 6" data-slack-author="China AI Workstream Bot" data-slack-quote="&lt;p&gt;AI Weekly Digest for 2026-06-29 to 2026-07-06 highlighted Sonnet 5, Fable 5, Claude Code cost-tier enforcement, MCP updates, model-cost debate, and approved-tool migration.&lt;/p&gt;" data-slack-content="&lt;p&gt;China AI Workstream Bot published the Jun 29-Jul 6 internal AI digest covering Sonnet 5, Fable 5, Claude Code caps, MCP updates, model-cost debate, and approved-tool migration.&lt;/p&gt;&lt;p&gt;For UX teams, it turns scattered engineering threads into one operational signal for choosing models, planning AI prototyping costs, and spotting workflow constraints before they affect teams.&lt;/p&gt;" href="https://booking.enterprise.slack.com/archives/C0KD35Y9M/p1783303790590519" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#dev-china</span></span><div class="slack-card-body"><h3 class="slack-card-title">China AI Workstream Bot Summarizes Sonnet 5, Fable 5, and Claude Cost Enforcement</h3><div class="slack-card-desc"><p>What is the update: China AI Workstream Bot published the Jun 29-Jul 6 internal digest covering Sonnet 5, Fable 5, Claude Code caps, MCP updates, model-cost debate, and approved-tool migration. Why it's valuable for UXers: it turns scattered engineering threads into one operational signal for choosing models, planning AI prototyping costs, and spotting workflow constraints before they affect teams.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">China AI Workstream Bot</span>, Jul 6</span></div></div></a>
+          <a class="slack-card" data-cat="other" data-slack-link="https://booking.enterprise.slack.com/archives/C0KD35Y9M/p1783303790590519" data-slack-title="China AI Workstream Bot Summarizes Sonnet 5, Fable 5, and Claude Cost Enforcement" data-slack-channel="#dev-china" data-slack-date="Jul 6" data-slack-author="China AI Workstream Bot" data-slack-quote="&lt;p&gt;AI Weekly Digest for 2026-06-29 to 2026-07-06 highlighted Sonnet 5, Fable 5, Claude Code cost-tier enforcement, MCP updates, model-cost debate, and approved-tool migration.&lt;/p&gt;" data-slack-content="&lt;p&gt;China AI Workstream Bot published the Jun 29-Jul 6 internal AI digest covering Sonnet 5, Fable 5, Claude Code caps, MCP updates, model-cost debate, and approved-tool migration.&lt;/p&gt;&lt;p&gt;For UX teams, it turns scattered engineering threads into one operational signal for choosing models, planning AI prototyping costs, and spotting workflow constraints before they affect teams.&lt;/p&gt;" href="https://booking.enterprise.slack.com/archives/C0KD35Y9M/p1783303790590519" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#dev-china</span></span><div class="slack-card-body"><h3 class="slack-card-title">China AI Workstream Bot Summarizes Sonnet 5, Fable 5, and Claude Cost Enforcement</h3><div class="slack-card-desc"><p>What is the update: China AI Workstream Bot published the Jun 29-Jul 6 internal digest covering Sonnet 5, Fable 5, Claude Code caps, MCP updates, model-cost debate, and approved-tool migration. Why it's valuable for UXers: it turns scattered engineering threads into one operational signal for choosing models, planning AI prototyping costs, and spotting workflow constraints before they affect teams.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">China AI Workstream Bot</span>, Jul 6</span></div></div></a>
           <a class="slack-card" data-cat="tools" href="https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783505667422479" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#design</span></span><div class="slack-card-body"><h3 class="slack-card-title">Claude Assistant Adds Dieter Actions, Scheduling, and a Budget Ring</h3><div class="slack-card-desc"><p><strong>What is the update:</strong> a new Claude Assistant release shipped Dieter actions, scheduled prompts, notes, model switching, and budget tracking.</p><p><strong>Why it's valuable for UXers:</strong> it brings repeatable design workflows and cost visibility into one internal tool.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Amine Zafri</span>, 2026/07/08</span><span class="slack-meta-replies">11 replies</span></div></div></a>
           <a class="slack-card" data-cat="tools" href="https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1783412257586729?thread_ts=1783412257.586729&amp;cid=C08F5QRGFDG" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#genai_eng</span></span><div class="slack-card-body"><h3 class="slack-card-title">Sourcegraph Official Lands in Toolbox with OAuth and No PAT</h3><div class="slack-card-desc"><p><strong>What is the update:</strong> Sourcegraph Official arrived in Toolbox with OAuth and richer repository search.</p><p><strong>Why it's valuable for UXers:</strong> codebase inspection becomes easier for design-system and design-to-code work.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Anushka Bhandari</span>, 2026/07/07</span><span class="slack-meta-replies">6 replies</span></div></div></a>
           <a class="slack-card" data-cat="learning" href="https://booking.enterprise.slack.com/archives/C09RJTFTMA5/p1783428393300619" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#ai-curriculum</span></span><div class="slack-card-body"><h3 class="slack-card-title">Design with AI Session 8 Videos and Transcripts Go Live</h3><div class="slack-card-desc"><p><strong>What is the update:</strong> Session 8 was published with recordings and transcripts.</p><p><strong>Why it's valuable for UXers:</strong> teams get a reusable learning artifact without depending on live attendance.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Nicole Winestock</span>, 2026/07/07</span><span class="slack-meta-replies">8 replies</span></div></div></a>
           <a class="slack-card" data-cat="learning" href="https://booking.enterprise.slack.com/archives/C0B4CV2EVL6/p1783692599105679" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#ai-for-ux</span></span><div class="slack-card-body"><h3 class="slack-card-title">AI for UX Session 3 Recording Explains Model and Agent Landscape</h3><div class="slack-card-desc"><p><strong>What is the update:</strong> Session 3 covered model types, multimodal capabilities, thinking models, and agents.</p><p><strong>Why it's valuable for UXers:</strong> it gives teams shared language for choosing tools.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Tim McKnight</span>, 2026/07/10</span><span class="slack-meta-replies">4 replies</span></div></div></a>
           <a class="slack-card" data-cat="practices" href="https://booking.enterprise.slack.com/archives/C09GMG8AL1L/p1783691170547189" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#ai-studio</span></span><div class="slack-card-body"><h3 class="slack-card-title">AI Studio Makes PII Guardrails Actionable Row by Row</h3><div class="slack-card-desc"><p><strong>What is the update:</strong> AI Studio now identifies rows and PII classes that trigger batch guardrails.</p><p><strong>Why it's valuable for UXers:</strong> safety feedback becomes specific enough to act on.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Anastasiia Barchukova</span>, 2026/07/10</span><span class="slack-meta-replies">9 replies</span></div></div></a>
           <a class="slack-card" data-cat="practices" href="https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783582593795409" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#design</span></span><div class="slack-card-body"><h3 class="slack-card-title">Figma Make Prompting Cheatsheet Captures Unrecorded Config Tips</h3><div class="slack-card-desc"><p><strong>What is the update:</strong> a Config recap shared reusable base-prompt and edit-prompt frameworks.</p><p><strong>Why it's valuable for UXers:</strong> designers gain a practical structure for steering AI prototypes.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Léo Fleury</span>, 2026/07/09</span><span class="slack-meta-replies">14 replies</span></div></div></a>
-          <a class="slack-card" data-cat="others" href="https://booking.enterprise.slack.com/archives/C09RJTFTMA5/p1783428393300619" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#ai-curriculum</span></span><div class="slack-card-body"><h3 class="slack-card-title">Design with AI Session 8 Covers PM Insights and Second-Brain Workflows</h3><div class="slack-card-desc"><p><strong>What is the update:</strong> Session 8 explored product perspectives and personal second-brain systems.</p><p><strong>Why it's valuable for UXers:</strong> teams can organise AI-generated insights alongside manual notes.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Nicole Winestock</span>, 2026/07/07</span><span class="slack-meta-replies">5 replies</span></div></div></a>
+          <a class="slack-card" data-cat="other" href="https://booking.enterprise.slack.com/archives/C09RJTFTMA5/p1783428393300619" target="_blank" rel="noopener noreferrer"><span class="slack-thread-tile"><span class="slack-thread-channel">#ai-curriculum</span></span><div class="slack-card-body"><h3 class="slack-card-title">Design with AI Session 8 Covers PM Insights and Second-Brain Workflows</h3><div class="slack-card-desc"><p><strong>What is the update:</strong> Session 8 explored product perspectives and personal second-brain systems.</p><p><strong>Why it's valuable for UXers:</strong> teams can organise AI-generated insights alongside manual notes.</p></div><div class="slack-card-meta"><svg class="slack-meta-logo"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Nicole Winestock</span>, 2026/07/07</span><span class="slack-meta-replies">5 replies</span></div></div></a>
         </div>
         <div class="section-header" style="margin-top: 48px;"><h2 class="section-title">External Updates</h2><p class="section-subtitle">Top picks and industry news</p></div>
         <div class="external-card-grid">
@@ -899,6 +903,8 @@
     const initialWeekPickerMonday = getISOWeekRange(selectedArchiveWeek.year, selectedArchiveWeek.week).monday;
     let weekPickerDisplayYear = initialWeekPickerMonday.getUTCFullYear();
     let weekPickerDisplayMonth = initialWeekPickerMonday.getUTCMonth();
+    let weekPickerYearNavigationMode = null;
+    let pendingWeekPickerYearNavigationMode;
 
     function archiveWeekKey(year, week) {
       return year + '-W' + String(week).padStart(2, '0');
@@ -938,6 +944,14 @@
 
     function getISOWeeksInYear(year) {
       return getISOWeekForDate(new Date(Date.UTC(year, 11, 28))).week;
+    }
+
+    function getWeekPickerISOYear(year, month) {
+      const representedYears = [...new Set(getMonthWeekRows(year, month).map(row => row.isoWeek.year))];
+      const representedArchiveYears = representedYears.filter(candidate => availableArchiveYears.includes(candidate));
+      if (representedArchiveYears.includes(year)) return year;
+      if (representedArchiveYears.includes(selectedArchiveWeek.year)) return selectedArchiveWeek.year;
+      return representedArchiveYears[0] ?? getISOWeekForDate(new Date(Date.UTC(year, month, 15))).year;
     }
 
     function getWeekPickerMonthBounds() {
@@ -1023,6 +1037,8 @@
     function renderMonthWeekPicker(year, month) {
       weekPickerDisplayYear = year;
       weekPickerDisplayMonth = month;
+      weekPickerYearNavigationMode = pendingWeekPickerYearNavigationMode ?? null;
+      pendingWeekPickerYearNavigationMode = undefined;
       const grid = document.getElementById('week-picker-grid');
       const yearLabel = document.getElementById('week-picker-year');
       const monthLabel = document.getElementById('week-picker-month');
@@ -1032,8 +1048,9 @@
       const nextMonthButton = document.getElementById('week-picker-month-next');
       if (!grid || !yearLabel || !monthLabel) return;
 
-      const yearIndex = availableArchiveYears.indexOf(year);
-      yearLabel.textContent = year;
+      const archiveYear = getWeekPickerISOYear(year, month);
+      const yearIndex = availableArchiveYears.indexOf(archiveYear);
+      yearLabel.textContent = archiveYear;
       monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' })
         .format(new Date(Date.UTC(year, month, 1)));
       previousYearButton.disabled = yearIndex <= 0;
@@ -1120,10 +1137,19 @@
     }
 
     function changeWeekPickerYear(direction) {
-      const currentIndex = availableArchiveYears.indexOf(weekPickerDisplayYear);
+      const currentISOYear = getWeekPickerISOYear(weekPickerDisplayYear, weekPickerDisplayMonth);
+      const currentIndex = availableArchiveYears.indexOf(currentISOYear);
       const targetIndex = currentIndex + direction;
       if (targetIndex < 0 || targetIndex >= availableArchiveYears.length) return;
-      renderMonthWeekPicker(availableArchiveYears[targetIndex], weekPickerDisplayMonth);
+      const targetISOYear = availableArchiveYears[targetIndex];
+      const followsWeekOne = weekPickerYearNavigationMode === 'week-one' || weekPickerDisplayYear !== currentISOYear;
+      if (followsWeekOne) {
+        const targetMonday = getISOWeekRange(targetISOYear, 1).monday;
+        pendingWeekPickerYearNavigationMode = 'week-one';
+        renderMonthWeekPicker(targetMonday.getUTCFullYear(), targetMonday.getUTCMonth());
+        return;
+      }
+      renderMonthWeekPicker(targetISOYear, weekPickerDisplayMonth);
     }
 
     function changeWeekPickerMonth(direction) {
