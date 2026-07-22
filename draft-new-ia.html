@@ -31,7 +31,7 @@
       --max-width: 960px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
 
     /* Top Navigation */
     .top-nav { position: sticky; top: 0; z-index: 100; background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; height: 60px; }
@@ -79,7 +79,7 @@
     .topic-action:disabled { cursor: default; opacity: 0.78; }
     .topic-action svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* ISO week picker (for All Weeks page) */
+    /* Month-calendar week picker (for All Weeks page) */
     .week-picker-shell { position: relative; margin-bottom: 30px; }
     .week-picker-trigger { width: 100%; min-height: 72px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: 14px; color: var(--text-primary); background: var(--card-bg); font-family: inherit; text-align: left; cursor: pointer; box-shadow: 0 2px 8px rgba(var(--shadow-rgb),0.025); transition: border-color 0.18s ease, box-shadow 0.18s ease; }
     .week-picker-trigger:hover { border-color: #bfdbfe; box-shadow: 0 8px 22px rgba(var(--shadow-rgb),0.06); }
@@ -93,19 +93,32 @@
     .week-picker-trigger[aria-expanded="true"] .week-picker-chevron { transform: rotate(180deg); }
     .week-picker-popover { position: absolute; z-index: 40; top: calc(100% + 8px); left: 0; width: min(100%, 540px); padding: 16px; border: 1px solid var(--border); border-radius: 16px; background: var(--card-bg); box-shadow: 0 20px 48px rgba(var(--shadow-rgb),0.16); }
     .week-picker-popover[hidden] { display: none; }
-    .week-picker-popover-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-    .week-picker-year { min-width: 96px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
-    .week-picker-year-button { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 9px; color: var(--text-secondary); background: var(--card-bg); cursor: pointer; }
-    .week-picker-year-button:hover { color: var(--primary); border-color: #bfdbfe; background: var(--primary-tint); }
-    .week-picker-year-button:disabled { color: #cbd5e1; border-color: var(--border-light); background: #f8fafc; cursor: not-allowed; }
-    .week-picker-year-button svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .week-picker-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
-    .week-picker-option { min-height: 36px; border: 1px solid transparent; border-radius: 9px; color: var(--text-muted); background: #f8fafc; font-family: inherit; font-size: 10px; font-weight: 650; cursor: not-allowed; }
-    .week-picker-option.is-available { color: var(--primary-ink); background: var(--primary-tint); border-color: #dbeafe; cursor: pointer; }
-    .week-picker-option.is-available:hover { color: var(--primary); border-color: #93c5fd; }
-    .week-picker-option.is-selected { color: white; background: var(--primary); border-color: var(--primary); }
-    .week-picker-option.is-current:not(.is-selected) { color: var(--primary-ink); background: #ffffff; border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
-    .week-picker-option.is-current.is-selected { box-shadow: none; }
+    .week-picker-popover-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+    .week-picker-year-controls, .week-picker-month-controls { display: flex; align-items: center; gap: 6px; }
+    .week-picker-year { min-width: 54px; text-align: center; font-size: 13px; font-weight: 750; letter-spacing: -0.15px; }
+    .week-picker-month { min-width: 92px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
+    .week-picker-nav-button { width: 38px; height: 38px; flex: 0 0 38px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 9px; color: var(--text-secondary); background: var(--card-bg); cursor: pointer; }
+    .week-picker-nav-button:hover { color: var(--primary); border-color: #bfdbfe; background: var(--primary-tint); }
+    .week-picker-nav-button:focus-visible, .week-picker-row:focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.24); outline-offset: 2px; }
+    .week-picker-nav-button:disabled, .week-picker-year-button:disabled { color: #cbd5e1; border-color: var(--border-light); background: #f8fafc; cursor: not-allowed; }
+    .week-picker-nav-button svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .week-picker-calendar { width: 100%; }
+    .week-picker-calendar-columns { display: grid; grid-template-columns: minmax(24px, 0.55fr) repeat(7, minmax(0, 1fr)); align-items: center; }
+    .week-picker-weekdays { min-height: 30px; padding: 0 5px; color: var(--text-muted); font-size: 10px; font-weight: 700; text-align: center; text-transform: uppercase; }
+    .week-picker-weekdays .week-picker-week-number { color: #cbd5e1; font-size: 8px; }
+    .week-picker-grid { display: grid; gap: 4px; }
+    .week-picker-row { min-height: 44px; padding: 0 5px; border-radius: 10px; color: var(--text-muted); background: #f8fafc; font-family: inherit; cursor: default; transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease; }
+    .week-picker-row.is-available { color: var(--text-primary); background: #ffffff; cursor: pointer; }
+    .week-picker-row.is-available:hover { background: #f8fafc; }
+    .week-picker-row.is-current:not(.is-selected) { box-shadow: inset 0 0 0 1px #2563EB; }
+    .week-picker-row.is-selected { color: #ffffff; background: #2563EB; }
+    .week-picker-row.is-current.is-selected { box-shadow: none; }
+    .week-picker-row[aria-disabled="true"] { color: #94a3b8; background: #f8fafc; cursor: not-allowed; }
+    .week-picker-week-number, .week-picker-date { display: grid; place-items: center; min-width: 0; line-height: 1; }
+    .week-picker-week-number { font-size: 9px; font-weight: 700; }
+    .week-picker-date { font-size: 12px; font-weight: 650; }
+    .week-picker-date.is-outside-month { opacity: 0.38; }
+    .week-picker-row.is-selected .week-picker-date, .week-picker-row.is-selected .week-picker-week-number { color: #ffffff; }
     .week-picker-popover-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light); color: var(--text-muted); font-size: 10px; }
     .week-picker-legend { display: inline-flex; align-items: center; gap: 6px; }
     .week-picker-legend-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
@@ -184,7 +197,11 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .top-nav { padding: 0 20px; }
+      .top-nav { padding: 0 20px; overflow: hidden; }
+      .nav-logo { flex: none; margin-right: 20px; }
+      .nav-tabs { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+      .nav-tabs::-webkit-scrollbar { display: none; }
+      .nav-tab { flex: none; }
       .main { padding: 24px 16px 60px; }
       .external-card-grid { grid-template-columns: repeat(2, 1fr); }
       .resource-categories { grid-template-columns: 1fr; }
@@ -202,9 +219,17 @@
       .slack-card { gap: 12px; padding: 17px 15px; }
       .slack-thread-tile { width: 64px; min-width: 64px; height: 64px; padding: 6px; }
       .slack-thread-channel { font-size: 8.5px; }
-      .week-picker-popover { width: 100%; padding: 14px; }
-      .week-picker-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; }
-      .week-picker-option { min-height: 34px; font-size: 9px; }
+      .week-picker-popover { width: 100%; padding: 12px; }
+      .week-picker-popover-header { gap: 6px; }
+      .week-picker-year-controls, .week-picker-month-controls { gap: 3px; }
+      .week-picker-year { min-width: 38px; font-size: 11px; }
+      .week-picker-month { min-width: 58px; font-size: 14px; }
+      .week-picker-nav-button { width: 44px; height: 44px; flex-basis: 44px; }
+      .week-picker-calendar-columns { grid-template-columns: 24px repeat(7, minmax(0, 1fr)); }
+      .week-picker-weekdays { padding: 0 2px; font-size: 9px; }
+      .week-picker-row { min-height: 44px; padding: 0 2px; }
+      .week-picker-date { font-size: 11px; }
+      .week-picker-week-number { font-size: 8px; }
       .week-picker-popover-footer { align-items: flex-start; flex-direction: column; }
       .external-card-grid { grid-template-columns: 1fr; }
       .resource-category { padding: 19px 16px; border-radius: 15px; }
@@ -685,11 +710,23 @@
 
         <div class="week-picker-popover" id="week-picker-popover" role="dialog" aria-label="Choose a calendar week" hidden>
           <div class="week-picker-popover-header">
-            <button class="week-picker-year-button" id="week-picker-year-previous" type="button" aria-label="Previous year" onclick="changeWeekPickerYear(-1)" disabled><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
-            <div class="week-picker-year" id="week-picker-year">2026</div>
-            <button class="week-picker-year-button" id="week-picker-year-next" type="button" aria-label="Next year" onclick="changeWeekPickerYear(1)" disabled><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+            <div class="week-picker-year-controls" aria-label="Year navigation">
+              <button class="week-picker-nav-button week-picker-year-button" id="week-picker-year-previous" type="button" aria-label="Previous year" onclick="changeWeekPickerYear(-1)" disabled><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+              <div class="week-picker-year" id="week-picker-year">2026</div>
+              <button class="week-picker-nav-button week-picker-year-button" id="week-picker-year-next" type="button" aria-label="Next year" onclick="changeWeekPickerYear(1)" disabled><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+            <div class="week-picker-month-controls" aria-label="Month navigation">
+              <button class="week-picker-nav-button" id="week-picker-month-previous" type="button" aria-label="Previous month" onclick="changeWeekPickerMonth(-1)"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+              <div class="week-picker-month" id="week-picker-month">July</div>
+              <button class="week-picker-nav-button" id="week-picker-month-next" type="button" aria-label="Next month" onclick="changeWeekPickerMonth(1)"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
           </div>
-          <div class="week-picker-grid" id="week-picker-grid" role="grid" aria-label="Weeks in 2026"></div>
+          <div class="week-picker-calendar">
+            <div class="week-picker-weekdays week-picker-calendar-columns" role="row" aria-hidden="true">
+              <span class="week-picker-week-number">Wk</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>
+            <div class="week-picker-grid" id="week-picker-grid" role="grid" aria-labelledby="week-picker-month week-picker-year"></div>
+          </div>
           <div class="week-picker-popover-footer">
             <span class="week-picker-legend"><span class="week-picker-legend-dot"></span>Report available</span>
             <span id="week-picker-detail">Week 29 - July 13 to 19, 2026</span>
@@ -755,7 +792,7 @@
       document.getElementById('page-' + pageId).classList.add('active');
       tabEl.classList.add('active');
       if (pageId === 'all') {
-        renderWeekPicker(weekPickerDisplayYear);
+        renderMonthWeekPicker(weekPickerDisplayYear, weekPickerDisplayMonth);
         syncArchiveWeekContent();
       }
     }
@@ -782,19 +819,12 @@
     ]);
     const currentArchiveWeek = { year: 2026, week: 29 };
     let selectedArchiveWeek = { year: 2026, week: 29 };
-    let weekPickerDisplayYear = 2026;
+    const initialWeekPickerMonday = getISOWeekRange(selectedArchiveWeek.year, selectedArchiveWeek.week).monday;
+    let weekPickerDisplayYear = initialWeekPickerMonday.getUTCFullYear();
+    let weekPickerDisplayMonth = initialWeekPickerMonday.getUTCMonth();
 
     function archiveWeekKey(year, week) {
       return year + '-W' + String(week).padStart(2, '0');
-    }
-
-    function isLeapYear(year) {
-      return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
-    }
-
-    function getISOWeeksInYear(year) {
-      const lastDay = new Date(Date.UTC(year, 11, 31)).getUTCDay();
-      return lastDay === 4 || (lastDay === 5 && isLeapYear(year)) ? 53 : 52;
     }
 
     function getISOWeekRange(year, week) {
@@ -805,6 +835,39 @@
       const sunday = new Date(monday);
       sunday.setUTCDate(monday.getUTCDate() + 6);
       return { monday, sunday };
+    }
+
+    function getISOWeekForDate(date) {
+      const target = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+      const day = target.getUTCDay() || 7;
+      target.setUTCDate(target.getUTCDate() + 4 - day);
+      const year = target.getUTCFullYear();
+      const yearStart = new Date(Date.UTC(year, 0, 1));
+      const week = Math.ceil((((target - yearStart) / 86400000) + 1) / 7);
+      return { year, week };
+    }
+
+    function getMonthWeekRows(year, month) {
+      const firstOfMonth = new Date(Date.UTC(year, month, 1));
+      const firstDay = firstOfMonth.getUTCDay() || 7;
+      const firstMonday = new Date(firstOfMonth);
+      firstMonday.setUTCDate(firstOfMonth.getUTCDate() - firstDay + 1);
+
+      const lastOfMonth = new Date(Date.UTC(year, month + 1, 0));
+      const lastDay = lastOfMonth.getUTCDay() || 7;
+      const lastSunday = new Date(lastOfMonth);
+      lastSunday.setUTCDate(lastOfMonth.getUTCDate() + 7 - lastDay);
+
+      const rows = [];
+      for (let monday = new Date(firstMonday); monday <= lastSunday; monday.setUTCDate(monday.getUTCDate() + 7)) {
+        const dates = Array.from({ length: 7 }, (_, dayOffset) => {
+          const date = new Date(monday);
+          date.setUTCDate(monday.getUTCDate() + dayOffset);
+          return date;
+        });
+        rows.push({ monday: new Date(monday), dates, isoWeek: getISOWeekForDate(monday) });
+      }
+      return rows;
     }
 
     function formatArchiveWeekParts(year, week) {
@@ -826,39 +889,85 @@
       return weekLabel + ' - ' + dateRange;
     }
 
-    function renderWeekPicker(year) {
+    function focusAdjacentWeekPickerRow(row, direction) {
+      const availableRows = Array.from(document.querySelectorAll('#week-picker-grid .week-picker-row.is-available'));
+      const currentIndex = availableRows.indexOf(row);
+      const target = availableRows[currentIndex + direction];
+      if (target) target.focus();
+    }
+
+    function renderMonthWeekPicker(year, month) {
       weekPickerDisplayYear = year;
+      weekPickerDisplayMonth = month;
       const grid = document.getElementById('week-picker-grid');
       const yearLabel = document.getElementById('week-picker-year');
-      const previousButton = document.getElementById('week-picker-year-previous');
-      const nextButton = document.getElementById('week-picker-year-next');
-      if (!grid || !yearLabel) return;
+      const monthLabel = document.getElementById('week-picker-month');
+      const previousYearButton = document.getElementById('week-picker-year-previous');
+      const nextYearButton = document.getElementById('week-picker-year-next');
+      const previousMonthButton = document.getElementById('week-picker-month-previous');
+      const nextMonthButton = document.getElementById('week-picker-month-next');
+      if (!grid || !yearLabel || !monthLabel) return;
 
-      const weeksInYear = getISOWeeksInYear(year);
       const yearIndex = availableArchiveYears.indexOf(year);
       yearLabel.textContent = year;
-      previousButton.disabled = yearIndex <= 0;
-      nextButton.disabled = yearIndex === -1 || yearIndex >= availableArchiveYears.length - 1;
-      grid.setAttribute('aria-label', 'Weeks in ' + year);
+      monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' })
+        .format(new Date(Date.UTC(year, month, 1)));
+      previousYearButton.disabled = yearIndex <= 0;
+      nextYearButton.disabled = yearIndex === -1 || yearIndex >= availableArchiveYears.length - 1;
+      previousMonthButton.disabled = yearIndex <= 0 && month === 0;
+      nextMonthButton.disabled = yearIndex >= availableArchiveYears.length - 1 && month === 11;
+      grid.setAttribute('aria-label', monthLabel.textContent + ' ' + year + ' calendar weeks');
       grid.replaceChildren();
 
-      for (let week = 1; week <= weeksInYear; week += 1) {
-        const key = archiveWeekKey(year, week);
+      getMonthWeekRows(year, month).forEach(({ dates, isoWeek }) => {
+        const key = archiveWeekKey(isoWeek.year, isoWeek.week);
         const isAvailable = availableArchiveWeeks.has(key);
-        const isSelected = selectedArchiveWeek.year === year && selectedArchiveWeek.week === week;
-        const isCurrent = currentArchiveWeek.year === year && currentArchiveWeek.week === week;
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'week-picker-option' + (isAvailable ? ' is-available' : '') + (isSelected ? ' is-selected' : '') + (isCurrent ? ' is-current' : '');
-        button.textContent = 'W' + String(week).padStart(2, '0');
-        button.setAttribute('role', 'gridcell');
-        button.setAttribute('aria-label', formatArchiveWeekName(year, week));
-        button.setAttribute('aria-selected', String(isSelected));
-        button.setAttribute('aria-current', isCurrent ? 'date' : 'false');
-        button.disabled = !isAvailable;
-        if (isAvailable) button.addEventListener('click', () => selectArchiveWeek(year, week));
-        grid.appendChild(button);
-      }
+        const isSelected = selectedArchiveWeek.year === isoWeek.year && selectedArchiveWeek.week === isoWeek.week;
+        const isCurrent = currentArchiveWeek.year === isoWeek.year && currentArchiveWeek.week === isoWeek.week;
+        const row = document.createElement('div');
+        row.className = 'week-picker-row week-picker-calendar-columns' + (isAvailable ? ' is-available' : '') + (isSelected ? ' is-selected' : '') + (isCurrent ? ' is-current' : '');
+        row.dataset.weekKey = key;
+        row.setAttribute('role', 'row');
+        row.setAttribute('aria-label', formatArchiveWeekName(isoWeek.year, isoWeek.week));
+        row.setAttribute('aria-selected', String(isSelected));
+        row.setAttribute('aria-disabled', String(!isAvailable));
+        row.setAttribute('aria-current', isCurrent ? 'date' : 'false');
+        row.tabIndex = isAvailable ? 0 : -1;
+
+        const weekNumber = document.createElement('span');
+        weekNumber.className = 'week-picker-week-number';
+        weekNumber.setAttribute('role', 'gridcell');
+        weekNumber.textContent = 'W' + isoWeek.week;
+        row.appendChild(weekNumber);
+
+        dates.forEach(date => {
+          const dateCell = document.createElement('span');
+          const isOutsideMonth = date.getUTCMonth() !== month;
+          dateCell.className = 'week-picker-date' + (isOutsideMonth ? ' is-outside-month' : '');
+          dateCell.setAttribute('role', 'gridcell');
+          dateCell.textContent = date.getUTCDate();
+          row.appendChild(dateCell);
+        });
+
+        if (isAvailable) {
+          const selectWeek = () => selectArchiveWeek(isoWeek.year, isoWeek.week);
+          row.addEventListener('click', selectWeek);
+          row.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              selectArchiveWeek(isoWeek.year, isoWeek.week);
+            } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+              event.preventDefault();
+              focusAdjacentWeekPickerRow(row, event.key === 'ArrowUp' ? -1 : 1);
+            }
+          });
+        }
+        grid.appendChild(row);
+      });
+    }
+
+    function renderWeekPicker(year) {
+      renderMonthWeekPicker(year, weekPickerDisplayMonth);
     }
 
     function toggleWeekPicker(forceOpen) {
@@ -867,21 +976,36 @@
       const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : popover.hidden;
       popover.hidden = !shouldOpen;
       trigger.setAttribute('aria-expanded', String(shouldOpen));
-      if (shouldOpen) renderWeekPicker(weekPickerDisplayYear);
+      if (shouldOpen) {
+        const selectedMonday = getISOWeekRange(selectedArchiveWeek.year, selectedArchiveWeek.week).monday;
+        renderMonthWeekPicker(selectedMonday.getUTCFullYear(), selectedMonday.getUTCMonth());
+        if (typeof forceOpen !== 'boolean') {
+          document.querySelector('#week-picker-grid .week-picker-row.is-selected')?.focus();
+        }
+      }
     }
 
     function changeWeekPickerYear(direction) {
       const currentIndex = availableArchiveYears.indexOf(weekPickerDisplayYear);
       const targetIndex = currentIndex + direction;
       if (targetIndex < 0 || targetIndex >= availableArchiveYears.length) return;
-      renderWeekPicker(availableArchiveYears[targetIndex]);
+      renderMonthWeekPicker(availableArchiveYears[targetIndex], weekPickerDisplayMonth);
+    }
+
+    function changeWeekPickerMonth(direction) {
+      const targetMonth = new Date(Date.UTC(weekPickerDisplayYear, weekPickerDisplayMonth + direction, 1));
+      const targetYear = targetMonth.getUTCFullYear();
+      if (!availableArchiveYears.includes(targetYear)) return;
+      renderMonthWeekPicker(targetYear, targetMonth.getUTCMonth());
     }
 
     function selectArchiveWeek(year, week) {
       const key = archiveWeekKey(year, week);
       if (!availableArchiveWeeks.has(key)) return;
       selectedArchiveWeek = { year, week };
-      weekPickerDisplayYear = year;
+      const selectedMonday = getISOWeekRange(year, week).monday;
+      weekPickerDisplayYear = selectedMonday.getUTCFullYear();
+      weekPickerDisplayMonth = selectedMonday.getUTCMonth();
       const { weekLabel, dateRange } = formatArchiveWeekParts(year, week);
       const weekName = weekLabel + ' - ' + dateRange;
       document.getElementById('week-picker-trigger-week').textContent = weekLabel;
@@ -890,6 +1014,7 @@
       document.getElementById('week-picker-detail').textContent = weekName;
       toggleWeekPicker(false);
       syncArchiveWeekContent();
+      document.getElementById('week-picker-trigger').focus();
     }
 
     function syncArchiveWeekContent() {
@@ -986,7 +1111,10 @@
     });
 
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape') toggleWeekPicker(false);
+      if (event.key === 'Escape' && !document.getElementById('week-picker-popover').hidden) {
+        toggleWeekPicker(false);
+        document.getElementById('week-picker-trigger').focus();
+      }
     });
 
   </script>

@@ -178,23 +178,46 @@ test('uses Apple System without loading or preferring Inter', () => {
   assert.doesNotMatch(html, /font-family: 'Inter'/);
 });
 
-test('replaces the archive dropdown with an accessible year and ISO week picker', () => {
+test('replaces the archive dropdown with an accessible month-calendar week picker', () => {
   assert.doesNotMatch(html, /<select class="week-picker-select"/);
   assert.match(html, /id="week-picker-trigger"/);
   assert.match(html, /aria-haspopup="dialog"/);
   assert.match(html, /id="week-picker-popover"/);
   assert.match(html, /id="week-picker-year"/);
-  assert.match(html, /id="week-picker-grid"/);
+  assert.match(html, /id="week-picker-month"/);
+  assert.match(html, /class="[^"]*week-picker-weekdays[^"]*"[^>]*>[\s\S]*?>Mon<[\s\S]*?>Tue<[\s\S]*?>Wed<[\s\S]*?>Thu<[\s\S]*?>Fri<[\s\S]*?>Sat<[\s\S]*?>Sun</);
+  assert.match(html, /id="week-picker-grid"[^>]*role="grid"/);
   assert.match(html, /Week 29 - July 13 to 19, 2026/);
 });
 
-test('builds a scalable 52 or 53 week grid with year navigation', () => {
-  assert.match(html, /function getISOWeeksInYear\(year\)/);
+test('builds UTC-safe Monday-Sunday calendar rows with ISO week metadata', () => {
   assert.match(html, /function getISOWeekRange\(year, week\)/);
-  assert.match(html, /function renderWeekPicker\(year\)/);
-  assert.match(html, /weeksInYear/);
+  assert.match(html, /function getISOWeekForDate\(date\)/);
+  assert.match(html, /function getMonthWeekRows\(year, month\)/);
+  assert.match(html, /function renderMonthWeekPicker\(year, month\)/);
+  assert.match(html, /week-picker-week-number/);
+  assert.match(html, /week-picker-date/);
+  assert.match(html, /is-outside-month/);
+  assert.doesNotMatch(html, /button\.textContent = 'W' \+ String\(week\)\.padStart/);
+});
+
+test('uses whole calendar rows as accessible selectable or disabled targets', () => {
+  assert.match(html, /row\.setAttribute\('role', 'row'\)/);
+  assert.match(html, /row\.setAttribute\('aria-selected', String\(isSelected\)\)/);
+  assert.match(html, /row\.setAttribute\('aria-disabled', String\(!isAvailable\)\)/);
+  assert.match(html, /row\.tabIndex = isAvailable \? 0 : -1/);
+  assert.match(html, /row\.addEventListener\('click', selectWeek\)/);
+  assert.match(html, /event\.key === 'Enter' \|\| event\.key === ' '/);
+  assert.match(html, /selectArchiveWeek\(isoWeek\.year, isoWeek\.week\)/);
+});
+
+test('navigates months within the only available archive year', () => {
+  assert.match(html, /changeWeekPickerMonth\(-1\)/);
+  assert.match(html, /changeWeekPickerMonth\(1\)/);
   assert.match(html, /changeWeekPickerYear\(-1\)/);
   assert.match(html, /changeWeekPickerYear\(1\)/);
+  assert.match(html, /weekPickerDisplayMonth/);
+  assert.match(html, /getISOWeekRange\(selectedArchiveWeek\.year, selectedArchiveWeek\.week\)\.monday/);
 });
 
 test('keeps week 28 archived and promotes real calendar week 29 to Latest Week', () => {
@@ -363,7 +386,20 @@ test('renders external update and UX value as separate summary paragraphs', () =
   assert.match(html, /\.masonry-card-summary-value \{ margin-top: 8px !important; \}/);
 });
 
-test('shows the current week ring only while it is not selected', () => {
-  assert.match(html, /\.week-picker-option\.is-current:not\(\.is-selected\) \{[^}]*background: #ffffff;[^}]*box-shadow: inset 0 0 0 1px var\(--primary\)/);
-  assert.match(html, /\.week-picker-option\.is-current\.is-selected \{[^}]*box-shadow: none/);
+test('shows the required available, current, selected, and unavailable row states', () => {
+  assert.match(html, /\.week-picker-row\.is-available \{[^}]*background: #ffffff/);
+  assert.match(html, /\.week-picker-row\.is-available:hover \{[^}]*background: #f8fafc/);
+  assert.match(html, /\.week-picker-row\.is-current:not\(\.is-selected\) \{[^}]*box-shadow: inset 0 0 0 1px #2563EB/);
+  assert.match(html, /\.week-picker-row\.is-selected \{[^}]*color: #ffffff;[^}]*background: #2563EB/);
+  assert.match(html, /\.week-picker-row\.is-current\.is-selected \{[^}]*box-shadow: none/);
+  assert.match(html, /\.week-picker-row\[aria-disabled="true"\] \{[^}]*cursor: not-allowed/);
+});
+
+test('keeps seven date columns and 44px whole-row targets at 390px', () => {
+  assert.match(html, /body \{[^}]*overflow-x: hidden/);
+  assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.nav-tabs \{[^}]*min-width: 0;[^}]*overflow-x: auto/);
+  assert.match(html, /\.week-picker-calendar-columns \{[^}]*grid-template-columns: minmax\(24px, 0\.55fr\) repeat\(7, minmax\(0, 1fr\)\)/);
+  assert.match(html, /\.week-picker-row \{[^}]*min-height: 44px/);
+  assert.match(html, /@media \(max-width: 520px\) \{[\s\S]*?\.week-picker-calendar-columns \{[^}]*grid-template-columns: 24px repeat\(7, minmax\(0, 1fr\)\)/);
+  assert.doesNotMatch(html, /\.week-picker-grid \{ grid-template-columns: repeat\(6/);
 });
