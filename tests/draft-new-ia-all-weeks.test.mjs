@@ -671,8 +671,9 @@ test('keeps seven date columns and 44px whole-row targets at 390px', () => {
 test('opens archived Slack cards in a detail dialog with their original permalink', () => {
   assert.match(html, /<dialog id="slack-message-dialog"/);
   assert.match(html, /id="slack-message-dialog-action"/);
-  assert.match(html, /function handleArchiveSlackCardClick\(event\)/);
-  assert.match(html, /event\.target\.closest\('#archive-week-content \.slack-card'\)/);
+  assert.match(html, /const detailTrigger = document\.createElement\('button'\)/);
+  assert.match(html, /detailTrigger\.setAttribute\('aria-haspopup', 'dialog'\)/);
+  assert.doesNotMatch(html, /archiveCard\.setAttribute\('role', 'button'\)/);
   assert.match(html, /dialogAction\.href = details\.permalink/);
   assert.match(html, /slackMessageDialog\.showModal\(\)/);
 });
@@ -754,11 +755,9 @@ test('gives every archived Slack card a dialog, direct permalink action, and tru
     }[id]; } };
     ${extractArchiveDialogFunction('getArchiveSlackMessageDetails')}
     ${extractArchiveDialogFunction('openSlackMessageDialog')}
-    ${extractArchiveDialogFunction('handleArchiveSlackCardClick')}
     ${extractArchiveDialogFunction('preventArchiveSlackActionPropagation')}
     globalThis.dialogHarness = {
       getArchiveSlackMessageDetails,
-      handleArchiveSlackCardClick,
       openSlackMessageDialog,
       preventArchiveSlackActionPropagation
     };
@@ -782,28 +781,201 @@ test('gives every archived Slack card a dialog, direct permalink action, and tru
         return null;
       }
     };
-    const clickEvent = {
-      target: { closest: selector => selector === '#archive-week-content .view-in-slack' ? null : card },
-      preventDefaultCalled: false,
-      preventDefault() { this.preventDefaultCalled = true; }
-    };
-
-    assert.equal(runtime.handleArchiveSlackCardClick(clickEvent), true, record.permalink);
-    assert.equal(clickEvent.preventDefaultCalled, true, record.permalink);
+    runtime.openSlackMessageDialog(card);
     assert.equal(harness.action.href, record.permalink, record.permalink);
     assert.equal(harness.copy.innerHTML, record.original || record.summary, record.permalink);
     assert.equal(harness.context.textContent, record.original ? 'Original Slack message' : 'Archived summary — original message unavailable', record.permalink);
   }
   assert.equal(harness.dialog.showCount, 63);
 
-  const directLinkEvent = {
-    target: { closest: selector => selector === '#archive-week-content .view-in-slack' ? {} : null },
-    preventDefaultCalled: false,
-    preventDefault() { this.preventDefaultCalled = true; }
-  };
-  assert.equal(runtime.handleArchiveSlackCardClick(directLinkEvent), false);
-  assert.equal(directLinkEvent.preventDefaultCalled, false);
   let propagationStopped = false;
   runtime.preventArchiveSlackActionPropagation({ stopPropagation() { propagationStopped = true; } });
   assert.equal(propagationStopped, true);
+});
+
+class ArchiveTestElement {
+  constructor(tagName, attributes = {}) {
+    this.tagName = tagName.toUpperCase();
+    this.attributeMap = new Map(Object.entries(attributes));
+    this.dataset = {};
+    this.children = [];
+    this.parentElement = null;
+    this.listeners = new Map();
+    this.textContent = '';
+    this.innerHTML = '';
+  }
+
+  get attributes() {
+    return [...this.attributeMap].map(([name, value]) => ({ name, value }));
+  }
+
+  get firstChild() {
+    return this.children[0] ?? null;
+  }
+
+  get className() {
+    return this.getAttribute('class') ?? '';
+  }
+
+  set className(value) {
+    this.setAttribute('class', value);
+  }
+
+  get classList() {
+    return {
+      add: (...names) => {
+        const classes = new Set(this.className.split(/\s+/).filter(Boolean));
+        names.forEach(name => classes.add(name));
+        this.className = [...classes].join(' ');
+      }
+    };
+  }
+
+  get href() { return this.getAttribute('href') ?? ''; }
+  set href(value) { this.setAttribute('href', value); }
+  get target() { return this.getAttribute('target') ?? ''; }
+  set target(value) { this.setAttribute('target', value); }
+  get rel() { return this.getAttribute('rel') ?? ''; }
+  set rel(value) { this.setAttribute('rel', value); }
+
+  setAttribute(name, value) {
+    this.attributeMap.set(name, String(value));
+  }
+
+  getAttribute(name) {
+    return this.attributeMap.get(name) ?? null;
+  }
+
+  appendChild(child) {
+    if (child.parentElement) {
+      const index = child.parentElement.children.indexOf(child);
+      if (index >= 0) child.parentElement.children.splice(index, 1);
+    }
+    child.parentElement = this;
+    this.children.push(child);
+    return child;
+  }
+
+  replaceWith(replacement) {
+    const index = this.parentElement?.children.indexOf(this) ?? -1;
+    assert.notEqual(index, -1, 'test card must be attached before replacement');
+    this.parentElement.children.splice(index, 1, replacement);
+    replacement.parentElement = this.parentElement;
+    this.parentElement = null;
+  }
+
+  querySelector(selector) {
+    const match = element => selector.startsWith('.') && element.className.split(/\s+/).includes(selector.slice(1));
+    for (const child of this.children) {
+      if (match(child)) return child;
+      const descendant = child.querySelector(selector);
+      if (descendant) return descendant;
+    }
+    return null;
+  }
+
+  addEventListener(type, listener) {
+    this.listeners.set(type, listener);
+  }
+
+  dispatch(type, event = {}) {
+    this.listeners.get(type)?.({ currentTarget: this, ...event });
+  }
+}
+
+function createArchiveSlackCard(record) {
+  const container = new ArchiveTestElement('div');
+  const card = new ArchiveTestElement('a', {
+    class: 'slack-card',
+    href: record.permalink,
+    'data-cat': 'slack'
+  });
+  card.dataset = {
+    slackLink: record.dataSlackLink,
+    slackQuote: record.original,
+    slackChannel: record.channel,
+    slackAuthor: record.author,
+    slackDate: record.date
+  };
+  const body = new ArchiveTestElement('div', { class: 'slack-card-body' });
+  const summary = new ArchiveTestElement('div', { class: 'slack-card-desc' });
+  summary.innerHTML = record.summary;
+  const meta = new ArchiveTestElement('div', { class: 'slack-card-meta' });
+  body.appendChild(summary);
+  body.appendChild(meta);
+  card.appendChild(body);
+  container.appendChild(card);
+  return { container, card };
+}
+
+test('prepares stored-original and href-only Slack cards as sibling detail and direct-link controls', () => {
+  const records = getArchivedSlackCardRecords();
+  const representatives = [
+    records.find(record => record.original),
+    records.find(record => !record.original)
+  ];
+  assert.equal(representatives.filter(Boolean).length, 2);
+
+  const harness = {
+    action: { href: '' },
+    channel: { textContent: '' },
+    author: { textContent: '' },
+    date: { textContent: '' },
+    copy: { innerHTML: '' },
+    context: { textContent: '' },
+    dialog: { showCount: 0, showModal() { this.showCount += 1; } },
+    createElement: tagName => new ArchiveTestElement(tagName)
+  };
+  const runtime = runInNewContext(`
+    const slackMessageDialog = harness.dialog;
+    const dialogAction = harness.action;
+    const document = {
+      createElement: harness.createElement,
+      getElementById(id) { return {
+        'slack-message-dialog-channel': harness.channel,
+        'slack-message-dialog-author': harness.author,
+        'slack-message-dialog-date': harness.date,
+        'slack-message-dialog-copy': harness.copy,
+        'slack-message-dialog-context': harness.context
+      }[id]; }
+    };
+    ${extractArchiveDialogFunction('getArchiveSlackMessageDetails')}
+    ${extractArchiveDialogFunction('preventArchiveSlackActionPropagation')}
+    ${extractArchiveDialogFunction('openSlackMessageDialog')}
+    ${extractArchiveDialogFunction('prepareArchiveSlackCard')}
+    globalThis.archiveHarness = { prepareArchiveSlackCard };
+    archiveHarness;
+  `, { harness });
+
+  for (const record of representatives) {
+    const { container, card } = createArchiveSlackCard(record);
+    const archiveCard = runtime.prepareArchiveSlackCard(card);
+    const detailTrigger = archiveCard.children[0];
+    const directLink = archiveCard.children[1];
+
+    assert.equal(container.children[0], archiveCard);
+    assert.equal(archiveCard.tagName, 'ARTICLE');
+    assert.equal(archiveCard.getAttribute('role'), null);
+    assert.equal(archiveCard.getAttribute('tabindex'), null);
+    assert.equal(detailTrigger.tagName, 'BUTTON');
+    assert.equal(detailTrigger.getAttribute('type'), 'button');
+    assert.equal(detailTrigger.getAttribute('aria-haspopup'), 'dialog');
+    assert.equal(directLink.tagName, 'A');
+    assert.equal(directLink.parentElement, archiveCard);
+    assert.equal(directLink.href, record.permalink);
+    assert.equal(directLink.target, '_blank');
+    assert.equal(directLink.rel, 'noopener noreferrer');
+    assert.equal(detailTrigger.querySelector('.view-in-slack'), null);
+    assert.ok(detailTrigger.listeners.has('click'));
+    assert.ok(directLink.listeners.has('click'));
+
+    detailTrigger.dispatch('click');
+    assert.equal(harness.action.href, record.permalink);
+    let propagationStopped = false;
+    directLink.dispatch('click', { stopPropagation() { propagationStopped = true; } });
+    assert.equal(propagationStopped, true);
+  }
+
+  assert.equal(harness.dialog.showCount, 2);
+  assert.equal(harness.context.textContent, 'Archived summary — original message unavailable');
 });

@@ -199,8 +199,10 @@
     .slack-dialog-footer { display: flex; justify-content: flex-end; padding: 14px 22px; border-top: 1px solid var(--border); background: #fbfdff; }
     .slack-dialog-action { display: inline-flex; align-items: center; gap: 7px; padding: 9px 13px; border-radius: 9px; color: var(--on-primary); background: var(--primary); font-size: 11px; font-weight: 700; text-decoration: none; }
     .slack-dialog-action:hover, .slack-dialog-action:focus-visible { background: var(--primary-dark); outline: 3px solid rgba(var(--primary-rgb),0.2); outline-offset: 2px; }
-    .archive-slack-card:focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.24); outline-offset: 3px; }
-    .view-in-slack { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; color: var(--primary); font: inherit; font-weight: 700; text-decoration: none; }
+    .slack-card.archive-slack-card { flex-direction: column; gap: 0; padding: 0; overflow: hidden; cursor: default; }
+    .archive-slack-card-detail { width: 100%; display: flex; gap: 16px; padding: 24px 20px; border: 0; color: inherit; background: transparent; font: inherit; text-align: left; cursor: pointer; }
+    .archive-slack-card-detail:focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.24); outline-offset: -3px; }
+    .view-in-slack { align-self: flex-end; display: inline-flex; align-items: center; gap: 4px; margin: 0 20px 18px auto; color: var(--primary); font: inherit; font-weight: 700; text-decoration: none; }
     .view-in-slack:hover, .view-in-slack:focus-visible { color: var(--primary-dark); text-decoration: underline; outline: none; }
 
     /* Resources Hub */
@@ -243,6 +245,9 @@
       .topic-card-word { font-size: 25px; }
       .topic-action { width: min(100%, 260px); }
       .slack-card { gap: 12px; padding: 17px 15px; }
+      .slack-card.archive-slack-card { gap: 0; padding: 0; }
+      .archive-slack-card-detail { gap: 12px; padding: 17px 15px; }
+      .view-in-slack { margin: 0 15px 15px auto; }
       .slack-dialog-header, .slack-dialog-body, .slack-dialog-footer { padding-left: 16px; padding-right: 16px; }
       .slack-thread-tile { width: 64px; min-width: 64px; height: 64px; padding: 6px; }
       .slack-thread-channel { font-size: 8.5px; }
@@ -1222,11 +1227,12 @@
       });
       archiveCard.classList.add('archive-slack-card');
       archiveCard.dataset.slackPermalink = permalink;
-      archiveCard.setAttribute('role', 'button');
-      archiveCard.setAttribute('tabindex', '0');
-      archiveCard.setAttribute('aria-haspopup', 'dialog');
-      while (card.firstChild) archiveCard.appendChild(card.firstChild);
-      card.replaceWith(archiveCard);
+      const detailTrigger = document.createElement('button');
+      detailTrigger.className = 'archive-slack-card-detail';
+      detailTrigger.setAttribute('type', 'button');
+      detailTrigger.setAttribute('aria-haspopup', 'dialog');
+      while (card.firstChild) detailTrigger.appendChild(card.firstChild);
+      archiveCard.appendChild(detailTrigger);
 
       const directLink = document.createElement('a');
       directLink.className = 'view-in-slack';
@@ -1235,13 +1241,15 @@
       directLink.rel = 'noopener noreferrer';
       directLink.textContent = 'View in Slack';
       directLink.addEventListener('click', preventArchiveSlackActionPropagation);
-      archiveCard.querySelector('.slack-card-meta')?.appendChild(directLink);
+      archiveCard.appendChild(directLink);
+      detailTrigger.addEventListener('click', () => openSlackMessageDialog(archiveCard, detailTrigger));
+      card.replaceWith(archiveCard);
       return archiveCard;
     }
 
-    function openSlackMessageDialog(card) {
+    function openSlackMessageDialog(card, trigger = card.querySelector('.archive-slack-card-detail') || card) {
       const details = getArchiveSlackMessageDetails(card);
-      slackMessageDialogTrigger = card;
+      slackMessageDialogTrigger = trigger;
       document.getElementById('slack-message-dialog-channel').textContent = card.dataset.slackChannel || card.querySelector('.slack-thread-channel')?.textContent || 'Slack message';
       document.getElementById('slack-message-dialog-author').textContent = card.dataset.slackAuthor || '';
       document.getElementById('slack-message-dialog-date').textContent = card.dataset.slackDate || '';
@@ -1255,17 +1263,7 @@
       if (slackMessageDialog.open) slackMessageDialog.close();
     }
 
-    function handleArchiveSlackCardClick(event) {
-      if (event.target.closest('#archive-week-content .view-in-slack')) return false;
-      const card = event.target.closest('#archive-week-content .slack-card');
-      if (!card) return false;
-      event.preventDefault();
-      openSlackMessageDialog(card);
-      return true;
-    }
-
     document.addEventListener('click', event => {
-      if (handleArchiveSlackCardClick(event)) return;
       const picker = document.querySelector('.week-picker-shell');
       const popover = document.getElementById('week-picker-popover');
       if (picker && popover && !popover.hidden && !picker.contains(event.target)) toggleWeekPicker(false);
@@ -1278,12 +1276,6 @@
     slackMessageDialog.addEventListener('close', () => slackMessageDialogTrigger?.focus());
 
     document.addEventListener('keydown', event => {
-      const card = event.target.closest?.('#archive-week-content .slack-card');
-      if (card && !event.target.closest('.view-in-slack') && (event.key === 'Enter' || event.key === ' ')) {
-        event.preventDefault();
-        openSlackMessageDialog(card);
-        return;
-      }
       if (event.key === 'Escape' && !document.getElementById('week-picker-popover').hidden) {
         toggleWeekPicker(false);
         document.getElementById('week-picker-trigger').focus();
