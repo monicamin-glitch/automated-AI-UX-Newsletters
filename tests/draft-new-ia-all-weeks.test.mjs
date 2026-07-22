@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawn } from 'node:child_process';
 import test from 'node:test';
 import { runInNewContext } from 'node:vm';
 
@@ -7,18 +10,50 @@ const html = readFileSync(new URL('../draft-new-ia.html', import.meta.url), 'utf
 const legacyHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const designSpec = readFileSync(new URL('../design-spec.md', import.meta.url), 'utf8');
 const digest = readFileSync(new URL('../digest.md', import.meta.url), 'utf8');
+const implementationPlan = readFileSync(new URL('../docs/superpowers/plans/2026-07-23-all-weeks-calendar-archive.md', import.meta.url), 'utf8');
 
 const archiveWeeks = [
-  { legacyWeek: 1, key: '2026-W19', start: '2026-05-04', end: '2026-05-10', range: 'May 4 to 10, 2026', slack: 2, external: 8 },
-  { legacyWeek: 2, key: '2026-W20', start: '2026-05-11', end: '2026-05-17', range: 'May 11 to 17, 2026', slack: 6, external: 9 },
-  { legacyWeek: 3, key: '2026-W21', start: '2026-05-18', end: '2026-05-24', range: 'May 18 to 24, 2026', slack: 1, external: 12 },
-  { legacyWeek: 4, key: '2026-W22', start: '2026-05-25', end: '2026-05-31', range: 'May 25 to 31, 2026', slack: 4, external: 8 },
-  { legacyWeek: 5, key: '2026-W23', start: '2026-06-01', end: '2026-06-07', range: 'June 1 to 7, 2026', slack: 6, external: 4 },
-  { legacyWeek: 6, key: '2026-W24', start: '2026-06-08', end: '2026-06-14', range: 'June 8 to 14, 2026', slack: 7, external: 9 },
-  { legacyWeek: 7, key: '2026-W25', start: '2026-06-15', end: '2026-06-21', range: 'June 15 to 21, 2026', slack: 6, external: 2 },
-  { legacyWeek: 8, key: '2026-W26', start: '2026-06-22', end: '2026-06-28', range: 'June 22 to 28, 2026', slack: 12, external: 4 },
-  { legacyWeek: 9, key: '2026-W27', start: '2026-06-29', end: '2026-07-05', range: 'June 29 to July 5, 2026', slack: 6, external: 5 },
-  { key: '2026-W28', start: '2026-07-06', end: '2026-07-12', range: 'July 6 to 12, 2026', slack: 7, external: 8 }
+  { legacyWeek: 1, key: '2026-W19', start: '2026-05-04', end: '2026-05-10', range: 'May 4 to 10, 2026', slack: 1, external: 6 },
+  { legacyWeek: 2, key: '2026-W20', start: '2026-05-11', end: '2026-05-17', range: 'May 11 to 17, 2026', slack: 3, external: 9 },
+  { legacyWeek: 3, key: '2026-W21', start: '2026-05-18', end: '2026-05-24', range: 'May 18 to 24, 2026', slack: 4, external: 12 },
+  { legacyWeek: 4, key: '2026-W22', start: '2026-05-25', end: '2026-05-31', range: 'May 25 to 31, 2026', slack: 3, external: 10 },
+  { legacyWeek: 5, key: '2026-W23', start: '2026-06-01', end: '2026-06-07', range: 'June 1 to 7, 2026', slack: 6, external: 1 },
+  { legacyWeek: 6, key: '2026-W24', start: '2026-06-08', end: '2026-06-14', range: 'June 8 to 14, 2026', slack: 8, external: 11 },
+  { legacyWeek: 7, key: '2026-W25', start: '2026-06-15', end: '2026-06-21', range: 'June 15 to 21, 2026', slack: 6, external: 3 },
+  { legacyWeek: 8, key: '2026-W26', start: '2026-06-22', end: '2026-06-28', range: 'June 22 to 28, 2026', slack: 9, external: 4 },
+  { legacyWeek: 9, key: '2026-W27', start: '2026-06-29', end: '2026-07-05', range: 'June 29 to July 5, 2026', slack: 9, external: 5 },
+  { key: '2026-W28', start: '2026-07-06', end: '2026-07-12', range: 'July 6 to 12, 2026', slack: 8, external: 8 }
+];
+
+const modernDestinationRecords = [
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783505667422479'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1783412257586729?thread_ts=1783412257.586729&cid=C08F5QRGFDG'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C09RJTFTMA5/p1783428393300619'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0B4CV2EVL6/p1783692599105679'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C09GMG8AL1L/p1783691170547189'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783582593795409'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C09RJTFTMA5/p1783428393300619'],
+  ['external', 'https://www.figma.com/blog/how-decagon-uses-ai-for-design-system-saturation/'],
+  ['external', 'https://www.nngroup.com/articles/design-system-maturity/'],
+  ['external', 'https://www.nngroup.com/articles/dimensions-of-ai-chatbots/'],
+  ['external', 'https://bolt.new/blog/build-custom-software-small-business-ai'],
+  ['external', 'https://www.lennysnewsletter.com/p/how-tech-workers-are-feeling-in-2026'],
+  ['external', 'https://claude.com/blog/cowork-web-mobile/'],
+  ['external', 'https://openai.com/index/chatgpt-for-your-most-ambitious-work/'],
+  ['external', 'https://www.figma.com/blog/gpt-5-6-is-now-available-in-figma-make/'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1784276960676419?thread_ts=1784276960.676419&cid=C08F5QRGFDG'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0ABNJ4NWG6/p1784106984960089'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0B4CV2EVL6/p1784292900691099?thread_ts=1784292900.691099&cid=C0B4CV2EVL6'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783940098536739?thread_ts=1783940098.536739&cid=C0DBLGXMJ'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783928849351589'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1784100504738449?thread_ts=1784100504.738449&cid=C08F5QRGFDG'],
+  ['external', 'https://www.figma.com/release-notes/'],
+  ['external', 'https://bolt.new/blog/introducing-bolt-slides'],
+  ['external', 'https://openai.com/products/release-notes/'],
+  ['external', 'https://www.anthropic.com/news/claude-for-teachers'],
+  ['external', 'https://www.figma.com/release-notes/'],
+  ['external', 'https://openai.com/products/release-notes/'],
+  ['external', 'https://openai.com/products/release-notes/']
 ];
 
 function getArchiveTemplate(key) {
@@ -149,6 +184,92 @@ function getEffectiveSourceRecords() {
   return [...getStaticSourceRecords(), ...backfilledSlack, ...backfilledExternal];
 }
 
+const monthNumbers = new Map([
+  ['Jan', 0], ['January', 0], ['Feb', 1], ['February', 1], ['Mar', 2], ['March', 2],
+  ['Apr', 3], ['April', 3], ['May', 4], ['Jun', 5], ['June', 5], ['Jul', 6], ['July', 6],
+  ['Aug', 7], ['August', 7], ['Sep', 8], ['Sept', 8], ['September', 8], ['Oct', 9],
+  ['October', 9], ['Nov', 10], ['November', 10], ['Dec', 11], ['December', 11]
+]);
+
+function parseStored2026Date(value) {
+  const normalized = String(value ?? '').trim();
+  let match = normalized.match(/^(2026)[/-](\d{2})[/-](\d{2})$/);
+  if (match) {
+    const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+    return date.getUTCFullYear() === 2026
+      && date.getUTCMonth() === Number(match[2]) - 1
+      && date.getUTCDate() === Number(match[3]) ? date : null;
+  }
+
+  match = normalized.match(/^([A-Za-z]+)\s+(\d{1,2})(?:,\s*(2026))?$/);
+  const month = match ? monthNumbers.get(match[1]) : undefined;
+  if (!match || month === undefined) return null;
+  const date = new Date(Date.UTC(2026, month, Number(match[2])));
+  return date.getUTCMonth() === month && date.getUTCDate() === Number(match[2]) ? date : null;
+}
+
+function getISOKeyForDate(date) {
+  const target = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  const day = target.getUTCDay() || 7;
+  target.setUTCDate(target.getUTCDate() + 4 - day);
+  const year = target.getUTCFullYear();
+  const yearStart = new Date(Date.UTC(year, 0, 1));
+  const week = Math.ceil((((target - yearStart) / 86400000) + 1) / 7);
+  return `${year}-W${String(week).padStart(2, '0')}`;
+}
+
+function stripMarkup(value) {
+  return String(value ?? '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function getStoredReportRecords() {
+  const latestStart = html.indexOf('<div class="page active" id="page-latest">');
+  const latestEnd = html.indexOf('<template id="week-report-2026-W19"');
+  const reports = [
+    ...archiveWeeks.map(({ key }) => ({ key, markup: getArchiveTemplate(key) })),
+    { key: '2026-W29', markup: html.slice(latestStart, latestEnd) }
+  ];
+
+  return reports.flatMap(({ key, markup }) => [
+    ...[...markup.matchAll(/<a class="slack-card"[^>]*>[\s\S]*?<\/a>/g)].map(match => {
+      const card = match[0];
+      const metadata = stripMarkup(card.match(/class="slack-card-meta">([\s\S]*?)<\/div>/)?.[1]);
+      const explicitDate = getAttribute(card, 'data-slack-date')
+        || getAttribute(card.match(/<time[^>]*>[\s\S]*?<\/time>/)?.[0] ?? '', 'datetime')
+        || metadata.match(/,\s*((?:2026[/-]\d{2}[/-]\d{2})|(?:[A-Za-z]+\s+\d{1,2}(?:,\s*2026)?))/)?.[1]
+        || '';
+      return {
+        key,
+        type: 'slack',
+        card,
+        date: explicitDate,
+        destination: decodeAttribute(getAttribute(card, 'href')),
+        policy: getAttribute(card, 'data-date-policy')
+      };
+    }),
+    ...[...markup.matchAll(/<a class="masonry-card"[^>]*>[\s\S]*?<\/a>/g)].map(match => {
+      const card = match[0];
+      const source = stripMarkup(card.match(/class="masonry-card-source">([\s\S]*?)<\/div>/)?.[1]);
+      return {
+        key,
+        type: 'external',
+        card,
+        date: source.includes('·') ? source.split('·').at(-1).trim() : '',
+        destination: decodeAttribute(getAttribute(card, 'href')),
+        policy: getAttribute(card, 'data-date-policy')
+      };
+    })
+  ]);
+}
+
 class CalendarTestElement {
   constructor(tagName, ownerDocument) {
     this.tagName = tagName.toUpperCase();
@@ -207,14 +328,15 @@ class CalendarTestElement {
   }
 }
 
-function createCalendarRuntime() {
+function createCalendarRuntime({ templateKeys = [], now = new Date('2026-07-23T12:00:00Z') } = {}) {
   const elements = new Map();
+  const templates = templateKeys.map(key => ({ id: `week-report-${key}` }));
   const document = {
     activeElement: null,
     createElement: tagName => new CalendarTestElement(tagName, document),
     getElementById: id => elements.get(id) ?? null,
     querySelectorAll(selector) {
-      if (selector === 'template[id^="week-report-"]') return [];
+      if (selector === 'template[id^="week-report-"]') return templates;
       if (!selector.startsWith('#week-picker-grid ')) return [];
       const requiredClasses = selector.split(' ').at(-1).split('.').filter(Boolean);
       return elements.get('week-picker-grid').children.filter(element =>
@@ -247,7 +369,10 @@ function createCalendarRuntime() {
   elements.get('week-picker-popover').hidden = true;
 
   const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1] ?? '';
-  const calendarStart = script.indexOf('const availableArchiveYears = [2026];');
+  const calendarStart = Math.min(...[
+    script.indexOf('const availableArchiveYears = [2026];'),
+    script.indexOf("const latestArchiveWeekKey = '2026-W29';")
+  ].filter(index => index >= 0));
   const calendarEnd = script.indexOf('function syncArchiveWeekContent()');
   assert.notEqual(calendarStart, -1, 'calendar source start must exist');
   assert.notEqual(calendarEnd, -1, 'calendar source end must exist');
@@ -257,8 +382,12 @@ function createCalendarRuntime() {
     function syncArchiveWeekContent() { harnessState.syncCount += 1; }
     globalThis.calendarApi = {
       addAvailable: key => availableArchiveWeeks.add(key),
+      changeWeekPickerYear,
       changeWeekPickerMonth,
       getDisplay: () => ({ year: weekPickerDisplayYear, month: weekPickerDisplayMonth }),
+      getAvailableYears: () => [...availableArchiveYears],
+      getCurrent: () => ({ ...currentArchiveWeek }),
+      getCurrentArchiveWeek: typeof getCurrentArchiveWeek === 'function' ? getCurrentArchiveWeek : undefined,
       getISOWeekForDate,
       getISOWeekRange,
       getMonthWeekRows,
@@ -270,7 +399,16 @@ function createCalendarRuntime() {
       toggleWeekPicker
     };
   `;
-  const context = { document, harnessState: state, console, Date, Intl, Math, Set };
+  const context = {
+    document,
+    harnessState: state,
+    console,
+    Date,
+    Intl,
+    Math,
+    Set,
+    __NEWSLETTER_ARCHIVE_CLOCK__: () => new Date(now)
+  };
   runInNewContext(calendarSource, context);
   return {
     api: context.calendarApi,
@@ -291,6 +429,13 @@ test('defines the approved month-calendar archive contract', () => {
   assert.match(designSpec, /previous or next month remain visible at reduced opacity/);
   assert.match(designSpec, /prominent `Week 29` label and the supporting date range `July 13 to 19, 2026`/);
   assert.doesNotMatch(designSpec, /Render all real ISO weeks for the selected year/);
+});
+
+test('documents date-first ISO migration and a deterministic undated-record exception', () => {
+  assert.match(implementationPlan, /legacy page is a source container, not authoritative ISO membership/i);
+  assert.match(implementationPlan, /parseable 2026 date[\s\S]*real Monday–Sunday ISO/i);
+  assert.match(implementationPlan, /without a safely parseable date[\s\S]*source container/i);
+  assert.doesNotMatch(implementationPlan, /\| `week1` \| `2026-W19` \|/);
 });
 
 test('preserves every stored report in availableArchiveWeeks during refresh', () => {
@@ -481,20 +626,51 @@ test('navigates months within the only available archive year', () => {
   assert.match(html, /getISOWeekRange\(selectedArchiveWeek\.year, selectedArchiveWeek\.week\)\.monday/);
 });
 
-test('keeps week 28 archived and promotes real calendar week 29 to Latest Week', () => {
+test('keeps week 29 as Latest while deriving the current ISO week from an injectable clock', () => {
   assert.match(html, /id="week-report-2026-W28"/);
   assert.match(html, /'2026-W29'/);
   assert.match(html, /selectedArchiveWeek = \{ year: 2026, week: 29 \}/);
-  assert.match(html, /currentArchiveWeek = \{ year: 2026, week: 29 \}/);
+  assert.match(html, /function getCurrentArchiveWeek\(now = new Date\(\)\)/);
+  assert.match(html, /__NEWSLETTER_ARCHIVE_CLOCK__/);
+  assert.doesNotMatch(html, /currentArchiveWeek = \{ year: 2026, week: 29 \}/);
   assert.match(html, /is-current/);
   assert.match(html, /aria-current/);
+
+  const runtime = createCalendarRuntime({ now: new Date('2026-07-23T12:00:00Z') });
+  assert.equal(typeof runtime.api.getCurrentArchiveWeek, 'function');
+  const calculatedCurrent = runtime.api.getCurrentArchiveWeek(new Date('2026-07-23T12:00:00Z'));
+  assert.equal(`${calculatedCurrent.year}-W${calculatedCurrent.week}`, '2026-W30');
+  const initializedCurrent = runtime.api.getCurrent();
+  assert.equal(`${initializedCurrent.year}-W${initializedCurrent.week}`, '2026-W30');
+  runtime.api.renderMonthWeekPicker(2026, 6);
+  const currentRow = calendarRow(runtime, '2026-W30');
+  assert.ok(currentRow.classList.contains('is-current'));
+  assert.ok(!currentRow.classList.contains('is-available'));
+  assert.equal(currentRow.getAttribute('aria-disabled'), 'true');
 });
 
-test('only enables navigation when another archive year has content', () => {
-  assert.match(html, /availableArchiveYears = \[2026\]/);
+test('derives archive years from available week keys and enables synthetic second-year navigation', () => {
+  assert.match(html, /function getAvailableArchiveYears\(availableWeeks\)/);
+  assert.match(html, /const availableArchiveYears = getAvailableArchiveYears\(availableArchiveWeeks\)/);
+  assert.doesNotMatch(html, /availableArchiveYears = \[2026\]/);
   assert.match(html, /id="week-picker-year-previous"[^>]*disabled/);
   assert.match(html, /id="week-picker-year-next"[^>]*disabled/);
   assert.match(html, /\.week-picker-year-button:disabled/);
+
+  const singleYear = createCalendarRuntime();
+  assert.equal(singleYear.api.getAvailableYears().join(','), '2026');
+  singleYear.api.renderMonthWeekPicker(2026, 6);
+  assert.equal(singleYear.element('week-picker-year-previous').disabled, true);
+  assert.equal(singleYear.element('week-picker-year-next').disabled, true);
+
+  const twoYears = createCalendarRuntime({ templateKeys: ['2027-W03'] });
+  assert.equal(twoYears.api.getAvailableYears().join(','), '2026,2027');
+  twoYears.api.renderMonthWeekPicker(2026, 6);
+  assert.equal(twoYears.element('week-picker-year-next').disabled, false);
+  twoYears.api.changeWeekPickerYear(1);
+  assert.equal(twoYears.api.getDisplay().year, 2027);
+  assert.equal(twoYears.element('week-picker-year-previous').disabled, false);
+  assert.equal(twoYears.element('week-picker-year-next').disabled, true);
 });
 
 test('uses the same full calendar week name across both pages', () => {
@@ -537,28 +713,27 @@ test('gives every archived report the two required update sections and no Popula
   }
 });
 
-test('migrates the complete effective legacy dataset with card-local fidelity', () => {
+test('rebuckets the complete effective legacy dataset by real date with card-local fidelity', () => {
   const records = getEffectiveSourceRecords();
   assert.equal(records.length, 111);
   assert.equal(records.filter(record => record.type === 'slack').length, 50);
   assert.equal(records.filter(record => record.type === 'external').length, 61);
 
-  const sourceDestinations = records.map(record => `${record.key}:${record.type}:${record.destination}`).sort();
-  const targetDestinations = archiveWeeks.filter(week => week.legacyWeek).flatMap(week => {
-    const archive = getArchiveTemplate(week.key);
-    return [...archive.matchAll(/<a class="(slack-card|masonry-card)"[^>]*href="([^"]+)"/g)]
-      .map(match => `${week.key}:${match[1] === 'slack-card' ? 'slack' : 'external'}:${match[2]}`);
-  }).sort();
+  const sourceDestinations = [
+    ...records.map(record => [record.type, decodeAttribute(record.destination)]),
+    ...modernDestinationRecords
+  ].map(([type, destination]) => `${type}:${destination}`).sort();
+  const targetDestinations = getStoredReportRecords()
+    .map(record => `${record.type}:${record.destination}`)
+    .sort();
+  assert.equal(targetDestinations.length, 139);
   assert.deepEqual(targetDestinations, sourceDestinations);
 
-  for (const week of archiveWeeks.filter(item => item.legacyWeek)) {
-    const weekRecords = records.filter(record => record.key === week.key);
-    assert.equal(weekRecords.filter(record => record.type === 'slack').length, week.slack, `${week.key} effective Slack count`);
-    assert.equal(weekRecords.filter(record => record.type === 'external').length, week.external, `${week.key} effective external count`);
-  }
-
   for (const record of records) {
-    const archive = getArchiveTemplate(record.key);
+    const parsedDate = parseStored2026Date(record.date);
+    assert.ok(parsedDate, `${record.destination} must retain its parseable 2026 date`);
+    const targetKey = getISOKeyForDate(parsedDate);
+    const archive = getArchiveTemplate(targetKey);
     const card = findDestinationCard(archive, record.type === 'slack' ? 'slack-card' : 'masonry-card', record.destination);
     if (record.type === 'slack') {
       assert.ok(card.includes(`data-slack-title="${record.title}"`), `${record.destination} title`);
@@ -577,6 +752,33 @@ test('migrates the complete effective legacy dataset with card-local fidelity', 
       if (record.media) assert.ok(card.includes(`src="${record.media}"`), `${record.destination} media`);
     }
   }
+
+  for (const week of archiveWeeks) {
+    const target = getStoredReportRecords().filter(record => record.key === week.key);
+    assert.equal(target.filter(record => record.type === 'slack').length, week.slack, `${week.key} canonical Slack count`);
+    assert.equal(target.filter(record => record.type === 'external').length, week.external, `${week.key} canonical external count`);
+  }
+});
+
+test('places every explicitly dated record in its canonical template and marks undated fallbacks', () => {
+  const records = getStoredReportRecords();
+  assert.equal(records.length, 139);
+
+  const dated = records.filter(record => parseStored2026Date(record.date));
+  assert.equal(dated.length, 131);
+  for (const record of dated) {
+    const expectedKey = getISOKeyForDate(parseStored2026Date(record.date));
+    assert.equal(record.key, expectedKey, `${record.destination} (${record.date}) belongs in ${expectedKey}`);
+    assert.equal(record.policy, '', `${record.destination} must not use an exception for a parseable date`);
+  }
+
+  const undated = records.filter(record => !parseStored2026Date(record.date));
+  assert.equal(undated.length, 8);
+  for (const record of undated) {
+    assert.equal(record.key, '2026-W28', `${record.destination} keeps its original W28 source container`);
+    assert.equal(record.type, 'external');
+    assert.equal(record.policy, 'source-container');
+  }
 });
 
 test('gives every archived card a safe original destination', () => {
@@ -591,6 +793,19 @@ test('gives every archived card a safe original destination', () => {
     }
     assert.doesNotMatch(archive, /href="#"/);
   }
+});
+
+test('gives every archived external card the refreshed Read article affordance', () => {
+  for (const { key, external } of archiveWeeks) {
+    const archive = getArchiveTemplate(key);
+    const cards = [...archive.matchAll(/<a class="masonry-card"[^>]*>[\s\S]*?<\/a>/g)].map(match => match[0]);
+    assert.equal(cards.length, external, `${key} external card count`);
+    for (const card of cards) {
+      assert.equal((card.match(/class="masonry-card-action"/g) ?? []).length, 1, `${key} external action`);
+      assert.match(card, /class="masonry-card-action">Read article/);
+    }
+  }
+  assert.match(html, /\.masonry-card-action \{[^}]*font-size: 12px;[^}]*font-weight: 600/);
 });
 
 test('derives available archive weeks from stored templates plus Latest Week', () => {
@@ -609,8 +824,8 @@ test('gives every Week 28 archive card a real safe destination', () => {
   const archive = getArchiveTemplate('2026-W28');
   const cards = archive.match(/<a class="(?:slack-card|masonry-card)"/g) ?? [];
   const safeLinks = archive.match(/<a class="(?:slack-card|masonry-card)"[^>]*href="https:\/\/[^\"]+"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/g) ?? [];
-  assert.equal(cards.length, 15);
-  assert.equal(safeLinks.length, 15);
+  assert.equal(cards.length, 16);
+  assert.equal(safeLinks.length, 16);
   assert.doesNotMatch(archive, /href="#"/);
 });
 
@@ -668,13 +883,17 @@ test('keeps seven date columns and 44px whole-row targets at 390px', () => {
   assert.doesNotMatch(html, /\.week-picker-grid \{ grid-template-columns: repeat\(6/);
 });
 
-test('opens archived Slack cards in a detail dialog with their original permalink', () => {
+test('uses one normalized Slack view model and shared hot-zone preparation on both pages', () => {
   assert.match(html, /<dialog id="slack-message-dialog"/);
   assert.match(html, /id="slack-message-dialog-action"/);
-  assert.match(html, /const detailTrigger = document\.createElement\('button'\)/);
+  assert.match(html, /function normalizeSlackCard\(card/);
+  assert.match(html, /function prepareSlackCard\(card\)/);
+  assert.match(html, /const viewModel = normalizeSlackCard\(card\)/);
+  assert.match(html, /const detailTrigger = existingDetail \|\| document\.createElement\('button'\)/);
   assert.match(html, /detailTrigger\.setAttribute\('aria-haspopup', 'dialog'\)/);
-  assert.doesNotMatch(html, /archiveCard\.setAttribute\('role', 'button'\)/);
-  assert.match(html, /dialogAction\.href = details\.permalink/);
+  assert.match(html, /document\.querySelectorAll\('#page-latest \.slack-card'\)\.forEach\(prepareSlackCard\)/);
+  assert.match(html, /clone\.querySelectorAll\('\.slack-card'\)\.forEach\(prepareSlackCard\)/);
+  assert.match(html, /dialogAction\.href = viewModel\.permalink/);
   assert.match(html, /slackMessageDialog\.showModal\(\)/);
 });
 
@@ -682,9 +901,13 @@ test('centers the archived Slack detail dialog despite the page margin reset', (
   assert.match(html, /#slack-message-dialog \{[^}]*margin: auto/);
 });
 
-test('keeps the archived Slack dialog in the active All Weeks page', () => {
+test('keeps the shared Slack dialog outside both switchable pages', () => {
+  const latestPage = html.match(/<div class="page active" id="page-latest">([\s\S]*?)<template id="week-report-2026-W19"/)?.[1] ?? '';
   const allWeeksPage = html.match(/<div class="page" id="page-all">([\s\S]*?)<!-- PAGE: Resources Hub -->/)?.[1] ?? '';
-  assert.match(allWeeksPage, /<dialog id="slack-message-dialog"/);
+  assert.doesNotMatch(latestPage, /<dialog id="slack-message-dialog"/);
+  assert.doesNotMatch(allWeeksPage, /<dialog id="slack-message-dialog"/);
+  assert.equal((html.match(/<dialog id="slack-message-dialog"/g) ?? []).length, 1);
+  assert.match(html, /<\/nav>\s*<dialog id="slack-message-dialog"[\s\S]*?<\/dialog>\s*<div class="main">/);
 });
 
 function extractArchiveDialogFunction(name) {
@@ -715,82 +938,69 @@ function getArchivedSlackCardRecords() {
 
   return reports.flatMap(report => [...report.matchAll(/<a class="slack-card"[^>]*>([\s\S]*?)<\/a>/g)].map(match => {
     const card = match[0];
+    const metadata = stripMarkup(card.match(/class="slack-card-meta">([\s\S]*?)<\/div>/)?.[1]);
+    const visibleAuthor = stripMarkup(card.match(/class="slack-sender-name">([\s\S]*?)<\/span>/)?.[1]);
+    const visibleDate = getAttribute(card.match(/<time[^>]*>[\s\S]*?<\/time>/)?.[0] ?? '', 'datetime')
+      || metadata.match(/,\s*((?:2026[/-]\d{2}[/-]\d{2})|(?:[A-Za-z]+\s+\d{1,2}(?:,\s*2026)?))/)?.[1]
+      || '';
     return {
       permalink: decodeAttribute(getAttribute(card, 'href')),
       original: decodeAttribute(getAttribute(card, 'data-slack-quote')),
       summary: card.match(/<div class="slack-card-desc">([\s\S]*?)<\/div><div class="slack-card-meta">/)?.[1] ?? '',
       channel: card.match(/class="slack-thread-channel">([\s\S]*?)<\/span>/)?.[1] ?? '',
       title: getClassText(card, 'slack-card-title'),
-      author: getAttribute(card, 'data-slack-author'),
-      date: getAttribute(card, 'data-slack-date'),
+      author: getAttribute(card, 'data-slack-author') || visibleAuthor,
+      date: getAttribute(card, 'data-slack-date') || visibleDate,
+      replyCount: stripMarkup(card.match(/class="slack-meta-replies">([\s\S]*?)<\/span>/)?.[1]),
       dataSlackLink: decodeAttribute(getAttribute(card, 'data-slack-link'))
     };
   }));
 }
 
-test('gives every archived Slack card a dialog, direct permalink action, and truthful fallback', () => {
+test('normalizes stored-original and href-only Slack cards without inventing metadata', () => {
   const records = getArchivedSlackCardRecords();
   assert.equal(records.length, 63);
   assert.equal(records.filter(record => record.dataSlackLink).length, 50);
   assert.equal(records.filter(record => !record.original).length, 13);
-
-  const harness = {
-    action: { href: '' },
-    channel: { textContent: '' },
-    author: { textContent: '' },
-    date: { textContent: '' },
-    copy: { innerHTML: '' },
-    context: { textContent: '' },
-    dialog: { showCount: 0, showModal() { this.showCount += 1; } }
-  };
   const runtime = runInNewContext(`
-    const slackMessageDialog = harness.dialog;
-    const dialogAction = harness.action;
-    const document = { getElementById(id) { return {
-      'slack-message-dialog-channel': harness.channel,
-      'slack-message-dialog-author': harness.author,
-      'slack-message-dialog-date': harness.date,
-      'slack-message-dialog-copy': harness.copy,
-      'slack-message-dialog-context': harness.context
-    }[id]; } };
-    ${extractArchiveDialogFunction('getArchiveSlackMessageDetails')}
-    ${extractArchiveDialogFunction('openSlackMessageDialog')}
-    ${extractArchiveDialogFunction('preventArchiveSlackActionPropagation')}
-    globalThis.dialogHarness = {
-      getArchiveSlackMessageDetails,
-      openSlackMessageDialog,
-      preventArchiveSlackActionPropagation
-    };
+    ${extractArchiveDialogFunction('getSafeSlackUrl')}
+    ${extractArchiveDialogFunction('normalizeSlackCard')}
+    globalThis.dialogHarness = { normalizeSlackCard };
     dialogHarness;
-  `, { harness });
+  `, { URL, document: { baseURI: 'https://newsletter.example/' } });
 
   for (const record of records) {
     const card = {
       dataset: {
         slackLink: record.dataSlackLink,
         slackQuote: record.original,
-        slackChannel: record.channel,
-        slackAuthor: record.author,
-        slackDate: record.date
+        slackChannel: record.dataSlackLink ? record.channel : '',
+        slackAuthor: record.dataSlackLink ? record.author : '',
+        slackDate: record.dataSlackLink ? record.date : '',
+        slackReactions: ''
       },
       getAttribute: name => name === 'href' ? record.permalink : null,
       querySelector(selector) {
         if (selector === '.slack-card-desc') return { innerHTML: record.summary };
         if (selector === '.slack-thread-channel') return { textContent: record.channel };
         if (selector === '.slack-card-title') return { textContent: record.title };
+        if (selector === '.slack-sender-name') return { textContent: record.author };
+        if (selector === 'time') return record.date ? { textContent: record.date, getAttribute: () => record.date } : null;
+        if (selector === '.slack-meta-replies') return record.replyCount ? { textContent: record.replyCount } : null;
+        if (selector === '.slack-card-meta') return { textContent: `posted by ${record.author}, ${record.date}` };
         return null;
-      }
+      },
+      querySelectorAll() { return []; }
     };
-    runtime.openSlackMessageDialog(card);
-    assert.equal(harness.action.href, record.permalink, record.permalink);
-    assert.equal(harness.copy.innerHTML, record.original || record.summary, record.permalink);
-    assert.equal(harness.context.textContent, record.original ? 'Original Slack message' : 'Archived summary — original message unavailable', record.permalink);
+    const viewModel = runtime.normalizeSlackCard(card, value => `sanitized:${value}`);
+    assert.equal(viewModel.permalink, record.permalink, record.permalink);
+    assert.equal(viewModel.author, record.author, record.permalink);
+    assert.equal(viewModel.date, record.date, record.permalink);
+    assert.equal(viewModel.replyCount, record.replyCount, record.permalink);
+    assert.equal(viewModel.content, `sanitized:${record.original || record.summary}`, record.permalink);
+    assert.equal(viewModel.context, record.original ? 'Original Slack message' : 'Archived summary — original message unavailable', record.permalink);
+    assert.equal(viewModel.reactions.length, 0, record.permalink);
   }
-  assert.equal(harness.dialog.showCount, 63);
-
-  let propagationStopped = false;
-  runtime.preventArchiveSlackActionPropagation({ stopPropagation() { propagationStopped = true; } });
-  assert.equal(propagationStopped, true);
 });
 
 class ArchiveTestElement {
@@ -909,73 +1119,326 @@ function createArchiveSlackCard(record) {
 }
 
 test('prepares stored-original and href-only Slack cards as sibling detail and direct-link controls', () => {
-  const records = getArchivedSlackCardRecords();
-  const representatives = [
-    records.find(record => record.original),
-    records.find(record => !record.original)
-  ];
-  assert.equal(representatives.filter(Boolean).length, 2);
+  assert.match(html, /function prepareSlackCard\(card\)/);
+  assert.match(html, /const detailTrigger = existingDetail \|\| document\.createElement\('button'\)/);
+  assert.match(html, /const directLink = card\.querySelector\(':scope > \.view-in-slack'\) \|\| document\.createElement\('a'\)/);
+  assert.match(html, /preparedCard\.appendChild\(detailTrigger\)[\s\S]*preparedCard\.appendChild\(directLink\)/);
+  assert.match(html, /directLink\.addEventListener\('click', preventSlackActionPropagation\)/);
+  assert.match(html, /detailTrigger\.addEventListener\('click',[\s\S]*openSlackMessageDialog/);
+  assert.doesNotMatch(html, /preparedCard\.setAttribute\('role', 'button'\)/);
+});
 
-  const harness = {
-    action: { href: '' },
-    channel: { textContent: '' },
-    author: { textContent: '' },
-    date: { textContent: '' },
-    copy: { innerHTML: '' },
-    context: { textContent: '' },
-    dialog: { showCount: 0, showModal() { this.showCount += 1; } },
-    createElement: tagName => new ArchiveTestElement(tagName)
-  };
-  const runtime = runInNewContext(`
-    const slackMessageDialog = harness.dialog;
-    const dialogAction = harness.action;
-    const document = {
-      createElement: harness.createElement,
-      getElementById(id) { return {
-        'slack-message-dialog-channel': harness.channel,
-        'slack-message-dialog-author': harness.author,
-        'slack-message-dialog-date': harness.date,
-        'slack-message-dialog-copy': harness.copy,
-        'slack-message-dialog-context': harness.context
-      }[id]; }
-    };
-    ${extractArchiveDialogFunction('getArchiveSlackMessageDetails')}
-    ${extractArchiveDialogFunction('preventArchiveSlackActionPropagation')}
-    ${extractArchiveDialogFunction('openSlackMessageDialog')}
-    ${extractArchiveDialogFunction('prepareArchiveSlackCard')}
-    globalThis.archiveHarness = { prepareArchiveSlackCard };
-    archiveHarness;
-  `, { harness });
+test('sanitizes Slack message HTML with a structural allowlist and safe link protocols', () => {
+  assert.match(html, /function sanitizeSlackHtml\(unsafeHtml\)/);
+  assert.match(html, /new Set\(\['p', 'br', 'ul', 'ol', 'li', 'blockquote', 'strong', 'b', 'em', 'i', 'a', 'code', 'pre'\]\)/);
+  assert.match(html, /function getSafeSlackUrl\(value\)/);
+  assert.match(html, /protocol === 'https:' \|\| protocol === 'http:'/);
+  assert.match(html, /document\.getElementById\('slack-message-dialog-copy'\)\.innerHTML = viewModel\.content/);
+  assert.doesNotMatch(html, /\.innerHTML = details\.content/);
+});
 
-  for (const record of representatives) {
-    const { container, card } = createArchiveSlackCard(record);
-    const archiveCard = runtime.prepareArchiveSlackCard(card);
-    const detailTrigger = archiveCard.children[0];
-    const directLink = archiveCard.children[1];
+test('implements the mobile bottom-sheet, scroll-lock, metadata, and focus-restoration contract', () => {
+  assert.match(html, /id="slack-message-dialog-reply-count"/);
+  assert.match(html, /id="slack-message-dialog-reactions"/);
+  assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?#slack-message-dialog \{[^}]*width: 100%;[^}]*inset: auto 0 0 0;[^}]*max-height: min\(88(?:d|s)vh, 720px\)/);
+  assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.archive-slack-card-detail \{[^}]*flex-direction: column/);
+  assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.slack-thread-tile \{[^}]*border-radius: 999px/);
+  assert.match(html, /body\.is-slack-dialog-open \{[^}]*position: fixed;[^}]*overflow: hidden/);
+  assert.match(html, /function lockPageScroll\(\)/);
+  assert.match(html, /function restorePageScroll\(\)/);
+  assert.match(html, /slackMessageDialog\.addEventListener\('cancel'/);
+  assert.match(html, /slackMessageDialog\.addEventListener\('close',[\s\S]*restorePageScroll\(\)[\s\S]*slackMessageDialogTrigger\?\.focus\(\)/);
+});
 
-    assert.equal(container.children[0], archiveCard);
-    assert.equal(archiveCard.tagName, 'ARTICLE');
-    assert.equal(archiveCard.getAttribute('role'), null);
-    assert.equal(archiveCard.getAttribute('tabindex'), null);
-    assert.equal(detailTrigger.tagName, 'BUTTON');
-    assert.equal(detailTrigger.getAttribute('type'), 'button');
-    assert.equal(detailTrigger.getAttribute('aria-haspopup'), 'dialog');
-    assert.equal(directLink.tagName, 'A');
-    assert.equal(directLink.parentElement, archiveCard);
-    assert.equal(directLink.href, record.permalink);
-    assert.equal(directLink.target, '_blank');
-    assert.equal(directLink.rel, 'noopener noreferrer');
-    assert.equal(detailTrigger.querySelector('.view-in-slack'), null);
-    assert.ok(detailTrigger.listeners.has('click'));
-    assert.ok(directLink.listeners.has('click'));
+const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
-    detailTrigger.dispatch('click');
-    assert.equal(harness.action.href, record.permalink);
-    let propagationStopped = false;
-    directLink.dispatch('click', { stopPropagation() { propagationStopped = true; } });
-    assert.equal(propagationStopped, true);
+function wait(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+async function waitFor(check, timeout = 10000) {
+  const started = Date.now();
+  while (Date.now() - started < timeout) {
+    const value = await check();
+    if (value) return value;
+    await wait(50);
   }
+  throw new Error(`Timed out after ${timeout}ms`);
+}
 
-  assert.equal(harness.dialog.showCount, 2);
-  assert.equal(harness.context.textContent, 'Archived summary — original message unavailable');
+async function openChromeRuntime({ width = 390, height = 844 } = {}) {
+  const profileDirectory = mkdtempSync(join(tmpdir(), 'calendar-archive-chrome-'));
+  const browserProcess = spawn(chromePath, [
+    '--headless=new',
+    '--disable-background-networking',
+    '--disable-default-apps',
+    '--disable-extensions',
+    '--disable-gpu',
+    '--disable-sync',
+    '--metrics-recording-only',
+    '--mute-audio',
+    '--no-first-run',
+    '--no-default-browser-check',
+    '--remote-debugging-port=0',
+    `--user-data-dir=${profileDirectory}`,
+    'about:blank'
+  ], { stdio: 'ignore' });
+
+  const portFile = join(profileDirectory, 'DevToolsActivePort');
+  const port = await waitFor(() => {
+    if (!existsSync(portFile)) return null;
+    return Number(readFileSync(portFile, 'utf8').split('\n')[0]);
+  });
+  const targets = await waitFor(async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:${port}/json/list`);
+      const list = await response.json();
+      return list.some(target => target.type === 'page') ? list : null;
+    } catch {
+      return null;
+    }
+  });
+  const target = targets.find(candidate => candidate.type === 'page');
+  const socket = new WebSocket(target.webSocketDebuggerUrl);
+  await new Promise((resolve, reject) => {
+    socket.addEventListener('open', resolve, { once: true });
+    socket.addEventListener('error', reject, { once: true });
+  });
+
+  let commandId = 0;
+  const pending = new Map();
+  const runtimeErrors = [];
+  socket.addEventListener('message', event => {
+    const message = JSON.parse(String(event.data));
+    if (message.method === 'Runtime.exceptionThrown') {
+      runtimeErrors.push(message.params.exceptionDetails.exception?.description || message.params.exceptionDetails.text);
+    }
+    if (message.method === 'Runtime.consoleAPICalled' && message.params.type === 'error') {
+      runtimeErrors.push(message.params.args.map(argument => argument.value || argument.description || '').join(' '));
+    }
+    if (!message.id || !pending.has(message.id)) return;
+    const { resolve, reject } = pending.get(message.id);
+    pending.delete(message.id);
+    if (message.error) reject(new Error(message.error.message));
+    else resolve(message.result);
+  });
+
+  const send = (method, params = {}) => new Promise((resolve, reject) => {
+    const id = ++commandId;
+    pending.set(id, { resolve, reject });
+    socket.send(JSON.stringify({ id, method, params }));
+  });
+  const evaluate = async expression => {
+    const response = await send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
+    if (response.exceptionDetails) {
+      throw new Error(response.exceptionDetails.exception?.description || response.exceptionDetails.text);
+    }
+    return response.result.value;
+  };
+
+  await send('Page.enable');
+  await send('Runtime.enable');
+  await send('Emulation.setDeviceMetricsOverride', {
+    width,
+    height,
+    deviceScaleFactor: 1,
+    mobile: false,
+    screenWidth: width,
+    screenHeight: height
+  });
+  await send('Page.addScriptToEvaluateOnNewDocument', {
+    source: `globalThis.__NEWSLETTER_ARCHIVE_CLOCK__ = () => new Date('2026-07-23T12:00:00Z');`
+  });
+  await send('Page.navigate', { url: new URL('../draft-new-ia.html', import.meta.url).href });
+  await waitFor(async () => await evaluate('document.readyState') === 'complete');
+
+  return {
+    evaluate,
+    getRuntimeErrors: () => [...runtimeErrors],
+    send,
+    setViewport: (nextWidth, nextHeight) => send('Emulation.setDeviceMetricsOverride', {
+      width: nextWidth,
+      height: nextHeight,
+      deviceScaleFactor: 1,
+      mobile: false,
+      screenWidth: nextWidth,
+      screenHeight: nextHeight
+    }),
+    async close() {
+      socket.close();
+      browserProcess.kill('SIGTERM');
+      await Promise.race([
+        new Promise(resolve => browserProcess.once('exit', resolve)),
+        wait(2000)
+      ]);
+      rmSync(profileDirectory, { recursive: true, force: true });
+    }
+  };
+}
+
+test('browser runtime sanitizes malicious Slack content and enforces the 390px interaction geometry', {
+  skip: process.env.RUN_BROWSER_TESTS !== '1' || !existsSync(chromePath)
+}, async () => {
+  const browser = await openChromeRuntime();
+  try {
+    const malicious = '<p onclick="steal()" style="color:red">Safe <strong data-x="1">bold</strong><script>alert(1)</script><iframe src="https://evil.test"></iframe><a href="javascript:alert(1)" onmouseover="steal()">bad</a><a href="https://example.com/path" style="display:none">good</a></p><blockquote><em>quote</em></blockquote><ul><li>one</li></ul><pre class="evil"><code onclick="steal()">const x = 1;</code></pre>';
+    const sanitized = await browser.evaluate(`sanitizeSlackHtml(${JSON.stringify(malicious)})`);
+    assert.match(sanitized, /<p>Safe <strong>bold<\/strong>/);
+    assert.match(sanitized, /<a>bad<\/a>/);
+    assert.match(sanitized, /href="https:\/\/example\.com\/path"/);
+    assert.match(sanitized, /<blockquote><em>quote<\/em><\/blockquote>/);
+    assert.match(sanitized, /<ul><li>one<\/li><\/ul>/);
+    assert.match(sanitized, /<pre><code>const x = 1;<\/code><\/pre>/);
+    assert.doesNotMatch(sanitized, /script|iframe|javascript:|onclick|onmouseover|style=|data-x|class=/i);
+
+    const latest = await browser.evaluate(`(async () => {
+      const cards = [...document.querySelectorAll('#page-latest .archive-slack-card')];
+      const first = cards[0];
+      const detail = first?.querySelector('.archive-slack-card-detail');
+      const direct = first?.querySelector(':scope > .view-in-slack');
+      window.scrollTo(0, 480);
+      const beforeScroll = window.scrollY;
+      detail?.click();
+      const dialog = document.getElementById('slack-message-dialog');
+      const rect = dialog.getBoundingClientRect();
+      const tile = detail?.querySelector('.slack-thread-tile');
+      const result = {
+        cardCount: cards.length,
+        siblingHotZones: Boolean(detail && direct && detail.parentElement === direct.parentElement),
+        open: dialog.open,
+        locked: document.body.classList.contains('is-slack-dialog-open'),
+        bottomGap: Math.abs(window.innerHeight - rect.bottom),
+        widthGap: Math.abs(window.innerWidth - rect.width),
+        maxHeightSafe: rect.height <= window.innerHeight * 0.88 + 1,
+        bodyScrolls: getComputedStyle(document.querySelector('.slack-dialog-body')).overflowY === 'auto',
+        mobileReadingLayout: getComputedStyle(detail).flexDirection === 'column',
+        channelPill: getComputedStyle(tile).borderRadius === '999px' && tile.getBoundingClientRect().height < 50,
+        noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+        truthfulContext: document.getElementById('slack-message-dialog-context').textContent,
+        author: document.getElementById('slack-message-dialog-author').textContent,
+        date: document.getElementById('slack-message-dialog-date').textContent,
+        replies: document.getElementById('slack-message-dialog-reply-count').textContent,
+        beforeScroll
+      };
+      document.getElementById('slack-message-dialog-close').click();
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      result.closed = !dialog.open;
+      result.unlocked = !document.body.classList.contains('is-slack-dialog-open');
+      result.focusRestored = document.activeElement === detail;
+      result.scrollRestored = Math.abs(window.scrollY - beforeScroll) <= 1;
+      return result;
+    })()`);
+    assert.equal(latest.cardCount, 6);
+    assert.equal(latest.siblingHotZones, true);
+    assert.equal(latest.open, true);
+    assert.equal(latest.locked, true);
+    assert.ok(latest.bottomGap <= 1);
+    assert.ok(latest.widthGap <= 1);
+    assert.equal(latest.maxHeightSafe, true);
+    assert.equal(latest.bodyScrolls, true);
+    assert.equal(latest.mobileReadingLayout, true);
+    assert.equal(latest.channelPill, true);
+    assert.equal(latest.noOverflow, true);
+    assert.equal(latest.truthfulContext, 'Archived summary — original message unavailable');
+    assert.ok(latest.author);
+    assert.ok(latest.date);
+    assert.ok(latest.replies);
+    assert.equal(latest.closed, true);
+    assert.equal(latest.unlocked, true);
+    assert.equal(latest.focusRestored, true);
+    assert.equal(latest.scrollRestored, true);
+
+    const archive = await browser.evaluate(`(() => {
+      document.querySelector('.nav-tab[data-page="all"]').click();
+      const cards = [...document.querySelectorAll('#archive-week-content .archive-slack-card')];
+      const first = cards[0];
+      const detail = first?.querySelector('.archive-slack-card-detail');
+      const direct = first?.querySelector(':scope > .view-in-slack');
+      detail?.click();
+      const current = document.querySelector('[data-week-key="2026-W30"]');
+      return {
+        cardCount: cards.length,
+        siblingHotZones: Boolean(detail && direct && detail.parentElement === direct.parentElement),
+        currentDisabled: current?.classList.contains('is-current') && current?.getAttribute('aria-disabled') === 'true',
+        noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth
+      };
+    })()`);
+    assert.equal(archive.cardCount, 6);
+    assert.equal(archive.siblingHotZones, true);
+    assert.equal(archive.currentDisabled, true);
+    assert.equal(archive.noOverflow, true);
+
+    await browser.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });
+    await browser.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });
+    await wait(50);
+    const escapeState = await browser.evaluate(`(() => {
+      const detail = document.querySelector('#archive-week-content .archive-slack-card-detail');
+      return {
+        closed: !document.getElementById('slack-message-dialog').open,
+        unlocked: !document.body.classList.contains('is-slack-dialog-open'),
+        focusRestored: document.activeElement === detail
+      };
+    })()`);
+    assert.equal(escapeState.closed, true);
+    assert.equal(escapeState.unlocked, true);
+    assert.equal(escapeState.focusRestored, true);
+
+    const reportChecks = await browser.evaluate(`(() => {
+      const expected = [[19, 1, 6], [24, 8, 11], [28, 8, 8], [29, 6, 7]];
+      return expected.map(([week, slack, external]) => {
+        selectArchiveWeek(2026, week);
+        const root = document.getElementById('archive-week-content');
+        const externalCards = [...root.querySelectorAll('.masonry-card')];
+        return {
+          week,
+          slack: root.querySelectorAll('.archive-slack-card').length,
+          external: externalCards.length,
+          expectedSlack: slack,
+          expectedExternal: external,
+          actions: externalCards.filter(card => card.querySelector('.masonry-card-action')).length,
+          popularTopics: root.querySelectorAll('.weekly-topic').length,
+          destinationsSafe: [...root.querySelectorAll('.archive-slack-card > .view-in-slack, .masonry-card')]
+            .every(link => link.href.startsWith('https://'))
+        };
+      });
+    })()`);
+    for (const report of reportChecks) {
+      assert.equal(report.slack, report.expectedSlack, `W${report.week} Slack count`);
+      assert.equal(report.external, report.expectedExternal, `W${report.week} external count`);
+      assert.equal(report.actions, report.expectedExternal, `W${report.week} Read article actions`);
+      assert.equal(report.popularTopics, 0, `W${report.week} archive topics`);
+      assert.equal(report.destinationsSafe, true, `W${report.week} destinations`);
+    }
+
+    await browser.setViewport(1440, 1000);
+    const desktop = await browser.evaluate(`(async () => {
+      selectArchiveWeek(2026, 24);
+      const detail = document.querySelector('#archive-week-content .archive-slack-card-detail');
+      detail.click();
+      const dialog = document.getElementById('slack-message-dialog');
+      const rect = dialog.getBoundingClientRect();
+      const result = {
+        centered: Math.abs((rect.left + rect.right) / 2 - window.innerWidth / 2) <= 1,
+        widthSafe: rect.width <= 680,
+        originalContext: document.getElementById('slack-message-dialog-context').textContent,
+        noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth
+      };
+      dialog.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      result.backdropClosed = !dialog.open;
+      result.unlocked = !document.body.classList.contains('is-slack-dialog-open');
+      result.focusRestored = document.activeElement === detail;
+      return result;
+    })()`);
+    assert.equal(desktop.centered, true);
+    assert.equal(desktop.widthSafe, true);
+    assert.equal(desktop.originalContext, 'Original Slack message');
+    assert.equal(desktop.noOverflow, true);
+    assert.equal(desktop.backdropClosed, true);
+    assert.equal(desktop.unlocked, true);
+    assert.equal(desktop.focusRestored, true);
+    assert.deepEqual(browser.getRuntimeErrors(), []);
+  } finally {
+    await browser.close();
+  }
 });

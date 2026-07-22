@@ -4,14 +4,14 @@
 
 **Goal:** Replace the ambiguous W-number picker with the approved month-calendar week picker and restore every existing 2026 weekly report to the refreshed All Weeks layout.
 
-**Architecture:** Keep `draft-new-ia.html` as the production-style single-page prototype and preserve each report in a static `<template>` keyed by canonical ISO year/week. The picker derives its available state from those template keys, renders a Monday–Sunday month calendar, and clones only Internal Updates and External Updates into All Weeks. Existing content in `index.html` is the migration source for Weeks 19–27; no article or Slack content is regenerated.
+**Architecture:** Keep `draft-new-ia.html` as the production-style single-page prototype and preserve each report in a static `<template>` keyed by canonical ISO year/week. The picker derives its available state and years from those template keys, renders a Monday–Sunday month calendar, and clones only Internal Updates and External Updates into All Weeks. Existing content in `index.html` is the migration source for Weeks 19–27; each record is assigned by its preserved real date, and no article or Slack content is regenerated.
 
 **Tech Stack:** Static HTML, CSS, browser JavaScript, Node.js built-in test runner.
 
 ## Global Constraints
 
 - Use Apple System typography and the approved `#2563EB` blue family.
-- Use real ISO week numbers and Monday–Sunday ranges.
+- Use real ISO week numbers and Monday–Sunday ranges; the legacy page is a source container, not authoritative ISO membership.
 - Keep Popular Topics exclusive to Latest Week.
 - Keep weeks without reports visible but disabled.
 - Preserve all existing Slack permalinks, external URLs, article copy, and checked-in media.
@@ -86,25 +86,25 @@ Run: `node --test tests/draft-new-ia-all-weeks.test.mjs`
 
 Expected: FAIL because only Weeks 28 and 29 are currently available.
 
-- [ ] **Step 3: Migrate existing weekly reports without rewriting content**
+- [ ] **Step 3: Migrate existing records without rewriting content**
 
-Map the historical pages as follows:
+Treat `week1` through `week9` as source containers only. For every Slack and external record with a parseable 2026 date, place that record in the real Monday–Sunday ISO template containing the date. Do not assign a complete legacy page to one ISO week.
 
-| Existing page | Canonical archive key | Date range |
-|---|---|---|
-| `week1` | `2026-W19` | May 4 to 10, 2026 |
-| `week2` | `2026-W20` | May 11 to 17, 2026 |
-| `week3` | `2026-W21` | May 18 to 24, 2026 |
-| `week4` | `2026-W22` | May 25 to 31, 2026 |
-| `week5` | `2026-W23` | June 1 to 7, 2026 |
-| `week6` | `2026-W24` | June 8 to 14, 2026 |
-| `week7` | `2026-W25` | June 15 to 21, 2026 |
-| `week8` | `2026-W26` | June 22 to 28, 2026 |
-| `week9` | `2026-W27` | June 29 to July 5, 2026 |
-| existing archive | `2026-W28` | July 6 to 12, 2026 |
-| Latest Week | `2026-W29` | July 13 to 19, 2026 |
+| Canonical archive key | Date range |
+|---|---|
+| `2026-W19` | May 4 to 10, 2026 |
+| `2026-W20` | May 11 to 17, 2026 |
+| `2026-W21` | May 18 to 24, 2026 |
+| `2026-W22` | May 25 to 31, 2026 |
+| `2026-W23` | June 1 to 7, 2026 |
+| `2026-W24` | June 8 to 14, 2026 |
+| `2026-W25` | June 15 to 21, 2026 |
+| `2026-W26` | June 22 to 28, 2026 |
+| `2026-W27` | June 29 to July 5, 2026 |
+| `2026-W28` | July 6 to 12, 2026 |
+| Latest Week `2026-W29` | July 13 to 19, 2026 |
 
-For Weeks 19–27, copy each existing report's Slack and external records from `index.html` into the refreshed `.slack-card` and `.masonry-card` structures. Keep original URLs, titles, summaries, authors, dates, channels, media paths, and stored original Slack messages. Do not add a Popular Topics section to any archive template.
+Keep original URLs, titles, summaries, authors, dates, channels, media paths, and stored original Slack messages. For a record without a safely parseable date, preserve it in its source container and mark `data-date-policy="source-container"`; never invent a date. Do not add a Popular Topics section to any archive template.
 
 - [ ] **Step 4: Derive the available set from all stored report templates**
 
@@ -171,7 +171,7 @@ Make the entire row one keyboard and pointer target. Selecting a row updates the
 
 - [ ] **Step 5: Implement month navigation and initial month**
 
-Open on the month containing the selected report's Monday. Month arrows can navigate within 2026; year arrows remain disabled because no other year has report data.
+Open on the month containing the selected report's Monday. Derive archive years from available report keys. Year arrows remain disabled for the current single-year dataset and become active automatically when another year has data. Derive the current-week outline from an injectable clock; on July 23, 2026, disabled Week 30 carries the current indicator while Week 29 remains the latest available report.
 
 - [ ] **Step 6: Add responsive calendar behavior**
 

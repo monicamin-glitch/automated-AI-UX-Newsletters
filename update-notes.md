@@ -7,6 +7,9 @@
 - Replaced the superseded W01–W53 archive button-grid rule with the approved Monday–Sunday month calendar, whole-row selection, disabled unavailable rows, and dimmed cross-month dates.
 - Updated the archive trigger hierarchy to `Week 29` with `July 13 to 19, 2026` as the supporting range.
 - Required refreshes to derive `availableArchiveWeeks` from every stored report and prohibited reducing the archive to only the two newest weeks.
+- Corrected the historical migration to bucket each dated record by its real 2026 ISO week instead of treating a legacy page as authoritative membership; undated W28 records remain in their source container under an explicit no-invented-date policy.
+- Derived archive years and the current-week indicator from report keys and an injectable clock, leaving Week 30 disabled but current on July 23, 2026.
+- Unified Latest Week and All Weeks Slack hot zones, sanitized dialog content through a structural allowlist, added the mobile bottom sheet and scroll restoration, and added `Read article` to every archived external card without changing destinations.
 
 ## 2026-07-22
 
