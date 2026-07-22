@@ -1,110 +1,164 @@
-# Media & Image Strategy
+# Media and Image Strategy
 
-Every website item should render an effective visual. The current site uses `.article-card-image` on weekly cards and generates `.article-grid-image` blocks for Explore All.
+Media rules for the current Latest Week, All Weeks, and Resources Hub website.
+
+The current interface has three distinct visual systems:
+
+1. a full-width checked-in illustration for Popular Topics;
+2. UI-native Slack channel tiles for Internal Updates;
+3. checked-in source-native images for External Updates.
 
 ---
 
-## Media Prepare Step
+## Weekly media preparation
 
-Run the media prepare step before publishing a weekly update:
+Run before publishing:
 
 ```bash
 node scripts/prepare-media.mjs --write-manifest
 ```
 
-This checks every public update card in `index.html`, confirms the card resolves to a checked-in local image, and writes `assets/media-manifest.json` with the source URL, selected local media, dimensions, file size, and any quality warnings.
+The step must verify every External Update resolves to a checked-in local image and write `assets/media-manifest.json` with the source URL, selected asset, dimensions, file size, and warnings.
 
-Treat the script as a pre-publish quality gate:
+### Publication gate
 
-- **Errors must be fixed before publishing**: missing local media, broken asset paths, blocked/login screenshots, unsupported files, or cards that would rely on Microlink/thum.io/runtime fallback.
-- **Warnings should be reviewed**: unusual aspect ratio, tiny logo-like files, very small images, or large files that may push B.Pages over the upload limit.
-- **Slack Spotlight cards are intentionally excluded** from the public-card media gate because their generated internal-source visual is acceptable unless a reviewed internal image is explicitly available.
+Fix these errors before publishing:
 
-The value of this step is consistency: the public website should show the same relevant, high-quality media on local preview, GitHub Pages, and B.Pages. Runtime thumbnail services can remain as backup for unknown future links, but current published cards should use local, validated media.
+- missing local image;
+- broken asset path;
+- login, error, cookie, or blocked-page screenshot;
+- unsupported format;
+- external card relying only on Microlink, thum.io, or another runtime preview service;
+- image and article describing different content.
 
-### Media Selection Priority
+Review these warnings:
 
-When adding new cards, choose media in this order:
+- unusual aspect ratio;
+- tiny logo-like asset;
+- low-resolution image;
+- oversized file;
+- generated fallback used where a source-native image should exist.
 
-| Priority | Use | Why |
-|---|---|---|
-| 1 | Existing `assets/weekXX/` image via `data-img` | Most stable for weekly product/release cards |
-| 2 | Cached source-native image in `assets/external/` via `localPreviewImagesByUrl` | Best for articles/newsletters where the source has a useful hero or OG image |
-| 3 | Cached YouTube thumbnail | Better than runtime YouTube dependency for important workflow videos |
-| 4 | Generated branded fallback | Acceptable for internal/Slack cards or when no good source image exists |
-| 5 | Microlink/thum.io runtime fetch | Backup only; do not rely on this for published cards |
-
-### Source-Specific Rules
-
-- **Figma**: prefer Figma Blog, Config, product, or event visuals. Avoid investor-page and help-center screenshots when they produce logos, blocked pages, or generic support UI.
-- **Lenny's Newsletter, UX Collective, Substack**: cache the Substack/OG hero image locally; do not depend on runtime CDN preview fetching.
-- **Nielsen Norman Group**: cache article or video thumbnail media from the source page.
-- **YouTube**: cache the thumbnail locally for high-priority workflow cards; `data-yt-id` is acceptable only as a fallback.
-- **Slack/internal updates**: use the generated Slack/internal visual by default. Only use real internal images when reviewed for publication.
+Internal Slack cards are excluded from the external-image gate because they use channel tiles rather than article thumbnails.
 
 ---
 
-## Runtime Priority
+## Popular-topic illustration
 
-For each card image, the JavaScript loader tries this order:
+Current asset:
 
-| Priority | Method | Required attribute |
-|---|---|---|
-| 1 | Explicit direct image URL | `data-img="[image-url]"` |
-| 2 | YouTube thumbnail | `data-yt-id="[VIDEO_ID]"` |
-| 3 | Microlink OG image | parent card `href` or image `data-url` |
-| 4 | thum.io page screenshot | parent card `href` or image `data-url` |
-| 5 | Generated branded visual | `data-section` + `data-label` |
-
-The generated visual is intentional: if external image services are slow, rate-limited, or blocked, the card still shows a polished source-specific image instead of a blank or plain gradient.
-
----
-
-## Required Attributes
-
-Every image block should include:
-
-```html
-<div class="article-card-image"
-     data-section="a"
-     data-label="OpenAI"
-     data-img="https://optional-direct-image-url.jpg">
+```text
+assets/internal/colleagues-topic-banner-v4.png
 ```
 
-| Attribute | On | Purpose |
+Requirements:
+
+- The illustration spans the full popular-topic component.
+- Export or redraw it at the component’s aspect ratio; never stretch or flatten it to fit.
+- Preserve the original character colors without a white or desaturation overlay.
+- Keep a Booking-style woman on the left in yellow and a man on the right in blue, at different heights.
+- Keep both people visually secondary to the center topic card.
+- Let office elements extend inward from both sides to create a natural slope toward the center.
+- Use varied office details—such as desk edges, notebook, books, cup, plant, lamp, clock, shelves, or devices—rather than repeated isolated plants.
+- Allow quiet space near the top and center so the heading, topic card, and button stay legible.
+- Use a continuous white-to-light-blue-grey background with no visible horizontal seam.
+- Decorative images use empty alt text and `aria-hidden="true"`; the nearby text carries the meaning.
+
+When the block size changes materially, generate a new asset at the new target dimensions instead of changing the image’s proportions in CSS.
+
+---
+
+## Internal Updates channel tiles
+
+Slack cards do not use fetched thumbnails.
+
+- Render an 80×80 UI tile at the start of each card.
+- Use a light-blue gradient from `--primary-tint` to `--primary-soft`.
+- Show only the Slack channel name in the tile.
+- Do not add a border, shadow, avatar photo, article screenshot, or large Slack logo inside the tile.
+- Use a small authentic Slack mark in the metadata row before `posted by`.
+
+The channel tile is generated by the webpage and is not stored as a bitmap asset.
+
+---
+
+## External Updates media priority
+
+| Priority | Media | Guidance |
 |---|---|---|
-| `data-section` | `.article-card-image`, `.article-grid-image` | Section color: `a` product, `b` workflows, `c` thinking, `d` Slack |
-| `data-label` | `.article-card-image`, `.article-grid-image` | Source label used in fallback/generated visuals |
-| `data-img` | `.article-card-image`, `.article-grid-image` | Optional stable direct image/OG image URL |
-| `data-url` | `.article-card-image`, `.article-grid-image` | Optional URL for OG/screenshot lookup; auto-filled from card `href` |
-| `data-yt-id` | `.article-card-image`, `.article-grid-image` | YouTube thumbnail ID |
+| 1 | Checked-in source-native image under `assets/weekXX/` | Preferred for every published External Update |
+| 2 | Cached source-native image under `assets/external/` | Use for stable article, newsletter, or case-study media |
+| 3 | Cached YouTube thumbnail | Use for selected workflow videos |
+| 4 | Generated branded fallback | Use only when a relevant source-native image cannot be obtained |
+| 5 | Runtime Microlink or thum.io lookup | Preview fallback only; never the only published path |
 
-Do not use old `.card-image` or `.link-thumb` selectors. They belong to the previous site structure.
+### Source-specific guidance
 
----
-
-## Fetching Guidance
-
-- For the published/latest week, prefer checked-in local media assets under `assets/weekXX/` and wire them with `data-img`. This avoids blank cards when external image services are slow, blocked, or rate-limited.
-- Prefer official article images or stable OG images when available.
-- For YouTube, set `data-yt-id` so the loader can use YouTube thumbnails.
-- For Substack/newsletter sources, prefer `data-img` from the OG image because screenshot services often return poor results.
-- For Slack Spotlight cards, use `data-section="d"` and `data-label="Slack"`; the generated visual is acceptable unless a specific shared image is available.
-- Avoid depending on Microlink or thum.io as the only visual path. They are runtime enhancement services and can be rate-limited.
+- **Figma:** prefer Figma Blog, Config, product, or event visuals.
+- **Anthropic and OpenAI release notes:** prefer item-specific product visuals; use a restrained generated fallback when the official page exposes only generic support imagery.
+- **Lenny’s Newsletter, UX Collective, and Substack:** cache the article’s OG or hero image locally.
+- **Nielsen Norman Group:** cache the article illustration or video thumbnail.
+- **YouTube:** cache the thumbnail locally for selected cards; keep the video ID as metadata.
+- Avoid logos, generic homepages, sign-in screens, cookie overlays, or text-heavy screenshots.
 
 ---
 
-## Explore All
+## External card rendering
 
-The Explore All grid is generated from weekly `.article-card` elements. Do not manually edit grid cards. The script clones each weekly card image into `.article-grid-image`, then runs the same media loader so all views have matching visuals.
+Each External Update card provides:
+
+```html
+<div class="masonry-card-image">
+  <img src="assets/weekXX/example.ext" alt="Concise description">
+  <span class="masonry-card-rank">Top pick · 1</span>
+</div>
+```
+
+- Image container height: 170px.
+- Use `object-fit: cover` and preserve the source proportions.
+- Only ranks 1–3 render a badge.
+- Every card keeps its checked-in image when copied into the All Weeks archive.
+- Selecting a week must not trigger a new image fetch or replace its stored media.
+
+If legacy runtime attributes remain during migration, the fallback order is:
+
+1. explicit local `data-img`;
+2. cached YouTube thumbnail;
+3. generated branded fallback;
+4. Microlink or thum.io preview for development only.
+
+---
+
+## Resources Hub
+
+The current Resources Hub uses category icons and external-link icons, not article imagery.
+
+- Use code-native SVG icons that inherit the blue UI tokens.
+- Keep icon dimensions and alignment consistent across categories.
+- Do not fetch screenshots or logos for Resource Hub links.
+
+---
+
+## All Weeks behavior
+
+All Weeks renders the stored Popular Topics, Internal Updates, External Updates, and media for the selected ISO week.
+
+- Do not maintain a separate manually edited archive-card image set.
+- Reuse the same checked-in assets and alt text as the original weekly report.
+- A missing historical image is a validation problem; do not silently replace it with an unrelated current-week image.
 
 ---
 
 ## Verification
 
-After updating `index.html`, run a browser check and confirm:
+After updating the website, confirm:
 
-- Latest cards with images equals latest card count.
-- Explore All grid cards with images equals Explore All card count.
-- YouTube cards show either a thumbnail or generated YouTube visual.
-- Slack cards show a generated Slack visual if no direct media exists.
+- every Latest Week External Update displays its expected local image;
+- every available All Weeks report displays the same external images as its original week;
+- all three Top Pick badges sit over the intended images;
+- equal-height cards do not distort their images;
+- the Popular Topic illustration is not stretched, flattened, masked, or cropped through a character unnaturally;
+- Slack channel tiles remain 80×80 and readable;
+- Resource Hub icons align with their headings;
+- decorative and meaningful images use appropriate alt text;
+- `git diff --check` and the media preparation gate pass.

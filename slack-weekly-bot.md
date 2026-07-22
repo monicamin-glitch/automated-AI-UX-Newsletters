@@ -2,6 +2,12 @@
 
 Use this workflow to publish a simplified weekly AI x UX highlight into an internal UX Slack channel after manual approval.
 
+The website content sources are now separated by responsibility:
+
+- Internal candidates come from the selected week produced through [`slack-spotlight.md`](slack-spotlight.md).
+- External candidates come from the selected week produced through [`digest.md`](digest.md) and [`sources.md`](sources.md).
+- The Resources Hub is evergreen and is never included automatically in the weekly Slack picker.
+
 The Slack post is intentionally shorter than the website. It is split into two categories:
 
 - **Internal Slack updates**: selected Slack Spotlight items with source channel and direct Slack permalink.
@@ -34,7 +40,7 @@ Use the reviewer ID for the private approval picker before the final channel sha
 
 ## Weekly Workflow
 
-The main newsletter website refresh runs every Monday at 10:00. Generate the Slack highlights draft only after that refresh has completed and `automation-status/weekly-refresh-status.json` says `status: "published"`, so your manual picks come from the newly updated B.Pages website. The recommended Slack draft window is Monday around 11:30 to leave room for source fetching, media preparation, GitHub push, and B.Pages publishing.
+The main newsletter website refresh runs every Monday at 10:00. Generate the Slack highlights draft only after that refresh has completed and `automation-status/weekly-refresh-status.json` says `status: "published"`, so the picker uses the newly published ISO calendar week from B.Pages. The recommended Slack draft window is Monday around 11:30 to leave room for source fetching, media preparation, GitHub push, and B.Pages publishing.
 
 For the next weekly share, use the Canvas version represented by `https://booking.enterprise.slack.com/docs/T0AMUUBC7/F0BEHNEPZT9`: two columns for Internal Slack updates and External AI updates, concise headlines, one `Why UXers care` line per item, direct Slack message links for internal items, source links/media-preview links for external items, and an `SH` title prefix.
 

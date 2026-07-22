@@ -1,5 +1,35 @@
 # Update Notes
 
+## 2026-07-22
+
+### Markdown architecture aligned with the latest website design
+
+- Replaced the old fixed-sidebar / Explore All documentation with the approved top navigation: Latest Week, All Weeks, and Resources Hub.
+- Standardized the archive on real ISO calendar weeks and Monday–Sunday date ranges, including the `Week 28` / `July 6 to 12, 2026` hierarchy.
+- Documented the current page order: week heading, “What colleagues are talking about this week?”, Internal Updates, and External Updates.
+- Documented the illustrated top-ten topic card, the 80×80 Slack channel tiles, unified metadata line, separate summary paragraphs, equal-height External Update cards, Top 3 badges, and All Weeks calendar states.
+
+### Responsibility split
+
+- Added `slack-spotlight.md` as the single source of truth for Slack channels, eligibility, scoring, deduplication, Popular Topic extraction, Internal Update fields, and replaceable current-week output.
+- Added `resources-hub.md` as the manually curated source of truth for the Booking.com UX AI Knowledge Hub.
+- Reduced `sources.md` to public External Update sources only.
+- Slimmed `digest.md` into the weekly orchestrator and added conditional document routing so routine refreshes do not read or rewrite the Resource Hub.
+- Updated `media-strategy.md` for the full-width Popular Topic illustration, UI-native Slack tiles, checked-in External Update media, and All Weeks reuse.
+- Updated `slack-weekly-bot.md` to consume the separated internal and external outputs while excluding evergreen resources from the weekly picker.
+
+### Resource Hub content
+
+- Preserved the approved three-category hierarchy: UX AI Foundations, Workflow / playbooks / use cases, and AI tools / prototyping / setup.
+- Added canonical resource IDs so repeated category placement does not duplicate URLs.
+- Kept Dieter in AI tools / prototyping / setup and kept AI Page Builder removed.
+- Recorded that Resource Hub links are human-curated and must never be searched for or added automatically.
+
+### Scope
+
+- No Skill-directory Markdown was changed.
+- No website HTML, CSS, JavaScript, or content assets were changed in this documentation migration.
+
 ## 2026-07-13
 
 ### Week 10 weekly refresh

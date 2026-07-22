@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slack Card Interaction Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-ink: #1e3a8a;
+      --primary-tint: #eff6ff;
+      --primary-soft: #bfdbfe;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --card: #ffffff;
+      --bg: #f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: var(--text-primary); background: var(--bg); }
+    button, a { font: inherit; }
+    .demo-shell { width: min(960px, calc(100% - 48px)); margin: 0 auto; padding: 42px 0 80px; }
+    .page-title { margin: 0 0 6px; font-size: 24px; font-weight: 800; letter-spacing: -.5px; }
+    .page-subtitle { margin: 0 0 28px; color: var(--text-muted); font-size: 13px; }
+    .filters { display: flex; gap: 8px; margin-bottom: 20px; }
+    .filter-chip { padding: 7px 14px; border: 1px solid var(--border); border-radius: 999px; color: var(--text-secondary); background: var(--card); font-size: 12px; font-weight: 500; }
+    .filter-chip.active { border-color: var(--primary); color: #fff; background: var(--primary); }
+    .chip-count { margin-left: 4px; padding: 1px 6px; border-radius: 999px; background: rgba(255,255,255,.24); font-size: 10px; }
+
+    .slack-card { display: flex; gap: 16px; padding: 24px 20px; border: 1px solid var(--border); border-radius: 15px; background: var(--card); cursor: pointer; box-shadow: 0 2px 8px rgba(15,23,42,.025); transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+    .slack-card:hover { border-color: rgba(37,99,235,.24); box-shadow: 0 8px 22px rgba(15,23,42,.07); transform: translateY(-1px); }
+    .slack-card:focus-visible { outline: 3px solid rgba(37,99,235,.22); outline-offset: 3px; }
+    .slack-thread-tile { width: 80px; min-width: 80px; height: 80px; padding: 8px; border-radius: 9px; display: flex; align-items: center; justify-content: center; align-self: flex-start; color: var(--primary-ink); background: linear-gradient(135deg, var(--primary-tint), var(--primary-soft)); }
+    .slack-thread-channel { font-size: 10px; font-weight: 750; line-height: 1.15; text-align: center; overflow-wrap: anywhere; }
+    .slack-card-body { flex: 1; min-width: 0; }
+    .slack-card-title { margin: 0 0 7px; font-size: 14px; font-weight: 700; line-height: 1.4; }
+    .slack-card-desc { color: var(--text-secondary); font-size: 12px; line-height: 1.58; }
+    .slack-card-desc p { margin: 0 0 5px; }
+    .slack-card-desc p:last-child { margin-bottom: 0; }
+    .slack-card-desc strong { color: var(--text-primary); }
+    .slack-card-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-top: 11px; color: var(--text-muted); font-size: 10px; font-weight: 400; }
+    .slack-logo { width: 14px; height: 14px; flex: none; }
+    .meta-item + .meta-item::before { content: "·"; margin-right: 7px; color: var(--text-muted); }
+    .view-in-slack { display: inline-flex; align-items: center; gap: 4px; margin: -4px -6px -4px 0; padding: 4px 6px; border-radius: 6px; color: var(--primary); font-weight: 600; text-decoration: none; transition: color .16s ease, background .16s ease; }
+    .view-in-slack::before { content: "·"; margin-right: 3px; color: var(--text-muted); font-weight: 400; }
+    .view-in-slack:hover, .view-in-slack:focus-visible { color: var(--primary-dark); background: var(--primary-tint); outline: none; }
+    .view-in-slack svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .16s ease; }
+    .view-in-slack:hover svg, .view-in-slack:focus-visible svg { transform: translate(1px,-1px); }
+
+    dialog { width: min(680px, calc(100% - 32px)); max-height: min(82vh, 820px); padding: 0; border: 0; border-radius: 18px; color: var(--text-primary); background: var(--card); box-shadow: 0 28px 80px rgba(15,23,42,.25); overflow: hidden; }
+    dialog::backdrop { background: rgba(15,23,42,.46); backdrop-filter: blur(2px); }
+    .modal-layout { display: flex; flex-direction: column; max-height: min(82vh, 820px); }
+    .modal-header { display: flex; align-items: flex-start; gap: 12px; padding: 20px 22px 16px; border-bottom: 1px solid var(--border); }
+    .modal-slack-mark { width: 38px; height: 38px; padding: 8px; border: 1px solid var(--border); border-radius: 10px; background: #fff; box-shadow: 0 2px 7px rgba(15,23,42,.06); }
+    .modal-heading { flex: 1; min-width: 0; }
+    .modal-channel { margin: 0; font-size: 14px; font-weight: 750; }
+    .modal-context { margin-top: 2px; color: var(--text-muted); font-size: 11px; }
+    .modal-close { width: 34px; height: 34px; display: grid; place-items: center; border: 0; border-radius: 9px; color: var(--text-secondary); background: transparent; cursor: pointer; }
+    .modal-close:hover, .modal-close:focus-visible { color: var(--text-primary); background: #f1f5f9; outline: none; }
+    .modal-close svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; }
+    .modal-body { padding: 22px; overflow-y: auto; }
+    .message-author-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .message-avatar { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 9px; color: #fff; background: linear-gradient(145deg,#2563eb,#60a5fa); font-size: 13px; font-weight: 800; }
+    .message-author { font-size: 13px; font-weight: 750; }
+    .message-time { color: var(--text-muted); font-size: 10px; }
+    .message-copy { color: #27364d; font-size: 12px; line-height: 1.62; }
+    .message-copy p { margin: 0 0 12px; }
+    .message-copy ul { margin: -2px 0 14px; padding-left: 20px; }
+    .message-copy li { margin: 4px 0; }
+    .message-copy h4 { margin: 17px 0 7px; color: var(--text-primary); font-size: 12px; }
+    .message-copy a { color: var(--primary); }
+    .message-copy code { padding: 2px 5px; border-radius: 5px; color: #7c2d12; background: #fff7ed; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 10px; }
+    .message-copy pre { margin: 8px 0 14px; padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 10px; color: #b42318; background: #f1f5f9; overflow-x: auto; white-space: pre; font-size: 10px; line-height: 1.55; }
+    .message-copy pre code { padding: 0; color: inherit; background: transparent; }
+    .message-reactions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .reaction { padding: 3px 8px; border: 1px solid #dbe3ee; border-radius: 999px; color: var(--text-secondary); background: #f8fafc; font-size: 10px; }
+    .modal-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 22px; border-top: 1px solid var(--border); background: #fbfdff; }
+    .modal-replies { color: var(--text-muted); font-size: 11px; }
+    .modal-action { display: inline-flex; align-items: center; gap: 7px; padding: 9px 13px; border-radius: 9px; color: #fff; background: var(--primary); font-size: 11px; font-weight: 700; text-decoration: none; }
+    .modal-action:hover, .modal-action:focus-visible { background: var(--primary-dark); outline: 3px solid rgba(37,99,235,.2); outline-offset: 2px; }
+    .modal-action svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    @media (max-width: 640px) {
+      .demo-shell { width: min(100% - 28px, 960px); padding-top: 26px; }
+      .slack-card { gap: 12px; padding: 17px 15px; }
+      .slack-thread-tile { width: 64px; min-width: 64px; height: 64px; }
+      .modal-header, .modal-body, .modal-footer { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="demo-shell">
+    <h1 class="page-title">Internal Updates</h1>
+    <p class="page-subtitle">Click the card to preview the original message, or use the inline action to go directly to Slack.</p>
+
+    <div class="filters" aria-label="Internal update filters">
+      <span class="filter-chip active">All <span class="chip-count">6</span></span>
+      <span class="filter-chip">Tools &amp; Releases</span>
+      <span class="filter-chip">Learning &amp; Curriculum</span>
+      <span class="filter-chip">Best Practices</span>
+      <span class="filter-chip">Others</span>
+    </div>
+
+    <article class="slack-card" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="slack-message-dialog" onclick="openMessageDialog()" onkeydown="handleCardKey(event)">
+      <span class="slack-thread-tile" aria-label="Slack channel genai engineering"><span class="slack-thread-channel">#genai_eng</span></span>
+      <div class="slack-card-body">
+        <h2 class="slack-card-title">Skills MCP Server Makes Booking Skills Discoverable Inside AI Coding Tools</h2>
+        <div class="slack-card-desc">
+          <p><strong>What is the update:</strong> the community-launched Skills MCP Server lets Claude Code, Codex, and Cursor search the Booking Skills Catalog semantically and load only the skills needed for the current task.</p>
+          <p><strong>Why it's valuable for UXers:</strong> design technologists and prototypers can discover reusable internal workflows in context without loading or remembering the entire catalogue.</p>
+        </div>
+        <div class="slack-card-meta">
+          <svg class="slack-logo" viewBox="0 0 24 24" aria-hidden="true"><rect x="9.5" y="1" width="5" height="10" rx="2.5" fill="#36C5F0"/><rect x="13" y="9.5" width="10" height="5" rx="2.5" fill="#2EB67D"/><rect x="9.5" y="13" width="5" height="10" rx="2.5" fill="#ECB22E"/><rect x="1" y="9.5" width="10" height="5" rx="2.5" fill="#E01E5A"/></svg>
+          <span>posted by Ahmed Kamal, <time datetime="2026-07-17">2026/07/17</time></span>
+          <span class="meta-item">16 replies</span>
+          <a class="view-in-slack" href="https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1784276960676419?thread_ts=1784276960.676419&amp;cid=C08F5QRGFDG" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()">
+            View in Slack
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M10 14 19 5M19 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <dialog id="slack-message-dialog" aria-labelledby="dialog-title">
+    <div class="modal-layout">
+      <header class="modal-header">
+        <svg class="modal-slack-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="9.5" y="1" width="5" height="10" rx="2.5" fill="#36C5F0"/><rect x="13" y="9.5" width="10" height="5" rx="2.5" fill="#2EB67D"/><rect x="9.5" y="13" width="5" height="10" rx="2.5" fill="#ECB22E"/><rect x="1" y="9.5" width="10" height="5" rx="2.5" fill="#E01E5A"/></svg>
+        <div class="modal-heading">
+          <h2 class="modal-channel" id="dialog-title">#genai_engineering</h2>
+          <div class="modal-context">Original Slack message</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Close message" onclick="closeMessageDialog()"><svg viewBox="0 0 24 24" fill="none"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </header>
+
+      <div class="modal-body">
+        <div class="message-author-row">
+          <div class="message-avatar" aria-hidden="true">AK</div>
+          <div><div class="message-author">Ahmed Kamal</div><div class="message-time">July 17, 2026 at 16:29</div></div>
+        </div>
+        <div class="message-copy">
+          <p>🚀 <strong>Introducing the Skills MCP Server — give your AI agent access to Booking.com’s shared knowledge</strong></p>
+          <p>The Skills MCP Server helps AI agents discover and use relevant skills while working on a task. It loads the right instructions exactly when they’re needed.</p>
+          <p>With the Skills MCP Server, your agent can:</p>
+          <ul>
+            <li>Search the Skills Catalog based on the current task</li>
+            <li>Load the most relevant skill and follow its workflow</li>
+            <li>Access Booking.com-specific tools and engineering knowledge</li>
+            <li>Use skills without permanently installing them—the temporary copy is removed immediately after loading</li>
+          </ul>
+          <p>The server is powered by the bk Skills Catalog, with skills available in the Coding Agent Tools repository.</p>
+          <p>This is a community project, so contributions, improvements, bug reports, and new ideas are very welcome in the <a href="https://gitlab.com/booking-com/genai-eng/skills-mcp-server" target="_blank" rel="noopener noreferrer">Skills MCP repository</a>. 🤝</p>
+          <h4>Before installing</h4>
+          <p>Make sure this command works:</p>
+          <pre><code>bk genai:skill:list --search adr --output json</code></pre>
+          <p>Also ensure your npm registry points to Booking.com’s JFrog.</p>
+          <h4>Claude Code</h4>
+          <pre><code>claude mcp add --scope user skills -- npx -y --prefix=/tmp @bookingcom/skills-mcp@latest</code></pre>
+          <h4>Codex</h4>
+          <pre><code>codex mcp add skills -- npx -y --prefix=/tmp @bookingcom/skills-mcp@latest</code></pre>
+          <h4>Cursor</h4>
+          <p>Add the following to <code>~/.cursor/mcp.json</code>:</p>
+          <pre><code>{
+  "mcpServers": {
+    "skills": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "--prefix=/tmp", "@bookingcom/skills-mcp@latest"]
+    }
+  }
+}</code></pre>
+          <p>Restart your coding agent, then try this prompt:</p>
+          <p><em>Search the Skills Catalog for guidance on creating an Architecture Decision Record (ADR).</em></p>
+          <p>The agent will use <code>search_skills</code> to discover relevant guidance and <code>get_skill_content</code> to load and follow it. ✨</p>
+          <p>Questions, feedback, or interested in trying it out? Feel free to reach out to me!</p>
+          <div class="message-reactions" aria-label="Message reactions"><span class="reaction">🚀 22</span><span class="reaction">🙌 2</span><span class="reaction">Nice 1</span></div>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <span class="modal-replies">16 replies in the thread</span>
+        <a class="modal-action" href="https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1784276960676419?thread_ts=1784276960.676419&amp;cid=C08F5QRGFDG" target="_blank" rel="noopener noreferrer">
+          View in Slack
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M10 14 19 5M19 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg>
+        </a>
+      </footer>
+    </div>
+  </dialog>
+
+  <script>
+    const dialog = document.getElementById('slack-message-dialog');
+    let dialogTrigger = null;
+
+    function openMessageDialog() {
+      dialogTrigger = document.activeElement;
+      dialog.showModal();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMessageDialog() {
+      dialog.close();
+    }
+
+    function handleCardKey(event) {
+      if (event.target.closest('.view-in-slack')) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openMessageDialog();
+      }
+    }
+
+    dialog.addEventListener('click', event => {
+      if (event.target === dialog) closeMessageDialog();
+    });
+
+    dialog.addEventListener('close', () => {
+      document.body.style.overflow = '';
+      if (dialogTrigger && typeof dialogTrigger.focus === 'function') dialogTrigger.focus();
+    });
+
+    if (window.location.hash === '#open') openMessageDialog();
+  </script>
+</body>
+</html>

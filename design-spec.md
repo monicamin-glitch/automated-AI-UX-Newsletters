@@ -1,195 +1,337 @@
 # Design Spec — AI × Design Weekly
 
-Visual design and component reference for the newsletter website.
+Authoritative visual and interaction specification for the newsletter website.
 
-**Owner:** zwang5 | **Updated:** May 20, 2026
+**Owner:** zwang5
+
+**Updated:** July 22, 2026
+
+Content and discovery rules live in [`digest.md`](digest.md), [`slack-spotlight.md`](slack-spotlight.md), and [`resources-hub.md`](resources-hub.md). This file defines presentation only.
+
+---
+
+## Information architecture
+
+Use a sticky top navigation with three pages:
+
+1. **Latest Week** — the most recent ISO calendar week
+2. **All Weeks** — a calendar-week picker and the selected week’s complete report
+3. **Resources Hub** — the manually curated Booking.com UX AI Knowledge Hub
+
+The navigation remains unchanged as weeks change. Weekly content is the primary variable.
+
+### Page order
+
+Latest Week:
+
+1. Week heading
+2. “What colleagues are talking about this week?”
+3. Internal Updates
+4. External Updates
+
+All Weeks:
+
+1. Week picker and selected-week context
+2. Internal Updates
+3. External Updates
+
+The popular-topic experience is exclusive to Latest Week. It appears below the Latest Week heading and above Internal Updates. All Weeks never renders a Popular Topic block; each selected archive report begins with Internal Updates.
 
 ---
 
 ## Layout
 
-Fixed sidebar (260px) + scrollable main content (max 1100px, padded 32px 40px). Background: `#f0f4ff` with radial gradients and a grid texture.
+- Sticky top navigation: 60px high, white background, subtle neutral bottom border
+- Main content: maximum width 960px, centered
+- Desktop horizontal padding: 40px
+- Page background: light blue-grey `#f8fafc`
+- Cards: white, rounded, neutral border; avoid blue outlines around entire cards
+- Use subtle shadows only for depth and hover feedback
+- Maintain generous white space without making the popular-topic block dominate the page
 
-On mobile (≤ 900px): sidebar hides off-screen with a hamburger toggle, main content goes full width.
+### Responsive behavior
+
+- At tablet widths, External Updates uses two columns.
+- At mobile widths, External Updates and Resource Hub use one column.
+- Top navigation stays available; reduce horizontal padding before allowing text to wrap.
+- Slack cards retain the channel tile at the start of each card; reduce card padding and gap on narrow screens.
+- The popular-topic illustration remains decorative and secondary to the topic card.
 
 ---
 
-## Colors
+## Color system
+
+Use one coherent blue-led system with warm illustration accents. Purple and amber must not act as competing UI themes.
 
 | Token | Value | Usage |
-|-------|-------|-------|
-| `--primary` | `#2563EB` | Links, active states |
-| `--primary-light` | `#3b82f6` | Hover |
-| `--primary-dark` | `#1d4ed8` | Pressed |
-| `--secondary` | `#A855F7` | Purple accent |
-| `--tertiary` | `#06B6D4` | Cyan accent |
-| `--bg` | `#f0f4ff` | Page background |
-| `--card-bg` | `#ffffff` | Cards |
-| `--text-primary` | `#0f172a` | Headings |
+|---|---|---|
+| `--primary` | `#2563EB` | Active states, links, buttons |
+| `--primary-rgb` | `37, 99, 235` | Focus and shadow alpha colors |
+| `--primary-light` | `#3B82F6` | Hover and gradients |
+| `--primary-dark` | `#1D4ED8` | Pressed state |
+| `--primary-ink` | `#1E3A8A` | Strong blue text |
+| `--primary-soft` | `#BFDBFE` | Soft blue surfaces |
+| `--primary-tint` | `#EFF6FF` | Very light blue surfaces |
+| `--secondary` | `#60A5FA` | Supporting blue accent |
+| `--tertiary` | `#93C5FD` | Illustration and gradient accent |
+| `--bg` | `#F8FAFC` | Page background |
+| `--card-bg` | `#FFFFFF` | Card surfaces |
+| `--text-primary` | `#0F172A` | Headings and bold labels |
 | `--text-secondary` | `#475569` | Body text |
-| `--text-muted` | `#94a3b8` | Meta, dates |
-| `--border` | `rgba(37, 99, 235, 0.08)` | Card borders |
+| `--text-muted` | `#94A3B8` | Metadata and supporting dates |
+| `--border` | `#E2E8F0` | Card and control borders |
+| `--border-light` | `#F1F5F9` | Internal separators |
+
+Illustrations may use Booking-style yellow, orange, skin tones, and blue. Do not place a white overlay over characters; preserve original colors.
 
 ---
 
 ## Typography
 
-Font: `'Inter', -apple-system, BlinkMacSystemFont, sans-serif`
+Use one typographic voice throughout:
 
-| Element | Size | Weight |
-|---------|------|--------|
-| Hero title | 32px | 800 |
-| Article title | 16px | 700 |
-| Article description | 13px | 400 |
-| Meta (source, date) | 11px | 400 |
-| Tag labels | 10px uppercase | 600 |
-| Filter chips | 12px | 500 |
-| Sidebar nav | 13px | 500 |
+```css
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+```
+
+| Element | Desktop size | Weight |
+|---|---:|---:|
+| Week/page heading | 26px | 800 |
+| Section heading | 21px | 800 |
+| Popular-topic question | 20px | 800 |
+| Topic word | 30px | 800 |
+| Resource category title | 17px | 750 |
+| Slack/article title | 14px | 700 |
+| Card body | 12px | 400 |
+| Metadata | 10px | 400 |
+| Filter chip | 11–12px | 600 |
+
+- Page, section, and popular-topic headings must feel like members of the same system.
+- Do not add a subtitle below “Internal Updates”.
+- Do not emphasize the Slack sender’s name; it inherits the metadata style.
 
 ---
 
-## Tags
+## Week naming
 
-| Value | Display name | Background | Text | Icon stroke |
-|-------|-------------|-----------|------|-------------|
-| `product` | Product Updates | `#dbeafe` | `#1d4ed8` | `#6366f1` |
-| `workflows` | Workflows | `#ccfbf1` | `#0d9488` | `#0d9488` |
-| `thinking` | Deeper Thinking | `#ede9fe` | `#6d28d9` | `#7c3aed` |
-| `slack` | Slack Spotlights | `#fef3c7` | `#b45309` | `#d97706` |
+Use the real ISO calendar week number and Monday–Sunday range.
 
-Each article has exactly one tag. Tags render as small pills (6px radius, 3px 8px padding).
+Latest Week heading:
+
+```text
+Week 28 - July 6 to 12, 2026
+```
+
+All Weeks selector hierarchy:
+
+```text
+Week 28
+July 6 to 12, 2026
+```
+
+Do not use newsletter-sequence labels such as “Week 10 — 14 updates”. Do not display a redundant archive heading below the selector.
 
 ---
 
 ## Components
 
-### Sidebar
+### Top navigation
 
-- Frosted glass (blur 20px, semi-transparent white)
-- Logo + "AI × Design Weekly" + "Curated for UX teams"
-- Nav: "This Week" + "Explore All" + "Archive" (auto-generated, max 5 weeks shown)
-- Active state: blue background tint + left edge bar
-- **Icons:** "This Week" = document with text lines, "Explore All" = grid, Archive weeks = document with folded corner
+- Left: AI × Design identity and Shanghai badge
+- Right: Latest Week, All Weeks, Resources Hub
+- Active page: primary-blue text and bottom border
+- Hover: primary-blue text
+- Support direct preview URLs such as `?page=all` and `?page=resources`
 
-### Hero Banner
+### Popular-topic experience
 
-All hero banners use the same compact format: label, title, and date range.
+Copy:
 
-- Gradient: navy → blue → purple → cyan, with grid texture overlay (static, no animation)
-- **Latest week:** Label "New This Week", title includes "✨ Fresh Picks"
-- **Archive weeks:** Label "Previously", title is the week number
-- **All Articles:** Label "The Full Collection", title "Explore All"
+```text
+What colleagues are talking about this week?
+```
 
-### Filter Chips (Sticky)
+Structure:
 
-- Pill buttons, white background, subtle border
-- Active: blue fill, white text
-- **Sticky behavior:** Filters are `position: sticky; top: 0`. Background is transparent by default. When stuck (scrolled past hero), they get `background: var(--bg)` and `box-shadow: 0 2px 8px rgba(0,0,0,0.06)` with a 0.3s transition. Full viewport width (minus sidebar).
-- Chips with no matching articles are auto-hidden
-- On page switch: `is-stuck` class is cleared and transitions disabled momentarily to prevent flash
-- On filter click: scrolls so the first article sits below the filter bar (no jump)
-- `min-height: 100vh` on articles list prevents layout shifts when filtering to few results
+- One full-width illustrated block directly under the week heading
+- White-to-light-blue-grey continuous background; no horizontal color seam
+- Booking-style woman on the left and man on the right, with different heights
+- Characters are approximately two-thirds of the early exploration size and must not compete with the center card
+- The woman wears yellow; the man wears a blue shirt
+- Office elements may extend inward from both sides: desk edges, notebooks, plants, books, cup, lamp, clock, shelves, or similar details
+- Decorative elements should form a natural visual slope toward the center instead of isolated repeated plants
+- The illustration asset fills the block without stretching or flattening; redraw or crop to the block aspect ratio rather than changing image proportions
 
-### Article Cards — List View
+Center content:
 
-- Full width, white background, rounded 12px
-- Left: 200×130px image thumbnail (gradient fallback shown immediately, real image loads on top)
-- Right: tag → title → description (max 5 lines) → meta
-- Hover: lifts 2px, blue glow
-- Mobile: stacks vertically (image on top, 160px tall)
-- Gap between cards: 16px
-- YouTube cards show a play button overlay (bottom-left corner, dark circle with white triangle)
-- Visible summaries use two stacked labels on every card: `What is the update:` and `Why it's valuable for UXers:`. Labels are bold primary text; explanations stay secondary text.
-- Slack Spotlight cards also include a source row below the meta line: `Source: Slack #channel` plus a `View Slack message` link when `data-slack-link` is present.
+- One visible white topic card with a second pale-blue card slightly offset behind it
+- Topic word is the primary visual focus
+- Metadata appears below as static text: `[mentions] mentions · [channels] channels`.
+- The metadata row is informational only. It has no arrow, hover treatment, click action, or Slack search link.
+- Do not show `Top N of 10`, proposal labels, internal labels, Slack labels, week badges, or authorization notes
+- Centered blue button below: `Show next topic`
+- Clicking cycles through the returned internal topics in rank order with a card-change animation
+- While the card-change animation runs, the button temporarily ignores repeat clicks but keeps a normal cursor and static icon; do not show a waiting cursor or loading rotation.
+- Default state shows rank 1 immediately; no reveal is required on first visit
+- Announce topic changes through an `aria-live` region
+- Disable nonessential animation for `prefers-reduced-motion`
 
-### Article Cards — Grid View (All Articles)
+Recommended block height: approximately 268px on desktop. Keep about 32px below the button.
 
-- Auto-fill grid, min 280px columns, 20px gap
-- Vertical layout with 160px image header
-- Smaller text (title 14px, desc 12px, max 4 lines)
-- Explore All preserves the same labeled summary markup and Slack source row from the weekly card.
+### Internal Updates filters
 
-### Slack Spotlights Modal
+Order:
 
-Slack cards open a modal (no external URL):
+1. All
+2. Tools & Releases
+3. Learning & Curriculum
+4. Best Practices
+5. Others
 
-- **Trigger:** Click any Slack Spotlights card
-- **Modal:** White, rounded 16px, max 640px wide, max 80vh tall, scrollable
-- **Header:** Tag pill ("Slack Spotlights")
-- **Title:** Large bold heading
-- **Author section:** Real Slack profile name (bold) + date + initials on amber gradient (40px, rounded 8px). Author name and message are fetched from Slack using the Toolbox Slack MCP tools based on the permalink URL.
-- **Highlighted quote:** The full original Slack message. Styled as a blockquote (amber left border 3px, warm `#fffbeb` background, rounded right corners 10px, italic text). Must be the author's actual words — not rewritten. Links from the original message should be preserved as clickable `<a>` tags.
-- **Channel name:** Shown below the quote as context (e.g. "#design"), muted text
-- **Footer:** "View in Slack" button (white background, blue text, blue border). Opens permalink in new tab. Hidden if no `data-slack-link` attribute.
-- **Close:** X button (turns blue on hover), overlay click, or Escape key
-- **Mobile:** Bottom sheet style
+- Pills use white backgrounds and neutral borders.
+- Active pill uses primary blue with white text.
+- The All pill includes the count.
+- Filtering is scoped to the active page.
 
-Data attributes per Slack card: `data-slack-author`, `data-slack-avatar` (optional URL), `data-slack-quote` (key excerpt).
+### Slack notification card
 
-**Important:** The `data-slack-quote` must contain the **full original message** from the Slack author — not a rewritten or summarized version. Fetch the message from Slack using the Toolbox Slack MCP (`slack_slack_read_channel` or `slack_slack_read_thread` with channel_id and timestamp from the permalink). Preserve all links from the original message as clickable HTML `<a href="..." target="_blank">` tags. Use `slack_slack_read_user_profile` to get the real author name for `data-slack-author`.
+- Full-width horizontal white card
+- Neutral border and 15px radius
+- 24px × 20px desktop padding; 16px gap
+- Subtle neutral shadow; hover may lift 1px without changing the neutral border to blue
 
-**AI relevance required:** Only include Slack messages that are directly about AI in the context of UX/design work — such as new AI tools or platforms, AI skills or workflows, AI-related documentation, or AI community initiatives. Do not include general design discussions (e.g. data visualization patterns, accessibility, design system components) that are not specifically about AI.
+Channel tile:
+
+- 80×80px
+- Light-blue gradient from `--primary-tint` to `--primary-soft`
+- No border and no shadow
+- Shows only the channel name, centered, for example `#design`
+
+Body order:
+
+1. Article title
+2. `What is the update:` paragraph
+3. `Why it's valuable for UXers:` paragraph
+4. Metadata row
+
+Both summary labels are bold and each explanation remains on its own line.
+
+Metadata uses one continuous row:
+
+```text
+[Slack icon] posted by [name], YYYY/MM/DD · [reply count] replies · View in Slack
+```
+
+- Slack icon is small and authentic.
+- `posted by`, sender, date, and reply count use the same type size, weight, and muted-grey color.
+- Do not highlight the sender's name.
+- Reply count follows the date; do not place it alone at the end of the card.
+- `View in Slack` follows the reply count. It uses primary-blue text and receives a compact pale-blue rounded background on hover and keyboard focus.
+
+Interaction uses two clearly separated hot zones without changing the card layout:
+
+- The complete card is the primary action and opens a Slack-message detail dialog. Implement the card as a button-like `article` or `div`, not as an outer link, so the nested Slack link remains valid HTML.
+- The card must be keyboard accessible with `tabindex="0"`, an appropriate accessible label or `role="button"`, and Enter/Space support.
+- `View in Slack` is the secondary action. It opens the original permalink in a new tab with `rel="noopener noreferrer"`, stops event propagation, and must not open the dialog.
+- Keep the existing subtle card lift on hover. The inline action's pale-blue hover state makes its smaller click target visibly distinct.
+- Apply this behavior and metadata styling to every Slack card on both Latest Week and All Weeks.
+
+### Slack message detail dialog
+
+- Use a clean Slack-style dialog, approximately 680px maximum width, with an internal scroll area for long messages.
+- Show the channel, author, original date/time, and reply count as supporting context.
+- Show the full original parent message, not the newsletter summary. Do not include thread replies in the dialog body.
+- Preserve paragraphs, lists, labelled links, inline code, fenced code blocks, and reactions when they are present in the stored source content.
+- Include a primary-blue `View in Slack` action in the footer that opens the original permalink in a new tab.
+- Support the close button, Escape key, and backdrop click. Lock page scrolling while open and return focus to the card that opened the dialog after close.
+- Code blocks use a flat light-grey background `#F1F5F9`, dark-red text `#B42318`, and border `#E2E8F0`. Inner `code` elements inherit this treatment and must not create a separate white pill.
+
+### External Updates cards
+
+- Desktop: three equal-width columns
+- Tablet: two columns
+- Mobile: one column
+- All cards remain in one grid; do not split into “Top picks” and “More articles” sections
+- Cards in each grid row stretch to equal height
+- Image area: fixed 170px height with `object-fit: cover`
+- Body uses a column layout so the action can align toward the bottom
+- The first three editorial picks receive `Top pick · 1`, `Top pick · 2`, and `Top pick · 3` badges over the image
+
+Body order:
+
+1. Source
+2. Title
+3. `What is the update:` paragraph
+4. `Why it’s valuable for UXers:` paragraph
+5. Read article action
+
+Do not merge the two summary paragraphs. All links open in a new tab with `rel="noopener noreferrer"`.
+
+### All Weeks calendar picker
+
+Trigger hierarchy:
+
+- Large: `Week [ISO number]`
+- Small: full date range
+
+Picker behavior:
+
+- Show only years containing newsletter data.
+- If only one year exists, show that year and disable previous/next year buttons.
+- Render all real ISO weeks for the selected year.
+- Weeks without reports: disabled neutral-grey buttons.
+- Available week: light-blue button with subtle blue border.
+- Current week when not selected: white button with an inner blue ring.
+- Selected week: solid blue button; the current-week ring merges into the fill and must not remain as a separate outer ring.
+- Selecting a week updates the trigger and renders that week’s Internal Updates and External Updates below. Do not render Popular Topic in All Weeks; the selected report begins with Internal Updates.
+- Do not show “Calendar Archive” or repeat the selected week in a second heading.
+
+### Resources Hub
+
+Content comes from [`resources-hub.md`](resources-hub.md).
+
+- Page heading: Booking.com UX AI Knowledge Hub
+- Subtitle: Curated internal AI resources for UX designers
+- Three category cards
+- UX AI Foundations is full width at the top
+- Workflow / playbooks / use cases and AI tools / prototyping / setup sit side by side below
+- Foundations links use the same effective column width as links inside the lower cards
+- Category icon and title are vertically centered
+- No subcategory labels and no special highlight treatment for Foundations
+- Link rows are compact, equal width, and include an external-link icon
+- Mobile stacks all categories and changes Foundations to one link column
 
 ---
 
-## Page Types
+## Media and image behavior
 
-1. **This Week** — Compact hero with "✨ Fresh Picks", sticky filters with count, list view
-2. **Archive Weeks** — Compact hero with "Previously", sticky filters, list view
-3. **Explore All** — Compact hero, week picker + tag filters, grid view
-
-Each page has `min-height: 100vh` to prevent jumps when switching between pages of different lengths.
-
----
-
-## Image Loading
-
-Gradient fallback shows immediately on all cards. Real images load on top when available:
-
-1. YouTube thumbnail (if `data-yt-id` present) — with play button overlay
-2. thum.io screenshot (skipped for Substack)
-3. Microlink OG image (rejects < 300px)
-4. Branded gradient stays visible if all above fail
-
-Fallback gradients by section: blue (product), teal (workflows), purple (thinking), amber (slack). Source name displayed as a label on the gradient.
-
-All image containers have `data-section` and `data-label` attributes pre-set in HTML for reliable fallback rendering.
+- External card images must use checked-in, validated source-native media where possible.
+- The popular-topic illustration is a checked-in full-width asset matched to the component aspect ratio.
+- Slack channel tiles are UI elements, not article images, and require no external thumbnail.
+- Detailed asset sourcing and validation live in [`media-strategy.md`](media-strategy.md).
 
 ---
 
-## Animations
+## Accessibility
 
-| Element | Effect |
-|---------|--------|
-| Page/filter switch | Smooth 0.3s opacity fade on articles list |
-| Card hover | Lift + blue glow shadow |
-| Filter chip hover | Lift + blue border |
-| Sticky filter | 0.3s background + shadow transition |
-| Modal | Fade + slide up (0.25s) |
-| Page navigation | Instant swap, no scroll animation |
-
----
-
-## Spacing Reference
-
-| Element | Value |
-|---------|-------|
-| Sidebar width | 260px |
-| Card border radius | 12px |
-| Card padding | 20px 24px |
-| Card gap | 16px |
-| Filter-to-articles gap | 16px |
-| Filter margin-bottom | 12px |
-| Hero border radius | 20px |
-| Main padding | 32px 40px |
-| Filter chip padding | 8px 16px |
+- Interactive elements have visible keyboard focus.
+- All external links communicate new-tab behavior through standard link semantics.
+- Decorative illustration images use empty alt text and `aria-hidden="true"`.
+- Topic changes are announced through `aria-live="polite"` and `aria-atomic="true"`.
+- Calendar controls expose expanded state, selected state, disabled state, and a meaningful week label.
+- Color is not the only indicator for selected, current, or unavailable weeks.
+- Respect `prefers-reduced-motion`.
 
 ---
 
-## Rules for Contributors
+## Content ownership
 
-- Don't edit sidebar HTML — auto-generated from page data attributes
-- Don't edit "Explore All" page — auto-populated via JavaScript
-- Don't edit CSS/JS without discussing first
-- Tag display names must match filter chip names exactly
-- Follow the card HTML format in `digest.md`
+| Content | Source of truth |
+|---|---|
+| Weekly orchestration and External Updates | [`digest.md`](digest.md) |
+| Public discovery sources | [`sources.md`](sources.md) |
+| Internal Updates and Popular Topics | [`slack-spotlight.md`](slack-spotlight.md) |
+| Resource Hub links and categories | [`resources-hub.md`](resources-hub.md) |
+| Images and asset validation | [`media-strategy.md`](media-strategy.md) |
+
+Do not duplicate content URLs or discovery rules in this visual specification.
