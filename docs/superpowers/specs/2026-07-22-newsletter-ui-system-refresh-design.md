@@ -1,6 +1,6 @@
 # Newsletter UI System Refresh — Design Specification
 
-**Date:** 2026-07-22  
+**Date:** 2026-07-22 (updated 2026-07-23)
 **Status:** Ready for user review  
 **Scope:** Latest Week, All Weeks, Resources Hub, Slack detail dialog, and responsive behavior
 
@@ -137,6 +137,21 @@ Slack's multicolor logo, editorial images, and the checked-in colleagues illustr
 - Add `AI UX Case Hub` to Workflow / playbooks / use cases with the supplied internal URL.
 - Keep the resource Markdown as the canonical manually curated content source.
 
+## All Weeks calendar picker
+
+- Replace the abstract `W01`–`W53` grid with a familiar month-calendar view.
+- Use Monday through Sunday columns and treat each complete calendar row as one selectable report week.
+- Show the ISO week number as small supporting metadata at the start of each row, while the seven calendar dates provide the primary orientation.
+- Selecting any available date or empty area within a row selects the entire week.
+- Keep the selected report visible below the calendar as two lines: a prominent `Week 29` label and the supporting date range `July 13 to 19, 2026`.
+- Weeks with reports use the normal interactive state. Weeks without reports remain visible for calendar context but are muted and disabled.
+- The selected week uses one continuous solid-primary-blue row with white dates; do not add a separate outer ring around that selected row.
+- If the current week is not selected, identify it with a restrained theme-blue inset outline. When current and selected are the same week, only the selected filled state is shown.
+- Dates belonging to the previous or next month remain visible at reduced opacity so each Monday–Sunday range stays complete.
+- Month controls change the visible calendar month. Year navigation remains unavailable until reports exist in another year.
+- Initial state opens the month containing the currently displayed report and selects that report's week.
+- Preserve the page-level title format as `Week 29` followed by `July 13 to 19, 2026`; do not reintroduce ambiguous labels such as `Week 10–14 updates`.
+
 ## Responsive behavior
 
 At 768px and below:
@@ -149,7 +164,7 @@ At 768px and below:
 - `Show next topic` and key calendar controls are at least 44px high.
 - Slack cards become a full-width reading layout; the channel tile becomes a compact pill above the body.
 - External Updates and Resources Hub become one column.
-- Calendar weeks remain a six-column grid with 44px controls.
+- The All Weeks calendar keeps all seven date columns visible. Each week row is at least 44px high and is selected as one touch target; the small week-number column is supporting information rather than a separate control.
 - The Slack detail dialog uses a mobile bottom-sheet layout.
 
 ## Markdown ownership
