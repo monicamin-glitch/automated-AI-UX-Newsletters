@@ -3,8 +3,42 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 const html = readFileSync(new URL('../draft-new-ia.html', import.meta.url), 'utf8');
+const legacyHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const designSpec = readFileSync(new URL('../design-spec.md', import.meta.url), 'utf8');
 const digest = readFileSync(new URL('../digest.md', import.meta.url), 'utf8');
+
+const archiveWeeks = [
+  { legacyWeek: 1, key: '2026-W19', start: '2026-05-04', end: '2026-05-10', range: 'May 4 to 10, 2026', slack: 0, external: 8 },
+  { legacyWeek: 2, key: '2026-W20', start: '2026-05-11', end: '2026-05-17', range: 'May 11 to 17, 2026', slack: 4, external: 9 },
+  { legacyWeek: 3, key: '2026-W21', start: '2026-05-18', end: '2026-05-24', range: 'May 18 to 24, 2026', slack: 0, external: 12 },
+  { legacyWeek: 4, key: '2026-W22', start: '2026-05-25', end: '2026-05-31', range: 'May 25 to 31, 2026', slack: 0, external: 8 },
+  { legacyWeek: 5, key: '2026-W23', start: '2026-06-01', end: '2026-06-07', range: 'June 1 to 7, 2026', slack: 4, external: 2 },
+  { legacyWeek: 6, key: '2026-W24', start: '2026-06-08', end: '2026-06-14', range: 'June 8 to 14, 2026', slack: 6, external: 5 },
+  { legacyWeek: 7, key: '2026-W25', start: '2026-06-15', end: '2026-06-21', range: 'June 15 to 21, 2026', slack: 5, external: 2 },
+  { legacyWeek: 8, key: '2026-W26', start: '2026-06-22', end: '2026-06-28', range: 'June 22 to 28, 2026', slack: 12, external: 4 },
+  { legacyWeek: 9, key: '2026-W27', start: '2026-06-29', end: '2026-07-05', range: 'June 29 to July 5, 2026', slack: 6, external: 5 },
+  { key: '2026-W28', start: '2026-07-06', end: '2026-07-12', range: 'July 6 to 12, 2026', slack: 7, external: 8 }
+];
+
+function getArchiveTemplate(key) {
+  return html.match(new RegExp(`<template id="week-report-${key}"[^>]*>([\\s\\S]*?)<\\/template>`))?.[1] ?? '';
+}
+
+function getLegacyWeek(week) {
+  const start = legacyHtml.indexOf(`id="page-week${week}"`);
+  const followingWeeks = Array.from({ length: 9 }, (_, index) => legacyHtml.indexOf(`id="page-week${index + 1}"`, start + 1))
+    .filter(index => index >= 0);
+  const end = Math.min(...followingWeeks, legacyHtml.indexOf('</main>', start));
+  return legacyHtml.slice(start, end);
+}
+
+function getAttribute(markup, name) {
+  return markup.match(new RegExp(`${name}="([^"]*)"`))?.[1] ?? '';
+}
+
+function getClassText(markup, className) {
+  return markup.match(new RegExp(`class="${className}"[^>]*>([\\s\\S]*?)<\\/[^>]+>`))?.[1] ?? '';
+}
 
 test('defines the approved month-calendar archive contract', () => {
   assert.match(designSpec, /Monday through Sunday columns/);
@@ -49,7 +83,7 @@ test('builds a scalable 52 or 53 week grid with year navigation', () => {
 });
 
 test('keeps week 28 archived and promotes real calendar week 29 to Latest Week', () => {
-  assert.match(html, /'2026-W28'/);
+  assert.match(html, /id="week-report-2026-W28"/);
   assert.match(html, /'2026-W29'/);
   assert.match(html, /selectedArchiveWeek = \{ year: 2026, week: 29 \}/);
   assert.match(html, /currentArchiveWeek = \{ year: 2026, week: 29 \}/);
@@ -81,6 +115,88 @@ test('syncs internal and external updates for each selected archive week', () =>
   assert.match(html, /archiveContent\.replaceChildren/);
 });
 
+test('stores every historical report under its canonical ISO week metadata', () => {
+  const expectedWeeks = Array.from({ length: 11 }, (_, index) => `2026-W${String(index + 19).padStart(2, '0')}`);
+  for (const key of expectedWeeks) assert.match(html, new RegExp(key));
+
+  for (const week of archiveWeeks) {
+    const templateTag = html.match(new RegExp(`<template id="week-report-${week.key}"[^>]*>`))?.[0] ?? '';
+    assert.match(templateTag, new RegExp(`data-week-start="${week.start}"`));
+    assert.match(templateTag, new RegExp(`data-week-end="${week.end}"`));
+    assert.match(templateTag, new RegExp(`data-week-range="${week.range}"`));
+  }
+});
+
+test('gives every archived report the two required update sections and no Popular Topics', () => {
+  for (const { key } of archiveWeeks) {
+    const archive = getArchiveTemplate(key);
+    assert.match(archive, /class="section-title">Internal Updates<\/h2>/, `${key} needs Internal Updates`);
+    assert.match(archive, /class="slack-cards">/, `${key} needs a Slack card container`);
+    assert.match(archive, /class="section-title">External Updates<\/h2>/, `${key} needs External Updates`);
+    assert.match(archive, /class="external-card-grid">/, `${key} needs an external card grid`);
+    assert.doesNotMatch(archive, /Popular Topics|weekly-topic/, `${key} must remain topic-free`);
+  }
+});
+
+test('preserves every legacy report record while moving it into refreshed card structures', () => {
+  for (const week of archiveWeeks.filter(item => item.legacyWeek)) {
+    const legacy = getLegacyWeek(week.legacyWeek);
+    const archive = getArchiveTemplate(week.key);
+    const externalCards = legacy.split('\n').filter(line => line.includes('<a class="article-card"'));
+    const slackCards = legacy.split('\n').filter(line => line.includes('<div class="article-card article-card--slack"'));
+
+    assert.equal(externalCards.length, week.external, `${week.key} source external count`);
+    assert.equal(slackCards.length, week.slack, `${week.key} source Slack count`);
+    assert.equal((archive.match(/<a class="masonry-card"/g) ?? []).length, week.external, `${week.key} migrated external count`);
+    assert.equal((archive.match(/<a class="slack-card"/g) ?? []).length, week.slack, `${week.key} migrated Slack count`);
+
+    for (const card of externalCards) {
+      const preservedValues = [
+        getAttribute(card, 'href'),
+        getAttribute(card, 'data-img'),
+        getClassText(card, 'article-card-title'),
+        getClassText(card, 'article-card-desc'),
+        ...Array.from(card.matchAll(/<div class="article-card-meta"><span>([\s\S]*?)<\/span><span>([\s\S]*?)<\/span>/g)).flatMap(match => match.slice(1))
+      ].filter(Boolean);
+      for (const value of preservedValues) assert.ok(archive.includes(value), `${week.key} lost external value: ${value}`);
+    }
+
+    for (const card of slackCards) {
+      const preservedValues = [
+        'data-slack-link',
+        'data-slack-title',
+        'data-slack-channel',
+        'data-slack-date',
+        'data-slack-author',
+        'data-slack-quote',
+        'data-slack-content'
+      ].map(name => `${name}="${getAttribute(card, name)}"`);
+      preservedValues.push(getClassText(card, 'article-card-desc'));
+      for (const value of preservedValues) assert.ok(archive.includes(value), `${week.key} lost Slack value: ${value}`);
+    }
+  }
+});
+
+test('gives every archived card a safe original destination', () => {
+  for (const week of archiveWeeks) {
+    const archive = getArchiveTemplate(week.key);
+    const cards = archive.match(/<a class="(?:slack-card|masonry-card)"[^>]*>/g) ?? [];
+    assert.equal(cards.length, week.slack + week.external, `${week.key} card count`);
+    for (const card of cards) {
+      assert.match(card, /href="https:\/\/[^"]+"/);
+      assert.match(card, /target="_blank"/);
+      assert.match(card, /rel="noopener noreferrer"/);
+    }
+    assert.doesNotMatch(archive, /href="#"/);
+  }
+});
+
+test('derives available archive weeks from stored templates plus Latest Week', () => {
+  assert.match(html, /const latestArchiveWeekKey = '2026-W29';/);
+  assert.match(html, /const availableArchiveWeeks = new Set\(\[[\s\S]*?latestArchiveWeekKey,[\s\S]*?document\.querySelectorAll\('template\[id\^="week-report-"\]'\)[\s\S]*?template\.id\.replace\('week-report-', ''\)[\s\S]*?\]\);/);
+  assert.doesNotMatch(html, /new Set\(\['2026-W28', '2026-W29'\]\)/);
+});
+
 test('keeps popular topics exclusive to Latest Week', () => {
   assert.match(html, /id="page-latest"[\s\S]*?<section class="weekly-topic"/);
   assert.doesNotMatch(html, /\[weeklyTopic, internalHeader, filters, slackCards, externalHeader, externalGrid\]/);
@@ -88,7 +204,7 @@ test('keeps popular topics exclusive to Latest Week', () => {
 });
 
 test('gives every Week 28 archive card a real safe destination', () => {
-  const archive = html.match(/<template id="week-report-2026-W28">([\s\S]*?)<\/template>/)?.[1] ?? '';
+  const archive = getArchiveTemplate('2026-W28');
   const cards = archive.match(/<a class="(?:slack-card|masonry-card)"/g) ?? [];
   const safeLinks = archive.match(/<a class="(?:slack-card|masonry-card)"[^>]*href="https:\/\/[^\"]+"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/g) ?? [];
   assert.equal(cards.length, 15);
