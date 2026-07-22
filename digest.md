@@ -149,7 +149,7 @@ Update the published HTML while preserving the approved structure and visual rul
 - Every historical report remains in `availableArchiveWeeks` during refresh.
 - Never replace `availableArchiveWeeks` with only the two newest weeks.
 - Keep unavailable calendar weeks disabled.
-- Render Popular Topics, Internal Updates, and External Updates in the selected archive report.
+- Render only Internal Updates and External Updates in the selected archive report. Popular Topics remains exclusive to Latest Week.
 - Preserve the Resources Hub exactly as-is unless the run mode is `resources` and a human has supplied explicit changes.
 
 ### 7. Append the written digest

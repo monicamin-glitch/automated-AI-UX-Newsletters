@@ -282,8 +282,8 @@ Picker behavior:
 - Treat each complete calendar row as one selectable report week. Selecting any available date or empty area within a row selects the whole row.
 - Weeks without reports remain visible for calendar context but are muted and disabled.
 - Available rows use the normal interactive state.
-- The selected week uses one continuous solid-primary-blue row with white dates. Do not add a separate outer ring around the selected row.
-- When the current week is not selected, identify it with a restrained theme-blue inset outline. When current and selected are the same week, show only the selected filled state.
+- The selected week uses one continuous solid `#2563EB` row with white dates. Do not add a separate outer ring around the selected row.
+- When the current week is not selected, identify it with a restrained `#2563EB` inset outline. When current and selected are the same week, show only the selected filled state.
 - Dates belonging to the previous or next month remain visible at reduced opacity so each Monday–Sunday range stays complete.
 - Month controls change the visible calendar month. Year navigation remains unavailable until reports exist in another year.
 - Initially open the month containing the currently displayed report and select that report’s week.

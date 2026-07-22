@@ -20,6 +20,11 @@ test('preserves every stored report in availableArchiveWeeks during refresh', ()
   assert.match(digest, /Never replace `availableArchiveWeeks` with only the two newest weeks/);
 });
 
+test('keeps Popular Topics exclusive to Latest Week in the archive refresh contract', () => {
+  assert.match(digest, /Render only Internal Updates and External Updates in the selected archive report/);
+  assert.doesNotMatch(digest, /Render Popular Topics, Internal Updates, and External Updates in the selected archive report/);
+});
+
 test('removes the meaningless newsletter sequence from Latest Week', () => {
   assert.doesNotMatch(html, /Week 10 — 14 updates/);
 });
