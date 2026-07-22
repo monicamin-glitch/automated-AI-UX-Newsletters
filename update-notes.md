@@ -1,5 +1,13 @@
 # Update Notes
 
+## 2026-07-23
+
+### Calendar archive contract refresh
+
+- Replaced the superseded W01–W53 archive button-grid rule with the approved Monday–Sunday month calendar, whole-row selection, disabled unavailable rows, and dimmed cross-month dates.
+- Updated the archive trigger hierarchy to `Week 29` with `July 13 to 19, 2026` as the supporting range.
+- Required refreshes to derive `availableArchiveWeeks` from every stored report and prohibited reducing the archive to only the two newest weeks.
+
 ## 2026-07-22
 
 ### Markdown architecture aligned with the latest website design

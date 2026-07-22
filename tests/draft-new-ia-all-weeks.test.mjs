@@ -3,6 +3,22 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 const html = readFileSync(new URL('../draft-new-ia.html', import.meta.url), 'utf8');
+const designSpec = readFileSync(new URL('../design-spec.md', import.meta.url), 'utf8');
+const digest = readFileSync(new URL('../digest.md', import.meta.url), 'utf8');
+
+test('defines the approved month-calendar archive contract', () => {
+  assert.match(designSpec, /Monday through Sunday columns/);
+  assert.match(designSpec, /each complete calendar row as one selectable report week/);
+  assert.match(designSpec, /Weeks without reports remain visible for calendar context but are muted and disabled/);
+  assert.match(designSpec, /previous or next month remain visible at reduced opacity/);
+  assert.match(designSpec, /prominent `Week 29` label and the supporting date range `July 13 to 19, 2026`/);
+  assert.doesNotMatch(designSpec, /Render all real ISO weeks for the selected year/);
+});
+
+test('preserves every stored report in availableArchiveWeeks during refresh', () => {
+  assert.match(digest, /Every historical report remains in `availableArchiveWeeks` during refresh/);
+  assert.match(digest, /Never replace `availableArchiveWeeks` with only the two newest weeks/);
+});
 
 test('removes the meaningless newsletter sequence from Latest Week', () => {
   assert.doesNotMatch(html, /Week 10 — 14 updates/);

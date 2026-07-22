@@ -145,7 +145,9 @@ Update the published HTML while preserving the approved structure and visual rul
 
 - Update Latest Week when the target is new.
 - Update the matching archive when rerunning an existing week.
-- Add the week to the All Weeks picker’s available-week data.
+- Derive `availableArchiveWeeks` from every stored report, then add or update the target week in that stored-report set.
+- Every historical report remains in `availableArchiveWeeks` during refresh.
+- Never replace `availableArchiveWeeks` with only the two newest weeks.
 - Keep unavailable calendar weeks disabled.
 - Render Popular Topics, Internal Updates, and External Updates in the selected archive report.
 - Preserve the Resources Hub exactly as-is unless the run mode is `resources` and a human has supplied explicit changes.
@@ -249,7 +251,7 @@ Do not collapse them into one paragraph.
 The website remains the historical archive.
 
 - Latest Week is the newest successfully published ISO week.
-- All Weeks exposes every real ISO week for each year containing data.
+- All Weeks exposes every stored report through the month calendar for each year containing data.
 - Only years containing at least one report appear.
 - Previous and next year buttons stay disabled when no adjacent archive year exists.
 - Weeks without reports remain disabled.

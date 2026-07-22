@@ -125,8 +125,8 @@ Week 28 - July 6 to 12, 2026
 All Weeks selector hierarchy:
 
 ```text
-Week 28
-July 6 to 12, 2026
+Week 29
+July 13 to 19, 2026
 ```
 
 Do not use newsletter-sequence labels such as “Week 10 — 14 updates”. Do not display a redundant archive heading below the selector.
@@ -271,18 +271,23 @@ Do not merge the two summary paragraphs. All links open in a new tab with `rel="
 
 Trigger hierarchy:
 
-- Large: `Week [ISO number]`
-- Small: full date range
+- Large: `Week 29`
+- Small: `July 13 to 19, 2026`
 
 Picker behavior:
 
 - Show only years containing newsletter data.
 - If only one year exists, show that year and disable previous/next year buttons.
-- Render all real ISO weeks for the selected year.
-- Weeks without reports: disabled neutral-grey buttons.
-- Available week: light-blue button with subtle blue border.
-- Current week when not selected: white button with an inner blue ring.
-- Selected week: solid blue button; the current-week ring merges into the fill and must not remain as a separate outer ring.
+- Render a familiar month calendar with Monday through Sunday columns; the seven calendar dates provide the primary orientation and the ISO week number is small supporting metadata at the start of each row.
+- Treat each complete calendar row as one selectable report week. Selecting any available date or empty area within a row selects the whole row.
+- Weeks without reports remain visible for calendar context but are muted and disabled.
+- Available rows use the normal interactive state.
+- The selected week uses one continuous solid-primary-blue row with white dates. Do not add a separate outer ring around the selected row.
+- When the current week is not selected, identify it with a restrained theme-blue inset outline. When current and selected are the same week, show only the selected filled state.
+- Dates belonging to the previous or next month remain visible at reduced opacity so each Monday–Sunday range stays complete.
+- Month controls change the visible calendar month. Year navigation remains unavailable until reports exist in another year.
+- Initially open the month containing the currently displayed report and select that report’s week.
+- Keep the selected report visible below the calendar as two lines: a prominent `Week 29` label and the supporting date range `July 13 to 19, 2026`.
 - Selecting a week updates the trigger and renders that week’s Internal Updates and External Updates below. Do not render Popular Topic in All Weeks; the selected report begins with Internal Updates.
 - Do not show “Calendar Archive” or repeat the selected week in a second heading.
 
