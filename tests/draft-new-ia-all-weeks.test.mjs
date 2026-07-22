@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { runInNewContext } from 'node:vm';
 
 const html = readFileSync(new URL('../draft-new-ia.html', import.meta.url), 'utf8');
 const legacyHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
@@ -8,13 +9,13 @@ const designSpec = readFileSync(new URL('../design-spec.md', import.meta.url), '
 const digest = readFileSync(new URL('../digest.md', import.meta.url), 'utf8');
 
 const archiveWeeks = [
-  { legacyWeek: 1, key: '2026-W19', start: '2026-05-04', end: '2026-05-10', range: 'May 4 to 10, 2026', slack: 0, external: 8 },
-  { legacyWeek: 2, key: '2026-W20', start: '2026-05-11', end: '2026-05-17', range: 'May 11 to 17, 2026', slack: 4, external: 9 },
-  { legacyWeek: 3, key: '2026-W21', start: '2026-05-18', end: '2026-05-24', range: 'May 18 to 24, 2026', slack: 0, external: 12 },
-  { legacyWeek: 4, key: '2026-W22', start: '2026-05-25', end: '2026-05-31', range: 'May 25 to 31, 2026', slack: 0, external: 8 },
-  { legacyWeek: 5, key: '2026-W23', start: '2026-06-01', end: '2026-06-07', range: 'June 1 to 7, 2026', slack: 4, external: 2 },
-  { legacyWeek: 6, key: '2026-W24', start: '2026-06-08', end: '2026-06-14', range: 'June 8 to 14, 2026', slack: 6, external: 5 },
-  { legacyWeek: 7, key: '2026-W25', start: '2026-06-15', end: '2026-06-21', range: 'June 15 to 21, 2026', slack: 5, external: 2 },
+  { legacyWeek: 1, key: '2026-W19', start: '2026-05-04', end: '2026-05-10', range: 'May 4 to 10, 2026', slack: 2, external: 8 },
+  { legacyWeek: 2, key: '2026-W20', start: '2026-05-11', end: '2026-05-17', range: 'May 11 to 17, 2026', slack: 6, external: 9 },
+  { legacyWeek: 3, key: '2026-W21', start: '2026-05-18', end: '2026-05-24', range: 'May 18 to 24, 2026', slack: 1, external: 12 },
+  { legacyWeek: 4, key: '2026-W22', start: '2026-05-25', end: '2026-05-31', range: 'May 25 to 31, 2026', slack: 4, external: 8 },
+  { legacyWeek: 5, key: '2026-W23', start: '2026-06-01', end: '2026-06-07', range: 'June 1 to 7, 2026', slack: 6, external: 4 },
+  { legacyWeek: 6, key: '2026-W24', start: '2026-06-08', end: '2026-06-14', range: 'June 8 to 14, 2026', slack: 7, external: 9 },
+  { legacyWeek: 7, key: '2026-W25', start: '2026-06-15', end: '2026-06-21', range: 'June 15 to 21, 2026', slack: 6, external: 2 },
   { legacyWeek: 8, key: '2026-W26', start: '2026-06-22', end: '2026-06-28', range: 'June 22 to 28, 2026', slack: 12, external: 4 },
   { legacyWeek: 9, key: '2026-W27', start: '2026-06-29', end: '2026-07-05', range: 'June 29 to July 5, 2026', slack: 6, external: 5 },
   { key: '2026-W28', start: '2026-07-06', end: '2026-07-12', range: 'July 6 to 12, 2026', slack: 7, external: 8 }
@@ -40,6 +41,114 @@ function getClassText(markup, className) {
   return markup.match(new RegExp(`class="${className}"[^>]*>([\\s\\S]*?)<\\/[^>]+>`))?.[1] ?? '';
 }
 
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
+}
+
+function getLegacyArray(name) {
+  const declaration = `const ${name} = [`;
+  const start = legacyHtml.indexOf(declaration);
+  assert.notEqual(start, -1, `${name} declaration must exist`);
+  const arrayStart = legacyHtml.indexOf('[', start);
+  let depth = 0;
+  let quote = '';
+  let escaped = false;
+
+  for (let index = arrayStart; index < legacyHtml.length; index += 1) {
+    const character = legacyHtml[index];
+    if (quote) {
+      if (escaped) escaped = false;
+      else if (character === '\\') escaped = true;
+      else if (character === quote) quote = '';
+      continue;
+    }
+    if (character === "'" || character === '"' || character === '`') {
+      quote = character;
+      continue;
+    }
+    if (character === '[') depth += 1;
+    if (character === ']') {
+      depth -= 1;
+      if (depth === 0) return runInNewContext(`(${legacyHtml.slice(arrayStart, index + 1)})`);
+    }
+  }
+  assert.fail(`Could not parse ${name}`);
+}
+
+function findDestinationCard(archive, className, destination) {
+  const escapedDestination = destination.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const matches = [...archive.matchAll(new RegExp(`<a class="${className}"[^>]*href="${escapedDestination}"[^>]*>[\\s\\S]*?<\\/a>`, 'g'))];
+  assert.equal(matches.length, 1, `${destination} must map to exactly one ${className}`);
+  return matches[0][0];
+}
+
+function getStaticSourceRecords() {
+  return archiveWeeks.filter(week => week.legacyWeek).flatMap(week => {
+    const legacy = getLegacyWeek(week.legacyWeek);
+    const lines = legacy.split('\n');
+    const external = lines.filter(line => line.includes('<a class="article-card"')).map(card => {
+      const metadata = card.match(/<div class="article-card-meta"><span>([\s\S]*?)<\/span><span>([\s\S]*?)<\/span>/);
+      assert.ok(metadata, `${week.key} external metadata must exist`);
+      return {
+        type: 'external',
+        key: week.key,
+        destination: getAttribute(card, 'href'),
+        title: getClassText(card, 'article-card-title'),
+        summary: getClassText(card, 'article-card-desc'),
+        publisher: metadata[1],
+        date: metadata[2],
+        media: getAttribute(card, 'data-img')
+      };
+    });
+    const slack = lines.filter(line => line.includes('<div class="article-card article-card--slack"')).map(card => ({
+      type: 'slack',
+      key: week.key,
+      destination: getAttribute(card, 'data-slack-link'),
+      title: getAttribute(card, 'data-slack-title'),
+      summary: getClassText(card, 'article-card-desc'),
+      channel: getAttribute(card, 'data-slack-channel'),
+      date: getAttribute(card, 'data-slack-date'),
+      author: getAttribute(card, 'data-slack-author'),
+      quote: getAttribute(card, 'data-slack-quote'),
+      content: getAttribute(card, 'data-slack-content')
+    }));
+    return [...slack, ...external];
+  });
+}
+
+function getEffectiveSourceRecords() {
+  const keysByLegacyWeek = new Map(archiveWeeks.filter(week => week.legacyWeek).map(week => [`week${week.legacyWeek}`, week.key]));
+  const backfilledSlack = getLegacyArray('backfilledSlackCards').map(card => ({
+    type: 'slack',
+    key: keysByLegacyWeek.get(card.week),
+    destination: escapeHtml(card.link),
+    title: escapeHtml(card.title),
+    summary: escapeHtml(card.desc),
+    channel: escapeHtml(card.channel),
+    date: escapeHtml(card.date),
+    author: escapeHtml(card.author),
+    quote: escapeHtml(card.quote),
+    content: escapeHtml(card.content)
+  }));
+  const backfilledExternal = getLegacyArray('backfilledPublicCards').map(card => ({
+    type: 'external',
+    key: keysByLegacyWeek.get(card.week),
+    destination: escapeHtml(card.link),
+    title: escapeHtml(card.title),
+    summary: escapeHtml(card.desc),
+    publisher: escapeHtml(card.source),
+    date: escapeHtml(card.date),
+    media: ''
+  }));
+  return [...getStaticSourceRecords(), ...backfilledSlack, ...backfilledExternal];
+}
+
 test('defines the approved month-calendar archive contract', () => {
   assert.match(designSpec, /Monday through Sunday columns/);
   assert.match(designSpec, /each complete calendar row as one selectable report week/);
@@ -61,6 +170,12 @@ test('keeps Popular Topics exclusive to Latest Week in the archive refresh contr
 
 test('removes the meaningless newsletter sequence from Latest Week', () => {
   assert.doesNotMatch(html, /Week 10 — 14 updates/);
+});
+
+test('uses Apple System without loading or preferring Inter', () => {
+  assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com|family=Inter/);
+  assert.match(html, /body \{ font-family: -apple-system, BlinkMacSystemFont, sans-serif;/);
+  assert.doesNotMatch(html, /font-family: 'Inter'/);
 });
 
 test('replaces the archive dropdown with an accessible year and ISO week picker', () => {
@@ -138,41 +253,44 @@ test('gives every archived report the two required update sections and no Popula
   }
 });
 
-test('preserves every legacy report record while moving it into refreshed card structures', () => {
-  for (const week of archiveWeeks.filter(item => item.legacyWeek)) {
-    const legacy = getLegacyWeek(week.legacyWeek);
+test('migrates the complete effective legacy dataset with card-local fidelity', () => {
+  const records = getEffectiveSourceRecords();
+  assert.equal(records.length, 111);
+  assert.equal(records.filter(record => record.type === 'slack').length, 50);
+  assert.equal(records.filter(record => record.type === 'external').length, 61);
+
+  const sourceDestinations = records.map(record => `${record.key}:${record.type}:${record.destination}`).sort();
+  const targetDestinations = archiveWeeks.filter(week => week.legacyWeek).flatMap(week => {
     const archive = getArchiveTemplate(week.key);
-    const externalCards = legacy.split('\n').filter(line => line.includes('<a class="article-card"'));
-    const slackCards = legacy.split('\n').filter(line => line.includes('<div class="article-card article-card--slack"'));
+    return [...archive.matchAll(/<a class="(slack-card|masonry-card)"[^>]*href="([^"]+)"/g)]
+      .map(match => `${week.key}:${match[1] === 'slack-card' ? 'slack' : 'external'}:${match[2]}`);
+  }).sort();
+  assert.deepEqual(targetDestinations, sourceDestinations);
 
-    assert.equal(externalCards.length, week.external, `${week.key} source external count`);
-    assert.equal(slackCards.length, week.slack, `${week.key} source Slack count`);
-    assert.equal((archive.match(/<a class="masonry-card"/g) ?? []).length, week.external, `${week.key} migrated external count`);
-    assert.equal((archive.match(/<a class="slack-card"/g) ?? []).length, week.slack, `${week.key} migrated Slack count`);
+  for (const week of archiveWeeks.filter(item => item.legacyWeek)) {
+    const weekRecords = records.filter(record => record.key === week.key);
+    assert.equal(weekRecords.filter(record => record.type === 'slack').length, week.slack, `${week.key} effective Slack count`);
+    assert.equal(weekRecords.filter(record => record.type === 'external').length, week.external, `${week.key} effective external count`);
+  }
 
-    for (const card of externalCards) {
-      const preservedValues = [
-        getAttribute(card, 'href'),
-        getAttribute(card, 'data-img'),
-        getClassText(card, 'article-card-title'),
-        getClassText(card, 'article-card-desc'),
-        ...Array.from(card.matchAll(/<div class="article-card-meta"><span>([\s\S]*?)<\/span><span>([\s\S]*?)<\/span>/g)).flatMap(match => match.slice(1))
-      ].filter(Boolean);
-      for (const value of preservedValues) assert.ok(archive.includes(value), `${week.key} lost external value: ${value}`);
-    }
-
-    for (const card of slackCards) {
-      const preservedValues = [
-        'data-slack-link',
-        'data-slack-title',
-        'data-slack-channel',
-        'data-slack-date',
-        'data-slack-author',
-        'data-slack-quote',
-        'data-slack-content'
-      ].map(name => `${name}="${getAttribute(card, name)}"`);
-      preservedValues.push(getClassText(card, 'article-card-desc'));
-      for (const value of preservedValues) assert.ok(archive.includes(value), `${week.key} lost Slack value: ${value}`);
+  for (const record of records) {
+    const archive = getArchiveTemplate(record.key);
+    const card = findDestinationCard(archive, record.type === 'slack' ? 'slack-card' : 'masonry-card', record.destination);
+    if (record.type === 'slack') {
+      assert.ok(card.includes(`data-slack-title="${record.title}"`), `${record.destination} title`);
+      assert.ok(card.includes(`data-slack-channel="${record.channel}"`), `${record.destination} channel`);
+      assert.ok(card.includes(`data-slack-date="${record.date}"`), `${record.destination} date`);
+      assert.ok(card.includes(`data-slack-author="${record.author}"`), `${record.destination} author`);
+      assert.ok(card.includes(`data-slack-quote="${record.quote}"`), `${record.destination} original message`);
+      assert.ok(card.includes(`data-slack-content="${record.content}"`), `${record.destination} stored content`);
+      assert.ok(card.includes(`<h3 class="slack-card-title">${record.title}</h3>`), `${record.destination} visible title`);
+      assert.ok(card.includes(record.summary), `${record.destination} summary`);
+    } else {
+      assert.ok(card.includes(`<h3 class="masonry-card-title">${record.title}</h3>`), `${record.destination} title`);
+      assert.ok(card.includes(record.summary), `${record.destination} summary`);
+      assert.ok(card.includes(record.publisher), `${record.destination} publisher`);
+      assert.ok(card.includes(record.date), `${record.destination} date`);
+      if (record.media) assert.ok(card.includes(`src="${record.media}"`), `${record.destination} media`);
     }
   }
 });
