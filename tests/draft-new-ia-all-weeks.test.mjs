@@ -588,7 +588,7 @@ test('runtime includes ISO-year spillover months and never enables a dead month 
   assert.equal(typeof runtime.api.getWeekPickerMonthBounds, 'function');
   const bounds = runtime.api.getWeekPickerMonthBounds();
   assert.equal(`${bounds.minimum.year}-${bounds.minimum.month}`, '2025-11');
-  assert.equal(`${bounds.maximum.year}-${bounds.maximum.month}`, '2027-0');
+  assert.equal(`${bounds.maximum.year}-${bounds.maximum.month}`, '2026-11');
 
   runtime.api.toggleWeekPicker(true);
   assert.equal(runtime.element('week-picker-year').textContent, 2026);
@@ -674,20 +674,31 @@ test('derives archive years from available week keys and enables synthetic secon
   assert.equal(twoYears.element('week-picker-year-next').disabled, true);
 });
 
-test('uses the applicable ISO archive year for spillover-month year navigation', () => {
-  const runtime = createCalendarRuntime({ templateKeys: ['2027-W03'] });
+test('uses selected ISO years for ambiguous leading Decembers across adjacent archive years', () => {
+  const runtime = createCalendarRuntime({ templateKeys: ['2025-W52', '2027-W03'] });
+  runtime.api.addAvailable('2026-W01');
+  runtime.api.setSelected(2026, 1);
 
   runtime.api.renderMonthWeekPicker(2025, 11);
   assert.equal(runtime.element('week-picker-year').textContent, 2026);
-  assert.equal(runtime.element('week-picker-year-previous').disabled, true);
+  assert.equal(runtime.element('week-picker-year-previous').disabled, false);
   assert.equal(runtime.element('week-picker-year-next').disabled, false);
+
+  runtime.api.changeWeekPickerYear(-1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2024, month: 11 });
+  assert.equal(runtime.element('week-picker-year').textContent, 2025);
   runtime.api.changeWeekPickerYear(1);
-  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 0 });
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2025, month: 11 });
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
+
+  runtime.api.changeWeekPickerYear(1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 11 });
   assert.equal(runtime.element('week-picker-year').textContent, 2027);
   assert.equal(runtime.element('week-picker-year-previous').disabled, false);
   assert.equal(runtime.element('week-picker-year-next').disabled, true);
   runtime.api.changeWeekPickerYear(-1);
   assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2025, month: 11 });
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
 
   runtime.api.renderMonthWeekPicker(2026, 0);
   assert.equal(runtime.element('week-picker-year').textContent, 2026);
@@ -696,6 +707,23 @@ test('uses the applicable ISO archive year for spillover-month year navigation',
   assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 0 });
   runtime.api.changeWeekPickerYear(-1);
   assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2026, month: 0 });
+});
+
+test('renders the maximum ISO year final week in December and never exposes trailing January', () => {
+  const runtime = createCalendarRuntime({ templateKeys: ['2027-W52'] });
+  const rows = runtime.api.getMonthWeekRows(2027, 11);
+  const finalRow = rows.at(-1);
+  assert.equal(finalRow.monday.toISOString().slice(0, 10), '2027-12-27');
+  assert.equal(finalRow.dates.at(-1).toISOString().slice(0, 10), '2028-01-02');
+  assert.equal(`${finalRow.isoWeek.year}-W${finalRow.isoWeek.week}`, '2027-W52');
+  assert.equal([...finalRow.dates.slice(-2)].map(date => date.getUTCMonth()).join(','), '0,0');
+
+  const bounds = runtime.api.getWeekPickerMonthBounds();
+  assert.deepEqual({ ...bounds.maximum }, { year: 2027, month: 11 });
+  runtime.api.renderMonthWeekPicker(2027, 11);
+  assert.equal(runtime.element('week-picker-month-next').disabled, true);
+  runtime.api.changeWeekPickerMonth(1);
+  assert.deepEqual({ ...runtime.api.getDisplay() }, { year: 2027, month: 11 });
 });
 
 test('uses the same full calendar week name across both pages', () => {
@@ -1338,15 +1366,18 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.doesNotMatch(sanitized, /script|iframe|javascript:|onclick|onmouseover|style=|data-x|class=/i);
 
     const boundaryYears = await browser.evaluate(`(() => {
+      availableArchiveWeeks.add('2025-W52');
       availableArchiveWeeks.add('2027-W03');
+      availableArchiveYears.unshift(2025);
       availableArchiveYears.push(2027);
+      selectedArchiveWeek = { year: 2026, week: 29 };
       renderMonthWeekPicker(2025, 11);
       const next = document.getElementById('week-picker-year-next');
       const previous = document.getElementById('week-picker-year-previous');
       const result = {
         decemberLabel: document.getElementById('week-picker-year').textContent,
         decemberNextEnabled: !next.disabled,
-        decemberPreviousDisabled: previous.disabled
+        decemberPreviousEnabled: !previous.disabled
       };
       next.click();
       result.forwardDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
@@ -1355,24 +1386,39 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
       result.forwardNextDisabled = next.disabled;
       previous.click();
       result.returnDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      renderMonthWeekPicker(2027, 11);
+      const finalRow = [...document.querySelectorAll('#week-picker-grid .week-picker-row')].at(-1);
+      const finalDates = [...finalRow.querySelectorAll('.week-picker-date')];
+      const nextMonth = document.getElementById('week-picker-month-next');
+      result.trailingJanuaryDates = finalDates.slice(-2).map(date => date.textContent);
+      result.trailingJanuaryDimmed = finalDates.slice(-2).every(date => date.classList.contains('is-outside-month'));
+      result.trailingMonthDisabled = nextMonth.disabled;
+      nextMonth.click();
+      result.trailingMonthDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
       renderMonthWeekPicker(2026, 0);
       next.click();
       result.januaryForwardDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
       previous.click();
       result.januaryReturnDisplay = [weekPickerDisplayYear, weekPickerDisplayMonth];
+      availableArchiveYears.shift();
       availableArchiveYears.pop();
+      availableArchiveWeeks.delete('2025-W52');
       availableArchiveWeeks.delete('2027-W03');
       renderMonthWeekPicker(2026, 6);
       return result;
     })()`);
     assert.equal(boundaryYears.decemberLabel, '2026');
     assert.equal(boundaryYears.decemberNextEnabled, true);
-    assert.equal(boundaryYears.decemberPreviousDisabled, true);
-    assert.deepEqual(boundaryYears.forwardDisplay, [2027, 0]);
+    assert.equal(boundaryYears.decemberPreviousEnabled, true);
+    assert.deepEqual(boundaryYears.forwardDisplay, [2027, 11]);
     assert.equal(boundaryYears.forwardLabel, '2027');
     assert.equal(boundaryYears.forwardPreviousEnabled, true);
     assert.equal(boundaryYears.forwardNextDisabled, true);
     assert.deepEqual(boundaryYears.returnDisplay, [2025, 11]);
+    assert.deepEqual(boundaryYears.trailingJanuaryDates, ['1', '2']);
+    assert.equal(boundaryYears.trailingJanuaryDimmed, true);
+    assert.equal(boundaryYears.trailingMonthDisabled, true);
+    assert.deepEqual(boundaryYears.trailingMonthDisplay, [2027, 11]);
     assert.deepEqual(boundaryYears.januaryForwardDisplay, [2027, 0]);
     assert.deepEqual(boundaryYears.januaryReturnDisplay, [2026, 0]);
 

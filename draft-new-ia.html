@@ -903,8 +903,7 @@
     const initialWeekPickerMonday = getISOWeekRange(selectedArchiveWeek.year, selectedArchiveWeek.week).monday;
     let weekPickerDisplayYear = initialWeekPickerMonday.getUTCFullYear();
     let weekPickerDisplayMonth = initialWeekPickerMonday.getUTCMonth();
-    let weekPickerYearNavigationMode = null;
-    let pendingWeekPickerYearNavigationMode;
+    let weekPickerDisplayISOYear = selectedArchiveWeek.year;
 
     function archiveWeekKey(year, week) {
       return year + '-W' + String(week).padStart(2, '0');
@@ -942,15 +941,13 @@
       return getISOWeekForDate(now);
     }
 
-    function getISOWeeksInYear(year) {
-      return getISOWeekForDate(new Date(Date.UTC(year, 11, 28))).week;
-    }
-
     function getWeekPickerISOYear(year, month) {
       const representedYears = [...new Set(getMonthWeekRows(year, month).map(row => row.isoWeek.year))];
       const representedArchiveYears = representedYears.filter(candidate => availableArchiveYears.includes(candidate));
+      if (month === 11 && representedArchiveYears.includes(weekPickerDisplayISOYear)) return weekPickerDisplayISOYear;
+      if (month === 11 && representedArchiveYears.includes(selectedArchiveWeek.year)) return selectedArchiveWeek.year;
       if (representedArchiveYears.includes(year)) return year;
-      if (representedArchiveYears.includes(selectedArchiveWeek.year)) return selectedArchiveWeek.year;
+      if (representedArchiveYears.includes(weekPickerDisplayISOYear)) return weekPickerDisplayISOYear;
       return representedArchiveYears[0] ?? getISOWeekForDate(new Date(Date.UTC(year, month, 15))).year;
     }
 
@@ -958,10 +955,9 @@
       const firstISOYear = Math.min(...availableArchiveYears);
       const lastISOYear = Math.max(...availableArchiveYears);
       const firstMonday = getISOWeekRange(firstISOYear, 1).monday;
-      const lastSunday = getISOWeekRange(lastISOYear, getISOWeeksInYear(lastISOYear)).sunday;
       return {
         minimum: { year: firstMonday.getUTCFullYear(), month: firstMonday.getUTCMonth() },
-        maximum: { year: lastSunday.getUTCFullYear(), month: lastSunday.getUTCMonth() }
+        maximum: { year: lastISOYear, month: 11 }
       };
     }
 
@@ -1037,8 +1033,6 @@
     function renderMonthWeekPicker(year, month) {
       weekPickerDisplayYear = year;
       weekPickerDisplayMonth = month;
-      weekPickerYearNavigationMode = pendingWeekPickerYearNavigationMode ?? null;
-      pendingWeekPickerYearNavigationMode = undefined;
       const grid = document.getElementById('week-picker-grid');
       const yearLabel = document.getElementById('week-picker-year');
       const monthLabel = document.getElementById('week-picker-month');
@@ -1049,6 +1043,7 @@
       if (!grid || !yearLabel || !monthLabel) return;
 
       const archiveYear = getWeekPickerISOYear(year, month);
+      weekPickerDisplayISOYear = archiveYear;
       const yearIndex = availableArchiveYears.indexOf(archiveYear);
       yearLabel.textContent = archiveYear;
       monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' })
@@ -1129,6 +1124,7 @@
       trigger.setAttribute('aria-expanded', String(shouldOpen));
       if (shouldOpen) {
         const selectedMonday = getISOWeekRange(selectedArchiveWeek.year, selectedArchiveWeek.week).monday;
+        weekPickerDisplayISOYear = selectedArchiveWeek.year;
         renderMonthWeekPicker(selectedMonday.getUTCFullYear(), selectedMonday.getUTCMonth());
         if (typeof forceOpen !== 'boolean') {
           document.querySelector('#week-picker-grid .week-picker-row.is-selected')?.focus();
@@ -1142,14 +1138,16 @@
       const targetIndex = currentIndex + direction;
       if (targetIndex < 0 || targetIndex >= availableArchiveYears.length) return;
       const targetISOYear = availableArchiveYears[targetIndex];
-      const followsWeekOne = weekPickerYearNavigationMode === 'week-one' || weekPickerDisplayYear !== currentISOYear;
-      if (followsWeekOne) {
-        const targetMonday = getISOWeekRange(targetISOYear, 1).monday;
-        pendingWeekPickerYearNavigationMode = 'week-one';
-        renderMonthWeekPicker(targetMonday.getUTCFullYear(), targetMonday.getUTCMonth());
-        return;
+      weekPickerDisplayISOYear = targetISOYear;
+      if (weekPickerDisplayMonth === 11) {
+        const targetWeekOneMonday = getISOWeekRange(targetISOYear, 1).monday;
+        const targetDecemberYear = targetWeekOneMonday.getUTCMonth() === 11
+          ? targetWeekOneMonday.getUTCFullYear()
+          : targetISOYear;
+        renderMonthWeekPicker(targetDecemberYear, 11);
+      } else {
+        renderMonthWeekPicker(targetISOYear, weekPickerDisplayMonth);
       }
-      renderMonthWeekPicker(targetISOYear, weekPickerDisplayMonth);
     }
 
     function changeWeekPickerMonth(direction) {
@@ -1162,6 +1160,7 @@
       const key = archiveWeekKey(year, week);
       if (!availableArchiveWeeks.has(key)) return;
       selectedArchiveWeek = { year, week };
+      weekPickerDisplayISOYear = year;
       const selectedMonday = getISOWeekRange(year, week).monday;
       weekPickerDisplayYear = selectedMonday.getUTCFullYear();
       weekPickerDisplayMonth = selectedMonday.getUTCMonth();
