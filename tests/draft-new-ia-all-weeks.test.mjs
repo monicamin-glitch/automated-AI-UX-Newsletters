@@ -671,8 +671,9 @@ test('keeps seven date columns and 44px whole-row targets at 390px', () => {
 test('opens archived Slack cards in a detail dialog with their original permalink', () => {
   assert.match(html, /<dialog id="slack-message-dialog"/);
   assert.match(html, /id="slack-message-dialog-action"/);
-  assert.match(html, /event\.target\.closest\('#archive-week-content \.slack-card\[data-slack-link\]'\)/);
-  assert.match(html, /dialogAction\.href = card\.dataset\.slackLink/);
+  assert.match(html, /function handleArchiveSlackCardClick\(event\)/);
+  assert.match(html, /event\.target\.closest\('#archive-week-content \.slack-card'\)/);
+  assert.match(html, /dialogAction\.href = details\.permalink/);
   assert.match(html, /slackMessageDialog\.showModal\(\)/);
 });
 
@@ -683,4 +684,126 @@ test('centers the archived Slack detail dialog despite the page margin reset', (
 test('keeps the archived Slack dialog in the active All Weeks page', () => {
   const allWeeksPage = html.match(/<div class="page" id="page-all">([\s\S]*?)<!-- PAGE: Resources Hub -->/)?.[1] ?? '';
   assert.match(allWeeksPage, /<dialog id="slack-message-dialog"/);
+});
+
+function extractArchiveDialogFunction(name) {
+  const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1] ?? '';
+  const start = script.indexOf(`function ${name}(`);
+  assert.notEqual(start, -1, `${name} must be defined`);
+  const bodyStart = script.indexOf('{', start);
+  let depth = 0;
+  for (let index = bodyStart; index < script.length; index += 1) {
+    if (script[index] === '{') depth += 1;
+    if (script[index] === '}') {
+      depth -= 1;
+      if (depth === 0) return script.slice(start, index + 1);
+    }
+  }
+  assert.fail(`${name} must have a complete body`);
+}
+
+function decodeAttribute(value) {
+  return value.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+}
+
+function getArchivedSlackCardRecords() {
+  const reports = [...archiveWeeks.map(({ key }) => getArchiveTemplate(key))];
+  const latestStart = html.indexOf('<div class="page active" id="page-latest">');
+  const latestEnd = html.indexOf('<template id="week-report-2026-W19"');
+  reports.push(html.slice(latestStart, latestEnd));
+
+  return reports.flatMap(report => [...report.matchAll(/<a class="slack-card"[^>]*>([\s\S]*?)<\/a>/g)].map(match => {
+    const card = match[0];
+    return {
+      permalink: decodeAttribute(getAttribute(card, 'href')),
+      original: decodeAttribute(getAttribute(card, 'data-slack-quote')),
+      summary: card.match(/<div class="slack-card-desc">([\s\S]*?)<\/div><div class="slack-card-meta">/)?.[1] ?? '',
+      channel: card.match(/class="slack-thread-channel">([\s\S]*?)<\/span>/)?.[1] ?? '',
+      title: getClassText(card, 'slack-card-title'),
+      author: getAttribute(card, 'data-slack-author'),
+      date: getAttribute(card, 'data-slack-date'),
+      dataSlackLink: decodeAttribute(getAttribute(card, 'data-slack-link'))
+    };
+  }));
+}
+
+test('gives every archived Slack card a dialog, direct permalink action, and truthful fallback', () => {
+  const records = getArchivedSlackCardRecords();
+  assert.equal(records.length, 63);
+  assert.equal(records.filter(record => record.dataSlackLink).length, 50);
+  assert.equal(records.filter(record => !record.original).length, 13);
+
+  const harness = {
+    action: { href: '' },
+    channel: { textContent: '' },
+    author: { textContent: '' },
+    date: { textContent: '' },
+    copy: { innerHTML: '' },
+    context: { textContent: '' },
+    dialog: { showCount: 0, showModal() { this.showCount += 1; } }
+  };
+  const runtime = runInNewContext(`
+    const slackMessageDialog = harness.dialog;
+    const dialogAction = harness.action;
+    const document = { getElementById(id) { return {
+      'slack-message-dialog-channel': harness.channel,
+      'slack-message-dialog-author': harness.author,
+      'slack-message-dialog-date': harness.date,
+      'slack-message-dialog-copy': harness.copy,
+      'slack-message-dialog-context': harness.context
+    }[id]; } };
+    ${extractArchiveDialogFunction('getArchiveSlackMessageDetails')}
+    ${extractArchiveDialogFunction('openSlackMessageDialog')}
+    ${extractArchiveDialogFunction('handleArchiveSlackCardClick')}
+    ${extractArchiveDialogFunction('preventArchiveSlackActionPropagation')}
+    globalThis.dialogHarness = {
+      getArchiveSlackMessageDetails,
+      handleArchiveSlackCardClick,
+      openSlackMessageDialog,
+      preventArchiveSlackActionPropagation
+    };
+    dialogHarness;
+  `, { harness });
+
+  for (const record of records) {
+    const card = {
+      dataset: {
+        slackLink: record.dataSlackLink,
+        slackQuote: record.original,
+        slackChannel: record.channel,
+        slackAuthor: record.author,
+        slackDate: record.date
+      },
+      getAttribute: name => name === 'href' ? record.permalink : null,
+      querySelector(selector) {
+        if (selector === '.slack-card-desc') return { innerHTML: record.summary };
+        if (selector === '.slack-thread-channel') return { textContent: record.channel };
+        if (selector === '.slack-card-title') return { textContent: record.title };
+        return null;
+      }
+    };
+    const clickEvent = {
+      target: { closest: selector => selector === '#archive-week-content .view-in-slack' ? null : card },
+      preventDefaultCalled: false,
+      preventDefault() { this.preventDefaultCalled = true; }
+    };
+
+    assert.equal(runtime.handleArchiveSlackCardClick(clickEvent), true, record.permalink);
+    assert.equal(clickEvent.preventDefaultCalled, true, record.permalink);
+    assert.equal(harness.action.href, record.permalink, record.permalink);
+    assert.equal(harness.copy.innerHTML, record.original || record.summary, record.permalink);
+    assert.equal(harness.context.textContent, record.original ? 'Original Slack message' : 'Archived summary — original message unavailable', record.permalink);
+  }
+  assert.equal(harness.dialog.showCount, 63);
+
+  const directLinkEvent = {
+    target: { closest: selector => selector === '#archive-week-content .view-in-slack' ? {} : null },
+    preventDefaultCalled: false,
+    preventDefault() { this.preventDefaultCalled = true; }
+  };
+  assert.equal(runtime.handleArchiveSlackCardClick(directLinkEvent), false);
+  assert.equal(directLinkEvent.preventDefaultCalled, false);
+  let propagationStopped = false;
+  runtime.preventArchiveSlackActionPropagation({ stopPropagation() { propagationStopped = true; } });
+  assert.equal(propagationStopped, true);
 });
