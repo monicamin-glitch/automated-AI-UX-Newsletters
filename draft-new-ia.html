@@ -99,7 +99,7 @@
     .week-picker-month { min-width: 92px; text-align: center; font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
     .week-picker-nav-button { width: 38px; height: 38px; flex: 0 0 38px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 9px; color: var(--text-secondary); background: var(--card-bg); cursor: pointer; }
     .week-picker-nav-button:hover { color: var(--primary); border-color: #bfdbfe; background: var(--primary-tint); }
-    .week-picker-nav-button:focus-visible, .week-picker-row:focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.24); outline-offset: 2px; }
+    .week-picker-nav-button:focus-visible, .week-picker-row:not(.is-selected):focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.24); outline-offset: 2px; }
     .week-picker-nav-button:disabled, .week-picker-year-button:disabled { color: #cbd5e1; border-color: var(--border-light); background: #f8fafc; cursor: not-allowed; }
     .week-picker-nav-button svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .week-picker-calendar { width: 100%; }
@@ -109,10 +109,11 @@
     .week-picker-grid { display: grid; gap: 4px; }
     .week-picker-row { min-height: 44px; padding: 0 5px; border-radius: 10px; color: var(--text-muted); background: #f8fafc; font-family: inherit; cursor: default; transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease; }
     .week-picker-row.is-available { color: var(--text-primary); background: #ffffff; cursor: pointer; }
-    .week-picker-row.is-available:hover { background: #f8fafc; }
+    .week-picker-row.is-available:not(.is-selected):hover { background: #f8fafc; }
     .week-picker-row.is-current:not(.is-selected) { box-shadow: inset 0 0 0 1px #2563EB; }
     .week-picker-row.is-selected { color: #ffffff; background: #2563EB; }
     .week-picker-row.is-current.is-selected { box-shadow: none; }
+    .week-picker-row.is-selected:focus-visible { outline: none; box-shadow: inset 0 0 0 2px #ffffff; }
     .week-picker-row[aria-disabled="true"] { color: #94a3b8; background: #f8fafc; cursor: not-allowed; }
     .week-picker-week-number, .week-picker-date { display: grid; place-items: center; min-width: 0; line-height: 1; }
     .week-picker-week-number { font-size: 9px; font-weight: 700; }
@@ -847,6 +848,33 @@
       return { year, week };
     }
 
+    function getISOWeeksInYear(year) {
+      return getISOWeekForDate(new Date(Date.UTC(year, 11, 28))).week;
+    }
+
+    function getWeekPickerMonthBounds() {
+      const firstISOYear = Math.min(...availableArchiveYears);
+      const lastISOYear = Math.max(...availableArchiveYears);
+      const firstMonday = getISOWeekRange(firstISOYear, 1).monday;
+      const lastSunday = getISOWeekRange(lastISOYear, getISOWeeksInYear(lastISOYear)).sunday;
+      return {
+        minimum: { year: firstMonday.getUTCFullYear(), month: firstMonday.getUTCMonth() },
+        maximum: { year: lastSunday.getUTCFullYear(), month: lastSunday.getUTCMonth() }
+      };
+    }
+
+    function getWeekPickerMonthIndex(year, month) {
+      return year * 12 + month;
+    }
+
+    function canChangeWeekPickerMonth(direction) {
+      const target = new Date(Date.UTC(weekPickerDisplayYear, weekPickerDisplayMonth + direction, 1));
+      const bounds = getWeekPickerMonthBounds();
+      const targetIndex = getWeekPickerMonthIndex(target.getUTCFullYear(), target.getUTCMonth());
+      return targetIndex >= getWeekPickerMonthIndex(bounds.minimum.year, bounds.minimum.month)
+        && targetIndex <= getWeekPickerMonthIndex(bounds.maximum.year, bounds.maximum.month);
+    }
+
     function getMonthWeekRows(year, month) {
       const firstOfMonth = new Date(Date.UTC(year, month, 1));
       const firstDay = firstOfMonth.getUTCDay() || 7;
@@ -889,11 +917,19 @@
       return weekLabel + ' - ' + dateRange;
     }
 
+    function setWeekPickerRowTabStop(row) {
+      const availableRows = Array.from(document.querySelectorAll('#week-picker-grid .week-picker-row.is-available'));
+      availableRows.forEach(candidate => { candidate.tabIndex = candidate === row ? 0 : -1; });
+    }
+
     function focusAdjacentWeekPickerRow(row, direction) {
       const availableRows = Array.from(document.querySelectorAll('#week-picker-grid .week-picker-row.is-available'));
       const currentIndex = availableRows.indexOf(row);
       const target = availableRows[currentIndex + direction];
-      if (target) target.focus();
+      if (target) {
+        setWeekPickerRowTabStop(target);
+        target.focus();
+      }
     }
 
     function renderMonthWeekPicker(year, month) {
@@ -914,12 +950,20 @@
         .format(new Date(Date.UTC(year, month, 1)));
       previousYearButton.disabled = yearIndex <= 0;
       nextYearButton.disabled = yearIndex === -1 || yearIndex >= availableArchiveYears.length - 1;
-      previousMonthButton.disabled = yearIndex <= 0 && month === 0;
-      nextMonthButton.disabled = yearIndex >= availableArchiveYears.length - 1 && month === 11;
+      previousMonthButton.disabled = !canChangeWeekPickerMonth(-1);
+      nextMonthButton.disabled = !canChangeWeekPickerMonth(1);
       grid.setAttribute('aria-label', monthLabel.textContent + ' ' + year + ' calendar weeks');
       grid.replaceChildren();
 
-      getMonthWeekRows(year, month).forEach(({ dates, isoWeek }) => {
+      const monthRows = getMonthWeekRows(year, month);
+      const selectedIsVisible = monthRows.some(({ isoWeek }) =>
+        availableArchiveWeeks.has(archiveWeekKey(isoWeek.year, isoWeek.week))
+          && selectedArchiveWeek.year === isoWeek.year
+          && selectedArchiveWeek.week === isoWeek.week
+      );
+      let tabStopAssigned = false;
+
+      monthRows.forEach(({ dates, isoWeek }) => {
         const key = archiveWeekKey(isoWeek.year, isoWeek.week);
         const isAvailable = availableArchiveWeeks.has(key);
         const isSelected = selectedArchiveWeek.year === isoWeek.year && selectedArchiveWeek.week === isoWeek.week;
@@ -932,7 +976,9 @@
         row.setAttribute('aria-selected', String(isSelected));
         row.setAttribute('aria-disabled', String(!isAvailable));
         row.setAttribute('aria-current', isCurrent ? 'date' : 'false');
-        row.tabIndex = isAvailable ? 0 : -1;
+        const isTabStop = isAvailable && (selectedIsVisible ? isSelected : !tabStopAssigned);
+        row.tabIndex = isTabStop ? 0 : -1;
+        if (isTabStop) tabStopAssigned = true;
 
         const weekNumber = document.createElement('span');
         weekNumber.className = 'week-picker-week-number';
@@ -993,10 +1039,9 @@
     }
 
     function changeWeekPickerMonth(direction) {
+      if (!canChangeWeekPickerMonth(direction)) return;
       const targetMonth = new Date(Date.UTC(weekPickerDisplayYear, weekPickerDisplayMonth + direction, 1));
-      const targetYear = targetMonth.getUTCFullYear();
-      if (!availableArchiveYears.includes(targetYear)) return;
-      renderMonthWeekPicker(targetYear, targetMonth.getUTCMonth());
+      renderMonthWeekPicker(targetMonth.getUTCFullYear(), targetMonth.getUTCMonth());
     }
 
     function selectArchiveWeek(year, week) {

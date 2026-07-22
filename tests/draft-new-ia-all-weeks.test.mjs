@@ -149,6 +149,141 @@ function getEffectiveSourceRecords() {
   return [...getStaticSourceRecords(), ...backfilledSlack, ...backfilledExternal];
 }
 
+class CalendarTestElement {
+  constructor(tagName, ownerDocument) {
+    this.tagName = tagName.toUpperCase();
+    this.ownerDocument = ownerDocument;
+    this.attributes = new Map();
+    this.children = [];
+    this.className = '';
+    this.dataset = {};
+    this.disabled = false;
+    this.hidden = false;
+    this.listeners = new Map();
+    this.tabIndex = -1;
+    this.textContent = '';
+    this.classList = {
+      contains: token => this.className.split(/\s+/).filter(Boolean).includes(token)
+    };
+  }
+
+  setAttribute(name, value) {
+    this.attributes.set(name, String(value));
+  }
+
+  getAttribute(name) {
+    return this.attributes.get(name) ?? null;
+  }
+
+  appendChild(child) {
+    this.children.push(child);
+    return child;
+  }
+
+  replaceChildren(...children) {
+    this.children = children;
+  }
+
+  addEventListener(type, listener) {
+    const listeners = this.listeners.get(type) ?? [];
+    listeners.push(listener);
+    this.listeners.set(type, listeners);
+  }
+
+  dispatchEvent(event) {
+    event.target ??= this;
+    event.defaultPrevented = false;
+    event.preventDefault ??= () => { event.defaultPrevented = true; };
+    for (const listener of this.listeners.get(event.type) ?? []) listener.call(this, event);
+    return !event.defaultPrevented;
+  }
+
+  click() {
+    this.dispatchEvent({ type: 'click' });
+  }
+
+  focus() {
+    this.ownerDocument.activeElement = this;
+  }
+}
+
+function createCalendarRuntime() {
+  const elements = new Map();
+  const document = {
+    activeElement: null,
+    createElement: tagName => new CalendarTestElement(tagName, document),
+    getElementById: id => elements.get(id) ?? null,
+    querySelectorAll(selector) {
+      if (selector === 'template[id^="week-report-"]') return [];
+      if (!selector.startsWith('#week-picker-grid ')) return [];
+      const requiredClasses = selector.split(' ').at(-1).split('.').filter(Boolean);
+      return elements.get('week-picker-grid').children.filter(element =>
+        requiredClasses.every(className => element.classList.contains(className))
+      );
+    },
+    querySelector(selector) {
+      return this.querySelectorAll(selector)[0] ?? null;
+    }
+  };
+
+  for (const id of [
+    'week-picker-grid',
+    'week-picker-year',
+    'week-picker-month',
+    'week-picker-year-previous',
+    'week-picker-year-next',
+    'week-picker-month-previous',
+    'week-picker-month-next',
+    'week-picker-trigger',
+    'week-picker-trigger-week',
+    'week-picker-trigger-range',
+    'week-picker-popover',
+    'week-picker-detail'
+  ]) {
+    const element = new CalendarTestElement(id.includes('button') ? 'button' : 'div', document);
+    element.id = id;
+    elements.set(id, element);
+  }
+  elements.get('week-picker-popover').hidden = true;
+
+  const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1] ?? '';
+  const calendarStart = script.indexOf('const availableArchiveYears = [2026];');
+  const calendarEnd = script.indexOf('function syncArchiveWeekContent()');
+  assert.notEqual(calendarStart, -1, 'calendar source start must exist');
+  assert.notEqual(calendarEnd, -1, 'calendar source end must exist');
+
+  const state = { syncCount: 0 };
+  const calendarSource = script.slice(calendarStart, calendarEnd) + `
+    function syncArchiveWeekContent() { harnessState.syncCount += 1; }
+    globalThis.calendarApi = {
+      addAvailable: key => availableArchiveWeeks.add(key),
+      changeWeekPickerMonth,
+      getDisplay: () => ({ year: weekPickerDisplayYear, month: weekPickerDisplayMonth }),
+      getISOWeekForDate,
+      getISOWeekRange,
+      getMonthWeekRows,
+      getSelection: () => ({ ...selectedArchiveWeek }),
+      getWeekPickerMonthBounds: typeof getWeekPickerMonthBounds === 'function' ? getWeekPickerMonthBounds : undefined,
+      renderMonthWeekPicker,
+      setCurrent: (year, week) => { currentArchiveWeek.year = year; currentArchiveWeek.week = week; },
+      setSelected: (year, week) => { selectedArchiveWeek = { year, week }; },
+      toggleWeekPicker
+    };
+  `;
+  const context = { document, harnessState: state, console, Date, Intl, Math, Set };
+  runInNewContext(calendarSource, context);
+  return {
+    api: context.calendarApi,
+    document,
+    element: id => elements.get(id),
+    state
+  };
+}
+
+function calendarRow(runtime, key) {
+  return runtime.element('week-picker-grid').children.find(row => row.dataset.weekKey === key);
+}
+
 test('defines the approved month-calendar archive contract', () => {
   assert.match(designSpec, /Monday through Sunday columns/);
   assert.match(designSpec, /each complete calendar row as one selectable report week/);
@@ -201,11 +336,136 @@ test('builds UTC-safe Monday-Sunday calendar rows with ISO week metadata', () =>
   assert.doesNotMatch(html, /button\.textContent = 'W' \+ String\(week\)\.padStart/);
 });
 
+test('runtime maps UTC dates and ISO week ranges across year boundaries', () => {
+  const { api } = createCalendarRuntime();
+  const weekOne = api.getISOWeekRange(2026, 1);
+  assert.equal(weekOne.monday.toISOString().slice(0, 10), '2025-12-29');
+  assert.equal(weekOne.sunday.toISOString().slice(0, 10), '2026-01-04');
+
+  const decemberDate = api.getISOWeekForDate(new Date(Date.UTC(2025, 11, 31)));
+  const januaryDate = api.getISOWeekForDate(new Date(Date.UTC(2026, 0, 1)));
+  assert.equal(`${decemberDate.year}-W${decemberDate.week}`, '2026-W1');
+  assert.equal(`${januaryDate.year}-W${januaryDate.week}`, '2026-W1');
+});
+
+test('runtime generates complete month rows with metadata, dates, and cross-month flags', () => {
+  const runtime = createCalendarRuntime();
+  runtime.api.addAvailable('2026-W01');
+  runtime.api.setSelected(2026, 1);
+  runtime.api.renderMonthWeekPicker(2025, 11);
+
+  const rows = runtime.element('week-picker-grid').children;
+  assert.equal(rows.length, 5);
+  for (const row of rows) {
+    assert.equal(row.children.length, 8, `${row.dataset.weekKey} needs one week number and seven dates`);
+    assert.ok(row.children[0].classList.contains('week-picker-week-number'));
+    assert.equal(row.children.slice(1).filter(cell => cell.classList.contains('week-picker-date')).length, 7);
+  }
+
+  const weekOne = calendarRow(runtime, '2026-W01');
+  assert.equal(weekOne.children.slice(1).map(cell => cell.textContent).join(','), '29,30,31,1,2,3,4');
+  assert.equal(weekOne.children.slice(1).filter(cell => cell.classList.contains('is-outside-month')).length, 4);
+});
+
+test('runtime keeps unavailable rows inert and activates available rows with Enter or Space', () => {
+  const runtime = createCalendarRuntime();
+  runtime.api.addAvailable('2025-W52');
+  runtime.api.addAvailable('2026-W01');
+  runtime.api.setSelected(2026, 1);
+  runtime.api.renderMonthWeekPicker(2025, 11);
+
+  const unavailable = calendarRow(runtime, '2025-W49');
+  unavailable.click();
+  unavailable.dispatchEvent({ type: 'keydown', key: 'Enter' });
+  assert.equal(runtime.api.getSelection().year, 2026);
+  assert.equal(runtime.api.getSelection().week, 1);
+  assert.equal(runtime.state.syncCount, 0);
+  assert.equal(unavailable.getAttribute('aria-disabled'), 'true');
+  assert.equal(unavailable.tabIndex, -1);
+
+  const available = calendarRow(runtime, '2025-W52');
+  available.dispatchEvent({ type: 'keydown', key: 'Enter' });
+  assert.equal(runtime.api.getSelection().year, 2025);
+  assert.equal(runtime.api.getSelection().week, 52);
+  assert.equal(runtime.state.syncCount, 1);
+
+  runtime.api.setSelected(2026, 1);
+  runtime.api.renderMonthWeekPicker(2025, 11);
+  calendarRow(runtime, '2025-W52').dispatchEvent({ type: 'keydown', key: ' ' });
+  assert.equal(runtime.api.getSelection().week, 52);
+  assert.equal(runtime.state.syncCount, 2);
+});
+
+test('runtime gives one roving tab stop to the selected row and moves it with Arrow keys', () => {
+  const runtime = createCalendarRuntime();
+  runtime.api.addAvailable('2025-W52');
+  runtime.api.addAvailable('2026-W01');
+  runtime.api.setSelected(2026, 1);
+  runtime.api.renderMonthWeekPicker(2025, 11);
+
+  const week52 = calendarRow(runtime, '2025-W52');
+  const weekOne = calendarRow(runtime, '2026-W01');
+  assert.equal(runtime.element('week-picker-grid').children.filter(row => row.tabIndex === 0).length, 1);
+  assert.equal(weekOne.tabIndex, 0);
+  assert.equal(week52.tabIndex, -1);
+
+  weekOne.focus();
+  weekOne.dispatchEvent({ type: 'keydown', key: 'ArrowUp' });
+  assert.equal(runtime.document.activeElement, week52);
+  assert.equal(week52.tabIndex, 0);
+  assert.equal(weekOne.tabIndex, -1);
+
+  week52.dispatchEvent({ type: 'keydown', key: 'ArrowDown' });
+  assert.equal(runtime.document.activeElement, weekOne);
+  assert.equal(weekOne.tabIndex, 0);
+});
+
+test('runtime applies selected and current precedence to the same available row', () => {
+  const runtime = createCalendarRuntime();
+  runtime.api.addAvailable('2026-W01');
+  runtime.api.setSelected(2026, 1);
+  runtime.api.setCurrent(2026, 1);
+  runtime.api.renderMonthWeekPicker(2025, 11);
+
+  const row = calendarRow(runtime, '2026-W01');
+  assert.ok(row.classList.contains('is-available'));
+  assert.ok(row.classList.contains('is-selected'));
+  assert.ok(row.classList.contains('is-current'));
+  assert.equal(row.getAttribute('aria-selected'), 'true');
+  assert.equal(row.getAttribute('aria-current'), 'date');
+  assert.equal(row.getAttribute('aria-disabled'), 'false');
+});
+
+test('runtime includes ISO-year spillover months and never enables a dead month button', () => {
+  const runtime = createCalendarRuntime();
+  runtime.api.addAvailable('2026-W01');
+  runtime.api.setSelected(2026, 1);
+  assert.equal(typeof runtime.api.getWeekPickerMonthBounds, 'function');
+  const bounds = runtime.api.getWeekPickerMonthBounds();
+  assert.equal(`${bounds.minimum.year}-${bounds.minimum.month}`, '2025-11');
+  assert.equal(`${bounds.maximum.year}-${bounds.maximum.month}`, '2027-0');
+
+  runtime.api.toggleWeekPicker(true);
+  assert.equal(runtime.element('week-picker-year').textContent, 2025);
+  assert.equal(runtime.element('week-picker-month').textContent, 'December');
+  assert.equal(runtime.element('week-picker-month-previous').disabled, true);
+  assert.equal(runtime.element('week-picker-month-next').disabled, false);
+
+  runtime.api.changeWeekPickerMonth(1);
+  assert.equal(runtime.element('week-picker-year').textContent, 2026);
+  assert.equal(runtime.element('week-picker-month').textContent, 'January');
+  assert.equal(runtime.element('week-picker-month-previous').disabled, false);
+
+  runtime.api.changeWeekPickerMonth(-1);
+  assert.equal(runtime.element('week-picker-year').textContent, 2025);
+  assert.equal(runtime.element('week-picker-month').textContent, 'December');
+});
+
 test('uses whole calendar rows as accessible selectable or disabled targets', () => {
   assert.match(html, /row\.setAttribute\('role', 'row'\)/);
   assert.match(html, /row\.setAttribute\('aria-selected', String\(isSelected\)\)/);
   assert.match(html, /row\.setAttribute\('aria-disabled', String\(!isAvailable\)\)/);
-  assert.match(html, /row\.tabIndex = isAvailable \? 0 : -1/);
+  assert.match(html, /setWeekPickerRowTabStop/);
   assert.match(html, /row\.addEventListener\('click', selectWeek\)/);
   assert.match(html, /event\.key === 'Enter' \|\| event\.key === ' '/);
   assert.match(html, /selectArchiveWeek\(isoWeek\.year, isoWeek\.week\)/);
@@ -217,6 +477,7 @@ test('navigates months within the only available archive year', () => {
   assert.match(html, /changeWeekPickerYear\(-1\)/);
   assert.match(html, /changeWeekPickerYear\(1\)/);
   assert.match(html, /weekPickerDisplayMonth/);
+  assert.match(html, /function getWeekPickerMonthBounds\(\)/);
   assert.match(html, /getISOWeekRange\(selectedArchiveWeek\.year, selectedArchiveWeek\.week\)\.monday/);
 });
 
@@ -388,10 +649,13 @@ test('renders external update and UX value as separate summary paragraphs', () =
 
 test('shows the required available, current, selected, and unavailable row states', () => {
   assert.match(html, /\.week-picker-row\.is-available \{[^}]*background: #ffffff/);
-  assert.match(html, /\.week-picker-row\.is-available:hover \{[^}]*background: #f8fafc/);
+  assert.match(html, /\.week-picker-row\.is-available:not\(\.is-selected\):hover \{[^}]*background: #f8fafc/);
+  assert.doesNotMatch(html, /\.week-picker-row\.is-available:hover/);
   assert.match(html, /\.week-picker-row\.is-current:not\(\.is-selected\) \{[^}]*box-shadow: inset 0 0 0 1px #2563EB/);
   assert.match(html, /\.week-picker-row\.is-selected \{[^}]*color: #ffffff;[^}]*background: #2563EB/);
   assert.match(html, /\.week-picker-row\.is-current\.is-selected \{[^}]*box-shadow: none/);
+  assert.match(html, /\.week-picker-row\.is-selected:focus-visible \{[^}]*outline: none;[^}]*box-shadow: inset 0 0 0 2px #ffffff/);
+  assert.doesNotMatch(html, /\.week-picker-nav-button:focus-visible, \.week-picker-row:focus-visible/);
   assert.match(html, /\.week-picker-row\[aria-disabled="true"\] \{[^}]*cursor: not-allowed/);
 });
 
