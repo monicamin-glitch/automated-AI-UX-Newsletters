@@ -178,6 +178,28 @@
     .masonry-card-action svg { width: 13px; height: 13px; transition: transform 0.2s ease; }
     .masonry-card:hover .masonry-card-action svg { transform: translate(2px, -2px); }
 
+    /* Archived Slack message dialog */
+    #slack-message-dialog { width: min(680px, calc(100% - 32px)); max-height: min(82vh, 820px); margin: auto; padding: 0; border: 0; border-radius: 18px; color: var(--text-primary); background: var(--card-bg); box-shadow: 0 28px 80px rgba(var(--shadow-rgb),0.25); overflow: hidden; }
+    #slack-message-dialog::backdrop { background: rgba(var(--shadow-rgb),0.46); backdrop-filter: blur(2px); }
+    .slack-dialog-layout { display: flex; flex-direction: column; max-height: min(82vh, 820px); }
+    .slack-dialog-header { display: flex; align-items: flex-start; gap: 12px; padding: 20px 22px 16px; border-bottom: 1px solid var(--border); }
+    .slack-dialog-heading { flex: 1; min-width: 0; }
+    .slack-dialog-channel { font-size: 14px; font-weight: 750; }
+    .slack-dialog-context { margin-top: 2px; color: var(--text-muted); font-size: 11px; }
+    .slack-dialog-close { width: 34px; height: 34px; display: grid; place-items: center; border: 0; border-radius: 9px; color: var(--text-secondary); background: transparent; cursor: pointer; }
+    .slack-dialog-close:hover, .slack-dialog-close:focus-visible { color: var(--text-primary); background: #f1f5f9; outline: none; }
+    .slack-dialog-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+    .slack-dialog-body { padding: 22px; overflow-y: auto; }
+    .slack-dialog-author { font-size: 13px; font-weight: 750; }
+    .slack-dialog-date { margin-top: 2px; color: var(--text-muted); font-size: 10px; }
+    .slack-dialog-copy { margin-top: 16px; color: var(--text-secondary); font-size: 12px; line-height: 1.62; }
+    .slack-dialog-copy p { margin: 0 0 12px; }
+    .slack-dialog-copy p:last-child { margin-bottom: 0; }
+    .slack-dialog-copy a { color: var(--primary); }
+    .slack-dialog-footer { display: flex; justify-content: flex-end; padding: 14px 22px; border-top: 1px solid var(--border); background: #fbfdff; }
+    .slack-dialog-action { display: inline-flex; align-items: center; gap: 7px; padding: 9px 13px; border-radius: 9px; color: var(--on-primary); background: var(--primary); font-size: 11px; font-weight: 700; text-decoration: none; }
+    .slack-dialog-action:hover, .slack-dialog-action:focus-visible { background: var(--primary-dark); outline: 3px solid rgba(var(--primary-rgb),0.2); outline-offset: 2px; }
+
     /* Resources Hub */
     .resource-page-header { margin-bottom: 28px; }
     .resource-page-header .section-title { font-size: 24px; letter-spacing: -0.45px; }
@@ -218,6 +240,7 @@
       .topic-card-word { font-size: 25px; }
       .topic-action { width: min(100%, 260px); }
       .slack-card { gap: 12px; padding: 17px 15px; }
+      .slack-dialog-header, .slack-dialog-body, .slack-dialog-footer { padding-left: 16px; padding-right: 16px; }
       .slack-thread-tile { width: 64px; min-width: 64px; height: 64px; padding: 6px; }
       .slack-thread-channel { font-size: 8.5px; }
       .week-picker-popover { width: 100%; padding: 12px; }
@@ -736,6 +759,26 @@
       </div>
 
       <div id="archive-week-content"></div>
+
+      <dialog id="slack-message-dialog" aria-labelledby="slack-message-dialog-channel">
+        <div class="slack-dialog-layout">
+          <header class="slack-dialog-header">
+            <div class="slack-dialog-heading">
+              <h2 class="slack-dialog-channel" id="slack-message-dialog-channel"></h2>
+              <p class="slack-dialog-context">Original Slack message</p>
+            </div>
+            <button class="slack-dialog-close" id="slack-message-dialog-close" type="button" aria-label="Close message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+          </header>
+          <div class="slack-dialog-body">
+            <p class="slack-dialog-author" id="slack-message-dialog-author"></p>
+            <p class="slack-dialog-date" id="slack-message-dialog-date"></p>
+            <div class="slack-dialog-copy" id="slack-message-dialog-copy"></div>
+          </div>
+          <footer class="slack-dialog-footer">
+            <a class="slack-dialog-action" id="slack-message-dialog-action" target="_blank" rel="noopener noreferrer">View in Slack</a>
+          </footer>
+        </div>
+      </dialog>
     </div>
 
     <!-- PAGE: Resources Hub -->
@@ -782,6 +825,7 @@
         </section>
 
       </div>
+
     </div>
 
   </div>
@@ -1149,11 +1193,41 @@
     syncArchiveWeekContent();
     activateInitialPageFromQuery();
 
+    const slackMessageDialog = document.getElementById('slack-message-dialog');
+    const dialogAction = document.getElementById('slack-message-dialog-action');
+    let slackMessageDialogTrigger = null;
+
+    function openSlackMessageDialog(card) {
+      slackMessageDialogTrigger = card;
+      document.getElementById('slack-message-dialog-channel').textContent = card.dataset.slackChannel || 'Slack message';
+      document.getElementById('slack-message-dialog-author').textContent = card.dataset.slackAuthor || '';
+      document.getElementById('slack-message-dialog-date').textContent = card.dataset.slackDate || '';
+      document.getElementById('slack-message-dialog-copy').innerHTML = card.dataset.slackContent || card.querySelector('.slack-card-desc')?.innerHTML || '';
+      dialogAction.href = card.dataset.slackLink;
+      slackMessageDialog.showModal();
+    }
+
+    function closeSlackMessageDialog() {
+      if (slackMessageDialog.open) slackMessageDialog.close();
+    }
+
     document.addEventListener('click', event => {
+      const card = event.target.closest('#archive-week-content .slack-card[data-slack-link]');
+      if (card) {
+        event.preventDefault();
+        openSlackMessageDialog(card);
+        return;
+      }
       const picker = document.querySelector('.week-picker-shell');
       const popover = document.getElementById('week-picker-popover');
       if (picker && popover && !popover.hidden && !picker.contains(event.target)) toggleWeekPicker(false);
     });
+
+    document.getElementById('slack-message-dialog-close').addEventListener('click', closeSlackMessageDialog);
+    slackMessageDialog.addEventListener('click', event => {
+      if (event.target === slackMessageDialog) closeSlackMessageDialog();
+    });
+    slackMessageDialog.addEventListener('close', () => slackMessageDialogTrigger?.focus());
 
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && !document.getElementById('week-picker-popover').hidden) {

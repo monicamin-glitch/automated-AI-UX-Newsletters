@@ -667,3 +667,20 @@ test('keeps seven date columns and 44px whole-row targets at 390px', () => {
   assert.match(html, /@media \(max-width: 520px\) \{[\s\S]*?\.week-picker-calendar-columns \{[^}]*grid-template-columns: 24px repeat\(7, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(html, /\.week-picker-grid \{ grid-template-columns: repeat\(6/);
 });
+
+test('opens archived Slack cards in a detail dialog with their original permalink', () => {
+  assert.match(html, /<dialog id="slack-message-dialog"/);
+  assert.match(html, /id="slack-message-dialog-action"/);
+  assert.match(html, /event\.target\.closest\('#archive-week-content \.slack-card\[data-slack-link\]'\)/);
+  assert.match(html, /dialogAction\.href = card\.dataset\.slackLink/);
+  assert.match(html, /slackMessageDialog\.showModal\(\)/);
+});
+
+test('centers the archived Slack detail dialog despite the page margin reset', () => {
+  assert.match(html, /#slack-message-dialog \{[^}]*margin: auto/);
+});
+
+test('keeps the archived Slack dialog in the active All Weeks page', () => {
+  const allWeeksPage = html.match(/<div class="page" id="page-all">([\s\S]*?)<!-- PAGE: Resources Hub -->/)?.[1] ?? '';
+  assert.match(allWeeksPage, /<dialog id="slack-message-dialog"/);
+});
