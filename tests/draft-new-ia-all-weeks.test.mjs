@@ -1299,8 +1299,18 @@ test('sanitizes Slack message HTML with a structural allowlist and safe link pro
   assert.doesNotMatch(html, /\.innerHTML = details\.content/);
 });
 
+test('renders a dialog author avatar and one supporting metadata line', () => {
+  assert.match(html, /id="slack-message-dialog-avatar"/);
+  assert.match(html, /id="slack-message-dialog-supporting"/);
+  assert.match(html, /\.slack-dialog-avatar \{[^}]*width: 36px;[^}]*height: 36px;[^}]*flex: 0 0 36px/);
+  assert.match(html, /function getAuthorInitials\(name\)/);
+  assert.match(html, /avatar: getSafeSlackUrl\(card\.dataset\.slackAvatar \|\| ''\)/);
+  assert.match(html, /avatar\.textContent = getAuthorInitials\(viewModel\.author\)/);
+  assert.match(html, /supporting\.textContent = \[viewModel\.date, viewModel\.replyCount\]\.filter\(Boolean\)\.join\(' · '\)/);
+});
+
 test('implements the mobile bottom-sheet, scroll-lock, metadata, and focus-restoration contract', () => {
-  assert.match(html, /id="slack-message-dialog-reply-count"/);
+  assert.match(html, /id="slack-message-dialog-supporting"/);
   assert.match(html, /id="slack-message-dialog-reactions"/);
   assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?#slack-message-dialog \{[^}]*width: 100%;[^}]*inset: auto 0 0 0;[^}]*max-height: min\(88(?:d|s)vh, 720px\)/);
   assert.doesNotMatch(html, /\.archive-slack-card-detail/);
@@ -1564,8 +1574,10 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
         noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth,
         truthfulContext: document.getElementById('slack-message-dialog-context').textContent,
         author: document.getElementById('slack-message-dialog-author').textContent,
-        date: document.getElementById('slack-message-dialog-date').textContent,
-        replies: document.getElementById('slack-message-dialog-reply-count').textContent,
+        avatar: document.getElementById('slack-message-dialog-avatar').textContent.trim(),
+        supporting: document.getElementById('slack-message-dialog-supporting').textContent,
+        date: first.dataset.slackDate,
+        replies: first.dataset.slackReplyCount,
         beforeScroll
       };
       document.getElementById('slack-message-dialog-close').click();
@@ -1592,6 +1604,8 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.ok(latest.author);
     assert.ok(latest.date);
     assert.ok(latest.replies);
+    assert.match(latest.avatar, /^[A-Z]{1,2}$/);
+    assert.equal(latest.supporting, `${latest.date} · ${latest.replies}`);
     assert.equal(latest.closed, true);
     assert.equal(latest.unlocked, true);
     assert.equal(latest.focusRestored, true);

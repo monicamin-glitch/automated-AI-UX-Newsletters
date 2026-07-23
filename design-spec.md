@@ -245,7 +245,9 @@ Interaction uses two clearly separated hot zones without changing the card layou
 ### Slack message detail dialog
 
 - Use a clean Slack-style dialog, approximately 680px maximum width, with an internal scroll area for long messages.
-- Show the channel, author, original date/time, and reply count as supporting context.
+- Show the author beside a 36×36 circular avatar. Use a safe stored profile image when available; otherwise use deterministic uppercase initials from the first and last name, or `?` when the author is unavailable.
+- Show the original date/time and reply count on one muted supporting line beneath the author, separated by ` · `. Omit either unavailable value and its separator rather than inventing metadata.
+- Keep reactions in their own row beneath the author identity and supporting line.
 - Show the full original parent message, not the newsletter summary. Do not include thread replies in the dialog body.
 - Preserve paragraphs, lists, labelled links, inline code, fenced code blocks, and reactions when they are present in the stored source content.
 - Include a primary-blue `View in Slack` action in the footer that opens the original permalink in a new tab.

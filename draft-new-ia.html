@@ -193,11 +193,15 @@
     .slack-dialog-close:hover, .slack-dialog-close:focus-visible { color: var(--text-primary); background: #f1f5f9; outline: none; }
     .slack-dialog-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
     .slack-dialog-body { padding: 22px; overflow-y: auto; }
+    .slack-dialog-author-row { display: flex; align-items: center; gap: 11px; }
+    .slack-dialog-avatar { position: relative; width: 36px; height: 36px; flex: 0 0 36px; display: grid; place-items: center; overflow: hidden; border-radius: 50%; color: var(--primary-ink); background: var(--primary-soft); font-size: 12px; font-weight: 700; }
+    .slack-dialog-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .slack-dialog-author-copy { min-width: 0; }
     .slack-dialog-author { font-size: 13px; font-weight: 750; }
-    .slack-dialog-date { margin-top: 2px; color: var(--text-muted); font-size: 10px; }
+    .slack-dialog-supporting { margin-top: 2px; color: var(--text-muted); font-size: 12px; }
     .slack-dialog-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 8px; color: var(--text-muted); font-size: 11px; }
     .slack-dialog-reactions { display: flex; flex-wrap: wrap; gap: 6px; }
-    .slack-dialog-reactions:empty, .slack-dialog-reply-count:empty { display: none; }
+    .slack-dialog-reactions:empty { display: none; }
     .slack-dialog-reaction { padding: 2px 7px; border: 1px solid var(--border); border-radius: 999px; background: #f8fafc; }
     .slack-dialog-copy { margin-top: 16px; color: var(--text-secondary); font-size: 14px; line-height: 1.62; }
     .slack-dialog-copy p { margin: 0 0 12px; }
@@ -318,10 +322,14 @@
         <button class="slack-dialog-close" id="slack-message-dialog-close" type="button" aria-label="Close message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
       </header>
       <div class="slack-dialog-body">
-        <p class="slack-dialog-author" id="slack-message-dialog-author"></p>
-        <p class="slack-dialog-date" id="slack-message-dialog-date"></p>
+        <div class="slack-dialog-author-row">
+          <div class="slack-dialog-avatar" id="slack-message-dialog-avatar" aria-hidden="true"></div>
+          <div class="slack-dialog-author-copy">
+            <p class="slack-dialog-author" id="slack-message-dialog-author"></p>
+            <p class="slack-dialog-supporting" id="slack-message-dialog-supporting"></p>
+          </div>
+        </div>
         <div class="slack-dialog-meta">
-          <span class="slack-dialog-reply-count" id="slack-message-dialog-reply-count"></span>
           <span class="slack-dialog-reactions" id="slack-message-dialog-reactions" aria-label="Reactions"></span>
         </div>
         <div class="slack-dialog-copy" id="slack-message-dialog-copy"></div>
@@ -1362,6 +1370,7 @@
         title: card.dataset.slackTitle || readText('.slack-card-title'),
         channel: card.dataset.slackChannel || readText('.slack-thread-channel') || 'Slack message',
         author: card.dataset.slackAuthor || readText('.slack-sender-name'),
+        avatar: getSafeSlackUrl(card.dataset.slackAvatar || ''),
         date: card.dataset.slackDate || visibleDate,
         replyCount: card.dataset.slackReplyCount || readText('.slack-meta-replies'),
         reactions,
@@ -1376,6 +1385,12 @@
       const viewModel = normalizeSlackCard(card);
       slackViewModels.set(card, viewModel);
       return viewModel;
+    }
+
+    function getAuthorInitials(name) {
+      const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+      if (!parts.length) return '?';
+      return (parts[0][0] + (parts.length > 1 ? parts.at(-1)[0] : '')).toUpperCase();
     }
 
     function preventSlackActionPropagation(event) {
@@ -1420,6 +1435,7 @@
       preparedCard.setAttribute('aria-label', 'View details for ' + viewModel.title);
       preparedCard.dataset.slackPermalink = viewModel.permalink;
       preparedCard.dataset.slackAuthor = viewModel.author;
+      preparedCard.dataset.slackAvatar = viewModel.avatar;
       preparedCard.dataset.slackDate = viewModel.date;
       preparedCard.dataset.slackReplyCount = viewModel.replyCount;
       preparedCard.addEventListener('click', event => {
@@ -1442,8 +1458,18 @@
       slackMessageDialogTrigger = trigger;
       document.getElementById('slack-message-dialog-channel').textContent = viewModel.channel;
       document.getElementById('slack-message-dialog-author').textContent = viewModel.author;
-      document.getElementById('slack-message-dialog-date').textContent = viewModel.date;
-      document.getElementById('slack-message-dialog-reply-count').textContent = viewModel.replyCount;
+      const avatar = document.getElementById('slack-message-dialog-avatar');
+      const supporting = document.getElementById('slack-message-dialog-supporting');
+      avatar.replaceChildren();
+      avatar.textContent = getAuthorInitials(viewModel.author);
+      if (viewModel.avatar) {
+        const image = document.createElement('img');
+        image.src = viewModel.avatar;
+        image.alt = '';
+        image.addEventListener('error', () => image.remove(), { once: true });
+        avatar.appendChild(image);
+      }
+      supporting.textContent = [viewModel.date, viewModel.replyCount].filter(Boolean).join(' · ');
       const reactions = document.getElementById('slack-message-dialog-reactions');
       reactions.replaceChildren(...viewModel.reactions.map(reaction => {
         const item = document.createElement('span');
