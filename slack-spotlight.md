@@ -193,6 +193,63 @@ internal_updates:
     date: 2026-07-17
     replies: 14
     permalink: https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1784276960676419?thread_ts=1784276960.676419&cid=C08F5QRGFDG
+    posted_at: 2026-07-17T16:29:20+08:00
+    original_message: |-
+      :rocket: Introducing the Skills MCP Server — give your AI agent access to <http://Booking.com|Booking.com>’s shared knowledge
+
+       The Skills MCP Server helps AI agents discover and use relevant skills while working on a task. It loads the right instructions exactly when they’re
+       needed.
+
+       With the Skills MCP Server, your agent can:
+
+       • Search the Skills Catalog based on the current task
+       • Load the most relevant skill and follow its workflow
+       • Access Booking.com-specific tools and engineering knowledge
+       • Use skills without permanently installing them—the temporary copy is removed immediately after loading
+
+       The server is powered by the bk Skills Catalog, with skills available in the Coding Agent Tools repository.
+
+       This is a community project, so contributions, improvements, bug reports, and new ideas are very welcome in the <https://gitlab.com/booking-com/genai-eng/skills-mcp-server|Skills MCP repository>. :handshake:
+
+       Before installing
+
+       Make sure this command works:
+
+       `bk genai:skill:list --search adr --output json`
+
+       Also ensure your npm registry points to <http://Booking.com|Booking.com>’s JFrog.
+
+       Claude Code
+
+       `claude mcp add --scope user skills -- npx -y --prefix=/tmp @bookingcom/skills-mcp@latest`
+
+       Codex
+
+      `codex mcp add skills -- npx -y --prefix=/tmp @bookingcom/skills-mcp@latest`
+
+       Cursor
+
+       Add the following to ~/.cursor/mcp.json:
+      ``` {
+        "mcpServers": {
+         "skills": {
+          "type": "stdio",
+          "command": "npx",
+          "args": [
+           "-y",
+           "--prefix=/tmp",
+           "@bookingcom/skills-mcp@latest"
+          ]
+         }
+        }
+       }```
+       Restart your coding agent, then try this prompt:
+
+       > Search the Skills Catalog for guidance on creating an Architecture Decision Record (ADR).
+
+       The agent will use search_skills to discover relevant guidance and get_skill_content to load and follow it. :sparkles:
+
+       Questions, feedback, or interested in trying it out? Feel free to reach out to me!
     what_is_the_update: The community-launched Skills MCP Server lets Claude Code, Codex, and Cursor search the Booking Skills Catalog semantically and load only the skills needed for the current task.
     why_valuable_for_uxers: Design technologists and prototypers can discover reusable internal workflows in context without loading or remembering the entire catalogue.
   - title: Agent Fabric Becomes One Home for Agents, MCP Servers, Skills, and Profiles
@@ -202,6 +259,21 @@ internal_updates:
     date: 2026-07-15
     replies: 1
     permalink: https://booking.enterprise.slack.com/archives/C0ABNJ4NWG6/p1784106984960089
+    posted_at: 2026-07-15T17:16:24+08:00
+    original_message: |-
+      :tada: We are excited to introduce Agent Fabric. A single home for agents, skills & MCP servers at<http://booking.com| Booking.com>.
+      This brings together <http://agents.booking.com|agents.booking.com> and<http://genai.booking.com| genai.booking.com> into a single platform: <http://fabric.booking.com|fabric.booking.com>
+
+      Discover, build, and run agents, MCP servers, skills, and profiles, all in one place.
+      :handshake: A real milestone in collaboration between the GenAI Engineering Platform team and the ABU GenAI Tech Enablement team. Two surfaces, one experience.
+
+      A huge thanks to everyone who made this happen  :heart::rocket:
+
+      :point_right: What to do now
+      • Bookmark <http://fabric.booking.com|fabric.booking.com>
+      • <http://genai.booking.com|genai.booking.com> &<http://agents.booking.com| agents.booking.com> will now automatically redirect you to<http://fabric.booking.com| fabric.booking.com>
+      • Learn more <https://booking.atlassian.net/wiki/spaces/GENAIENG/pages/1704395963/Introducing+Agent+Fabric|here>
+      :speech_balloon: Share any questions you have here in the thread
     what_is_the_update: Agent Fabric launched a single internal destination for discovering, building, and running agents alongside MCP servers, skills, and reusable profiles.
     why_valuable_for_uxers: It reduces fragmented entry points and makes AI-enabled design and prototyping workflows easier to find, share, and hand over.
   - title: AI for UX Session 4 Shares Claude Commands Recording and Handout
@@ -211,6 +283,14 @@ internal_updates:
     date: 2026-07-17
     replies: 8
     permalink: https://booking.enterprise.slack.com/archives/C0B4CV2EVL6/p1784292900691099?thread_ts=1784292900.691099&cid=C0B4CV2EVL6
+    posted_at: 2026-07-17T20:55:00+08:00
+    original_message: |-
+      :sparkles:*AI for UX: Grounding and Understanding: Session 4*:sparkles:
+      starts in 5 minutes - if you had/have any issues with the invite... <https://booking.zoom.us/j/96066881143|here is the zoom link> [access code redacted]
+
+      Today we'll be looking at useful Claude commands: -
+      • Know the key commands available in Claude Code and what each one does
+      • Understand when and why to use specific commands in your workflow
     what_is_the_update: The AI for UX community published the Session 4 material on Claude Commands, including the recording and a reusable handout after the live workshop.
     why_valuable_for_uxers: Teams can turn repeated research, critique, and prototype tasks into shared commands without relying on live attendance.
   - title: Booking Design+AI Summit Opens a Hands-On Community Showcase
@@ -220,6 +300,21 @@ internal_updates:
     date: 2026-07-13
     replies: 1
     permalink: https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783940098536739?thread_ts=1783940098.536739&cid=C0DBLGXMJ
+    posted_at: 2026-07-13T18:54:58+08:00
+    original_message: |-
+      :goose-announce-right: *Designers, get your calendars ready!* :goose-announce-left:
+      The Booking Design+AI Summit is officially happening on *September 2nd (instead of July 29th*:grey_exclamation: *).*
+      Here's what to expect:
+
+      • *Our own designers* will facilitate and present multiple learnings, such as:
+          ◦ AI-assisted UX work processes
+          ◦ Case studies (personal or in-team)
+          ◦ Demonstrate tools, workflows, and practical walkthroughs.
+          ◦ Deep-dives into AI topics, UX design evolution, collaboration, and more.
+      • *External speakers (from AI-tool companies)*, will join the event to share best practices, and valuable insights.
+      • Curated hands-on *workshops* for you to choose from.
+      • Social breakfast to fuel our brains. Breaks during the event itself, and a social outing at the end of the day.
+      Let us know if you can make it: respond to the poll forwarded below + to the calendar invite that will be sent-out in the following days. :sparkling: <!channel>
     what_is_the_update: The Design+AI Summit moved to September 2 and invited designers to share AI-assisted processes, cases, tools, and workflows alongside talks and workshops.
     why_valuable_for_uxers: It creates a practical venue for comparing what works across teams and turning individual experiments into reusable community knowledge.
   - title: Production-Ready AI Illustration Tool Recruits Community Testers
@@ -229,6 +324,15 @@ internal_updates:
     date: 2026-07-13
     replies: 0
     permalink: https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783928849351589
+    posted_at: 2026-07-13T15:47:29+08:00
+    original_message: |-
+      Good morning everyone! :sun_smile:
+
+      We're close to releasing a tool to *generate production-ready illustrations with AI!* Now, before we do, we would like to run some final user testing with people from the community.
+
+      If you are able to help out for 30 minutes somewhere in the coming weeks, please respond to this post through either an emoji, reply or DM :slightly_smiling_face:
+
+      Thank you! :art:
     what_is_the_update: A near-release internal tool for generating production-ready illustrations with AI opened a round of 30-minute community user-testing sessions.
     why_valuable_for_uxers: Designers can influence the workflow before launch and evaluate whether generated visuals meet real production and brand-quality needs.
   - title: GPT-5.6 Guide Maps Practical Model and Agent Workflow Choices
@@ -238,6 +342,23 @@ internal_updates:
     date: 2026-07-15
     replies: 1
     permalink: https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1784100504738449?thread_ts=1784100504.738449&cid=C08F5QRGFDG
+    posted_at: 2026-07-15T15:28:24+08:00
+    original_message: |-
+      Good morning all,
+
+      I put together a practical guide for getting better, more consistent results from the new GPT-5.6 models. They are very powerful, but they need to be prompted a bit differently to get amazing results without breaking the bank :fire::money_with_wings:
+
+      It’s designed for both engineers and everyday ChatGPT users, and covers:
+
+      •  Choosing between Sol, Terra, and Luna
+      • Setting the right reasoning effort
+      • Writing clearer, more effective prompts
+      • Controlling token usage and subagents
+      • Configuring reusable `AGENTS.md` guidance
+      • Verifying results without overworking the model
+      The recommendations combine official OpenAI guidance with practical advice from experienced AI engineering creators.
+
+      Feedback and examples from your own workflows are very welcome—especially anything that has noticeably improved quality, consistency, or cost.
     what_is_the_update: A practical internal guide explains the Sol, Terra, and Luna variants, reasoning effort, token usage, subagents, AGENTS.md, and verification patterns.
     why_valuable_for_uxers: UX technologists can make more deliberate model, cost, and quality choices when building or evaluating AI-assisted prototypes.
 

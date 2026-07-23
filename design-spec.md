@@ -91,7 +91,7 @@ Illustrations may use Booking-style yellow, orange, skin tones, and blue. Do not
 Use one typographic voice throughout:
 
 ```css
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 ```
 
 | Element | Desktop size | Weight |
@@ -102,8 +102,8 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 | Topic word | 30px | 800 |
 | Resource category title | 17px | 750 |
 | Slack/article title | 14px | 700 |
-| Card body | 12px | 400 |
-| Metadata | 10px | 400 |
+| Card body and Slack dialog copy | 14px | 400 |
+| Metadata | 12px | 400 |
 | Filter chip | 11–12px | 600 |
 
 - Page, section, and popular-topic headings must feel like members of the same system.

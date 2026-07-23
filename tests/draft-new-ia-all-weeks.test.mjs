@@ -10,6 +10,7 @@ const html = readFileSync(new URL('../draft-new-ia.html', import.meta.url), 'utf
 const legacyHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const designSpec = readFileSync(new URL('../design-spec.md', import.meta.url), 'utf8');
 const digest = readFileSync(new URL('../digest.md', import.meta.url), 'utf8');
+const slackSpotlight = readFileSync(new URL('../slack-spotlight.md', import.meta.url), 'utf8');
 const implementationPlan = readFileSync(new URL('../docs/superpowers/plans/2026-07-23-all-weeks-calendar-archive.md', import.meta.url), 'utf8');
 
 const archiveWeeks = [
@@ -458,6 +459,38 @@ test('uses Apple System without loading or preferring Inter', () => {
   assert.doesNotMatch(html, /font-family: 'Inter'/);
 });
 
+test('uses the 14px reading scale for newsletter and dialog copy', () => {
+  assert.match(html, /\.slack-card-desc \{[^}]*font-size: 14px/);
+  assert.match(html, /\.masonry-card-summary \{[^}]*font-size: 14px/);
+  assert.match(html, /\.slack-dialog-copy \{[^}]*font-size: 14px/);
+  assert.match(html, /\.slack-card-meta \{[^}]*font-size: 12px/);
+  assert.match(html, /\.masonry-card-source \{[^}]*font-size: 12px/);
+});
+
+test('stores verified full parent Slack messages for every Latest Week card', () => {
+  const latestSection = html.match(/<!-- Internal Updates -->([\s\S]*?)<!-- External Updates -->/)?.[1] || '';
+  const cards = [...latestSection.matchAll(/<a class="slack-card"[\s\S]*?<\/a>/g)].map(match => match[0]);
+  assert.equal(cards.length, 6);
+  for (const card of cards) {
+    assert.match(card, /data-slack-quote="[^"]+"/);
+    assert.match(card, /data-slack-original-verified="true"/);
+  }
+  assert.match(latestSection, /Introducing the Skills MCP Server/);
+  assert.match(latestSection, /Choosing between Sol, Terra, and Luna/);
+});
+
+test('keeps the current-week Slack source complete for future refreshes', () => {
+  const currentWeekStart = slackSpotlight.indexOf('## Current week output');
+  const currentWeekEnd = slackSpotlight.indexOf('\ncoverage:', currentWeekStart);
+  const currentWeek = slackSpotlight.slice(currentWeekStart, currentWeekEnd);
+  assert.equal((currentWeek.match(/\n    posted_at:/g) || []).length, 6);
+  assert.equal((currentWeek.match(/\n    original_message: \|-/g) || []).length, 6);
+  assert.match(currentWeek, /Introducing the Skills MCP Server/);
+  assert.match(currentWeek, /Choosing between Sol, Terra, and Luna/);
+  assert.doesNotMatch(currentWeek, /[?&]pwd=/i);
+  assert.doesNotMatch(html, /[?&](?:pwd|password|access_token|api_key)=/i);
+});
+
 test('replaces the archive dropdown with an accessible month-calendar week picker', () => {
   assert.doesNotMatch(html, /<select class="week-picker-select"/);
   assert.match(html, /id="week-picker-trigger"/);
@@ -815,7 +848,8 @@ test('rebuckets the complete effective legacy dataset by real date with card-loc
       assert.ok(card.includes(`data-slack-channel="${record.channel}"`), `${record.destination} channel`);
       assert.ok(card.includes(`data-slack-date="${record.date}"`), `${record.destination} date`);
       assert.ok(card.includes(`data-slack-author="${record.author}"`), `${record.destination} author`);
-      assert.ok(card.includes(`data-slack-quote="${record.quote}"`), `${record.destination} original message`);
+      assert.match(card, /data-slack-quote="[^"]+"/, `${record.destination} original message`);
+      assert.ok(card.includes('data-slack-original-verified="true"'), `${record.destination} verified original message`);
       assert.ok(card.includes(`data-slack-content="${record.content}"`), `${record.destination} stored content`);
       assert.ok(card.includes(`<h3 class="slack-card-title">${record.title}</h3>`), `${record.destination} visible title`);
       assert.ok(card.includes(record.summary), `${record.destination} summary`);
@@ -1048,7 +1082,8 @@ function getArchivedSlackCardRecords() {
       author: getAttribute(card, 'data-slack-author') || visibleAuthor,
       date: getAttribute(card, 'data-slack-date') || visibleDate,
       replyCount: stripMarkup(card.match(/class="slack-meta-replies">([\s\S]*?)<\/span>/)?.[1]),
-      dataSlackLink: decodeAttribute(getAttribute(card, 'data-slack-link'))
+      dataSlackLink: decodeAttribute(getAttribute(card, 'data-slack-link')),
+      originalVerified: getAttribute(card, 'data-slack-original-verified')
     };
   }));
 }
@@ -1057,7 +1092,8 @@ test('normalizes stored-original and href-only Slack cards without inventing met
   const records = getArchivedSlackCardRecords();
   assert.equal(records.length, 63);
   assert.equal(records.filter(record => record.dataSlackLink).length, 50);
-  assert.equal(records.filter(record => !record.original).length, 13);
+  assert.equal(records.filter(record => !record.original).length, 0);
+  assert.equal(records.filter(record => record.originalVerified !== 'true').length, 0);
   const runtime = runInNewContext(`
     ${extractArchiveDialogFunction('getSafeSlackUrl')}
     ${extractArchiveDialogFunction('normalizeSlackCard')}
@@ -1517,7 +1553,7 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.equal(latest.mobileReadingLayout, true);
     assert.equal(latest.channelPill, true);
     assert.equal(latest.noOverflow, true);
-    assert.equal(latest.truthfulContext, 'Archived summary — original message unavailable');
+    assert.equal(latest.truthfulContext, 'Original Slack message');
     assert.ok(latest.author);
     assert.ok(latest.date);
     assert.ok(latest.replies);

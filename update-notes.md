@@ -10,6 +10,8 @@
 - Corrected the historical migration to bucket each dated record by its real 2026 ISO week instead of treating a legacy page as authoritative membership; undated W28 records remain in their source container under an explicit no-invented-date policy.
 - Derived archive years and the current-week indicator from report keys and an injectable clock, leaving Week 30 disabled but current on July 23, 2026.
 - Unified Latest Week and All Weeks Slack hot zones, sanitized dialog content through a structural allowlist, added the mobile bottom sheet and scroll restoration, and added `Read article` to every archived external card without changing destinations.
+- Raised newsletter reading copy to the approved 14px scale and supporting metadata to 12px while retaining Apple System throughout.
+- Re-fetched every Slack parent message represented in Latest Week and All Weeks so all 63 detail dialogs show verified original content rather than card summaries; stored the six current-week originals in `slack-spotlight.md` for the next refresh.
 
 ## 2026-07-22
 
