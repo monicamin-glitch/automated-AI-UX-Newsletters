@@ -934,8 +934,22 @@ test('gives every archived external card the refreshed Read article affordance',
   assert.match(sharedActionRule, /font-size: 12px/);
   assert.match(sharedActionRule, /font-weight: 600/);
   assert.match(sharedActionRule, /line-height: 1\.4/);
-  assert.match(html, /\.masonry-card:hover \.masonry-card-action, \.view-in-slack:hover, \.view-in-slack:focus-visible \{[^}]*color: var\(--primary-dark\);[^}]*background: var\(--primary-tint\)/);
   assert.doesNotMatch(html, /\.masonry-card-body \.masonry-card-action \{[^}]*padding-top/);
+});
+
+test('keeps External Read article styling stable during hover and focus', () => {
+  assert.match(
+    html,
+    /\.masonry-card:hover \.masonry-card-action,\s*\.masonry-card-action:hover,\s*\.masonry-card-action:focus-visible \{[^}]*color: var\(--primary\);[^}]*background: transparent/
+  );
+  assert.match(
+    html,
+    /\.view-in-slack:hover,\s*\.view-in-slack:focus-visible \{[^}]*color: var\(--primary-dark\);[^}]*background: var\(--primary-tint\)/
+  );
+  assert.doesNotMatch(
+    html,
+    /\.masonry-card:hover \.masonry-card-action,\s*\.view-in-slack:hover/
+  );
 });
 
 test('derives available archive weeks from stored templates plus Latest Week', () => {

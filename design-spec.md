@@ -275,6 +275,8 @@ Body order:
 
 Do not merge the two summary paragraphs. All links open in a new tab with `rel="noopener noreferrer"`.
 
+`Read article` keeps its default primary-blue text color when the card or action is hovered or focused. It does not receive a blue-tinted background. The subtle arrow movement may remain. This stable External action state is separate from the interactive hover treatment used by `View in Slack`.
+
 ### All Weeks calendar picker
 
 Trigger hierarchy:
