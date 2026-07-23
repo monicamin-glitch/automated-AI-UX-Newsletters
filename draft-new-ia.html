@@ -147,7 +147,7 @@
     .slack-thread-tile { width: 80px; min-width: 80px; height: 80px; padding: 8px; border-radius: 9px; display: flex; align-items: center; justify-content: center; align-self: flex-start; color: var(--primary-ink); background: linear-gradient(135deg, var(--primary-tint) 0%, var(--primary-soft) 100%); border: none; box-shadow: none; overflow: hidden; }
     .slack-thread-channel { color: var(--primary-ink); font-size: 10px; font-weight: 750; line-height: 1.15; text-align: center; overflow-wrap: anywhere; }
     .slack-card-body { flex: 1; min-width: 0; }
-    .slack-card-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; line-height: 1.4; }
+    .slack-card-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; line-height: 1.4; }
     .slack-card-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.58; }
     .slack-card-desc p { margin-bottom: 5px; }
     .slack-card-desc p:last-child { margin-bottom: 0; }
@@ -169,14 +169,14 @@
     .masonry-card-rank { position: absolute; top: 14px; left: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; background: rgba(var(--shadow-rgb),0.78); color: var(--on-primary); backdrop-filter: blur(8px); font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
     .masonry-card-body { display: flex; flex: 1; flex-direction: column; padding: 16px 17px 18px; }
     .masonry-card-source { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
-    .masonry-card-title { font-size: 14px; font-weight: 700; color: var(--text-primary); line-height: 1.38; letter-spacing: -0.15px; margin-bottom: 8px; }
-    .masonry-card-summary { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+    .masonry-card-title { font-size: 16px; font-weight: 700; color: var(--text-primary); line-height: 1.38; letter-spacing: -0.15px; margin-bottom: 8px; }
+    .masonry-card-summary { flex: 1; font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
     .masonry-card-summary p { margin: 0; }
     .masonry-card-summary-value { margin-top: 8px !important; }
     .masonry-card-summary strong { color: var(--text-primary); font-weight: 700; }
-    .masonry-card-action, .view-in-slack { display: inline-flex; align-items: center; gap: 4px; padding: 3px 6px; border-radius: 6px; color: var(--primary); font-size: 12px; font-weight: 600; line-height: 1.4; text-decoration: none; }
-    .masonry-card-action { width: fit-content; margin-top: 13px; }
-    .masonry-card-body .masonry-card-action { margin-top: auto; }
+    .masonry-card-action, .view-in-slack { display: inline-flex; align-items: center; gap: 4px; border-radius: 6px; color: var(--primary); font-size: 12px; font-weight: 600; line-height: 1.4; text-decoration: none; }
+    .masonry-card-action { width: fit-content; margin-top: 8px; padding: 0; }
+    .view-in-slack { padding: 3px 6px; }
     .masonry-card-action svg { width: 13px; height: 13px; transition: transform 0.2s ease; }
     .masonry-card:hover .masonry-card-action svg { transform: translate(2px, -2px); }
     .masonry-card:hover .masonry-card-action, .view-in-slack:hover, .view-in-slack:focus-visible { color: var(--primary-dark); background: var(--primary-tint); outline: none; }

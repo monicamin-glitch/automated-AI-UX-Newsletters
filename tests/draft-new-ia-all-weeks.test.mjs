@@ -467,6 +467,17 @@ test('uses the 14px reading scale for newsletter and dialog copy', () => {
   assert.match(html, /\.masonry-card-source \{[^}]*font-size: 12px/);
 });
 
+test('uses the approved 16px card-title scale', () => {
+  assert.match(html, /\.slack-card-title \{[^}]*font-size: 16px;[^}]*font-weight: 700/);
+  assert.match(html, /\.masonry-card-title \{[^}]*font-size: 16px;[^}]*font-weight: 700/);
+});
+
+test('left-aligns External actions with an 8px content gap', () => {
+  assert.match(html, /\.masonry-card-summary \{[^}]*flex: 1/);
+  assert.match(html, /\.masonry-card-action \{[^}]*margin-top: 8px;[^}]*padding: 0/);
+  assert.doesNotMatch(html, /\.masonry-card-body \.masonry-card-action \{[^}]*margin-top: auto/);
+});
+
 test('stores verified full parent Slack messages for every Latest Week card', () => {
   const latestSection = html.match(/<!-- Internal Updates -->([\s\S]*?)<!-- External Updates -->/)?.[1] || '';
   const cards = [...latestSection.matchAll(/<a class="slack-card"[\s\S]*?<\/a>/g)].map(match => match[0]);
@@ -915,7 +926,9 @@ test('gives every archived external card the refreshed Read article affordance',
     }
   }
   const sharedActionRule = html.match(/\.masonry-card-action, \.view-in-slack \{([^}]*)\}/)?.[1] ?? '';
-  assert.match(sharedActionRule, /padding: 3px 6px/);
+  const slackActionRule = html.match(/(?:^|\n)\s*\.view-in-slack \{([^}]*)\}/)?.[1] ?? '';
+  assert.doesNotMatch(sharedActionRule, /padding:/);
+  assert.match(slackActionRule, /padding: 3px 6px/);
   assert.match(sharedActionRule, /border-radius: 6px/);
   assert.match(sharedActionRule, /color: var\(--primary\)/);
   assert.match(sharedActionRule, /font-size: 12px/);

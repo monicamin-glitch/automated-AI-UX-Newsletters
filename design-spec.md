@@ -101,7 +101,7 @@ font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 | Popular-topic question | 20px | 800 |
 | Topic word | 30px | 800 |
 | Resource category title | 17px | 750 |
-| Slack/article title | 14px | 700 |
+| Slack/article title | 16px | 700 |
 | Card body and Slack dialog copy | 14px | 400 |
 | Metadata | 12px | 400 |
 | Filter chip | 11–12px | 600 |
@@ -109,6 +109,7 @@ font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 - Page, section, and popular-topic headings must feel like members of the same system.
 - Do not add a subtitle below “Internal Updates”.
 - Do not emphasize the Slack sender’s name; it inherits the metadata style.
+- External article actions use zero horizontal padding so their left edge aligns with the card copy, with an 8px gap after the summary.
 
 ---
 
