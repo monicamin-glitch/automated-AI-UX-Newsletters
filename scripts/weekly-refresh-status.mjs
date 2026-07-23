@@ -30,14 +30,15 @@ export function latestDigestSnapshot() {
     internalCount: cards.internal.length,
     externalCount: cards.external.length,
     cardCount: cards.internal.length + cards.external.length,
-    slackLinkCount: (week.html.match(/data-slack-link=/g) || []).length,
+    slackLinkCount: cards.internal.filter(card => card.link).length,
     updateLabelCount: (week.html.match(/What is the update:/g) || []).length,
-    whyLabelCount: (week.html.match(/Why it(?:'|&#x27;)s valuable for UXers:/g) || []).length,
+    whyLabelCount: (week.html.match(/Why it(?:'|’|&#x27;)s valuable for UXers:/g) || []).length,
   };
 }
 
 export function latestHeroRange(pageHtml) {
-  return firstMatch(pageHtml, /<p class="hero-subtitle">([^<]+)<\/p>/);
+  const heading = firstMatch(pageHtml, /<div class="page-header">[\s\S]*?<h1>Week\s+\d+\s*-\s*([^<]+)<\/h1>/);
+  return heading || firstMatch(pageHtml, /<p class="hero-subtitle">([^<]+)<\/p>/);
 }
 
 export function buildRefreshStatus(overrides = {}) {
@@ -151,7 +152,10 @@ export function changedFiles() {
 
 export function stagedFilesForLatest() {
   const snapshot = latestDigestSnapshot();
-  const assetMatches = [...snapshot.week.html.matchAll(/data-img="([^"]+)"/g)]
+  const assetMatches = [
+    ...snapshot.week.html.matchAll(/data-img="([^"]+)"/g),
+    ...snapshot.week.html.matchAll(/<img[^>]+src="([^"]+)"/g),
+  ]
     .map(match => match[1])
     .filter(value => value.startsWith('assets/'));
   return unique([
@@ -182,8 +186,9 @@ export function runCommand(command, args, options = {}) {
 
 export function gitCommitMessage() {
   const snapshot = latestDigestSnapshot();
-  const rangeStart = snapshot.range?.split(/[–-]/)[0]?.trim() || snapshot.week.date || 'latest';
-  return `Digest: Week of ${rangeStart} 2026`;
+  const rangeMatch = snapshot.range?.match(/^(.+?)\s+(?:to|[–-])\s+.+,\s*(\d{4})$/);
+  const rangeStart = rangeMatch ? `${rangeMatch[1]}, ${rangeMatch[2]}` : snapshot.week.date || 'latest';
+  return `Digest: Week of ${rangeStart}`;
 }
 
 function optionalGit(args) {

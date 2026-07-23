@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-const html = readFileSync(new URL('../draft-new-ia.html', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const resourcesPage = html.match(/<div class="page" id="page-resources">([\s\S]*?)<\/div>\s*<\/div>\s*<script>/)?.[1] ?? '';
 
 test('uses the approved Knowledge Hub title and three categories', () => {

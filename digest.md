@@ -56,7 +56,7 @@ The weekly flow can run end to end or as three retryable phases:
 | Phase | Input | Output |
 |---|---|---|
 | Fetch | the operation-specific documents listed above | `drafts/weekly-cards-YYYY-MM-DD.json` |
-| Build | the weekly checkpoint | updated `draft-new-ia.html`, checked-in assets, and `assets/media-manifest.json` |
+| Build | the weekly checkpoint | updated `index.html`, checked-in assets, and `assets/media-manifest.json` |
 | Publish | a verified build | GitHub, B.Pages, Google Doc, notification, and refresh status |
 
 The checkpoint stores output data, not duplicated rules. Internal records follow [`slack-spotlight.md`](slack-spotlight.md); External records follow [`sources.md`](sources.md) and [`media-strategy.md`](media-strategy.md).
@@ -177,7 +177,7 @@ The first three cards receive badges. They remain in the same External Updates g
 Follow [`media-strategy.md`](media-strategy.md) and run:
 
 ```bash
-node scripts/prepare-media.mjs --html draft-new-ia.html --write-manifest
+node scripts/prepare-media.mjs --html index.html --write-manifest
 ```
 
 Every External Update must resolve to a checked-in local image before publication. Internal Slack cards use the channel tile defined in [`design-spec.md`](design-spec.md), not an external article image.

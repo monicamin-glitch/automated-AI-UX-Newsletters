@@ -2,6 +2,17 @@
 
 ## 2026-07-23
 
+### GitHub merge and canonical modern publishing entry
+
+- Merged the latest GitHub Week 11 work with the reviewed local Latest Week / All Weeks / Resources Hub experience, preserving the modern information architecture and interaction design.
+- Added the unique Miro shared-canvas article and reused the stronger checked-in Week 11 Figma, Miro, Bolt, and OpenAI media in the current External Updates layout.
+- Deduplicated overlapping Agent Fabric, Skills MCP, and AI for UX Session 4 Slack items in favour of the local cards with complete verified parent messages.
+- Held the GitHub Dieter Slack item out of the merged report because its complete parent message was not available; it can be added after the original is fetched and stored under the Slack Spotlight rules.
+- Promoted the reviewed modern website to the canonical `index.html`; retained the former published page as `legacy-index.html` only for historical migration regression tests and removed the obsolete draft entry.
+- Migrated media preparation, archive materialization, date-bucket validation, weekly status, Slack candidate generation, browser tests, and operational documentation to the canonical modern entry.
+- Updated the Slack parser for modern `.slack-card` and `.masonry-card` structures, including current-week metadata, summaries, links, dates, and checked-in images.
+- This repository release updates GitHub only. It does not publish B.Pages and does not send a Slack newsletter.
+
 ### Calendar archive contract refresh
 
 - Replaced the superseded W01–W53 archive button-grid rule with the approved Monday–Sunday month calendar, whole-row selection, disabled unavailable rows, and dimmed cross-month dates.

@@ -15,7 +15,7 @@ The current interface has three distinct visual systems:
 Run before publishing:
 
 ```bash
-node scripts/prepare-media.mjs --html draft-new-ia.html --write-manifest
+node scripts/prepare-media.mjs --html index.html --write-manifest
 ```
 
 The step must verify every External Update in Latest Week and every stored All Weeks report resolves to an image embedded in the card and backed by a checked-in local file. It writes `assets/media-manifest.json` with the source URL, selected asset, dimensions, file size, and warnings.

@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const htmlPath = path.join(repoRoot, 'draft-new-ia.html');
+const htmlPath = path.join(repoRoot, 'index.html');
 const shouldWrite = process.argv.includes('--write');
 const source = fs.readFileSync(htmlPath, 'utf8');
 const imageMap = parseImageMap(source);

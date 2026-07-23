@@ -14,17 +14,20 @@ export function readHtml() {
 }
 
 export function parseLatestWeek(html) {
-  const pageMatch = html.match(/<div class="page active" id="page-latest"([^>]*)>([\s\S]*?)\n\s*<\/div>\n\s*\n\s*<!-- ARCHIVE:/);
-  if (!pageMatch) {
+  const pageStart = html.search(/<div class="page active" id="page-latest"[^>]*>/);
+  if (pageStart === -1) {
     throw new Error('Could not find the active latest page in index.html');
   }
-
-  const attrs = parseAttrs(pageMatch[1]);
-  const pageHtml = pageMatch[2];
+  const archiveStart = html.indexOf('<template id="week-report-', pageStart);
+  const pageHtml = html.slice(pageStart, archiveStart === -1 ? html.length : archiveStart);
+  const heading = textContent(firstMatch(pageHtml, /<div class="page-header">[\s\S]*?<h1>([\s\S]*?)<\/h1>/));
+  const headingMatch = heading.match(/^Week\s+(\d+)\s*-\s*(.+)$/i);
+  const currentKey = firstMatch(html, /const\s+latestArchiveWeekKey\s*=\s*['"]([^'"]+)['"]/);
+  const displayYear = headingMatch?.[2].match(/(\d{4})\s*$/)?.[1] || '';
   return {
-    id: attrs['data-week'] || 'latest',
-    label: attrs['data-week-label'] || 'This Week',
-    date: attrs['data-week-date'] || '',
+    id: currentKey || (headingMatch && displayYear ? `${displayYear}-W${headingMatch[1].padStart(2, '0')}` : 'latest'),
+    label: headingMatch ? `Week ${headingMatch[1]}` : 'This Week',
+    date: headingMatch?.[2] || '',
     html: pageHtml,
   };
 }
@@ -39,6 +42,9 @@ export function parseCards(pageHtml, options = {}) {
 }
 
 export function parseSlackCards(pageHtml, fullHtml = '', weekId = '') {
+  if (/<a class="slack-card"/.test(pageHtml)) {
+    return parseModernSlackCards(pageHtml);
+  }
   const cards = [];
   const pattern = /<div class="article-card article-card--slack"([\s\S]*?)<\/div><\/div><\/div>/g;
   let match;
@@ -86,6 +92,9 @@ export function parseSlackCards(pageHtml, fullHtml = '', weekId = '') {
 }
 
 export function parseExternalCards(pageHtml, fullHtml = '', weekId = '') {
+  if (/<a class="masonry-card"/.test(pageHtml)) {
+    return parseModernExternalCards(pageHtml, fullHtml);
+  }
   const cards = [];
   const pattern = /<a class="article-card"([\s\S]*?)<\/a>/g;
   let match;
@@ -133,6 +142,80 @@ export function parseExternalCards(pageHtml, fullHtml = '', weekId = '') {
       });
     });
   return dedupeByLink(cards);
+}
+
+function parseModernSlackCards(pageHtml) {
+  const cards = [];
+  const pattern = /<a class="slack-card"([^>]*)>([\s\S]*?)<\/a>/g;
+  let match;
+  while ((match = pattern.exec(pageHtml)) !== null) {
+    const attrs = parseAttrs(match[1]);
+    const block = match[0];
+    const title = textContent(firstMatch(block, /<h3 class="slack-card-title">([\s\S]*?)<\/h3>/));
+    const summary = parseModernSummary(block, 'slack-card-desc');
+    const desc = `${summary.update} ${summary.why}`.trim();
+    const timeAttrs = parseAttrs(firstMatch(block, /<time([^>]*)>/));
+    const source = textContent(firstMatch(block, /<span class="slack-thread-channel">([\s\S]*?)<\/span>/));
+    cards.push({
+      id: makeId(title),
+      title,
+      category: 'internal',
+      source,
+      author: textContent(firstMatch(block, /<span class="slack-sender-name">([\s\S]*?)<\/span>/)),
+      date: timeAttrs.datetime || textContent(firstMatch(block, /<time[^>]*>([\s\S]*?)<\/time>/)),
+      link: attrs.href || '',
+      image: '',
+      update: summary.update,
+      why: summary.why,
+      score: scoreCandidate({ title, desc, source, internal: true }),
+      selected: false,
+    });
+  }
+  return dedupeByLink(cards);
+}
+
+function parseModernExternalCards(pageHtml, fullHtml) {
+  const cards = [];
+  const pattern = /<a class="masonry-card"([^>]*)>([\s\S]*?)<\/a>/g;
+  let match;
+  while ((match = pattern.exec(pageHtml)) !== null) {
+    const attrs = parseAttrs(match[1]);
+    const block = match[0];
+    const title = textContent(firstMatch(block, /<h3 class="masonry-card-title">([\s\S]*?)<\/h3>/));
+    const summary = parseModernSummary(block, 'masonry-card-summary');
+    const desc = `${summary.update} ${summary.why}`.trim();
+    const sourceLine = textContent(firstMatch(block, /<div class="masonry-card-source">([\s\S]*?)<\/div>/));
+    const [source = '', date = ''] = sourceLine.split(/\s+·\s+/, 2);
+    const imageAttrs = parseAttrs(firstMatch(block, /<img([^>]*)>/));
+    cards.push({
+      id: makeId(title),
+      title,
+      category: 'external',
+      source,
+      date,
+      link: attrs.href || '',
+      image: imageAttrs.src || localPreviewImageForUrl(fullHtml, attrs.href || ''),
+      update: summary.update,
+      why: summary.why,
+      tags: attrs['data-tags'] || '',
+      score: scoreCandidate({ title, desc, source, internal: false }),
+      selected: false,
+    });
+  }
+  return cards;
+}
+
+function parseModernSummary(block, className) {
+  const container = firstMatch(block, new RegExp(`<div class="${className}">([\\s\\S]*?)<\\/div>`));
+  const paragraphs = [...container.matchAll(/<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/g)]
+    .map(match => textContent(match[1]));
+  if (paragraphs.length >= 2) {
+    return {
+      update: paragraphs[0].replace(/^(?:What is the update|Update):\s*/i, ''),
+      why: paragraphs[1].replace(/^(?:Why it(?:'|’)s valuable for UXers|Why it is valuable for UXers|UX value):\s*/i, ''),
+    };
+  }
+  return splitSummary(paragraphs.join(' ') || textContent(container));
 }
 
 export function pickCandidates(cards, maxCandidates, selectedCount) {

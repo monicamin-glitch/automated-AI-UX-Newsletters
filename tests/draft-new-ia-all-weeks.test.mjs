@@ -6,8 +6,8 @@ import { spawn, spawnSync } from 'node:child_process';
 import test from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-const html = readFileSync(new URL('../draft-new-ia.html', import.meta.url), 'utf8');
-const legacyHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const legacyHtml = readFileSync(new URL('../legacy-index.html', import.meta.url), 'utf8');
 const designSpec = readFileSync(new URL('../design-spec.md', import.meta.url), 'utf8');
 const digest = readFileSync(new URL('../digest.md', import.meta.url), 'utf8');
 const slackSpotlight = readFileSync(new URL('../slack-spotlight.md', import.meta.url), 'utf8');
@@ -969,7 +969,7 @@ test('stores a valid checked-in image directly in every archived External card',
 test('the media preparation gate audits the current layout and every archived week', () => {
   const result = spawnSync(
     process.execPath,
-    ['scripts/prepare-media.mjs', '--html', 'draft-new-ia.html', '--no-strict'],
+    ['scripts/prepare-media.mjs', '--html', 'index.html', '--no-strict'],
     { cwd: new URL('..', import.meta.url), encoding: 'utf8' }
   );
   assert.equal(result.status, 0, result.stderr || result.stdout);
@@ -1505,7 +1505,7 @@ async function openChromeRuntime({ width = 390, height = 844 } = {}) {
   await send('Page.addScriptToEvaluateOnNewDocument', {
     source: `globalThis.__NEWSLETTER_ARCHIVE_CLOCK__ = () => new Date('2026-07-23T12:00:00Z');`
   });
-  await send('Page.navigate', { url: new URL('../draft-new-ia.html', import.meta.url).href });
+  await send('Page.navigate', { url: new URL('../index.html', import.meta.url).href });
   await waitFor(async () => await evaluate('document.readyState') === 'complete');
 
   return {

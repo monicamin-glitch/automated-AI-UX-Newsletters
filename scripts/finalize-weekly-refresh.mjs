@@ -22,7 +22,7 @@ writeRefreshStatus(statusBase);
 
 try {
   console.log('Preparing media manifest...');
-  runCommand('node', ['scripts/prepare-media.mjs', '--html', 'draft-new-ia.html', '--write-manifest'], { stdio: 'inherit' });
+  runCommand('node', ['scripts/prepare-media.mjs', '--html', 'index.html', '--write-manifest'], { stdio: 'inherit' });
 
   console.log('Validating latest week date bucket...');
   runCommand('node', ['scripts/validate-week-buckets.mjs'], { stdio: 'inherit' });
