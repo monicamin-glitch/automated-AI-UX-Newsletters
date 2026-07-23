@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T08:41:33.835Z",
+  "generatedAt": "2026-07-23T08:52:05.256Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,11 +15,11 @@
     ]
   },
   "summary": {
-    "cards": 78,
+    "cards": 79,
     "errors": 0,
-    "warnings": 5,
+    "warnings": 4,
     "counts": {
-      "embedded-img": 78
+      "embedded-img": 79
     }
   },
   "entries": [
@@ -29,10 +29,10 @@
       "date": "July 16",
       "url": "https://www.figma.com/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/external/figma-release-notes-may-2026.jpg",
+      "localImage": "assets/week11/01-figma-code-backed-screens.png",
       "youtubeId": "",
-      "dimensions": "700x393",
-      "sizeBytes": 39808,
+      "dimensions": "542x305",
+      "sizeBytes": 237709,
       "status": "ok",
       "issues": []
     },
@@ -55,10 +55,23 @@
       "date": "July 16",
       "url": "https://bolt.new/blog/introducing-bolt-slides",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week10/02-bolt-custom-software-ai.webp",
+      "localImage": "assets/week11/06-bolt-slides-launch.png",
       "youtubeId": "",
-      "dimensions": "900x560",
-      "sizeBytes": 35082,
+      "dimensions": "600x450",
+      "sizeBytes": 164600,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Out of the Chat Window, Onto the Canvas",
+      "source": "Miro",
+      "date": "July 16",
+      "url": "https://miro.com/blog/build-the-right-thing-canvas-26/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week11/02-miro-teams-agents-canvas.jpg",
+      "youtubeId": "",
+      "dimensions": "1280x853",
+      "sizeBytes": 274736,
       "status": "ok",
       "issues": []
     },
@@ -68,14 +81,12 @@
       "date": "July 16",
       "url": "https://openai.com/products/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week10/06-chatgpt-work-sites.svg",
+      "localImage": "assets/week3/12-chatgpt-persistent-file-storage-documents-that-remember.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1460,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "2560x1440",
+      "sizeBytes": 199056,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "Claude for Teachers Builds Around a Specific Professional Workflow",

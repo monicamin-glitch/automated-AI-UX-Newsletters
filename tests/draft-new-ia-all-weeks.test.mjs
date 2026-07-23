@@ -51,6 +51,7 @@ const modernDestinationRecords = [
   ['external', 'https://www.figma.com/release-notes/'],
   ['external', 'https://www.nngroup.com/articles/human-led-research-still-matters/'],
   ['external', 'https://bolt.new/blog/introducing-bolt-slides'],
+  ['external', 'https://miro.com/blog/build-the-right-thing-canvas-26/'],
   ['external', 'https://openai.com/products/release-notes/'],
   ['external', 'https://www.anthropic.com/news/claude-for-teachers'],
   ['external', 'https://www.figma.com/release-notes/'],
@@ -847,7 +848,7 @@ test('rebuckets the complete effective legacy dataset by real date with card-loc
   const targetDestinations = getStoredReportRecords()
     .map(record => `${record.type}:${record.destination}`)
     .sort();
-  assert.equal(targetDestinations.length, 141);
+  assert.equal(targetDestinations.length, 142);
   assert.deepEqual(targetDestinations, sourceDestinations);
 
   for (const record of records) {
@@ -884,10 +885,10 @@ test('rebuckets the complete effective legacy dataset by real date with card-loc
 
 test('places every explicitly dated record in its canonical template and marks undated fallbacks', () => {
   const records = getStoredReportRecords();
-  assert.equal(records.length, 141);
+  assert.equal(records.length, 142);
 
   const dated = records.filter(record => parseStored2026Date(record.date));
-  assert.equal(dated.length, 133);
+  assert.equal(dated.length, 134);
   for (const record of dated) {
     const expectedKey = getISOKeyForDate(parseStored2026Date(record.date));
     assert.equal(record.key, expectedKey, `${record.destination} (${record.date}) belongs in ${expectedKey}`);
@@ -972,9 +973,9 @@ test('the media preparation gate audits the current layout and every archived we
     { cwd: new URL('..', import.meta.url), encoding: 'utf8' }
   );
   assert.equal(result.status, 0, result.stderr || result.stdout);
-  assert.match(result.stdout, /Cards checked: 78/);
+  assert.match(result.stdout, /Cards checked: 79/);
   assert.match(result.stdout, /Errors: 0/);
-  assert.match(result.stdout, /Media sources: \{"embedded-img":78\}/);
+  assert.match(result.stdout, /Media sources: \{"embedded-img":79\}/);
 });
 
 test('keeps External Read article styling stable during hover and focus', () => {
@@ -1079,8 +1080,8 @@ test('renders external update and UX value as separate summary paragraphs', () =
   const latestPage = html.match(/id="page-latest"([\s\S]*?)<template id="week-report/)?.[1] ?? '';
   const updates = latestPage.match(/class="masonry-card-summary-update"/g) ?? [];
   const values = latestPage.match(/class="masonry-card-summary-value"/g) ?? [];
-  assert.equal(updates.length, 9);
-  assert.equal(values.length, 9);
+  assert.equal(updates.length, 10);
+  assert.equal(values.length, 10);
   assert.match(html, /\.masonry-card-summary p \{ margin: 0; \}/);
   assert.match(html, /\.masonry-card-summary-value \{ margin-top: 8px !important; \}/);
 });
@@ -1959,7 +1960,7 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     }
 
     const reportChecks = await browser.evaluate(`(() => {
-      const expected = [[19, 1, 6], [24, 8, 11], [28, 8, 8], [29, 6, 9]];
+      const expected = [[19, 1, 6], [24, 8, 11], [28, 8, 8], [29, 6, 10]];
       return expected.map(([week, slack, external]) => {
         selectArchiveWeek(2026, week);
         const root = document.getElementById('archive-week-content');

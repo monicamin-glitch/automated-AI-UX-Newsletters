@@ -45,6 +45,26 @@
 - No Skill-directory Markdown was changed.
 - No website HTML, CSS, JavaScript, or content assets were changed in this documentation migration.
 
+## 2026-07-20
+
+### Week 11 weekly refresh from GitHub
+
+- Refreshed the legacy website to `Week 11` for `Jul 14-Jul 20, 2026` and archived the previous latest page as `Week 10`.
+- Added 8 validated Week 11 cards: 1 workflow, 1 deeper-thinking article, 4 Slack Spotlights, and 2 product updates.
+- Added checked-in media under `assets/week11/` for Figma code-backed screens, the Miro shared-canvas article, OpenAI desktop updates, and Bolt Slides.
+- Covered Figma, Miro, OpenAI, Bolt, `#ai-for-ux`, `#dieter`, and `#genai_engineering`; the source audit skipped lower-signal or duplicate items instead of adding filler.
+- Recorded Agent Fabric, Skills MCP, AI for UX Session 4, and the Dieter connector guide as the strongest internal signals.
+- Added a retryable Fetch → Build → Publish workflow proposal with JSON checkpoints between phases.
+
+### Integration into the current layout
+
+- Preserved the current Latest Week / All Weeks / Resources Hub architecture instead of restoring the superseded legacy layout.
+- Reused the higher-quality Week 11 Figma, Miro, Bolt, and OpenAI images in the current External Update cards.
+- Added the unique Miro article to the current External Updates grid; the other three GitHub External cards already existed in the current report.
+- Did not duplicate Agent Fabric, Skills MCP, or Session 4 because the current cards already contain fuller verified Slack originals.
+- Kept the GitHub Dieter card out of the current Slack list until its complete parent message can be fetched and stored according to `slack-spotlight.md`.
+- Adapted the checkpoint workflow into `digest.md` without duplicating Slack extraction rules, source lists, or Resource Hub content.
+
 ## 2026-07-13
 
 ### Week 10 weekly refresh

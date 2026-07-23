@@ -22,6 +22,11 @@ UX designers, researchers, writers, design technologists, design-system teams, a
 /digest internal      # refresh Internal Updates and Popular Topics only
 /digest full          # refresh the complete selected week
 /digest resources     # update Resources Hub only after explicit human edits
+/digest fetch         # collect and checkpoint full-week content without rendering
+/digest fetch external # checkpoint External Updates only
+/digest fetch internal # checkpoint Internal Updates and Popular Topics only
+/digest build         # render the latest checkpoint and validate local media
+/digest publish       # run the guarded publication flow for the built website
 ```
 
 `full` is the default weekly mode.
@@ -41,6 +46,44 @@ Read only the documents needed for the requested operation.
 | Slack channel share after website publication | [`slack-weekly-bot.md`](slack-weekly-bot.md) |
 
 Do not read or rewrite [`resources-hub.md`](resources-hub.md) during a routine weekly refresh. It is manually curated and changes only after explicit human direction.
+
+---
+
+## Execution phases and checkpoints
+
+The weekly flow can run end to end or as three retryable phases:
+
+| Phase | Input | Output |
+|---|---|---|
+| Fetch | the operation-specific documents listed above | `drafts/weekly-cards-YYYY-MM-DD.json` |
+| Build | the weekly checkpoint | updated `draft-new-ia.html`, checked-in assets, and `assets/media-manifest.json` |
+| Publish | a verified build | GitHub, B.Pages, Google Doc, notification, and refresh status |
+
+The checkpoint stores output data, not duplicated rules. Internal records follow [`slack-spotlight.md`](slack-spotlight.md); External records follow [`sources.md`](sources.md) and [`media-strategy.md`](media-strategy.md).
+
+Minimum checkpoint shape:
+
+```json
+{
+  "iso_year": 2026,
+  "iso_week": 29,
+  "start_date": "2026-07-13",
+  "end_date": "2026-07-19",
+  "fetched_at": "2026-07-20T10:15:00+08:00",
+  "internal": [],
+  "popular_topics": [],
+  "external": []
+}
+```
+
+Fetching `external` or `internal` updates only the matching checkpoint fields. Build may proceed with one section only when the user explicitly requested that partial mode; a full weekly build requires both sections.
+
+Recovery:
+
+- if Fetch succeeded but Build failed, fix the data or assets and rerun `/digest build`;
+- if Build succeeded but Publish failed, fix authentication or publication state and rerun `/digest publish`;
+- if Slack access is unavailable, checkpoint External Updates without inventing internal content;
+- if Google Doc append fails after the website publishes, record the failure and retry only that delivery step.
 
 ---
 
