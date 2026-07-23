@@ -1634,8 +1634,15 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
         scrollsHorizontally: getComputedStyle(filters).overflowX === 'auto' && filters.scrollWidth > filters.clientWidth,
         chipTouchHeight: Math.min(...chips.map(chip => chip.getBoundingClientRect().height)),
         filtersWithinViewport: filterRect.left >= 0 && filterRect.right <= window.innerWidth,
-        actionParity: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'borderRadius', 'color', 'fontSize', 'fontWeight', 'lineHeight']
+        actionParity: ['borderRadius', 'color', 'fontSize', 'fontWeight', 'lineHeight']
           .every(property => readStyle[property] === slackStyle[property]),
+        externalZeroPadding: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft']
+          .every(property => readStyle[property] === '0px'),
+        slackCompactPadding:
+          slackStyle.paddingTop === '3px'
+          && slackStyle.paddingRight === '6px'
+          && slackStyle.paddingBottom === '3px'
+          && slackStyle.paddingLeft === '6px',
         noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth
       };
       all.click();
@@ -1650,6 +1657,8 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.ok(mobileFiltersAndActions.chipTouchHeight >= 40);
     assert.equal(mobileFiltersAndActions.filtersWithinViewport, true);
     assert.equal(mobileFiltersAndActions.actionParity, true);
+    assert.equal(mobileFiltersAndActions.externalZeroPadding, true);
+    assert.equal(mobileFiltersAndActions.slackCompactPadding, true);
     assert.equal(mobileFiltersAndActions.noOverflow, true);
 
     const reportChecks = await browser.evaluate(`(() => {
