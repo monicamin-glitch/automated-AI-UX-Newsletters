@@ -167,6 +167,9 @@ Center content:
 
 - One visible white topic card with a second pale-blue card slightly offset behind it
 - Topic word is the primary visual focus
+- Topic words use 28px on desktop and 25px on mobile by default.
+- When a topic is longer than 18 characters, keep the compact state after the transition completes: 24px on desktop and 21px on mobile.
+- Apply the same compact decision to both the current and next topic cards so the animated and settled states match.
 - Metadata appears below as static text: `[mentions] mentions · [channels] channels`.
 - The metadata row is informational only. It has no arrow, hover treatment, click action, or Slack search link.
 - Do not show `Top N of 10`, proposal labels, internal labels, Slack labels, week badges, or authorization notes

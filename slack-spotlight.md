@@ -166,6 +166,15 @@ Required display behavior is defined in [`design-spec.md`](design-spec.md). Cont
 
 `original_message` and `posted_at` are required for newly generated output after this contract update; `reactions` remains optional. Existing current-week entries must not be backfilled from memory or invented; populate the new fields from Slack during the next verified refresh.
 
+### Category-filter behavior
+
+- Derive available filter categories from the Slack cards currently rendered on the page.
+- Keep `All` visible at all times and show the current Slack-card total beside it.
+- Show `Tools & Releases`, `Learning & Curriculum`, `Best Practices`, and `Others` only when at least one current card uses the matching `category`.
+- Calculate filters when Latest Week initializes and recalculate them whenever All Weeks switches to another week.
+- If a previously selected category is unavailable after a week change, reset the active filter to `All` and show every Slack card.
+- Do not duplicate per-week category availability in this file, weekly output, or archive metadata.
+
 ---
 
 ## Current week output

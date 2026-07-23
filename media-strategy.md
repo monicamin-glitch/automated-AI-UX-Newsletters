@@ -15,10 +15,10 @@ The current interface has three distinct visual systems:
 Run before publishing:
 
 ```bash
-node scripts/prepare-media.mjs --write-manifest
+node scripts/prepare-media.mjs --html draft-new-ia.html --write-manifest
 ```
 
-The step must verify every External Update resolves to a checked-in local image and write `assets/media-manifest.json` with the source URL, selected asset, dimensions, file size, and warnings.
+The step must verify every External Update in Latest Week and every stored All Weeks report resolves to an image embedded in the card and backed by a checked-in local file. It writes `assets/media-manifest.json` with the source URL, selected asset, dimensions, file size, and warnings.
 
 ### Publication gate
 
@@ -119,13 +119,19 @@ Each External Update card provides:
 - Only ranks 1–3 render a badge.
 - Every card keeps its checked-in image when copied into the All Weeks archive.
 - Selecting a week must not trigger a new image fetch or replace its stored media.
+- Run the same image-preparation path for Latest Week and every report rendered through All Weeks.
+- Resolve known legacy article URLs to their existing checked-in local assets when older cards do not carry an explicit image field.
+- Ensure every External Update card renders a 170px image area, including cards whose source image is missing.
+- If an embedded or URL-mapped local image fails to load, replace it in place with a light-blue branded fallback that displays the article source.
+- Keep published fallback media local and deterministic; do not depend on a third-party runtime screenshot service.
 
 If legacy runtime attributes remain during migration, the fallback order is:
 
 1. explicit local `data-img`;
-2. cached YouTube thumbnail;
-3. generated branded fallback;
-4. Microlink or thum.io preview for development only.
+2. checked-in URL-to-asset mapping;
+3. cached YouTube thumbnail;
+4. generated branded fallback;
+5. Microlink or thum.io preview for development only.
 
 ---
 
@@ -146,6 +152,7 @@ All Weeks renders the stored Popular Topics, Internal Updates, External Updates,
 - Do not maintain a separate manually edited archive-card image set.
 - Reuse the same checked-in assets and alt text as the original weekly report.
 - A missing historical image is a validation problem; do not silently replace it with an unrelated current-week image.
+- During legacy migration, preserve URL-to-local-asset mappings as well as explicit image fields; dropping the mapping must fail verification.
 
 ---
 
@@ -155,6 +162,8 @@ After updating the website, confirm:
 
 - every Latest Week External Update displays its expected local image;
 - every available All Weeks report displays the same external images as its original week;
+- every rendered External Update has an image area and a visible branded fallback after a simulated image error;
+- Week 24’s Figma Config card resolves to `assets/week7/01-figma-config-2026-what-to-know-before.png`;
 - all three Top Pick badges sit over the intended images;
 - equal-height cards do not distort their images;
 - the Popular Topic illustration is not stretched, flattened, masked, or cropped through a character unnaturally;

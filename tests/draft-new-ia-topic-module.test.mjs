@@ -61,6 +61,10 @@ test('renders topic metadata as non-interactive text without a search arrow', ()
   assert.doesNotMatch(extractFunctionSource('renderTopicCard'), /topicSearch|buildSlackTopicSearchUrl/);
 });
 
+test('uses readable regular-weight metadata below the weekly topic', () => {
+  assert.match(html, /\.topic-card-meta \{[^}]*font-size: 12px;[^}]*font-weight: 400/);
+});
+
 test('keeps topic initialization but removes loading cursor and icon rotation', () => {
   assert.match(html, /\n    renderTopicCard\(topicCardIndex\);\n    renderWeekPicker\(weekPickerDisplayYear\);/);
   assert.match(html, /\.topic-action:disabled \{[^}]*cursor: default;[^}]*opacity:/);
@@ -86,6 +90,15 @@ test('runs the normal-motion topic transition before completing the change', () 
   const normalMotionBranch = extractFunctionSource('showNextWeeklyTopic').match(/else \{[\s\S]*?\n      \}/)[0];
   assert.match(normalMotionBranch, /stack\.classList\.add\('is-changing'\)/);
   assert.match(normalMotionBranch, /window\.setTimeout\(completeChange, 530\)/);
+});
+
+test('keeps the compact font fallback after a long topic finishes transitioning', () => {
+  const setTopicWord = extractFunctionSource('setTopicWord');
+  const renderTopicCard = extractFunctionSource('renderTopicCard');
+  assert.match(html, /\.topic-card-word\.is-compact \{[^}]*font-size: 24px/);
+  assert.match(setTopicWord, /element\.classList\.toggle\('is-compact', word\.length > 18\)/);
+  assert.match(renderTopicCard, /setTopicWord\(document\.getElementById\('topic-card-word'\), topic\.word\)/);
+  assert.match(renderTopicCard, /setTopicWord\(document\.getElementById\('topic-card-next-word'\), nextTopic\.word\)/);
 });
 
 test('shows the weekly topic module on Latest Week only', () => {

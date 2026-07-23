@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import test from 'node:test';
 import { runInNewContext } from 'node:vm';
 
@@ -49,12 +49,14 @@ const modernDestinationRecords = [
   ['slack', 'https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1783928849351589'],
   ['slack', 'https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1784100504738449?thread_ts=1784100504.738449&cid=C08F5QRGFDG'],
   ['external', 'https://www.figma.com/release-notes/'],
+  ['external', 'https://www.nngroup.com/articles/human-led-research-still-matters/'],
   ['external', 'https://bolt.new/blog/introducing-bolt-slides'],
   ['external', 'https://openai.com/products/release-notes/'],
   ['external', 'https://www.anthropic.com/news/claude-for-teachers'],
   ['external', 'https://www.figma.com/release-notes/'],
   ['external', 'https://openai.com/products/release-notes/'],
-  ['external', 'https://openai.com/products/release-notes/']
+  ['external', 'https://openai.com/products/release-notes/'],
+  ['external', 'https://newsletter.uxdesign.cc/p/wait-who-made-this']
 ];
 
 function getArchiveTemplate(key) {
@@ -845,7 +847,7 @@ test('rebuckets the complete effective legacy dataset by real date with card-loc
   const targetDestinations = getStoredReportRecords()
     .map(record => `${record.type}:${record.destination}`)
     .sort();
-  assert.equal(targetDestinations.length, 139);
+  assert.equal(targetDestinations.length, 141);
   assert.deepEqual(targetDestinations, sourceDestinations);
 
   for (const record of records) {
@@ -882,10 +884,10 @@ test('rebuckets the complete effective legacy dataset by real date with card-loc
 
 test('places every explicitly dated record in its canonical template and marks undated fallbacks', () => {
   const records = getStoredReportRecords();
-  assert.equal(records.length, 139);
+  assert.equal(records.length, 141);
 
   const dated = records.filter(record => parseStored2026Date(record.date));
-  assert.equal(dated.length, 131);
+  assert.equal(dated.length, 133);
   for (const record of dated) {
     const expectedKey = getISOKeyForDate(parseStored2026Date(record.date));
     assert.equal(record.key, expectedKey, `${record.destination} (${record.date}) belongs in ${expectedKey}`);
@@ -937,6 +939,44 @@ test('gives every archived external card the refreshed Read article affordance',
   assert.doesNotMatch(html, /\.masonry-card-body \.masonry-card-action \{[^}]*padding-top/);
 });
 
+test('restores known archive images and falls back visibly when an image is missing or fails', () => {
+  assert.match(
+    html,
+    /'https:\/\/investor\.figma\.com\/news-events\/news\/news-details\/2026\/Figma-to-Host-Investor-and-Analyst-Session-at-Config-2026\/default\.aspx': 'assets\/week7\/01-figma-config-2026-what-to-know-before\.png'/
+  );
+  assert.match(html, /function prepareExternalCardImage\(card\) \{/);
+  assert.match(html, /image\.addEventListener\('error', \(\) => showExternalCardFallback\(container, card\), \{ once: true \}\)/);
+  assert.match(html, /function showExternalCardFallback\(container, card\) \{/);
+  assert.match(html, /\.masonry-card-image\.is-fallback \{[^}]*display: flex;[^}]*background: linear-gradient/);
+  assert.match(html, /if \(node === externalGrid\) clone\.querySelectorAll\('\.masonry-card'\)\.forEach\(prepareExternalCardImage\)/);
+  assert.match(html, /document\.querySelectorAll\('#page-latest \.masonry-card'\)\.forEach\(prepareExternalCardImage\)/);
+});
+
+test('stores a valid checked-in image directly in every archived External card', () => {
+  for (const { key } of archiveWeeks) {
+    const cards = [...getArchiveTemplate(key).matchAll(/<a class="masonry-card"[^>]*>([\s\S]*?)<\/a>/g)];
+    for (const [, body] of cards) {
+      const title = stripMarkup(body.match(/class="masonry-card-title">([\s\S]*?)<\/h3>/)?.[1] ?? 'Untitled card');
+      const imagePath = body.match(/class="masonry-card-image"[^>]*>\s*<img src="([^"]+)"/)?.[1] ?? '';
+      assert.ok(imagePath, `${key}: ${title} stores its image in the card`);
+      assert.match(imagePath, /^assets\//, `${key}: ${title} uses a checked-in local image`);
+      assert.equal(existsSync(new URL(`../${imagePath}`, import.meta.url)), true, `${key}: ${title} image exists`);
+    }
+  }
+});
+
+test('the media preparation gate audits the current layout and every archived week', () => {
+  const result = spawnSync(
+    process.execPath,
+    ['scripts/prepare-media.mjs', '--html', 'draft-new-ia.html', '--no-strict'],
+    { cwd: new URL('..', import.meta.url), encoding: 'utf8' }
+  );
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.match(result.stdout, /Cards checked: 78/);
+  assert.match(result.stdout, /Errors: 0/);
+  assert.match(result.stdout, /Media sources: \{"embedded-img":78\}/);
+});
+
 test('keeps External Read article styling stable during hover and focus', () => {
   assert.match(
     html,
@@ -949,6 +989,17 @@ test('keeps External Read article styling stable during hover and focus', () => 
   assert.doesNotMatch(
     html,
     /\.masonry-card:hover \.masonry-card-action,\s*\.view-in-slack:hover/
+  );
+});
+
+test('keeps the Slack metadata separator outside the View in Slack hover surface', () => {
+  assert.match(
+    html,
+    /\.view-in-slack \{[^}]*position: relative;[^}]*margin-left: 14px;[^}]*white-space: nowrap/
+  );
+  assert.match(
+    html,
+    /\.view-in-slack::before \{[^}]*content: "·";[^}]*position: absolute;[^}]*right: 100%;[^}]*pointer-events: none/
   );
 });
 
@@ -989,6 +1040,23 @@ test('keeps Slack filtering scoped to the active page', () => {
   assert.match(html, /page\.querySelectorAll\('\.slack-card'\)/);
 });
 
+test('normalizes legacy Others categories when syncing Slack filter pills', () => {
+  assert.match(html, /function normalizeSlackCategory\(value\) \{/);
+  assert.match(html, /function syncSlackFilterPills\(root\) \{/);
+  assert.match(html, /syncSlackFilterPills\(document\.getElementById\('page-latest'\)\)/);
+  assert.match(html, /syncSlackFilterPills\(archiveContent\)/);
+  const runtime = runInNewContext(`${extractArchiveDialogFunction('normalizeSlackCategory')}\n({ normalizeSlackCategory })`);
+  assert.equal(runtime.normalizeSlackCategory('other'), 'others');
+  assert.equal(runtime.normalizeSlackCategory('others'), 'others');
+});
+
+test('creates the canonical Slack filter row before archived cards when filters are missing', () => {
+  assert.match(html, /function createSlackFilterRow\(\) \{/);
+  assert.match(html, /filters = createSlackFilterRow\(\);[\s\S]*?slackCards\.before\(filters\)/);
+  assert.match(html, /count\.className = 'chip-count';[\s\S]*?count\.textContent = '0'/);
+  assert.match(html, /filterSlack\('others', this\)/);
+});
+
 test('supports a direct All Weeks preview URL', () => {
   assert.match(html, /data-page="all"/);
   assert.match(html, /new URLSearchParams\(window\.location\.search\)\.get\('page'\)/);
@@ -1011,8 +1079,8 @@ test('renders external update and UX value as separate summary paragraphs', () =
   const latestPage = html.match(/id="page-latest"([\s\S]*?)<template id="week-report/)?.[1] ?? '';
   const updates = latestPage.match(/class="masonry-card-summary-update"/g) ?? [];
   const values = latestPage.match(/class="masonry-card-summary-value"/g) ?? [];
-  assert.equal(updates.length, 7);
-  assert.equal(values.length, 7);
+  assert.equal(updates.length, 9);
+  assert.equal(values.length, 9);
   assert.match(html, /\.masonry-card-summary p \{ margin: 0; \}/);
   assert.match(html, /\.masonry-card-summary-value \{ margin-top: 8px !important; \}/);
 });
@@ -1333,7 +1401,8 @@ test('implements the mobile bottom-sheet, scroll-lock, metadata, and focus-resto
   assert.match(html, /function lockPageScroll\(\)/);
   assert.match(html, /function restorePageScroll\(\)/);
   assert.match(html, /slackMessageDialog\.addEventListener\('cancel'/);
-  assert.match(html, /slackMessageDialog\.addEventListener\('close',[\s\S]*restorePageScroll\(\)[\s\S]*slackMessageDialogTrigger\?\.focus\(\)/);
+  assert.match(html, /slackMessageDialog\.addEventListener\('close',[\s\S]*restorePageScroll\(\)[\s\S]*slackMessageDialogTrigger\?\.focus\(\{\s*preventScroll:\s*true\s*\}\)/);
+  assert.doesNotMatch(html, /slackMessageDialogTrigger\?\.focus\(\)/);
 });
 
 const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -1625,6 +1694,24 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.equal(latest.focusRestored, true);
     assert.equal(latest.scrollRestored, true);
 
+    const longTopic = await browser.evaluate(`(async () => {
+      for (let index = 0; index < 3; index += 1) {
+        showNextWeeklyTopic();
+        await new Promise(resolve => window.setTimeout(resolve, 560));
+      }
+      const word = document.getElementById('topic-card-word');
+      return {
+        text: word.textContent,
+        compact: word.classList.contains('is-compact'),
+        fontSize: Number.parseFloat(getComputedStyle(word).fontSize),
+        transitionFinished: !document.getElementById('topic-card-stack').classList.contains('is-changing')
+      };
+    })()`);
+    assert.equal(longTopic.text, 'AI Illustration Generator');
+    assert.equal(longTopic.compact, true);
+    assert.equal(longTopic.fontSize, 21);
+    assert.equal(longTopic.transitionFinished, true);
+
     const archive = await browser.evaluate(`(() => {
       document.querySelector('.nav-tab[data-page="all"]').click();
       const cards = [...document.querySelectorAll('#archive-week-content .archive-slack-card')];
@@ -1692,6 +1779,59 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
       defaultPrevented: true,
       focusRestored: true
     });
+
+    const historicalImageHealth = await browser.evaluate(`(async () => {
+      const inspect = async (label, root) => {
+        const cards = [...root.querySelectorAll('.masonry-card')];
+        const images = cards.map(card => card.querySelector('.masonry-card-image img')).filter(Boolean);
+        await Promise.all(images.map(image => image.complete
+          ? Promise.resolve()
+          : new Promise(resolve => {
+              image.addEventListener('load', resolve, { once: true });
+              image.addEventListener('error', resolve, { once: true });
+            })));
+        return {
+          label,
+          cards: cards.length,
+          images: images.length,
+          fallbacks: cards.filter(card => card.querySelector('.masonry-card-image.is-fallback')).length,
+          broken: images.filter(image => image.naturalWidth === 0).length
+        };
+      };
+      const results = [await inspect('Latest Week', document.getElementById('page-latest'))];
+      for (const week of [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]) {
+        selectArchiveWeek(2026, week);
+        results.push(await inspect(\`Week \${week}\`, document.getElementById('archive-week-content')));
+      }
+      return results;
+    })()`);
+    for (const result of historicalImageHealth) {
+      assert.equal(result.images, result.cards, `${result.label} embeds every image`);
+      assert.equal(result.fallbacks, 0, `${result.label} has no unexpected fallback`);
+      assert.equal(result.broken, 0, `${result.label} loads every image`);
+    }
+
+    const archiveImages = await browser.evaluate(`(() => {
+      selectArchiveWeek(2026, 24);
+      const cards = [...document.querySelectorAll('#archive-week-content .masonry-card')];
+      const figmaCard = cards.find(card => card.href.includes('Figma-to-Host-Investor-and-Analyst-Session-at-Config-2026'));
+      const image = figmaCard?.querySelector('.masonry-card-image img');
+      const expectedLocalImage = image?.getAttribute('src');
+      image?.dispatchEvent(new Event('error'));
+      const container = figmaCard?.querySelector('.masonry-card-image');
+      return {
+        cardCount: cards.length,
+        everyCardHasImageArea: cards.every(card => card.querySelector('.masonry-card-image')),
+        expectedLocalImage,
+        fallbackVisible: container?.classList.contains('is-fallback'),
+        fallbackLabel: container?.querySelector('.masonry-card-image-fallback-label')?.textContent
+      };
+    })()`);
+    assert.equal(archiveImages.cardCount, 11);
+    assert.equal(archiveImages.everyCardHasImageArea, true);
+    assert.equal(archiveImages.expectedLocalImage, 'assets/week7/01-figma-config-2026-what-to-know-before.png');
+    assert.equal(archiveImages.fallbackVisible, true);
+    assert.equal(archiveImages.fallbackLabel, 'Figma');
 
     const conditionalMetadata = await browser.evaluate(`(() => {
       const current = document.querySelector('#page-latest .archive-slack-card');
@@ -1767,8 +1907,59 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.equal(mobileFiltersAndActions.slackCompactPadding, true);
     assert.equal(mobileFiltersAndActions.noOverflow, true);
 
+    const categoryAvailability = await browser.evaluate(`(() => {
+      selectArchiveWeek(2026, 27);
+      const root = document.getElementById('archive-week-content');
+      const chips = [...root.querySelectorAll('.filter-chip')];
+      const all = chips.find(chip => chip.textContent.trim().startsWith('All'));
+      return {
+        allExists: Boolean(all),
+        allActive: all?.classList.contains('active'),
+        allCount: all?.querySelector('.chip-count')?.textContent,
+        emptyPillsHidden: chips.filter(chip => chip !== all).every(chip => chip.hidden),
+        emptyPillsNotRendered: chips
+          .filter(chip => chip !== all)
+          .every(chip => getComputedStyle(chip).display === 'none'),
+        visibleCards: [...root.querySelectorAll('.archive-slack-card')]
+          .filter(card => getComputedStyle(card).display !== 'none').length
+      };
+    })()`);
+    assert.equal(categoryAvailability.allExists, true);
+    assert.equal(categoryAvailability.allActive, true);
+    assert.equal(categoryAvailability.allCount, '9');
+    assert.equal(categoryAvailability.emptyPillsHidden, true);
+    assert.equal(categoryAvailability.emptyPillsNotRendered, true);
+    assert.equal(categoryAvailability.visibleCards, 9);
+
+    const filterAvailabilityAcrossPages = await browser.evaluate(`(() => {
+      const inspect = (label, root) => {
+        const expectedCategories = new Set(
+          [...root.querySelectorAll('.archive-slack-card, .slack-card')]
+            .map(card => normalizeSlackCategory(card.dataset.cat))
+            .filter(Boolean)
+        );
+        const chips = [...root.querySelectorAll('.filters .filter-chip')];
+        const visibleCategories = chips
+          .filter(chip => getComputedStyle(chip).display !== 'none')
+          .map(chip => normalizeSlackCategory(chip.getAttribute('onclick')?.match(/filterSlack\\('([^']+)'/)?.[1] || 'all'));
+        const unexpectedVisible = visibleCategories.filter(category => category !== 'all' && !expectedCategories.has(category));
+        const missingVisible = [...expectedCategories].filter(category => !visibleCategories.includes(category));
+        return { label, unexpectedVisible, missingVisible };
+      };
+      const snapshots = [inspect('Latest Week', document.getElementById('page-latest'))];
+      for (const week of [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]) {
+        selectArchiveWeek(2026, week);
+        snapshots.push(inspect(\`Week \${week}\`, document.getElementById('archive-week-content')));
+      }
+      return snapshots;
+    })()`);
+    for (const snapshot of filterAvailabilityAcrossPages) {
+      assert.deepEqual(snapshot.unexpectedVisible, [], `${snapshot.label} hides empty filters`);
+      assert.deepEqual(snapshot.missingVisible, [], `${snapshot.label} shows populated filters`);
+    }
+
     const reportChecks = await browser.evaluate(`(() => {
-      const expected = [[19, 1, 6], [24, 8, 11], [28, 8, 8], [29, 6, 7]];
+      const expected = [[19, 1, 6], [24, 8, 11], [28, 8, 8], [29, 6, 9]];
       return expected.map(([week, slack, external]) => {
         selectArchiveWeek(2026, week);
         const root = document.getElementById('archive-week-content');

@@ -6,13 +6,19 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
-const indexPath = path.join(repoRoot, 'index.html');
 const manifestPath = path.join(repoRoot, 'assets', 'media-manifest.json');
-const args = new Set(process.argv.slice(2));
+const rawArgs = process.argv.slice(2);
+const args = new Set(rawArgs);
 const shouldWriteManifest = args.has('--write-manifest');
 const strict = !args.has('--no-strict');
+const htmlArgumentIndex = rawArgs.indexOf('--html');
+const htmlInput = htmlArgumentIndex >= 0 ? rawArgs[htmlArgumentIndex + 1] : 'index.html';
+if (!htmlInput || htmlInput.startsWith('--')) {
+  throw new Error('--html requires a repository-relative HTML path');
+}
+const htmlPath = path.resolve(repoRoot, htmlInput);
 
-const html = fs.readFileSync(indexPath, 'utf8');
+const html = fs.readFileSync(htmlPath, 'utf8');
 const localPreviewImagesByUrl = parseLocalPreviewMap(html);
 const publicCards = parsePublicCards(html);
 const mediaEntries = publicCards.map(resolveMediaForCard);
@@ -29,20 +35,26 @@ if (strict && findings.errors.length) {
 }
 
 function parseLocalPreviewMap(source) {
-  const match = source.match(/const\s+localPreviewImagesByUrl\s*=\s*\{([\s\S]*?)\n\s*\};/);
   const map = new Map();
-  if (!match) return map;
+  for (const name of ['localPreviewImagesByUrl', 'externalCardImagesByUrl']) {
+    const match = source.match(new RegExp(`const\\s+${name}\\s*=\\s*\\{([\\s\\S]*?)\\n\\s*\\};`));
+    if (!match) continue;
 
-  const entryPattern = /['"]([^'"]+)['"]\s*:\s*['"]([^'"]+)['"]/g;
-  let entry;
-  while ((entry = entryPattern.exec(match[1])) !== null) {
-    map.set(normalizeUrl(entry[1]), entry[2]);
-    map.set(normalizeUrl(entry[1]).replace(/\/$/, ''), entry[2]);
+    const entryPattern = /['"]([^'"]+)['"]\s*:\s*['"]([^'"]+)['"]/g;
+    let entry;
+    while ((entry = entryPattern.exec(match[1])) !== null) {
+      map.set(normalizeUrl(entry[1]), entry[2]);
+      map.set(normalizeUrl(entry[1]).replace(/\/$/, ''), entry[2]);
+    }
   }
   return map;
 }
 
 function parsePublicCards(source) {
+  if (source.includes('class="masonry-card"')) {
+    return parseMasonryCards(source);
+  }
+
   const cards = [];
   const staticMarkup = source.slice(0, source.indexOf('<script>') === -1 ? source.length : source.indexOf('<script>'));
   const cardPattern = /<a\s+class="article-card"([\s\S]*?)<\/a>/g;
@@ -66,6 +78,30 @@ function parsePublicCards(source) {
   return cards;
 }
 
+function parseMasonryCards(source) {
+  const cards = [];
+  const cardPattern = /<a\s+class="masonry-card"([^>]*)>([\s\S]*?)<\/a>/g;
+  let match;
+  while ((match = cardPattern.exec(source)) !== null) {
+    const openAttrs = parseAttrs(match[1]);
+    const block = match[2];
+    const sourceAndDate = textContent(firstMatch(block, /<div\s+class="masonry-card-source">([\s\S]*?)<\/div>/));
+    const [sourceLabel = '', date = ''] = sourceAndDate.split(/\s*·\s*/, 2);
+    cards.push({
+      title: textContent(firstMatch(block, /<h3\s+class="masonry-card-title">([\s\S]*?)<\/h3>/)),
+      url: openAttrs.href || '',
+      source: sourceLabel,
+      date,
+      section: 'external',
+      label: sourceLabel,
+      dataImg: openAttrs['data-img'] || '',
+      embeddedImage: decodeHtml(firstMatch(block, /<img\s+[^>]*src="([^"]+)"/)),
+      youtubeId: openAttrs['data-yt-id'] || '',
+    });
+  }
+  return cards;
+}
+
 function parseAttrs(source) {
   const attrs = {};
   const attrPattern = /([\w:-]+)\s*=\s*"([^"]*)"/g;
@@ -79,9 +115,11 @@ function parseAttrs(source) {
 function resolveMediaForCard(card) {
   const normalizedUrl = normalizeUrl(card.url);
   const mappedImage = localPreviewImagesByUrl.get(normalizedUrl) || localPreviewImagesByUrl.get(normalizedUrl.replace(/\/$/, '')) || '';
-  const mediaPath = card.dataImg || mappedImage;
+  const mediaPath = card.dataImg || card.embeddedImage || mappedImage;
   const mediaSource = card.dataImg
     ? 'data-img'
+    : card.embeddedImage
+      ? 'embedded-img'
     : mappedImage
       ? 'localPreviewImagesByUrl'
       : card.youtubeId
@@ -248,6 +286,7 @@ function printReport(entries, findings) {
   const errorCount = entries.filter(entry => entry.validation.status === 'error').length;
 
   console.log('Media prepare audit');
+  console.log(`HTML: ${path.relative(repoRoot, htmlPath)}`);
   console.log(`Cards checked: ${entries.length}`);
   console.log(`OK: ${okCount}  Warnings: ${warningCount}  Errors: ${errorCount}`);
   console.log(`Media sources: ${JSON.stringify(findings.counts)}`);

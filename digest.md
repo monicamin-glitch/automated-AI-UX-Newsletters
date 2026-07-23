@@ -134,7 +134,7 @@ The first three cards receive badges. They remain in the same External Updates g
 Follow [`media-strategy.md`](media-strategy.md) and run:
 
 ```bash
-node scripts/prepare-media.mjs --write-manifest
+node scripts/prepare-media.mjs --html draft-new-ia.html --write-manifest
 ```
 
 Every External Update must resolve to a checked-in local image before publication. Internal Slack cards use the channel tile defined in [`design-spec.md`](design-spec.md), not an external article image.
