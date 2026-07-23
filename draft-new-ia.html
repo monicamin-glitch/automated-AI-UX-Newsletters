@@ -212,10 +212,10 @@
     .slack-dialog-footer { display: flex; justify-content: flex-end; padding: 14px 22px; border-top: 1px solid var(--border); background: #fbfdff; }
     .slack-dialog-action { display: inline-flex; align-items: center; gap: 7px; padding: 9px 13px; border-radius: 9px; color: var(--on-primary); background: var(--primary); font-size: 11px; font-weight: 700; text-decoration: none; }
     .slack-dialog-action:hover, .slack-dialog-action:focus-visible { background: var(--primary-dark); outline: 3px solid rgba(var(--primary-rgb),0.2); outline-offset: 2px; }
-    .slack-card.archive-slack-card { flex-direction: column; gap: 0; padding: 0; overflow: hidden; cursor: default; }
-    .archive-slack-card-detail { width: 100%; display: flex; gap: 16px; padding: 24px 20px; border: 0; color: inherit; background: transparent; font: inherit; text-align: left; cursor: pointer; }
-    .archive-slack-card-detail:focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.24); outline-offset: -3px; }
-    .view-in-slack { align-self: flex-end; margin: 0 20px 18px auto; }
+    .slack-card.archive-slack-card { cursor: pointer; }
+    .slack-card.archive-slack-card:focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.24); outline-offset: 3px; }
+    .view-in-slack { margin-left: 0; white-space: nowrap; }
+    .view-in-slack::before { content: "·"; margin-right: 7px; color: var(--text-muted); }
 
     /* Resources Hub */
     .resource-page-header { margin-bottom: 28px; }
@@ -246,7 +246,7 @@
       .filters { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; }
       .filters::-webkit-scrollbar { display: none; }
       .filter-chip { flex: 0 0 auto; min-height: 40px; }
-      .slack-card:not(.archive-slack-card), .archive-slack-card-detail { flex-direction: column; gap: 12px; }
+      .slack-card { flex-direction: column; gap: 12px; }
       .slack-thread-tile { width: auto; min-width: 0; height: auto; min-height: 28px; padding: 6px 10px; border-radius: 999px; }
       .slack-thread-channel { font-size: 11px; line-height: 1.2; }
       #slack-message-dialog { width: 100%; max-width: none; inset: auto 0 0 0; max-height: min(88dvh, 720px); margin: 0; border-radius: 20px 20px 0 0; }
@@ -266,9 +266,6 @@
       .topic-card-word { font-size: 25px; }
       .topic-action { width: min(100%, 260px); }
       .slack-card { gap: 12px; padding: 17px 15px; }
-      .slack-card.archive-slack-card { gap: 0; padding: 0; }
-      .archive-slack-card-detail { gap: 12px; padding: 17px 15px; }
-      .view-in-slack { margin: 0 15px 15px auto; }
       .slack-dialog-header, .slack-dialog-body, .slack-dialog-footer { padding-left: 16px; padding-right: 16px; }
       .slack-thread-tile { width: auto; min-width: 0; height: auto; padding: 6px 10px; }
       .slack-thread-channel { font-size: 11px; }
@@ -1387,44 +1384,51 @@
 
     function prepareSlackCard(card) {
       const viewModel = normalizeSlackCard(card);
-      const existingDetail = card.querySelector('.archive-slack-card-detail');
-      const detailTrigger = existingDetail || document.createElement('button');
-      const directLink = card.querySelector(':scope > .view-in-slack') || document.createElement('a');
-      let preparedCard = card;
+      const preparedCard = card.tagName === 'ARTICLE' ? card : document.createElement('article');
 
-      if (!existingDetail) {
-        preparedCard = document.createElement('article');
+      if (preparedCard !== card) {
         Array.from(card.attributes).forEach(attribute => {
           if (!['href', 'target', 'rel'].includes(attribute.name)) preparedCard.setAttribute(attribute.name, attribute.value);
         });
-        detailTrigger.className = 'archive-slack-card-detail';
-        detailTrigger.setAttribute('type', 'button');
-        detailTrigger.setAttribute('aria-haspopup', 'dialog');
-        while (card.firstChild) detailTrigger.appendChild(card.firstChild);
-        preparedCard.appendChild(detailTrigger);
-        directLink.className = 'view-in-slack';
-        directLink.target = '_blank';
-        directLink.rel = 'noopener noreferrer';
-        directLink.textContent = 'View in Slack';
-        preparedCard.appendChild(directLink);
+        while (card.firstChild) preparedCard.appendChild(card.firstChild);
         card.replaceWith(preparedCard);
       }
 
+      const metadata = preparedCard.querySelector('.slack-card-meta');
+      const directLink = metadata.querySelector('.view-in-slack') || document.createElement('a');
+      directLink.className = 'view-in-slack';
+      directLink.target = '_blank';
+      directLink.rel = 'noopener noreferrer';
+      directLink.innerHTML = 'View in Slack <span aria-hidden="true">↗</span>';
+      directLink.href = viewModel.permalink;
+      directLink.hidden = !viewModel.permalink;
+      if (!directLink.parentElement) metadata.appendChild(directLink);
+
       preparedCard.classList.add('archive-slack-card');
+      preparedCard.setAttribute('role', 'button');
+      preparedCard.setAttribute('tabindex', '0');
+      preparedCard.setAttribute('aria-haspopup', 'dialog');
+      preparedCard.setAttribute('aria-label', 'View details for ' + viewModel.title);
       preparedCard.dataset.slackPermalink = viewModel.permalink;
       preparedCard.dataset.slackAuthor = viewModel.author;
       preparedCard.dataset.slackDate = viewModel.date;
       preparedCard.dataset.slackReplyCount = viewModel.replyCount;
-      directLink.href = viewModel.permalink;
-      directLink.hidden = !viewModel.permalink;
+      preparedCard.addEventListener('click', event => {
+        if (event.target?.closest?.('.view-in-slack')) return;
+        openSlackMessageDialog(preparedCard, preparedCard);
+      });
+      preparedCard.addEventListener('keydown', event => {
+        if (event.target !== preparedCard) return;
+        if (!(event.key === 'Enter' || event.key === ' ')) return;
+        event.preventDefault();
+        openSlackMessageDialog(preparedCard, preparedCard);
+      });
       directLink.addEventListener('click', preventSlackActionPropagation);
-      detailTrigger.setAttribute('aria-label', 'View details for ' + viewModel.title);
-      detailTrigger.addEventListener('click', () => openSlackMessageDialog(preparedCard, detailTrigger));
       slackViewModels.set(preparedCard, viewModel);
       return preparedCard;
     }
 
-    function openSlackMessageDialog(card, trigger = card.querySelector('.archive-slack-card-detail') || card) {
+    function openSlackMessageDialog(card, trigger = card) {
       const viewModel = getSlackViewModel(card);
       slackMessageDialogTrigger = trigger;
       document.getElementById('slack-message-dialog-channel').textContent = viewModel.channel;

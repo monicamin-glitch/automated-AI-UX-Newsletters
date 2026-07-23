@@ -227,12 +227,12 @@ Metadata uses one continuous row:
 - `posted by`, sender, date, and reply count use the same type size, weight, and muted-grey color.
 - Do not highlight the sender's name.
 - Reply count follows the date; do not place it alone at the end of the card.
-- `View in Slack` follows the reply count. It uses primary-blue text and receives a compact pale-blue rounded background on hover and keyboard focus.
+- `View in Slack ↗` follows the reply count as a real anchor nested inside the same `.slack-card-meta` row. It uses primary-blue text and receives a compact pale-blue rounded background on hover and keyboard focus.
 
 Interaction uses two clearly separated hot zones without changing the card layout:
 
-- The complete card is the primary action and opens a Slack-message detail dialog. Implement the card as a button-like `article` or `div`, not as an outer link, so the nested Slack link remains valid HTML.
-- The card must be keyboard accessible with `tabindex="0"`, an appropriate accessible label or `role="button"`, and Enter/Space support.
+- The complete card is the primary action and opens a Slack-message detail dialog. Implement the card root as a button-like `article`, not as an outer link, so the nested Slack link remains valid HTML.
+- The article uses `role="button"`, `tabindex="0"`, `aria-haspopup="dialog"`, a descriptive accessible label, and Enter/Space support.
 - `View in Slack` is the secondary action. It opens the original permalink in a new tab with `rel="noopener noreferrer"`, stops event propagation, and must not open the dialog.
 - Keep the existing subtle card lift on hover. The inline action's pale-blue hover state makes its smaller click target visibly distinct.
 - Apply this behavior and metadata styling to every Slack card on both Latest Week and All Weeks.

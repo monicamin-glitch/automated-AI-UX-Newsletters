@@ -1032,8 +1032,8 @@ test('uses one normalized Slack view model and shared hot-zone preparation on bo
   assert.match(html, /function normalizeSlackCard\(card/);
   assert.match(html, /function prepareSlackCard\(card\)/);
   assert.match(html, /const viewModel = normalizeSlackCard\(card\)/);
-  assert.match(html, /const detailTrigger = existingDetail \|\| document\.createElement\('button'\)/);
-  assert.match(html, /detailTrigger\.setAttribute\('aria-haspopup', 'dialog'\)/);
+  assert.match(html, /const preparedCard = card\.tagName === 'ARTICLE' \? card : document\.createElement\('article'\)/);
+  assert.match(html, /preparedCard\.setAttribute\('aria-haspopup', 'dialog'\)/);
   assert.match(html, /document\.querySelectorAll\('#page-latest \.slack-card'\)\.forEach\(prepareSlackCard\)/);
   assert.match(html, /clone\.querySelectorAll\('\.slack-card'\)\.forEach\(prepareSlackCard\)/);
   assert.match(html, /dialogAction\.href = viewModel\.permalink/);
@@ -1263,14 +1263,20 @@ function createArchiveSlackCard(record) {
   return { container, card };
 }
 
-test('prepares stored-original and href-only Slack cards as sibling detail and direct-link controls', () => {
+test('places the direct Slack action after replies inside metadata', () => {
   assert.match(html, /function prepareSlackCard\(card\)/);
-  assert.match(html, /const detailTrigger = existingDetail \|\| document\.createElement\('button'\)/);
-  assert.match(html, /const directLink = card\.querySelector\(':scope > \.view-in-slack'\) \|\| document\.createElement\('a'\)/);
-  assert.match(html, /preparedCard\.appendChild\(detailTrigger\)[\s\S]*preparedCard\.appendChild\(directLink\)/);
+  assert.match(html, /const metadata = preparedCard\.querySelector\('\.slack-card-meta'\)/);
+  assert.match(html, /metadata\.appendChild\(directLink\)/);
+  assert.match(html, /directLink\.innerHTML = 'View in Slack <span aria-hidden="true">↗<\/span>'/);
+  assert.doesNotMatch(html, /preparedCard\.appendChild\(directLink\)/);
+});
+
+test('makes the article root the accessible dialog trigger', () => {
+  assert.match(html, /preparedCard\.setAttribute\('role', 'button'\)/);
+  assert.match(html, /preparedCard\.setAttribute\('tabindex', '0'\)/);
+  assert.match(html, /preparedCard\.addEventListener\('click',[\s\S]*openSlackMessageDialog/);
+  assert.match(html, /preparedCard\.addEventListener\('keydown',[\s\S]*event\.key === 'Enter'[\s\S]*event\.key === ' '/);
   assert.match(html, /directLink\.addEventListener\('click', preventSlackActionPropagation\)/);
-  assert.match(html, /detailTrigger\.addEventListener\('click',[\s\S]*openSlackMessageDialog/);
-  assert.doesNotMatch(html, /preparedCard\.setAttribute\('role', 'button'\)/);
 });
 
 test('sanitizes Slack message HTML with a structural allowlist and safe link protocols', () => {
@@ -1286,7 +1292,7 @@ test('implements the mobile bottom-sheet, scroll-lock, metadata, and focus-resto
   assert.match(html, /id="slack-message-dialog-reply-count"/);
   assert.match(html, /id="slack-message-dialog-reactions"/);
   assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?#slack-message-dialog \{[^}]*width: 100%;[^}]*inset: auto 0 0 0;[^}]*max-height: min\(88(?:d|s)vh, 720px\)/);
-  assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.archive-slack-card-detail \{[^}]*flex-direction: column/);
+  assert.doesNotMatch(html, /\.archive-slack-card-detail/);
   assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.slack-thread-tile \{[^}]*border-radius: 999px/);
   assert.match(html, /body\.is-slack-dialog-open \{[^}]*position: fixed;[^}]*overflow: hidden/);
   assert.match(html, /function lockPageScroll\(\)/);
@@ -1521,24 +1527,28 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     const latest = await browser.evaluate(`(async () => {
       const cards = [...document.querySelectorAll('#page-latest .archive-slack-card')];
       const first = cards[0];
-      const detail = first?.querySelector('.archive-slack-card-detail');
-      const direct = first?.querySelector(':scope > .view-in-slack');
+      const direct = first?.querySelector('.slack-card-meta .view-in-slack');
+      const replies = first?.querySelector('.slack-meta-replies');
       window.scrollTo(0, 480);
       const beforeScroll = window.scrollY;
-      detail?.click();
       const dialog = document.getElementById('slack-message-dialog');
+      direct?.addEventListener('click', event => event.preventDefault(), { once: true });
+      direct?.click();
+      const directLeftDialogClosed = !dialog.open;
+      first?.click();
       const rect = dialog.getBoundingClientRect();
-      const tile = detail?.querySelector('.slack-thread-tile');
+      const tile = first?.querySelector('.slack-thread-tile');
       const result = {
         cardCount: cards.length,
-        siblingHotZones: Boolean(detail && direct && detail.parentElement === direct.parentElement),
+        inlineActionAfterReplies: Boolean(replies && direct && replies.nextElementSibling === direct),
+        directLeftDialogClosed,
         open: dialog.open,
         locked: document.body.classList.contains('is-slack-dialog-open'),
         bottomGap: Math.abs(window.innerHeight - rect.bottom),
         widthGap: Math.abs(window.innerWidth - rect.width),
         maxHeightSafe: rect.height <= window.innerHeight * 0.88 + 1,
         bodyScrolls: getComputedStyle(document.querySelector('.slack-dialog-body')).overflowY === 'auto',
-        mobileReadingLayout: getComputedStyle(detail).flexDirection === 'column',
+        mobileReadingLayout: getComputedStyle(first).flexDirection === 'column',
         channelPill: getComputedStyle(tile).borderRadius === '999px' && tile.getBoundingClientRect().height < 50,
         noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth,
         truthfulContext: document.getElementById('slack-message-dialog-context').textContent,
@@ -1551,12 +1561,13 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
       await new Promise(resolve => requestAnimationFrame(resolve));
       result.closed = !dialog.open;
       result.unlocked = !document.body.classList.contains('is-slack-dialog-open');
-      result.focusRestored = document.activeElement === detail;
+      result.focusRestored = document.activeElement === first;
       result.scrollRestored = Math.abs(window.scrollY - beforeScroll) <= 1;
       return result;
     })()`);
     assert.equal(latest.cardCount, 6);
-    assert.equal(latest.siblingHotZones, true);
+    assert.equal(latest.inlineActionAfterReplies, true);
+    assert.equal(latest.directLeftDialogClosed, true);
     assert.equal(latest.open, true);
     assert.equal(latest.locked, true);
     assert.ok(latest.bottomGap <= 1);
@@ -1579,19 +1590,19 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
       document.querySelector('.nav-tab[data-page="all"]').click();
       const cards = [...document.querySelectorAll('#archive-week-content .archive-slack-card')];
       const first = cards[0];
-      const detail = first?.querySelector('.archive-slack-card-detail');
-      const direct = first?.querySelector(':scope > .view-in-slack');
-      detail?.click();
+      const direct = first?.querySelector('.slack-card-meta .view-in-slack');
+      const replies = first?.querySelector('.slack-meta-replies');
+      first?.click();
       const current = document.querySelector('[data-week-key="2026-W30"]');
       return {
         cardCount: cards.length,
-        siblingHotZones: Boolean(detail && direct && detail.parentElement === direct.parentElement),
+        inlineActionAfterReplies: Boolean(replies && direct && replies.nextElementSibling === direct),
         currentDisabled: current?.classList.contains('is-current') && current?.getAttribute('aria-disabled') === 'true',
         noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth
       };
     })()`);
     assert.equal(archive.cardCount, 6);
-    assert.equal(archive.siblingHotZones, true);
+    assert.equal(archive.inlineActionAfterReplies, true);
     assert.equal(archive.currentDisabled, true);
     assert.equal(archive.noOverflow, true);
 
@@ -1599,7 +1610,7 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     await browser.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });
     await wait(50);
     const escapeState = await browser.evaluate(`(() => {
-      const detail = document.querySelector('#archive-week-content .archive-slack-card-detail');
+      const detail = document.querySelector('#archive-week-content .archive-slack-card');
       return {
         closed: !document.getElementById('slack-message-dialog').open,
         unlocked: !document.body.classList.contains('is-slack-dialog-open'),
@@ -1675,7 +1686,7 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
           expectedExternal: external,
           actions: externalCards.filter(card => card.querySelector('.masonry-card-action')).length,
           popularTopics: root.querySelectorAll('.weekly-topic').length,
-          destinationsSafe: [...root.querySelectorAll('.archive-slack-card > .view-in-slack, .masonry-card')]
+          destinationsSafe: [...root.querySelectorAll('.archive-slack-card .slack-card-meta .view-in-slack, .masonry-card')]
             .every(link => link.href.startsWith('https://'))
         };
       });
@@ -1691,7 +1702,7 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     await browser.setViewport(1440, 1000);
     const desktop = await browser.evaluate(`(async () => {
       selectArchiveWeek(2026, 24);
-      const detail = document.querySelector('#archive-week-content .archive-slack-card-detail');
+      const detail = document.querySelector('#archive-week-content .archive-slack-card');
       detail.click();
       const dialog = document.getElementById('slack-message-dialog');
       const rect = dialog.getBoundingClientRect();
