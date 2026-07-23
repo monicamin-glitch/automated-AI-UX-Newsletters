@@ -1395,6 +1395,15 @@
       }
 
       const metadata = preparedCard.querySelector('.slack-card-meta');
+      let replyMetadata = metadata.querySelector('.slack-meta-replies');
+      if (viewModel.replyCount) {
+        replyMetadata = replyMetadata || document.createElement('span');
+        replyMetadata.className = 'slack-meta-replies';
+        replyMetadata.textContent = viewModel.replyCount;
+        metadata.appendChild(replyMetadata);
+      } else {
+        replyMetadata?.remove();
+      }
       const directLink = metadata.querySelector('.view-in-slack') || document.createElement('a');
       directLink.className = 'view-in-slack';
       directLink.target = '_blank';
@@ -1402,7 +1411,7 @@
       directLink.innerHTML = 'View in Slack <span aria-hidden="true">↗</span>';
       directLink.href = viewModel.permalink;
       directLink.hidden = !viewModel.permalink;
-      if (!directLink.parentElement) metadata.appendChild(directLink);
+      metadata.appendChild(directLink);
 
       preparedCard.classList.add('archive-slack-card');
       preparedCard.setAttribute('role', 'button');

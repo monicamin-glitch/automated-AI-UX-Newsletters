@@ -217,17 +217,22 @@ Body order:
 
 Both summary labels are bold and each explanation remains on its own line.
 
-Metadata uses one continuous row:
+Metadata uses one continuous row and only shows reply data that is present in a verified source:
 
 ```text
-[Slack icon] posted by [name], YYYY/MM/DD · [reply count] replies · View in Slack
+When a verified reply count exists:
+[Slack icon] posted by [name], date · replies · `View in Slack ↗`
+
+When reply metadata is unavailable:
+[Slack icon] posted by [name], date · `View in Slack ↗`
 ```
 
 - Slack icon is small and authentic.
 - `posted by`, sender, date, and reply count use the same type size, weight, and muted-grey color.
 - Do not highlight the sender's name.
-- Reply count follows the date; do not place it alone at the end of the card.
-- `View in Slack ↗` follows the reply count as a real anchor nested inside the same `.slack-card-meta` row. It uses primary-blue text and receives a compact pale-blue rounded background on hover and keyboard focus.
+- When available, reply count follows the date; do not place it alone at the end of the card.
+- Do not infer or invent reply counts for historical cards. If the source does not include verified reply metadata, omit the reply element and its separator.
+- `View in Slack ↗` is a real anchor nested at the end of the same `.slack-card-meta` row. It follows replies when replies exist and follows the date when they do not. It uses primary-blue text and receives a compact pale-blue rounded background on hover and keyboard focus.
 
 Interaction uses two clearly separated hot zones without changing the card layout:
 

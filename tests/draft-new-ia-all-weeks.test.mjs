@@ -1271,6 +1271,17 @@ test('places the direct Slack action after replies inside metadata', () => {
   assert.doesNotMatch(html, /preparedCard\.appendChild\(directLink\)/);
 });
 
+test('documents conditional Slack metadata without inventing historical replies', () => {
+  assert.match(designSpec, /When a verified reply count exists:[\s\S]*date · replies · `View in Slack ↗`/);
+  assert.match(designSpec, /When reply metadata is unavailable:[\s\S]*date · `View in Slack ↗`/);
+  assert.match(designSpec, /Do not infer or invent reply counts/);
+  assert.match(html, /let replyMetadata = metadata\.querySelector\('\.slack-meta-replies'\)/);
+  assert.match(html, /if \(viewModel\.replyCount\) \{[\s\S]*metadata\.appendChild\(replyMetadata\)/);
+  assert.match(html, /else \{[\s\S]*replyMetadata\?\.remove\(\)/);
+  assert.match(html, /\.view-in-slack::before \{[^}]*content: "·"/);
+  assert.match(html, /\.slack-meta-replies::before \{[^}]*content: "·"/);
+});
+
 test('makes the article root the accessible dialog trigger', () => {
   assert.match(html, /preparedCard\.setAttribute\('role', 'button'\)/);
   assert.match(html, /preparedCard\.setAttribute\('tabindex', '0'\)/);
@@ -1596,13 +1607,13 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
       const current = document.querySelector('[data-week-key="2026-W30"]');
       return {
         cardCount: cards.length,
-        inlineActionAfterReplies: Boolean(replies && direct && replies.nextElementSibling === direct),
+        conditionalActionOrder: Boolean(direct && (!replies || replies.nextElementSibling === direct)),
         currentDisabled: current?.classList.contains('is-current') && current?.getAttribute('aria-disabled') === 'true',
         noOverflow: document.documentElement.scrollWidth <= document.documentElement.clientWidth
       };
     })()`);
     assert.equal(archive.cardCount, 6);
-    assert.equal(archive.inlineActionAfterReplies, true);
+    assert.equal(archive.conditionalActionOrder, true);
     assert.equal(archive.currentDisabled, true);
     assert.equal(archive.noOverflow, true);
 
@@ -1620,6 +1631,62 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.equal(escapeState.closed, true);
     assert.equal(escapeState.unlocked, true);
     assert.equal(escapeState.focusRestored, true);
+
+    const keyboardActivation = await browser.evaluate(`(async () => {
+      const card = document.querySelector('#archive-week-content .archive-slack-card');
+      const dialog = document.getElementById('slack-message-dialog');
+      const close = document.getElementById('slack-message-dialog-close');
+      const activate = async key => {
+        card.focus();
+        const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+        const dispatchResult = card.dispatchEvent(event);
+        const opened = dialog.open;
+        close.click();
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        return {
+          opened,
+          defaultPrevented: event.defaultPrevented && dispatchResult === false,
+          focusRestored: document.activeElement === card
+        };
+      };
+      return {
+        enter: await activate('Enter'),
+        space: await activate(' ')
+      };
+    })()`);
+    assert.deepEqual(keyboardActivation.enter, {
+      opened: true,
+      defaultPrevented: true,
+      focusRestored: true
+    });
+    assert.deepEqual(keyboardActivation.space, {
+      opened: true,
+      defaultPrevented: true,
+      focusRestored: true
+    });
+
+    const conditionalMetadata = await browser.evaluate(`(() => {
+      const current = document.querySelector('#page-latest .archive-slack-card');
+      const currentReplies = current.querySelector('.slack-meta-replies');
+      const currentAction = current.querySelector('.view-in-slack');
+      selectArchiveWeek(2026, 19);
+      const historical = document.querySelector('#archive-week-content .archive-slack-card');
+      const historicalMeta = historical.querySelector('.slack-card-meta');
+      const historicalReplies = historicalMeta.querySelector('.slack-meta-replies');
+      const historicalAction = historicalMeta.querySelector('.view-in-slack');
+      return {
+        currentHasVerifiedReplies: Boolean(currentReplies?.textContent.trim()),
+        currentOrder: currentReplies?.nextElementSibling === currentAction,
+        historicalHasNoReplyMetadata: historicalReplies === null,
+        historicalActionFollowsDate: historicalAction?.previousElementSibling === historicalMeta.children[1],
+        historicalActionText: historicalAction?.textContent.trim()
+      };
+    })()`);
+    assert.equal(conditionalMetadata.currentHasVerifiedReplies, true);
+    assert.equal(conditionalMetadata.currentOrder, true);
+    assert.equal(conditionalMetadata.historicalHasNoReplyMetadata, true);
+    assert.equal(conditionalMetadata.historicalActionFollowsDate, true);
+    assert.equal(conditionalMetadata.historicalActionText, 'View in Slack ↗');
 
     const mobileFiltersAndActions = await browser.evaluate(`(() => {
       selectArchiveWeek(2026, 28);
