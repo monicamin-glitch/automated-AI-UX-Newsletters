@@ -10,7 +10,8 @@
 - Added six external updates from Google Design, OpenAI, Bolt, and Figma; retained the unified card hierarchy, separate summary paragraphs, and Top 3 badges.
 - Added checked-in Week 30 media, using official source-native previews where available and branded local fallbacks for OpenAI pages that did not expose a usable preview image.
 - Audited the configured source list and skipped sources without a sufficiently strong, verifiable, in-window UX update rather than adding filler.
-- Prepared the report for manual B.Pages publication without generating or sending a Slack picker.
+- Published the verified report as a new Booking-internal B.Pages artifact at `https://bpages.booking.com/rbpQL/ai-ux-newsletter-week30` without generating or sending a Slack picker.
+- Kept Monica’s existing B.Pages artifact unchanged because B.Pages only allows its owner to replace that page in place.
 
 ## 2026-07-23
 
