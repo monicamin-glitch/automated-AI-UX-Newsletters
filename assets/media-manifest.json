@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T08:52:05.256Z",
+  "generatedAt": "2026-07-27T04:10:16.083Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,92 @@
     ]
   },
   "summary": {
-    "cards": 79,
+    "cards": 85,
     "errors": 0,
     "warnings": 4,
     "counts": {
-      "embedded-img": 79
+      "embedded-img": 85
     }
   },
   "entries": [
+    {
+      "title": "Code Is a Design Material",
+      "source": "Google Design",
+      "date": "July 23",
+      "url": "https://design.google/library/code-is-a-design-material",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week30/01-google-code-design-material.jpg",
+      "youtubeId": "",
+      "dimensions": "1000x525",
+      "sizeBytes": 89256,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "OpenAI Presence Turns Enterprise Agents into Governed Experiences",
+      "source": "OpenAI",
+      "date": "July 22",
+      "url": "https://openai.com/index/introducing-openai-presence/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week30/02-openai-presence.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 966,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Bolt Skills Turn Team Context into Reusable Builder Behaviour",
+      "source": "Bolt",
+      "date": "July 22",
+      "url": "https://bolt.new/blog/introducing-bolt-new-skills",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week30/03-bolt-skills.jpg",
+      "youtubeId": "",
+      "dimensions": "1000x556",
+      "sizeBytes": 97431,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Figma Auto Layout Moves Closer to CSS Flexbox",
+      "source": "Figma",
+      "date": "July 24",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week30/04-figma-auto-layout.png",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 38233,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Health in ChatGPT Makes Consent and Data Boundaries Explicit",
+      "source": "OpenAI",
+      "date": "July 23",
+      "url": "https://openai.com/index/health-in-chatgpt/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week30/05-openai-health.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 862,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Newsrooms Use AI While Keeping Editorial Judgment in the Loop",
+      "source": "OpenAI",
+      "date": "July 22",
+      "url": "https://openai.com/index/how-news-organizations-are-using-ai/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week30/06-openai-newsrooms.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1112,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Code-Backed Screens Arrive on the Canvas with Variables Attached",
       "source": "Figma",

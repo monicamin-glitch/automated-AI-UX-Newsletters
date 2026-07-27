@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f4f7fb"/>
+  <rect x="104" y="100" width="992" height="430" rx="36" fill="#fff" stroke="#c8ddf8" stroke-width="3"/>
+  <rect x="155" y="155" width="330" height="44" rx="12" fill="#006ce4"/>
+  <rect x="155" y="238" width="470" height="22" rx="11" fill="#b7d7ff"/>
+  <rect x="155" y="284" width="400" height="22" rx="11" fill="#d5e7fb"/>
+  <rect x="155" y="330" width="440" height="22" rx="11" fill="#d5e7fb"/>
+  <rect x="690" y="155" width="350" height="230" rx="24" fill="#e7f1ff"/>
+  <path d="M734 328l75-76 63 57 62-91 71 110" fill="none" stroke="#006ce4" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="155" y="445" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="48" font-weight="750" fill="#17233d">AI in the newsroom</text>
+  <text x="155" y="490" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="25" fill="#53627a">Editorial judgment, provenance, and reader experience</text>
+</svg>

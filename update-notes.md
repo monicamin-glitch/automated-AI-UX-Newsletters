@@ -1,5 +1,17 @@
 # Update Notes
 
+## 2026-07-27
+
+### Week 30 manual refresh
+
+- Refreshed Latest Week to `Week 30 - July 20 to 26, 2026` and archived the former Week 29 report without adding the popular-topic block to All Weeks.
+- Added five verified Slack Spotlights with complete parent-message content for Structural Clarity, the Fabric MCP Gateway beta, the Design AI Summit, China GenAI upskilling, and Codex Lab.
+- Extracted five internal community topics from observed weekly Slack search results and kept the existing local, non-navigating topic-card interaction.
+- Added six external updates from Google Design, OpenAI, Bolt, and Figma; retained the unified card hierarchy, separate summary paragraphs, and Top 3 badges.
+- Added checked-in Week 30 media, using official source-native previews where available and branded local fallbacks for OpenAI pages that did not expose a usable preview image.
+- Audited the configured source list and skipped sources without a sufficiently strong, verifiable, in-window UX update rather than adding filler.
+- Prepared the report for manual B.Pages publication without generating or sending a Slack picker.
+
 ## 2026-07-23
 
 ### GitHub merge and canonical modern publishing entry

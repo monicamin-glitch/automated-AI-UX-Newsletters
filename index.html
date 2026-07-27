@@ -352,7 +352,7 @@
     <div class="page active" id="page-latest">
 
       <div class="page-header">
-        <h1>Week 29 - July 13 to 19, 2026</h1>
+        <h1>Week 30 - July 20 to 26, 2026</h1>
       </div>
 
       <section class="weekly-topic" aria-label="Popular topics from colleagues">
@@ -361,25 +361,137 @@
           <h3 class="topic-title">What colleagues are talking about this week?</h3>
           <div class="topic-card-stack" id="topic-card-stack" aria-live="polite" aria-atomic="true">
             <article class="topic-card topic-card-current">
-              <h4 class="topic-card-word" id="topic-card-word">Agent Fabric</h4>
-              <div class="topic-card-meta">
-                <span id="topic-card-mentions">16 mentions</span>
-                <span aria-hidden="true">·</span>
-                <span id="topic-card-channels">13 channels</span>
-              </div>
+              <h4 class="topic-card-word" id="topic-card-word">Codex Lab</h4>
+              <div class="topic-card-meta"><span id="topic-card-mentions">10 mentions</span><span aria-hidden="true">·</span><span id="topic-card-channels">8 channels</span></div>
             </article>
-            <article class="topic-card topic-card-next" aria-hidden="true">
-              <h4 class="topic-card-word" id="topic-card-next-word">Skills MCP</h4>
-              <div class="topic-card-meta"><span>Next topic</span></div>
-            </article>
+            <article class="topic-card topic-card-next" aria-hidden="true"><h4 class="topic-card-word" id="topic-card-next-word">Fabric MCP Gateway</h4><div class="topic-card-meta"><span>Next topic</span></div></article>
           </div>
-          <button class="topic-action" id="topic-next-button" type="button" onclick="showNextWeeklyTopic()">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/></svg>
-            <span>Show next topic</span>
-          </button>
+          <button class="topic-action" id="topic-next-button" type="button" onclick="showNextWeeklyTopic()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/></svg><span>Show next topic</span></button>
         </div>
       </section>
 
+      <!-- Internal Updates -->
+      <div class="section-header"><h2 class="section-title">Internal Updates</h2></div>
+      <svg class="slack-symbols" aria-hidden="true"><symbol id="slack-symbol" viewBox="0 0 24 24"><rect x="9.5" y="1" width="5" height="10" rx="2.5" fill="#36C5F0"/><rect x="13" y="9.5" width="10" height="5" rx="2.5" fill="#2EB67D"/><rect x="9.5" y="13" width="5" height="10" rx="2.5" fill="#ECB22E"/><rect x="1" y="9.5" width="10" height="5" rx="2.5" fill="#E01E5A"/></symbol></svg>
+      <div class="filters">
+        <span class="filter-chip active" onclick="filterSlack('all', this)">All <span class="chip-count">5</span></span>
+        <span class="filter-chip" onclick="filterSlack('tools', this)">Tools &amp; Releases</span>
+        <span class="filter-chip" onclick="filterSlack('learning', this)">Learning &amp; Curriculum</span>
+        <span class="filter-chip" onclick="filterSlack('practices', this)">Best Practices</span>
+      </div>
+      <div class="slack-cards">
+        <a class="slack-card" data-cat="practices" data-slack-quote="&lt;p&gt;Hey gang – a custom judge I created, Structural Clarity™ is now out in the wild 🐕&lt;br&gt;• AI Registry: https://bdx.booking.com/ml/asset/configurations/details?asset_id=structural_clarity (structural_clarity v0.3.0) — Prompt: https://bdx.booking.com/ml/asset/prompts/details?asset_id=structural_clarity-agent-system-prompt&lt;br&gt;• That means its available in AI Studio/Flow Builder (although I haven't tried using it there)&lt;br&gt;• And also available for Eval-suite eval runs as a custom judge - this is where my team and I will be using it (instructions on how to add it that way in the thread)&lt;/p&gt;&lt;p&gt;What/why is it?&lt;br&gt;Scan-ability and basic information design. It's a judge that mostly catches &amp;quot;lazily&amp;quot; structured responses (sans headings, breaks, bullets) and responses that bury the answer. Over in property Q&amp;amp;A Companion (Soon to be dot), user research told us that, amongst other things, our responses were annoyingly structured (or not at all structured, just walls of text). We wanted to guard against that in our new prompt and felt we needed a custom judge to measure any potential gains.&lt;/p&gt;&lt;p&gt;What the scores mean in a nutshell:&lt;br&gt;• 3 — Structurally clear (structure matches question/context scope, leads with the answer)&lt;br&gt;• 2 — Mostly clear, one issue (has some structure but doesn't fully meet the bar)&lt;br&gt;• 1 — Wall of text answer (single paragraph, zero formatting) - pleasantries/sign offs like &amp;quot;You're welcome...&amp;quot; are exempt&lt;br&gt;(there are more details, exceptions within the prompt itself)&lt;/p&gt;&lt;p&gt;Why am I sharing it here?&lt;br&gt;• I'm interested to know if you think it could apply to any use cases you might have, and to see if it &amp;quot;has enough legs&amp;quot; to become a permanent or first-class evaluator.&lt;br&gt;• Also keen to know what you think of it in general, any feedback for future versions, etc.&lt;/p&gt;&lt;p&gt;So yeah, if it makes sense for your work, try using it and let me know how it goes!&lt;/p&gt;" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C070U2AADCZ/p1784723511399259?thread_ts=1784723511.399259&amp;cid=C070U2AADCZ" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel uxw-genai"><span class="slack-thread-channel">#uxw-genai</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">Structural Clarity Judge Measures Whether AI Answers Are Easy to Scan</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> Structural Clarity v0.3.0 launched in AI Registry as a custom evaluator for scanability, answer-first structure, and basic information design.</p><p><strong>Why it's valuable for UXers:</strong> Teams can now measure whether AI responses avoid walls of text and buried answers instead of relying only on subjective review.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Niall Hurley</span>, <time datetime="2026-07-22">2026/07/22</time></span><span class="slack-meta-replies">4 replies</span></div>
+          </div>
+        </a>
+
+        <a class="slack-card" data-cat="tools" data-slack-quote="&lt;p&gt;🚀 Fabric MCP Gateway BETA App is open!&lt;/p&gt;&lt;p&gt;Agent Fabric App is ready for you to try: one MCP gateway for Codex, Claude Code, and Cursor. Connect your clients to Booking's MCP catalog without the setup hassle: no terminal commands, no manual auth, no guesswork.&lt;/p&gt;&lt;p&gt;What's in it for you&lt;br&gt;• Set up once, everything works&lt;br&gt;• Point and click, not command line&lt;br&gt;• Less time lost to sign-ins: Fabric Authenticate using IAM authentication, with auto-auth on by default&lt;br&gt;• Want to save tokens? Toggle Tool Search on and off with a single click, no config edits&lt;br&gt;• No additional dependencies&lt;/p&gt;&lt;p&gt;👉 Download the beta: https://fabric.booking.com/app&lt;br&gt;macOS 13+, Apple Silicon. Windows support coming.&lt;/p&gt;&lt;p&gt;💬 Help us polish it: it's a beta, so you might hit a rough edge here and there. When you do, use Send feedback in the app: open Agent Fabric from your menu bar and click Send feedback… Every report goes straight to the team and shapes what we fix next.&lt;/p&gt;&lt;p&gt;🙏 Huge thanks to the people who made this happen: Matt Sexton and Paulo Pinheiro, incredible work, team!&lt;/p&gt;&lt;p&gt;Try it, break it, and tell us what you think. We're just getting started! ⚡&lt;/p&gt;" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C0ABNJ4NWG6/p1784801781561099?thread_ts=1784801781.561099&amp;cid=C0ABNJ4NWG6" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel agent-fabric"><span class="slack-thread-channel">#agent-fabric</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">Fabric MCP Gateway Beta Makes Internal Tools Point-and-Click</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> The Fabric MCP Gateway beta provides one desktop app for connecting Codex, Claude Code, and Cursor to Booking’s MCP catalogue with IAM authentication and a Tool Search toggle.</p><p><strong>Why it's valuable for UXers:</strong> Designers and prototypers can access internal tools without terminal setup while gaining clearer control over context and token use.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Rami Heikel</span>, <time datetime="2026-07-23">2026/07/23</time></span><span class="slack-meta-replies">21 replies</span></div>
+          </div>
+        </a>
+
+        <a class="slack-card" data-cat="learning" data-slack-quote="&lt;p&gt;Hi everyone &amp;lt;!channel&amp;gt; Dear Design Community, I've been receiving a lot of requests about the event placeholder on the 29th July. We're working with Florian together with IT to remove it from everyone's calendar. It looks like there is a glitch or an error in google calendar and we can't remove it ourselves. Sorry about that! The correct date for our Design AI Summit is the 2nd of September and with our project team we're working on creating an unforgettable experience for you all 🙂&lt;/p&gt;" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1784560890110689?thread_ts=1784560890.110689&amp;cid=C0DBLGXMJ" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel design"><span class="slack-thread-channel">#design</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">Design AI Summit Confirms September 2 and Opens Community Participation</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> The Design AI Summit confirmed September 2 as the correct date, with the project team continuing to shape talks, workshops, and participation.</p><p><strong>Why it's valuable for UXers:</strong> UXers have a clear moment to share real AI workflows and turn individual experiments into reusable community learning.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Aga Stupkiewicz</span>, <time datetime="2026-07-20">2026/07/20</time></span><span class="slack-meta-replies">1 reply</span></div>
+          </div>
+        </a>
+
+        <a class="slack-card" data-cat="learning" data-slack-quote="&lt;p&gt;Hey Clyde Li, Yini Bao FYI I have been talking with Deborah on bringing GenAI upskill trainings to China. Currently we have agreed on Oct 19 - 22 for their trip to Shanghai.&lt;/p&gt;&lt;p&gt;The current agenda is:&lt;br&gt;• Shanghai (3 Days)&lt;br&gt;  ◦ 2 Days, 5 session per day 20 people per sessions ~ 200 people&lt;br&gt;  ◦ 1 Day - train the trainer session for new ambassadors&lt;/p&gt;&lt;p&gt;There will be 5 trainers coming so we can host more sessions if needed.&lt;/p&gt;&lt;p&gt;Let me know if you have any thoughts / concerns.&lt;/p&gt;&lt;p&gt;Next Step:&lt;br&gt;Will launch survey in China to see if ppl are interested in any other topics not covered in current list.&lt;/p&gt;&lt;p&gt;Forwarded message from Deborah Davis-DeWitt:&lt;br&gt;Good morning team, due to holidays schedules and local holidays we will be moving the training travel for the ambassadors to October. We will only cover advanced topics listed above. We will also provide virtual sessions for the 101 training in Q3. Based on conversations. I would like to confirm the dates for Bangalore, Shanghai and Singapore.&lt;/p&gt;&lt;p&gt;Can we confirm:&lt;br&gt;Shanghai - Oct 19 - 22&lt;br&gt;Singapore Oct 21 -23&lt;br&gt;Bangalore Oct 26 - 30&lt;/p&gt;&lt;p&gt;Let me know if this works. We will cover 3 topics in Intermediate and 3-4 topics in more advanced subjects. We are looking to launch SDD sooner and do hybrid sessions once available.&lt;/p&gt;" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C0AKE5B4KGU/p1784621359191079?thread_ts=1784621359.191079&amp;cid=C0AKE5B4KGU" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel china-ai-workstream"><span class="slack-thread-channel">#china-ai-workstream</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">China Plans a Multi-Day GenAI Upskilling Programme for October</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> A tentative October GenAI upskilling programme is being planned for Shanghai, combining small-group advanced sessions with a train-the-trainer day.</p><p><strong>Why it's valuable for UXers:</strong> The format could widen practical AI enablement beyond engineering, while the planned survey gives local teams a way to shape the curriculum.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Yiyang Lin</span>, <time datetime="2026-07-21">2026/07/21</time></span><span class="slack-meta-replies">6 replies</span></div>
+          </div>
+        </a>
+
+        <a class="slack-card" data-cat="learning" data-slack-quote="&lt;p&gt;🚀 We Have $1.6 Million Worth of Codex Credits Available — Use Them Before They Run Out!&lt;/p&gt;&lt;p&gt;Great news! We currently have $1.6 million worth additional Codex credits available now for teams to use. Now's the perfect time to try Codex even more and see how it can boost your workflow. These credits are short lived and will expire in mid-August, so jump in while you can!&lt;/p&gt;&lt;p&gt;What's coming up?&lt;br&gt;• August 11: We're also hosting a Codex Lab, where you are welcome to join, learn practical tips and best practices, and discover how to use Codex and the extra credits more effectively in your day-to-day development work.&lt;br&gt;  ◦ AMS20-0-002 Auditorium [Video Conferencing]&lt;br&gt;  ◦ Time: 09:30 - 16:30&lt;br&gt;Only 100 spots available—don't miss out! Register now before they're gone or by August 10, whichever comes first: https://docs.google.com/forms/d/1p8DXOGpo1I1SssjQiJV_LHhKT6WhcK6VdQEAjIICg0Y/edit&lt;/p&gt;&lt;p&gt;Why use Codex?&lt;br&gt;Codex can help you:&lt;br&gt;⚡ Generate code, functions, and boilerplate in seconds.&lt;br&gt;🐞 Debug issues by explaining errors and suggesting fixes.&lt;br&gt;🧪 Create and improve unit tests to increase code quality.&lt;br&gt;📝 Understand unfamiliar codebases with clear explanations.&lt;br&gt;🔄 Refactor and optimize existing code.&lt;br&gt;📚 Explore new frameworks, libraries, and APIs with practical examples.&lt;br&gt;🚀 Prototype ideas and features much faster.&lt;/p&gt;&lt;p&gt;Why use the available tokens?&lt;br&gt;Since these tokens are already allocated to us:&lt;br&gt;✅ They're available for everyone to use.&lt;br&gt;⏳ The current allocation expires on August 17, so any unused tokens will be forfeited.&lt;br&gt;💡 This is a great opportunity to experiment with AI-assisted development at no additional cost.&lt;br&gt;📈 The more we use Codex, the better we can identify high-value use cases and improve our engineering workflows.&lt;/p&gt;&lt;p&gt;Whether you're building a new feature, fixing bugs, writing tests, refactoring code, or learning a new part of the codebase, now is a great time to put Codex to work.&lt;/p&gt;&lt;p&gt;Make the most of the current $1.6 million dollars worth of credits before mid August, and don't miss the Codex Lab on August 11 to learn with the OpenAI team on how to get the most value from them!&lt;/p&gt;&lt;p&gt;GenAI for Engineering Program Team&lt;/p&gt;" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C09LCDNRK0F/p1784806678410369?thread_ts=1784806678.410369&amp;cid=C09LCDNRK0F" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel codex_all"><span class="slack-thread-channel">#codex_all</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">Codex Lab Pairs Extra Credits with a Hands-On Learning Day</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> Booking teams received a short-lived pool of additional Codex credits, paired with a 100-seat hands-on Codex Lab on August 11.</p><p><strong>Why it's valuable for UXers:</strong> UX technologists can test faster prototype and implementation workflows while learning practical patterns before the credit window closes.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Deborah Davis-DeWitt</span>, <time datetime="2026-07-23">2026/07/23</time></span><span class="slack-meta-replies">8 replies</span></div>
+          </div>
+        </a>
+      </div>
+
+      <!-- External Updates -->
+      <div class="section-header" style="margin-top: 48px;"><h2 class="section-title">External Updates</h2><p class="section-subtitle">Top picks and industry news</p></div>
+      <div class="external-card-grid">
+        <a class="masonry-card" data-published-date="2026-07-23" href="https://design.google/library/code-is-a-design-material" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week30/01-google-code-design-material.jpg" alt="Google Design illustration exploring code as a design material"><span class="masonry-card-rank">Top pick · 1</span></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">Google Design · July 23</div>
+            <h3 class="masonry-card-title">Code Is a Design Material</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> Google Design argues that AI makes code directly usable in the design process, while warning that polished prototypes can hide unresolved product strategy and system decisions.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> It gives designers a balanced practice: use code to explore realistic interactions, but preserve low-fidelity mapping and deliberate thinking before fidelity creates false certainty.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="masonry-card" data-published-date="2026-07-22" href="https://openai.com/index/introducing-openai-presence/" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week30/02-openai-presence.svg" alt="OpenAI Presence enterprise voice and chat agent concept"><span class="masonry-card-rank">Top pick · 2</span></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">OpenAI · July 22</div>
+            <h3 class="masonry-card-title">OpenAI Presence Turns Enterprise Agents into Governed Experiences</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> OpenAI introduced Presence for building enterprise voice and chat agents with policies, approved actions, escalation paths, simulations, evaluations, and continuous improvement.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> It is a strong reference for designing agent experiences where trust depends on visible boundaries, safe handoffs, and measurable behaviour—not only conversational quality.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="masonry-card" data-published-date="2026-07-22" href="https://bolt.new/blog/introducing-bolt-new-skills" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week30/03-bolt-skills.jpg" alt="Bolt Skills interface for reusable AI builder context"><span class="masonry-card-rank">Top pick · 3</span></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">Bolt · July 22</div>
+            <h3 class="masonry-card-title">Bolt Skills Turn Team Context into Reusable Builder Behaviour</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> Bolt introduced built-in, custom, and uploaded Skills that package reusable context, rules, and actions at project or workspace scope.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> Design standards, content rules, and repeatable prototyping workflows can travel with a team instead of being re-explained in every prompt.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="masonry-card" data-published-date="2026-07-24" href="https://www.figma.com/release-notes/" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week30/04-figma-auto-layout.png" alt="Figma auto layout controls aligned with CSS Flexbox"></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">Figma · July 24</div>
+            <h3 class="masonry-card-title">Figma Auto Layout Moves Closer to CSS Flexbox</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> Figma updated auto layout to close common gaps with CSS Flexbox, applying the new behaviour to new frames while letting existing files opt in.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> Design intent can translate more predictably into implementation, reducing layout reinterpretation during handoff and code-backed prototyping.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="masonry-card" data-published-date="2026-07-23" href="https://openai.com/index/health-in-chatgpt/" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week30/05-openai-health.svg" alt="OpenAI Health privacy and consent interface concept"></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">OpenAI · July 23</div>
+            <h3 class="masonry-card-title">Health in ChatGPT Makes Consent and Data Boundaries Explicit</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> OpenAI launched a health experience with per-use permissions, account disconnection, deletion controls, temporary chat, memory limits, and safeguards around external actions.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> It offers concrete patterns for sensitive AI experiences: progressive consent, reversible connections, clear retention rules, and stricter boundaries around consequential actions.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="masonry-card" data-published-date="2026-07-22" href="https://openai.com/index/how-news-organizations-are-using-ai/" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week30/06-openai-newsrooms.svg" alt="Editorial workflow with AI-assisted content and provenance"></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">OpenAI · July 22</div>
+            <h3 class="masonry-card-title">Newsrooms Use AI While Keeping Editorial Judgment in the Loop</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> OpenAI documented how news organisations use AI for captions, headlines, internal knowledge, and reader experiences while retaining editorial control.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> Content designers can study how AI assistance is introduced without obscuring authorship, provenance, or the human judgment behind published work.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <template id="week-report-2026-W29" data-week-start="2026-07-13" data-week-end="2026-07-19" data-week-range="July 13 to 19, 2026">
       <!-- Internal Updates -->
       <div class="section-header">
         <h2 class="section-title">Internal Updates</h2>
@@ -580,7 +692,7 @@
         </a>
 
       </div>
-    </div>
+    </template>
 
     <!-- Legacy Week 1 restored as canonical ISO 2026-W19: May 4 to 10, 2026 -->
     <template id="week-report-2026-W19" data-week-start="2026-05-04" data-week-end="2026-05-10" data-week-range="May 4 to 10, 2026">
@@ -821,11 +933,11 @@
       </div>
 
       <div class="week-picker-shell">
-        <button class="week-picker-trigger" id="week-picker-trigger" type="button" aria-label="Week 29 - July 13 to 19, 2026. Choose another calendar week" aria-haspopup="dialog" aria-expanded="false" aria-controls="week-picker-popover" onclick="toggleWeekPicker()">
+        <button class="week-picker-trigger" id="week-picker-trigger" type="button" aria-label="Week 30 - July 20 to 26, 2026. Choose another calendar week" aria-haspopup="dialog" aria-expanded="false" aria-controls="week-picker-popover" onclick="toggleWeekPicker()">
           <span class="week-picker-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span>
           <span class="week-picker-trigger-copy">
-            <span class="week-picker-trigger-week" id="week-picker-trigger-week">Week 29</span>
-            <span class="week-picker-trigger-range" id="week-picker-trigger-range">July 13 to 19, 2026</span>
+            <span class="week-picker-trigger-week" id="week-picker-trigger-week">Week 30</span>
+            <span class="week-picker-trigger-range" id="week-picker-trigger-range">July 20 to 26, 2026</span>
           </span>
           <svg class="week-picker-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </button>
@@ -851,7 +963,7 @@
           </div>
           <div class="week-picker-popover-footer">
             <span class="week-picker-legend"><span class="week-picker-legend-dot"></span>Report available</span>
-            <span id="week-picker-detail">Week 29 - July 13 to 19, 2026</span>
+            <span id="week-picker-detail">Week 30 - July 20 to 26, 2026</span>
           </div>
         </div>
       </div>
@@ -990,7 +1102,7 @@
       });
     }
 
-    const latestArchiveWeekKey = '2026-W29';
+    const latestArchiveWeekKey = '2026-W30';
     const availableArchiveWeeks = new Set([
       latestArchiveWeekKey,
       ...Array.from(document.querySelectorAll('template[id^="week-report-"]'))
@@ -1001,7 +1113,7 @@
       ? globalThis.__NEWSLETTER_ARCHIVE_CLOCK__
       : () => new Date();
     const currentArchiveWeek = getCurrentArchiveWeek(archiveClock());
-    let selectedArchiveWeek = { year: 2026, week: 29 };
+    let selectedArchiveWeek = { year: 2026, week: 30 };
     const initialWeekPickerMonday = getISOWeekRange(selectedArchiveWeek.year, selectedArchiveWeek.week).monday;
     let weekPickerDisplayYear = initialWeekPickerMonday.getUTCFullYear();
     let weekPickerDisplayMonth = initialWeekPickerMonday.getUTCMonth();
@@ -1373,7 +1485,7 @@
 
       const selectedWeekKey = archiveWeekKey(selectedArchiveWeek.year, selectedArchiveWeek.week);
       const archiveTemplate = document.getElementById('week-report-' + selectedWeekKey);
-      const source = selectedWeekKey === '2026-W29' ? latestPage : archiveTemplate?.content;
+      const source = selectedWeekKey === latestArchiveWeekKey ? latestPage : archiveTemplate?.content;
       if (!source) return;
 
       const sectionHeaders = Array.from(source.querySelectorAll('.section-header'));
@@ -1406,11 +1518,32 @@
     }
 
     const weeklyTopics = [
-      { word: 'Agent Fabric', mentions: '16', channels: 13 },
-      { word: 'Skills MCP', mentions: '8', channels: 2 },
-      { word: 'Design+AI Summit', mentions: '2', channels: 2 },
-      { word: 'AI Illustration Generator', mentions: '1', channels: 1 }
-    ];
+      {
+            word: 'Codex Lab',
+            mentions: '10',
+            channels: 8
+      },
+      {
+            word: 'Fabric MCP Gateway',
+            mentions: '7',
+            channels: 5
+      },
+      {
+            word: 'Design AI Summit',
+            mentions: '3',
+            channels: 2
+      },
+      {
+            word: 'Structural Clarity',
+            mentions: '2',
+            channels: 1
+      },
+      {
+            word: 'GenAI Upskill China',
+            mentions: '1',
+            channels: 1
+      }
+];
 
     function topicAt(index) {
       return weeklyTopics[(index + weeklyTopics.length) % weeklyTopics.length];
