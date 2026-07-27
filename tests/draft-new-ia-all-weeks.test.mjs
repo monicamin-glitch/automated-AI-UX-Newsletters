@@ -23,7 +23,8 @@ const archiveWeeks = [
   { legacyWeek: 7, key: '2026-W25', start: '2026-06-15', end: '2026-06-21', range: 'June 15 to 21, 2026', slack: 6, external: 3 },
   { legacyWeek: 8, key: '2026-W26', start: '2026-06-22', end: '2026-06-28', range: 'June 22 to 28, 2026', slack: 9, external: 4 },
   { legacyWeek: 9, key: '2026-W27', start: '2026-06-29', end: '2026-07-05', range: 'June 29 to July 5, 2026', slack: 9, external: 5 },
-  { key: '2026-W28', start: '2026-07-06', end: '2026-07-12', range: 'July 6 to 12, 2026', slack: 8, external: 8 }
+  { key: '2026-W28', start: '2026-07-06', end: '2026-07-12', range: 'July 6 to 12, 2026', slack: 8, external: 8 },
+  { key: '2026-W29', start: '2026-07-13', end: '2026-07-19', range: 'July 13 to 19, 2026', slack: 6, external: 10 }
 ];
 
 const modernDestinationRecords = [
@@ -57,7 +58,18 @@ const modernDestinationRecords = [
   ['external', 'https://www.figma.com/release-notes/'],
   ['external', 'https://openai.com/products/release-notes/'],
   ['external', 'https://openai.com/products/release-notes/'],
-  ['external', 'https://newsletter.uxdesign.cc/p/wait-who-made-this']
+  ['external', 'https://newsletter.uxdesign.cc/p/wait-who-made-this'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C070U2AADCZ/p1784723511399259?thread_ts=1784723511.399259&cid=C070U2AADCZ'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0ABNJ4NWG6/p1784801781561099?thread_ts=1784801781.561099&cid=C0ABNJ4NWG6'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1784560890110689?thread_ts=1784560890.110689&cid=C0DBLGXMJ'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C0AKE5B4KGU/p1784621359191079?thread_ts=1784621359.191079&cid=C0AKE5B4KGU'],
+  ['slack', 'https://booking.enterprise.slack.com/archives/C09LCDNRK0F/p1784806678410369?thread_ts=1784806678.410369&cid=C09LCDNRK0F'],
+  ['external', 'https://design.google/library/code-is-a-design-material'],
+  ['external', 'https://openai.com/index/introducing-openai-presence/'],
+  ['external', 'https://bolt.new/blog/introducing-bolt-new-skills'],
+  ['external', 'https://www.figma.com/release-notes/'],
+  ['external', 'https://openai.com/index/health-in-chatgpt/'],
+  ['external', 'https://openai.com/index/how-news-organizations-are-using-ai/']
 ];
 
 function getArchiveTemplate(key) {
@@ -236,10 +248,10 @@ function stripMarkup(value) {
 
 function getStoredReportRecords() {
   const latestStart = html.indexOf('<div class="page active" id="page-latest">');
-  const latestEnd = html.indexOf('<template id="week-report-2026-W19"');
+  const latestEnd = html.indexOf('<template id="week-report-', latestStart);
   const reports = [
     ...archiveWeeks.map(({ key }) => ({ key, markup: getArchiveTemplate(key) })),
-    { key: '2026-W29', markup: html.slice(latestStart, latestEnd) }
+    { key: '2026-W30', markup: html.slice(latestStart, latestEnd) }
   ];
 
   return reports.flatMap(({ key, markup }) => [
@@ -375,7 +387,7 @@ function createCalendarRuntime({ templateKeys = [], now = new Date('2026-07-23T1
   const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1] ?? '';
   const calendarStart = Math.min(...[
     script.indexOf('const availableArchiveYears = [2026];'),
-    script.indexOf("const latestArchiveWeekKey = '2026-W29';")
+    script.indexOf("const latestArchiveWeekKey = '2026-W30';")
   ].filter(index => index >= 0));
   const calendarEnd = script.indexOf('function syncArchiveWeekContent()');
   assert.notEqual(calendarStart, -1, 'calendar source start must exist');
@@ -431,7 +443,7 @@ test('defines the approved month-calendar archive contract', () => {
   assert.match(designSpec, /each complete calendar row as one selectable report week/);
   assert.match(designSpec, /Weeks without reports remain visible for calendar context but are muted and disabled/);
   assert.match(designSpec, /previous or next month remain visible at reduced opacity/);
-  assert.match(designSpec, /prominent `Week 29` label and the supporting date range `July 13 to 19, 2026`/);
+  assert.match(designSpec, /prominent `Week 30` label and the supporting date range `July 20 to 26, 2026`/);
   assert.doesNotMatch(designSpec, /Render all real ISO weeks for the selected year/);
 });
 
@@ -484,23 +496,23 @@ test('left-aligns External actions with an 8px content gap', () => {
 test('stores verified full parent Slack messages for every Latest Week card', () => {
   const latestSection = html.match(/<!-- Internal Updates -->([\s\S]*?)<!-- External Updates -->/)?.[1] || '';
   const cards = [...latestSection.matchAll(/<a class="slack-card"[\s\S]*?<\/a>/g)].map(match => match[0]);
-  assert.equal(cards.length, 6);
+  assert.equal(cards.length, 5);
   for (const card of cards) {
     assert.match(card, /data-slack-quote="[^"]+"/);
     assert.match(card, /data-slack-original-verified="true"/);
   }
-  assert.match(latestSection, /Introducing the Skills MCP Server/);
-  assert.match(latestSection, /Choosing between Sol, Terra, and Luna/);
+  assert.match(latestSection, /Structural Clarity Judge Measures Whether AI Answers Are Easy to Scan/);
+  assert.match(latestSection, /Fabric MCP Gateway Beta Makes Internal Tools Point-and-Click/);
 });
 
 test('keeps the current-week Slack source complete for future refreshes', () => {
   const currentWeekStart = slackSpotlight.indexOf('## Current week output');
   const currentWeekEnd = slackSpotlight.indexOf('\ncoverage:', currentWeekStart);
   const currentWeek = slackSpotlight.slice(currentWeekStart, currentWeekEnd);
-  assert.equal((currentWeek.match(/\n    posted_at:/g) || []).length, 6);
-  assert.equal((currentWeek.match(/\n    original_message: \|-/g) || []).length, 6);
-  assert.match(currentWeek, /Introducing the Skills MCP Server/);
-  assert.match(currentWeek, /Choosing between Sol, Terra, and Luna/);
+  assert.equal((currentWeek.match(/\n    posted_at:/g) || []).length, 5);
+  assert.equal((currentWeek.match(/\n    original_message: \|-/g) || []).length, 5);
+  assert.match(currentWeek, /Structural Clarity v0\.3\.0/);
+  assert.match(currentWeek, /Fabric MCP Gateway BETA App is open/);
   assert.doesNotMatch(currentWeek, /[?&]pwd=/i);
   assert.doesNotMatch(html, /[?&](?:pwd|password|access_token|api_key)=/i);
 });
@@ -514,7 +526,7 @@ test('replaces the archive dropdown with an accessible month-calendar week picke
   assert.match(html, /id="week-picker-month"/);
   assert.match(html, /class="[^"]*week-picker-weekdays[^"]*"[^>]*>[\s\S]*?>Mon<[\s\S]*?>Tue<[\s\S]*?>Wed<[\s\S]*?>Thu<[\s\S]*?>Fri<[\s\S]*?>Sat<[\s\S]*?>Sun</);
   assert.match(html, /id="week-picker-grid"[^>]*role="grid"/);
-  assert.match(html, /Week 29 - July 13 to 19, 2026/);
+  assert.match(html, /Week 30 - July 20 to 26, 2026/);
 });
 
 test('builds UTC-safe Monday-Sunday calendar rows with ISO week metadata', () => {
@@ -673,13 +685,13 @@ test('navigates months within the only available archive year', () => {
   assert.match(html, /getISOWeekRange\(selectedArchiveWeek\.year, selectedArchiveWeek\.week\)\.monday/);
 });
 
-test('keeps week 29 as Latest while deriving the current ISO week from an injectable clock', () => {
+test('keeps week 30 as Latest while deriving the current ISO week from an injectable clock', () => {
   assert.match(html, /id="week-report-2026-W28"/);
-  assert.match(html, /'2026-W29'/);
-  assert.match(html, /selectedArchiveWeek = \{ year: 2026, week: 29 \}/);
+  assert.match(html, /'2026-W30'/);
+  assert.match(html, /selectedArchiveWeek = \{ year: 2026, week: 30 \}/);
   assert.match(html, /function getCurrentArchiveWeek\(now = new Date\(\)\)/);
   assert.match(html, /__NEWSLETTER_ARCHIVE_CLOCK__/);
-  assert.doesNotMatch(html, /currentArchiveWeek = \{ year: 2026, week: 29 \}/);
+  assert.doesNotMatch(html, /currentArchiveWeek = \{ year: 2026, week: 30 \}/);
   assert.match(html, /is-current/);
   assert.match(html, /aria-current/);
 
@@ -692,8 +704,9 @@ test('keeps week 29 as Latest while deriving the current ISO week from an inject
   runtime.api.renderMonthWeekPicker(2026, 6);
   const currentRow = calendarRow(runtime, '2026-W30');
   assert.ok(currentRow.classList.contains('is-current'));
-  assert.ok(!currentRow.classList.contains('is-available'));
-  assert.equal(currentRow.getAttribute('aria-disabled'), 'true');
+  assert.ok(currentRow.classList.contains('is-available'));
+  assert.ok(currentRow.classList.contains('is-selected'));
+  assert.equal(currentRow.getAttribute('aria-disabled'), 'false');
 });
 
 test('derives archive years from available week keys and enables synthetic second-year navigation', () => {
@@ -796,7 +809,7 @@ test('renders the maximum ISO year final week in December and never exposes trai
 });
 
 test('uses the same full calendar week name across both pages', () => {
-  const fullWeekNames = html.match(/Week 29 - July 13 to 19, 2026/g) ?? [];
+  const fullWeekNames = html.match(/Week 30 - July 20 to 26, 2026/g) ?? [];
   assert.ok(fullWeekNames.length >= 3);
   assert.doesNotMatch(html, /Week of Jul 7, 2026/);
   assert.match(html, /function formatArchiveWeekName\(year, week\)/);
@@ -848,7 +861,7 @@ test('rebuckets the complete effective legacy dataset by real date with card-loc
   const targetDestinations = getStoredReportRecords()
     .map(record => `${record.type}:${record.destination}`)
     .sort();
-  assert.equal(targetDestinations.length, 142);
+  assert.equal(targetDestinations.length, 153);
   assert.deepEqual(targetDestinations, sourceDestinations);
 
   for (const record of records) {
@@ -885,10 +898,10 @@ test('rebuckets the complete effective legacy dataset by real date with card-loc
 
 test('places every explicitly dated record in its canonical template and marks undated fallbacks', () => {
   const records = getStoredReportRecords();
-  assert.equal(records.length, 142);
+  assert.equal(records.length, 153);
 
   const dated = records.filter(record => parseStored2026Date(record.date));
-  assert.equal(dated.length, 134);
+  assert.equal(dated.length, 145);
   for (const record of dated) {
     const expectedKey = getISOKeyForDate(parseStored2026Date(record.date));
     assert.equal(record.key, expectedKey, `${record.destination} (${record.date}) belongs in ${expectedKey}`);
@@ -973,9 +986,9 @@ test('the media preparation gate audits the current layout and every archived we
     { cwd: new URL('..', import.meta.url), encoding: 'utf8' }
   );
   assert.equal(result.status, 0, result.stderr || result.stdout);
-  assert.match(result.stdout, /Cards checked: 79/);
+  assert.match(result.stdout, /Cards checked: 85/);
   assert.match(result.stdout, /Errors: 0/);
-  assert.match(result.stdout, /Media sources: \{"embedded-img":79\}/);
+  assert.match(result.stdout, /Media sources: \{"embedded-img":85\}/);
 });
 
 test('keeps External Read article styling stable during hover and focus', () => {
@@ -1004,10 +1017,15 @@ test('keeps the Slack metadata separator outside the View in Slack hover surface
   );
 });
 
+test('suppresses B.Pages injected comment affordances only inside this newsletter', () => {
+  assert.match(html, /\.bp-comment-icon \{[^}]*display: none !important/);
+  assert.doesNotMatch(html, /localStorage\.setItem\(['"]bp-hide-annotations/);
+});
+
 test('derives available archive weeks from stored templates plus Latest Week', () => {
-  assert.match(html, /const latestArchiveWeekKey = '2026-W29';/);
+  assert.match(html, /const latestArchiveWeekKey = '2026-W30';/);
   assert.match(html, /const availableArchiveWeeks = new Set\(\[[\s\S]*?latestArchiveWeekKey,[\s\S]*?document\.querySelectorAll\('template\[id\^="week-report-"\]'\)[\s\S]*?template\.id\.replace\('week-report-', ''\)[\s\S]*?\]\);/);
-  assert.doesNotMatch(html, /new Set\(\['2026-W28', '2026-W29'\]\)/);
+  assert.doesNotMatch(html, /new Set\(\['2026-W29', '2026-W30'\]\)/);
 });
 
 test('keeps popular topics exclusive to Latest Week', () => {
@@ -1067,8 +1085,8 @@ test('supports a direct All Weeks preview URL', () => {
 
 test('uses the selected week as the All Weeks page starter without a Calendar Archive heading', () => {
   assert.doesNotMatch(html, /class="archive-picker-title"/);
-  assert.match(html, /id="week-picker-trigger-week">Week 29<\/span>/);
-  assert.match(html, /id="week-picker-trigger-range">July 13 to 19, 2026<\/span>/);
+  assert.match(html, /id="week-picker-trigger-week">Week 30<\/span>/);
+  assert.match(html, /id="week-picker-trigger-range">July 20 to 26, 2026<\/span>/);
   assert.match(html, /\.week-picker-trigger-week \{[^}]*font-size: 20px;[^}]*font-weight: 800/);
   assert.match(html, /\.week-picker-trigger-range \{[^}]*font-size: 11px;[^}]*color: var\(--text-muted\)/);
   assert.match(html, /function formatArchiveWeekParts\(year, week\)/);
@@ -1080,8 +1098,8 @@ test('renders external update and UX value as separate summary paragraphs', () =
   const latestPage = html.match(/id="page-latest"([\s\S]*?)<template id="week-report/)?.[1] ?? '';
   const updates = latestPage.match(/class="masonry-card-summary-update"/g) ?? [];
   const values = latestPage.match(/class="masonry-card-summary-value"/g) ?? [];
-  assert.equal(updates.length, 10);
-  assert.equal(values.length, 10);
+  assert.equal(updates.length, 6);
+  assert.equal(values.length, 6);
   assert.match(html, /\.masonry-card-summary p \{ margin: 0; \}/);
   assert.match(html, /\.masonry-card-summary-value \{ margin-top: 8px !important; \}/);
 });
@@ -1115,7 +1133,8 @@ test('uses one normalized Slack view model and shared hot-zone preparation on bo
   assert.match(html, /function normalizeSlackCard\(card/);
   assert.match(html, /function prepareSlackCard\(card\)/);
   assert.match(html, /const viewModel = normalizeSlackCard\(card\)/);
-  assert.match(html, /const preparedCard = card\.tagName === 'ARTICLE' \? card : document\.createElement\('article'\)/);
+  assert.match(html, /const preparedCard = card\.tagName === 'DIV' \? card : document\.createElement\('div'\)/);
+  assert.doesNotMatch(html, /document\.createElement\('article'\)/);
   assert.match(html, /preparedCard\.setAttribute\('aria-haspopup', 'dialog'\)/);
   assert.match(html, /document\.querySelectorAll\('#page-latest \.slack-card'\)\.forEach\(prepareSlackCard\)/);
   assert.match(html, /clone\.querySelectorAll\('\.slack-card'\)\.forEach\(prepareSlackCard\)/);
@@ -1186,7 +1205,7 @@ function getArchivedSlackCardRecords() {
 
 test('normalizes stored-original and href-only Slack cards without inventing metadata', () => {
   const records = getArchivedSlackCardRecords();
-  assert.equal(records.length, 63);
+  assert.equal(records.length, 74);
   assert.equal(records.filter(record => record.dataSlackLink).length, 50);
   assert.equal(records.filter(record => !record.original).length, 0);
   assert.equal(records.filter(record => record.originalVerified !== 'true').length, 0);
@@ -1365,7 +1384,7 @@ test('documents conditional Slack metadata without inventing historical replies'
   assert.match(html, /\.slack-meta-replies::before \{[^}]*content: "·"/);
 });
 
-test('makes the article root the accessible dialog trigger', () => {
+test('makes the non-semantic card root the accessible dialog trigger', () => {
   assert.match(html, /preparedCard\.setAttribute\('role', 'button'\)/);
   assert.match(html, /preparedCard\.setAttribute\('tabindex', '0'\)/);
   assert.match(html, /preparedCard\.addEventListener\('click',[\s\S]*openSlackMessageDialog/);
@@ -1696,7 +1715,7 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
     assert.equal(latest.scrollRestored, true);
 
     const longTopic = await browser.evaluate(`(async () => {
-      for (let index = 0; index < 3; index += 1) {
+      for (let index = 0; index < 4; index += 1) {
         showNextWeeklyTopic();
         await new Promise(resolve => window.setTimeout(resolve, 560));
       }
@@ -1708,7 +1727,7 @@ test('browser runtime sanitizes malicious Slack content and enforces the 390px i
         transitionFinished: !document.getElementById('topic-card-stack').classList.contains('is-changing')
       };
     })()`);
-    assert.equal(longTopic.text, 'AI Illustration Generator');
+    assert.equal(longTopic.text, 'GenAI Upskill China');
     assert.equal(longTopic.compact, true);
     assert.equal(longTopic.fontSize, 21);
     assert.equal(longTopic.transitionFinished, true);

@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import vm from 'node:vm';
 
@@ -31,7 +33,7 @@ test('renders one illustrated weekly-topic experience with the approved copy', (
   assert.match(html, /class="topic-card topic-card-next"/);
   assert.match(html, /id="topic-next-button"/);
   assert.match(html, />Show next topic</);
-  assert.match(html, /assets\/internal\/colleagues-topic-banner-v4\.png/);
+  assert.match(html, /assets\/internal\/colleagues-topic-banner-v4\.jpg/);
 });
 
 test('removes the old comparison experiences from the page', () => {
@@ -40,12 +42,13 @@ test('removes the old comparison experiences from the page', () => {
   assert.doesNotMatch(html, /topic-flip-card-experience/);
 });
 
-test('keeps only four Booking-specific weekly topics', () => {
+test('keeps only the five Booking-specific weekly topics', () => {
   assert.deepEqual(extractWeeklyTopics(), [
-    { word: 'Agent Fabric', mentions: '16', channels: 13 },
-    { word: 'Skills MCP', mentions: '8', channels: 2 },
-    { word: 'Design+AI Summit', mentions: '2', channels: 2 },
-    { word: 'AI Illustration Generator', mentions: '1', channels: 1 }
+    { word: 'Codex Lab', mentions: '10', channels: 8 },
+    { word: 'Fabric MCP Gateway', mentions: '7', channels: 5 },
+    { word: 'Design AI Summit', mentions: '3', channels: 2 },
+    { word: 'Structural Clarity', mentions: '2', channels: 1 },
+    { word: 'GenAI Upskill China', mentions: '1', channels: 1 }
   ]);
 });
 
@@ -53,9 +56,9 @@ test('renders topic metadata as non-interactive text without a search arrow', ()
   const latestPage = extractLatestPage();
   const metadataMatch = latestPage.match(/<div class="topic-card-meta">[\s\S]*?id="topic-card-mentions"[\s\S]*?id="topic-card-channels"[\s\S]*?<\/div>/);
   assert.ok(metadataMatch, 'expected non-interactive topic metadata');
-  assert.match(metadataMatch[0], /<span id="topic-card-mentions">16 mentions<\/span>/);
+  assert.match(metadataMatch[0], /<span id="topic-card-mentions">10 mentions<\/span>/);
   assert.match(metadataMatch[0], /<span aria-hidden="true">·<\/span>/);
-  assert.match(metadataMatch[0], /<span id="topic-card-channels">13 channels<\/span>/);
+  assert.match(metadataMatch[0], /<span id="topic-card-channels">8 channels<\/span>/);
   assert.doesNotMatch(latestPage, /id="topic-card-search"|topic-search-arrow|booking\.enterprise\.slack\.com\/search/);
   assert.doesNotMatch(html, /function buildSlackTopicSearchUrl\(topic\)/);
   assert.doesNotMatch(extractFunctionSource('renderTopicCard'), /topicSearch|buildSlackTopicSearchUrl/);
@@ -135,10 +138,25 @@ test('does not show ranking progress on the topic card', () => {
 
 test('uses one continuous full-width office illustration', () => {
   assert.match(html, /class="topic-illustration-banner"/);
+  assert.match(html, /src="assets\/internal\/colleagues-topic-banner-v4\.jpg"/);
   assert.match(html, /\.topic-illustration-banner \{[^}]*position: absolute[^}]*inset: 0[^}]*width: 100%[^}]*height: 100%[^}]*object-fit: cover/);
   assert.doesNotMatch(html, /topic-illustration-side/);
   assert.doesNotMatch(html, /topic-illustration-left/);
   assert.doesNotMatch(html, /topic-illustration-right/);
+});
+
+test('keeps the published topic illustration sharp without exhausting the B.Pages bundle budget', () => {
+  const imageUrl = new URL('../assets/internal/colleagues-topic-banner-v4.jpg', import.meta.url);
+  assert.equal(existsSync(imageUrl), true);
+  assert.ok(statSync(imageUrl).size < 500_000, 'topic illustration should stay below 500 KB');
+
+  const dimensions = spawnSync('sips', ['-g', 'pixelWidth', '-g', 'pixelHeight', fileURLToPath(imageUrl)], {
+    encoding: 'utf8',
+  });
+  assert.equal(dimensions.status, 0, dimensions.stderr || dimensions.stdout);
+  const dimensionOutput = `${dimensions.stdout}\n${dimensions.stderr}`;
+  assert.match(dimensionOutput, /pixelWidth: (1[6-9]\d{2}|[2-9]\d{3,})/);
+  assert.match(dimensionOutput, /pixelHeight: [4-9]\d{2,}/);
 });
 
 test('shows the original illustration colors without a white mask', () => {

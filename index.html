@@ -33,6 +33,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
     body.is-slack-dialog-open { position: fixed; width: 100%; overflow: hidden; }
+    /* B.Pages injects per-heading/paragraph comment buttons into the artifact iframe. */
+    .bp-comment-icon { display: none !important; }
 
     /* Top Navigation */
     .top-nav { position: sticky; top: 0; z-index: 100; background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; height: 60px; }
@@ -356,7 +358,7 @@
       </div>
 
       <section class="weekly-topic" aria-label="Popular topics from colleagues">
-        <img class="topic-illustration-banner" src="assets/internal/colleagues-topic-banner-v4.png" alt="" aria-hidden="true">
+        <img class="topic-illustration-banner" src="assets/internal/colleagues-topic-banner-v4.jpg" alt="" aria-hidden="true">
         <div class="topic-experience">
           <h3 class="topic-title">What colleagues are talking about this week?</h3>
           <div class="topic-card-stack" id="topic-card-stack" aria-live="polite" aria-atomic="true">
@@ -1708,7 +1710,7 @@
 
     function prepareSlackCard(card) {
       const viewModel = normalizeSlackCard(card);
-      const preparedCard = card.tagName === 'ARTICLE' ? card : document.createElement('article');
+      const preparedCard = card.tagName === 'DIV' ? card : document.createElement('div');
 
       if (preparedCard !== card) {
         Array.from(card.attributes).forEach(attribute => {

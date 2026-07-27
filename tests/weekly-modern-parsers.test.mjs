@@ -24,36 +24,36 @@ test('parses the modern latest-week heading and card collections', () => {
 
   assert.deepEqual(
     { id: week.id, label: week.label, date: week.date },
-    { id: '2026-W29', label: 'Week 29', date: 'July 13 to 19, 2026' },
+    { id: '2026-W30', label: 'Week 30', date: 'July 20 to 26, 2026' },
   );
-  assert.equal(cards.internal.length, 6);
-  assert.equal(cards.external.length, 10);
-  assert.equal(cards.internal[0].source, '#genai_eng');
-  assert.equal(cards.internal[0].author, 'Ahmed Kamal');
-  assert.equal(cards.internal[0].date, '2026-07-17');
+  assert.equal(cards.internal.length, 5);
+  assert.equal(cards.external.length, 6);
+  assert.equal(cards.internal[0].source, '#uxw-genai');
+  assert.equal(cards.internal[0].author, 'Niall Hurley');
+  assert.equal(cards.internal[0].date, '2026-07-22');
   assert.match(cards.internal[0].link, /^https:\/\/booking\.enterprise\.slack\.com\/archives\//);
-  assert.equal(cards.external[0].source, 'Figma');
-  assert.equal(cards.external[0].date, 'July 16');
-  assert.equal(cards.external[0].image, 'assets/week11/01-figma-code-backed-screens.png');
+  assert.equal(cards.external[0].source, 'Google Design');
+  assert.equal(cards.external[0].date, 'July 23');
+  assert.equal(cards.external[0].image, 'assets/week30/01-google-code-design-material.jpg');
   assert.equal(
     cards.external[0].update,
-    'screens brought into Figma from Make previews, Figma MCP, or the Chrome extension can now bind to existing variables and arrive with more auto layout.',
+    'Google Design argues that AI makes code directly usable in the design process, while warning that polished prototypes can hide unresolved product strategy and system decisions.',
   );
-  assert.match(cards.external[0].why, /^live interfaces can return to the canvas/);
+  assert.match(cards.external[0].why, /^It gives designers a balanced practice/);
   assert.doesNotMatch(cards.external[0].why, /^Why it/);
-  assert.match(cards.internal[5].update, /AGENTS\.md, and verification patterns\.$/);
-  assert.doesNotMatch(cards.internal[5].update, /^What is the update:/);
+  assert.match(cards.internal[4].update, /hands-on Codex Lab on August 11\.$/);
+  assert.doesNotMatch(cards.internal[4].update, /^What is the update:/);
 });
 
 test('builds a valid weekly status snapshot from the modern page', () => {
   const snapshot = latestDigestSnapshot();
-  assert.equal(latestHeroRange(snapshot.week.html), 'July 13 to 19, 2026');
-  assert.equal(snapshot.cardCount, 16);
-  assert.equal(snapshot.internalCount, 6);
-  assert.equal(snapshot.externalCount, 10);
-  assert.equal(snapshot.slackLinkCount, 6);
-  assert.equal(snapshot.updateLabelCount, 16);
-  assert.equal(snapshot.whyLabelCount, 16);
+  assert.equal(latestHeroRange(snapshot.week.html), 'July 20 to 26, 2026');
+  assert.equal(snapshot.cardCount, 11);
+  assert.equal(snapshot.internalCount, 5);
+  assert.equal(snapshot.externalCount, 6);
+  assert.equal(snapshot.slackLinkCount, 5);
+  assert.equal(snapshot.updateLabelCount, 11);
+  assert.equal(snapshot.whyLabelCount, 11);
   assert.deepEqual(validateLatestSnapshot(snapshot), []);
 });
 
@@ -68,16 +68,16 @@ test('validates the modern latest week date bucket', () => {
 
 test('stages checked-in media referenced by modern latest-week cards', () => {
   const files = stagedFilesForLatest();
-  assert.ok(files.includes('assets/week11/01-figma-code-backed-screens.png'));
-  assert.ok(files.includes('assets/week11/02-miro-teams-agents-canvas.jpg'));
+  assert.ok(files.includes('assets/week30/01-google-code-design-material.jpg'));
+  assert.ok(files.includes('assets/week30/04-figma-auto-layout.png'));
 });
 
 test('derives fallback week years and commit subjects from the displayed range', () => {
   const synthetic = readHtml()
-    .replace("const latestArchiveWeekKey = '2026-W29';", '')
-    .replace('Week 29 - July 13 to 19, 2026', 'Week 2 - January 4 to 10, 2027');
+    .replace("const latestArchiveWeekKey = '2026-W30';", '')
+    .replace('Week 30 - July 20 to 26, 2026', 'Week 2 - January 4 to 10, 2027');
   assert.equal(parseLatestWeek(synthetic).id, '2027-W02');
-  assert.equal(gitCommitMessage(), 'Digest: Week of July 13, 2026');
+  assert.equal(gitCommitMessage(), 'Digest: Week of July 20, 2026');
 });
 
 test('fails archive validation when a stored week loses its range metadata', () => {

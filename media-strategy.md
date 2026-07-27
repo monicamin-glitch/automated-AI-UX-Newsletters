@@ -48,12 +48,13 @@ Internal Slack cards are excluded from the external-image gate because they use 
 Current asset:
 
 ```text
-assets/internal/colleagues-topic-banner-v4.png
+assets/internal/colleagues-topic-banner-v4.jpg
 ```
 
 Requirements:
 
 - The illustration spans the full popular-topic component.
+- Keep the checked-in publishing asset at least 1600px wide while remaining below 500 KB. Do not include it in generic thumbnail downscaling during B.Pages packaging.
 - Export or redraw it at the component’s aspect ratio; never stretch or flatten it to fit.
 - Preserve the original character colors without a white or desaturation overlay.
 - Keep a Booking-style woman on the left in yellow and a man on the right in blue, at different heights.

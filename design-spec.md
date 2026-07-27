@@ -120,14 +120,14 @@ Use the real ISO calendar week number and Monday–Sunday range.
 Latest Week heading:
 
 ```text
-Week 28 - July 6 to 12, 2026
+Week 30 - July 20 to 26, 2026
 ```
 
 All Weeks selector hierarchy:
 
 ```text
-Week 29
-July 13 to 19, 2026
+Week 30
+July 20 to 26, 2026
 ```
 
 Do not use newsletter-sequence labels such as “Week 10 — 14 updates”. Do not display a redundant archive heading below the selector.
@@ -239,11 +239,12 @@ When reply metadata is unavailable:
 
 Interaction uses two clearly separated hot zones without changing the card layout:
 
-- The complete card is the primary action and opens a Slack-message detail dialog. Implement the card root as a button-like `article`, not as an outer link, so the nested Slack link remains valid HTML.
-- The article uses `role="button"`, `tabindex="0"`, `aria-haspopup="dialog"`, a descriptive accessible label, and Enter/Space support.
+- The complete card is the primary action and opens a Slack-message detail dialog. Implement the card root as a button-like `div`, not as an outer link, so the nested Slack link remains valid HTML.
+- The card root uses `role="button"`, `tabindex="0"`, `aria-haspopup="dialog"`, a descriptive accessible label, and Enter/Space support.
 - `View in Slack` is the secondary action. It opens the original permalink in a new tab with `rel="noopener noreferrer"`, stops event propagation, and must not open the dialog.
 - Keep the existing subtle card lift on hover. The inline action's pale-blue hover state makes its smaller click target visibly distinct.
 - Apply this behavior and metadata styling to every Slack card on both Latest Week and All Weeks.
+- B.Pages injects `.bp-comment-icon` buttons into headings, paragraphs, and list items inside its artifact iframe. Hide these injected affordances page-locally with `.bp-comment-icon { display: none !important; }` so Slack and External card hover states remain clean. Do not write the platform-wide `bp-hide-annotations` local-storage preference on the viewer’s behalf.
 
 ### Slack message detail dialog
 
@@ -284,8 +285,8 @@ Do not merge the two summary paragraphs. All links open in a new tab with `rel="
 
 Trigger hierarchy:
 
-- Large: `Week 29`
-- Small: `July 13 to 19, 2026`
+- Large: `Week 30`
+- Small: `July 20 to 26, 2026`
 
 Picker behavior:
 
@@ -300,7 +301,7 @@ Picker behavior:
 - Dates belonging to the previous or next month remain visible at reduced opacity so each Monday–Sunday range stays complete.
 - Month controls change the visible calendar month. Year navigation remains unavailable until reports exist in another year.
 - Initially open the month containing the currently displayed report and select that report’s week.
-- Keep the selected report visible below the calendar as two lines: a prominent `Week 29` label and the supporting date range `July 13 to 19, 2026`.
+- Keep the selected report visible below the calendar as two lines: a prominent `Week 30` label and the supporting date range `July 20 to 26, 2026`.
 - Selecting a week updates the trigger and renders that week’s Internal Updates and External Updates below. Do not render Popular Topic in All Weeks; the selected report begins with Internal Updates.
 - Do not show “Calendar Archive” or repeat the selected week in a second heading.
 

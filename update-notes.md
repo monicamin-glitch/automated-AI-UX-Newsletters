@@ -12,6 +12,9 @@
 - Audited the configured source list and skipped sources without a sufficiently strong, verifiable, in-window UX update rather than adding filler.
 - Published the verified report as a new Booking-internal B.Pages artifact at `https://bpages.booking.com/rbpQL/ai-ux-newsletter-week30` without generating or sending a Slack picker.
 - Kept Monica’s existing B.Pages artifact unchanged because B.Pages only allows its owner to replace that page in place.
+- Replaced the over-compressed popular-topic banner with an 1800px publishing asset and kept it below 500 KB so the B.Pages version stays sharp without exceeding the bundle limit.
+- Changed interactive Slack-card roots from semantic `article` elements to accessible button-like `div` elements, preserving the full-message dialog and `View in Slack` action.
+- Added a page-local override for B.Pages’ injected `.bp-comment-icon` affordances so Slack and External card hover states do not reveal platform comment bubbles, without changing the viewer’s annotation preference on other B.Pages artifacts.
 
 ## 2026-07-23
 
