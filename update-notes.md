@@ -1,5 +1,14 @@
 # Update Notes
 
+## 2026-08-12
+
+### Three-week UI, content, and B.Pages handoff
+
+- Published the collaborator UI with Week 30–32 content and the checked-in Week 30–32 media set.
+- Kept public GitHub Slack dialogs summary-only while publishing verified original parent messages to the Booking-only B.Pages artifact.
+- Finalized the B.Pages header as `AI × Design / Shanghai`, with `Created by Monica Min · Wang Zi` at the far right and the B.Pages shell title set to `Wang Zi`.
+- Added the complete privacy boundary, final interaction decisions, publishing state, and next-update checklist in [`docs/handoffs/2026-08-12-three-week-ui-and-bpages-handoff.md`](docs/handoffs/2026-08-12-three-week-ui-and-bpages-handoff.md).
+
 ## 2026-07-27
 
 ### Week 30 manual refresh
