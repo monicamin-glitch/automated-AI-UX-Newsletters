@@ -360,7 +360,7 @@
         <div class="topic-experience">
           <h3 class="topic-title">What colleagues are talking about this week?</h3>
           <div class="topic-card-stack" id="topic-card-stack" aria-live="polite" aria-atomic="true">
-            <article class="topic-card topic-card-current"><h4 class="topic-card-word" id="topic-card-word">Reusable Agent Workflows</h4><div class="topic-card-meta"><span id="topic-card-mentions">9 mentions</span><span aria-hidden="true">·</span><span id="topic-card-channels">5 channels</span></div></article>
+            <article class="topic-card topic-card-current"><h4 class="topic-card-word" id="topic-card-word">Reusable Agent Workflows</h4><div class="topic-card-meta"><span id="topic-card-mentions">10 mentions</span><span aria-hidden="true">·</span><span id="topic-card-channels">6 channels</span></div></article>
             <article class="topic-card topic-card-next" aria-hidden="true"><h4 class="topic-card-word" id="topic-card-next-word">Design Tools in Context</h4><div class="topic-card-meta"><span>Next topic</span></div></article>
           </div>
           <button class="topic-action" id="topic-next-button" type="button" onclick="showNextWeeklyTopic()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/></svg><span>Show next topic</span></button>
@@ -370,7 +370,7 @@
       <div class="section-header"><h2 class="section-title">Internal Updates</h2></div>
       <svg class="slack-symbols" aria-hidden="true"><symbol id="slack-symbol" viewBox="0 0 24 24"><rect x="9.5" y="1" width="5" height="10" rx="2.5" fill="#36C5F0"/><rect x="13" y="9.5" width="10" height="5" rx="2.5" fill="#2EB67D"/><rect x="9.5" y="13" width="5" height="10" rx="2.5" fill="#ECB22E"/><rect x="1" y="9.5" width="10" height="5" rx="2.5" fill="#E01E5A"/></symbol></svg>
       <div class="filters">
-        <span class="filter-chip active" onclick="filterSlack('all', this)">All <span class="chip-count">5</span></span>
+        <span class="filter-chip active" onclick="filterSlack('all', this)">All <span class="chip-count">6</span></span>
         <span class="filter-chip" onclick="filterSlack('tools', this)">Tools &amp; Releases</span>
         <span class="filter-chip" onclick="filterSlack('learning', this)">Learning &amp; Curriculum</span>
         <span class="filter-chip" onclick="filterSlack('practices', this)">Best Practices</span>
@@ -418,6 +418,15 @@
             <h3 class="slack-card-title">UX Writing Team Shares a Quantitative Pipeline for Evaluating AI Responses</h3>
             <div class="slack-card-desc"><p><strong>What is the update:</strong> A UX Writing thread shared a working evaluation pipeline for AI-generated partner responses, using a repeatable question set, spreadsheet logging, and a judge model to compare quality across prompt iterations.</p><p><strong>Why it's valuable for UXers:</strong> It gives content designers and researchers a concrete pattern for moving AI evaluation beyond anecdotal prompt testing into a reusable review method with traceable scoring.</p></div>
             <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Andrew Matthews</span>, <time datetime="2026-08-14">2026/08/14</time></span><span class="slack-meta-replies">2 replies</span></div>
+          </div>
+        </a>
+
+        <a class="slack-card" data-cat="tools" data-slack-title="BUI Figma Library Update Adds New Icons, Illustrations, and Smarter Table Defaults" data-slack-channel="#design-systems" data-slack-author="Lena Zubareva" data-slack-date="Aug 14" data-slack-link="https://booking.enterprise.slack.com/archives/C242Q65C2/p1786712433122749" data-slack-quote="&lt;p&gt;Hey everyone, we&#39;ve got a small update for you today.&lt;/p&gt;&lt;p&gt;Full changelog: Banner/Card hint variant reverted, Table container new columns now include default header and cell content, plus many new icons and traveler illustrations in the BUI Figma Library.&lt;/p&gt;" data-slack-content="" data-slack-detail-kind="newsletter-summary" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C242Q65C2/p1786712433122749" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel design-systems"><span class="slack-thread-channel">#design-systems</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">BUI Figma Library Update Adds New Icons, Illustrations, and Smarter Table Defaults</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> The BUI Figma Library shipped a concrete August 14 refresh with a reverted Banner/Card hint variant, default header and cell content for new table columns, plus a large batch of new icons and traveler illustrations.</p><p><strong>Why it's valuable for UXers:</strong> Designers working in the system can prototype faster with more realistic table states and fresher asset coverage, while reducing cleanup work when moving concepts toward implementation.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Lena Zubareva</span>, <time datetime="2026-08-14">2026/08/14</time></span></div>
           </div>
         </a></div>
 
@@ -2022,9 +2031,10 @@
     }
 
     const weeklyTopics = [
-      { word: 'Agent Skills', mentions: '9', channels: 3 },
+      { word: 'Agent Skills', mentions: '10', channels: 4 },
       { word: 'AI Tool Governance', mentions: '6', channels: 3 },
       { word: 'Prototype Testing', mentions: '5', channels: 1 },
+      { word: 'BUI Library Updates', mentions: '4', channels: 1 },
       { word: 'Architecture Compass', mentions: '4', channels: 2 },
       { word: 'Figma AI Credits', mentions: '3', channels: 2 }
     ];
