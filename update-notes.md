@@ -31,6 +31,7 @@
 - Verified each public card uses a checked-in local image under `assets/week33/` rather than a runtime preview dependency.
 - Used the official Figma and OpenAI release-notes URLs because the relevant entries are present on those pages and no cleaner stable direct-entry URLs were surfaced during validation.
 - Re-audited external rows after publication and corrected the week by adding three initially missed cards: OpenAI's Aug 14 app experience updates, Bolt's Aug 13 dictation launch, and Lenny's Aug 16 Ian Silber interview.
+- Refined Week 33 external media after publication by replacing five generated fallback assets with source-native checked-in images from Figma release notes, Bolt, and Lenny's Newsletter; kept the OpenAI Aug 14 app-experience card on a generated fallback because the help-center release notes still did not expose a stronger item-specific hero.
 - Preserved the existing `Week 32` archive content exactly as it appeared before this run, even though its displayed range remains a pre-existing nonstandard bucket.
 
 ### Known follow-ups
