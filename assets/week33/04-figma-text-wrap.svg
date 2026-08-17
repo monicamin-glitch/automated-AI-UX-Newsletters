@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Responsive text wrap in Figma</title>
+  <desc id="desc">Abstract layouts showing balanced and pretty text wrapping across different screen widths.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fefce8"/>
+      <stop offset="100%" stop-color="#fae8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="108" y="100" width="258" height="470" rx="28" fill="#ffffff" stroke="#f9a8d4" stroke-width="4"/>
+  <rect x="470" y="100" width="258" height="470" rx="28" fill="#ffffff" stroke="#fcd34d" stroke-width="4"/>
+  <rect x="832" y="100" width="258" height="470" rx="28" fill="#ffffff" stroke="#c084fc" stroke-width="4"/>
+  <text x="152" y="178" fill="#111827" font-family="Arial, sans-serif" font-size="28" font-weight="700">Compact</text>
+  <text x="520" y="178" fill="#111827" font-family="Arial, sans-serif" font-size="28" font-weight="700">Balanced</text>
+  <text x="886" y="178" fill="#111827" font-family="Arial, sans-serif" font-size="28" font-weight="700">Pretty</text>
+  <rect x="148" y="226" width="178" height="18" rx="9" fill="#111827"/>
+  <rect x="148" y="258" width="154" height="18" rx="9" fill="#111827"/>
+  <rect x="148" y="290" width="126" height="18" rx="9" fill="#111827"/>
+  <rect x="510" y="226" width="168" height="18" rx="9" fill="#111827"/>
+  <rect x="510" y="258" width="168" height="18" rx="9" fill="#111827"/>
+  <rect x="510" y="290" width="168" height="18" rx="9" fill="#111827"/>
+  <rect x="872" y="226" width="160" height="18" rx="9" fill="#111827"/>
+  <rect x="872" y="258" width="136" height="18" rx="9" fill="#111827"/>
+  <rect x="872" y="290" width="96" height="18" rx="9" fill="#111827"/>
+  <text x="144" y="626" fill="#111827" font-family="Arial, sans-serif" font-size="48" font-weight="700">Typography behaves more predictably across screens</text>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Figma agent skills library</title>
+  <desc id="desc">Abstract illustration of shared Figma agent skills cards and a slash-command panel.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff7ed"/>
+      <stop offset="100%" stop-color="#fee2e2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="86" y="86" width="1028" height="503" rx="32" fill="#ffffff" stroke="#fca5a5" stroke-width="4"/>
+  <rect x="140" y="138" width="260" height="350" rx="24" fill="#111827"/>
+  <rect x="178" y="184" width="184" height="22" rx="11" fill="#fca5a5"/>
+  <rect x="178" y="228" width="184" height="120" rx="18" fill="#1f2937"/>
+  <path d="M226 258h88v68h-88z" fill="#f87171"/>
+  <circle cx="246" cy="372" r="11" fill="#fdba74"/>
+  <rect x="268" y="361" width="64" height="22" rx="11" fill="#fb7185"/>
+  <circle cx="246" cy="414" r="11" fill="#fbbf24"/>
+  <rect x="268" y="403" width="78" height="22" rx="11" fill="#f97316"/>
+  <rect x="450" y="150" width="300" height="152" rx="28" fill="#f9fafb" stroke="#fda4af" stroke-width="4"/>
+  <text x="488" y="204" fill="#111827" font-family="Arial, sans-serif" font-size="32" font-weight="700">AI skills library</text>
+  <rect x="488" y="230" width="224" height="18" rx="9" fill="#fecdd3"/>
+  <rect x="488" y="262" width="196" height="18" rx="9" fill="#fde68a"/>
+  <rect x="790" y="186" width="240" height="278" rx="28" fill="#111827"/>
+  <text x="826" y="236" fill="#ffffff" font-family="Arial, sans-serif" font-size="30" font-weight="700">/design-review</text>
+  <rect x="826" y="264" width="164" height="16" rx="8" fill="#fca5a5"/>
+  <rect x="826" y="312" width="168" height="112" rx="18" fill="#1f2937"/>
+  <text x="826" y="520" fill="#111827" font-family="Arial, sans-serif" font-size="46" font-weight="700">Figma turns prompts into team skills</text>
+</svg>

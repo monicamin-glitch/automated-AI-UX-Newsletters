@@ -352,21 +352,109 @@
   <div class="main">
 
     <!-- PAGE: Latest Week -->
-    <div class="page active" id="page-latest">
-      <div class="page-header"><h1>Week 32 - August 4 to 10, 2026</h1></div>
+    <div class="page active" id="page-latest" data-week="week33" data-week-label="Week 33" data-week-date="Aug 10">
+      <div class="page-header"><h1>Week 33 - August 10 to 16, 2026</h1></div>
 
       <section class="weekly-topic" aria-label="Popular topics from colleagues">
         <img class="topic-illustration-banner" src="assets/internal/colleagues-topic-banner-v4.jpg" alt="" aria-hidden="true">
         <div class="topic-experience">
           <h3 class="topic-title">What colleagues are talking about this week?</h3>
           <div class="topic-card-stack" id="topic-card-stack" aria-live="polite" aria-atomic="true">
-            <article class="topic-card topic-card-current"><h4 class="topic-card-word" id="topic-card-word">Agent Skills</h4><div class="topic-card-meta"><span id="topic-card-mentions">9 mentions</span><span aria-hidden="true">·</span><span id="topic-card-channels">3 channels</span></div></article>
-            <article class="topic-card topic-card-next" aria-hidden="true"><h4 class="topic-card-word" id="topic-card-next-word">AI Tool Governance</h4><div class="topic-card-meta"><span>Next topic</span></div></article>
+            <article class="topic-card topic-card-current"><h4 class="topic-card-word" id="topic-card-word">Reusable Agent Workflows</h4><div class="topic-card-meta"><span id="topic-card-mentions">8 mentions</span><span aria-hidden="true">·</span><span id="topic-card-channels">4 channels</span></div></article>
+            <article class="topic-card topic-card-next" aria-hidden="true"><h4 class="topic-card-word" id="topic-card-next-word">Design Tools in Context</h4><div class="topic-card-meta"><span>Next topic</span></div></article>
           </div>
           <button class="topic-action" id="topic-next-button" type="button" onclick="showNextWeeklyTopic()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/></svg><span>Show next topic</span></button>
         </div>
       </section>
 
+      <div class="section-header"><h2 class="section-title">Internal Updates</h2></div>
+      <svg class="slack-symbols" aria-hidden="true"><symbol id="slack-symbol" viewBox="0 0 24 24"><rect x="9.5" y="1" width="5" height="10" rx="2.5" fill="#36C5F0"/><rect x="13" y="9.5" width="10" height="5" rx="2.5" fill="#2EB67D"/><rect x="9.5" y="13" width="5" height="10" rx="2.5" fill="#ECB22E"/><rect x="1" y="9.5" width="10" height="5" rx="2.5" fill="#E01E5A"/></symbol></svg>
+      <div class="filters">
+        <span class="filter-chip active" onclick="filterSlack('all', this)">All <span class="chip-count">4</span></span>
+        <span class="filter-chip" onclick="filterSlack('tools', this)">Tools &amp; Releases</span>
+        <span class="filter-chip" onclick="filterSlack('learning', this)">Learning &amp; Curriculum</span>
+        <span class="filter-chip" onclick="filterSlack('practices', this)">Best Practices</span>
+      </div>
+      <div class="slack-cards">
+        <a class="slack-card" data-cat="tools" data-slack-title="AI Studio Can Now Evaluate Agents and AI Inference Configs in One Flow" data-slack-channel="#ai-studio-updates" data-slack-author="Kate Rasskazimova" data-slack-date="Aug 11" data-slack-link="https://booking.enterprise.slack.com/archives/C09GMG8AL1L/p1786431600458009?thread_ts=1786431600.458009&amp;cid=C09GMG8AL1L" data-slack-quote="&lt;p&gt;Evaluation for Agents and Gen AI Inference configurations in AI Studio. Running evals in AI Studio is no longer just for prompts.&lt;/p&gt;&lt;p&gt;The capability is already available to everyone in AI Studio.&lt;/p&gt;" data-slack-content="&lt;p&gt;&lt;strong&gt;What is the update:&lt;/strong&gt; AI Studio now lets teams evaluate published agents and GenAI inference configs with the same side-by-side metrics flow previously reserved for prompts.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Why it’s valuable for UXers:&lt;/strong&gt; UX teams prototyping AI products can review the behavior of the actual agent experience, not just the prompt underneath it, before they ship or scale experiments.&lt;/p&gt;" data-slack-detail-kind="newsletter-summary" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C09GMG8AL1L/p1786431600458009?thread_ts=1786431600.458009&amp;cid=C09GMG8AL1L" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel ai-studio-updates"><span class="slack-thread-channel">#ai-studio-updates</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">AI Studio Can Now Evaluate Agents and AI Inference Configs in One Flow</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> AI Studio now lets teams evaluate published agents and GenAI inference configs with the same side-by-side metrics flow previously reserved for prompts.</p><p><strong>Why it's valuable for UXers:</strong> UX teams prototyping AI products can review the behavior of the actual agent experience, not just the prompt underneath it, before they ship or scale experiments.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Kate Rasskazimova</span>, <time datetime="2026-08-11">2026/08/11</time></span><span class="slack-meta-replies">1 reply</span></div>
+          </div>
+        </a>
+
+        <a class="slack-card" data-cat="practices" data-slack-title="Agent Fabric Success Stories Turn Team Experiments into Reusable Playbooks" data-slack-channel="#genai_engineering" data-slack-author="Rami Heikel" data-slack-date="Aug 14" data-slack-link="https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1786699737532819" data-slack-quote="&lt;p&gt;New on Agent Fabric: Success Stories! We just launched a new page on fabric.booking.com where we celebrate what teams across Booking.com are building with Agent Fabric.&lt;/p&gt;&lt;p&gt;Our first story shows how the Payout Breakdown team used Profiles to turn personal AI workflows into a shared team brain, cutting a support workflow from 4 hours to 15 minutes.&lt;/p&gt;" data-slack-content="&lt;p&gt;&lt;strong&gt;What is the update:&lt;/strong&gt; Agent Fabric launched a success-stories page and opened with a documented case showing Profiles compressing a support workflow from four hours to fifteen minutes.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Why it’s valuable for UXers:&lt;/strong&gt; Design technologists and UX ops leads get an internal pattern for turning one person’s prompt craft into a shared, reviewable team workflow with measurable impact.&lt;/p&gt;" data-slack-detail-kind="newsletter-summary" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1786699737532819" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel genai_engineering"><span class="slack-thread-channel">#genai_engineering</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">Agent Fabric Success Stories Turn Team Experiments into Reusable Playbooks</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> Agent Fabric launched a success-stories page and opened with a documented case showing Profiles compressing a support workflow from four hours to fifteen minutes.</p><p><strong>Why it's valuable for UXers:</strong> Design technologists and UX ops leads get an internal pattern for turning one person's prompt craft into a shared, reviewable team workflow with measurable impact.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Rami Heikel</span>, <time datetime="2026-08-14">2026/08/14</time></span></div>
+          </div>
+        </a>
+
+        <a class="slack-card" data-cat="learning" data-slack-title="AI Design Curriculum Publishes Session 9 and 10 Recordings" data-slack-channel="#ai-design-curriculum" data-slack-author="Nicole Winestock" data-slack-date="Aug 12" data-slack-link="https://booking.enterprise.slack.com/archives/C09RJTFTMA5/p1786522497515919" data-slack-quote="&lt;p&gt;The final two sessions are ready for viewing.&lt;/p&gt;&lt;p&gt;Session 9 and Session 10 include rapid experimentation for designers, Figma Config learnings, design-team agents, and using Claude plus CMUX to manipulate Figma.&lt;/p&gt;" data-slack-content="&lt;p&gt;&lt;strong&gt;What is the update:&lt;/strong&gt; The curriculum team released the final Session 9 and Session 10 recording folders, bundling talks on rapid experimentation, Figma Config learnings, design-team agents, and Claude plus CMUX in Figma.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Why it’s valuable for UXers:&lt;/strong&gt; Designers and researchers get a reusable internal library of applied workflows they can watch, copy, and discuss without waiting for the next live session.&lt;/p&gt;" data-slack-detail-kind="newsletter-summary" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C09RJTFTMA5/p1786522497515919" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel ai-design-curriculum"><span class="slack-thread-channel">#ai-design-curriculum</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">AI Design Curriculum Publishes Session 9 and 10 Recordings</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> The curriculum team released the final Session 9 and Session 10 recording folders, bundling talks on rapid experimentation, Figma Config learnings, design-team agents, and Claude plus CMUX in Figma.</p><p><strong>Why it's valuable for UXers:</strong> Designers and researchers get a reusable internal library of applied workflows they can watch, copy, and discuss without waiting for the next live session.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Nicole Winestock</span>, <time datetime="2026-08-12">2026/08/12</time></span></div>
+          </div>
+        </a>
+
+        <a class="slack-card" data-cat="learning" data-slack-title="Marketplace AI Meetup Shares AIAP Skills Recording and Slides" data-slack-channel="#mp-ai-engineering" data-slack-author="Mike Mulev" data-slack-date="Aug 11" data-slack-link="https://booking.enterprise.slack.com/archives/C0AGAKHURQ9/p1786455148616619?thread_ts=1786345222.157689&amp;cid=C0AGAKHURQ9" data-slack-quote="&lt;p&gt;Thanks for joining the meetup today. Sharing here the recording and the presentations from our speakers.&lt;/p&gt;&lt;p&gt;Build AI with AI: AIAP Skills is included with the recording and deck links.&lt;/p&gt;" data-slack-content="&lt;p&gt;&lt;strong&gt;What is the update:&lt;/strong&gt; The Marketplace AI meetup published its recording plus slides for Beacon and the AIAP Skills talk on going from idea to production in days, not weeks.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Why it’s valuable for UXers:&lt;/strong&gt; UX engineers and prototype-heavy designers get a replayable internal reference on how reusable skills can shorten the path from exploratory workflow to production-ready agent behavior.&lt;/p&gt;" data-slack-detail-kind="newsletter-summary" data-slack-original-verified="true" href="https://booking.enterprise.slack.com/archives/C0AGAKHURQ9/p1786455148616619?thread_ts=1786345222.157689&amp;cid=C0AGAKHURQ9" target="_blank" rel="noopener noreferrer">
+          <span class="slack-thread-tile" aria-label="Slack channel mp-ai-engineering"><span class="slack-thread-channel">#mp-ai-engineering</span></span>
+          <div class="slack-card-body">
+            <h3 class="slack-card-title">Marketplace AI Meetup Shares AIAP Skills Recording and Slides</h3>
+            <div class="slack-card-desc"><p><strong>What is the update:</strong> The Marketplace AI meetup published its recording plus slides for Beacon and the AIAP Skills talk on going from idea to production in days, not weeks.</p><p><strong>Why it's valuable for UXers:</strong> UX engineers and prototype-heavy designers get a replayable internal reference on how reusable skills can shorten the path from exploratory workflow to production-ready agent behavior.</p></div>
+            <div class="slack-card-meta"><svg class="slack-meta-logo" aria-hidden="true"><use href="#slack-symbol"></use></svg><span>posted by <span class="slack-sender-name">Mike Mulev</span>, <time datetime="2026-08-11">2026/08/11</time></span></div>
+          </div>
+        </a></div>
+
+      <div class="section-header" style="margin-top: 48px;"><h2 class="section-title">External Updates</h2><p class="section-subtitle">Top picks and industry news</p></div>
+      <div class="external-card-grid">
+        <a class="masonry-card" data-published-date="2026-08-13" href="https://www.figma.com/release-notes/#aug-13-2026-try-skills-from-the-community-and-make-your-own-with-the-figma-agent" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week33/01-figma-agent-skills.svg" alt="Figma Community skills library and agent workflow concept"><span class="masonry-card-rank">Top pick · 1</span></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">Figma · August 13</div>
+            <h3 class="masonry-card-title">Figma Lets Teams Discover, Create, and Publish Agent Skills in the Community</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> Figma added an AI skills library in Community, lets the Figma agent generate new skills from file context, and supports publishing those reusable commands for others to remix.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> Design teams can turn prompt craft into shared, inspectable workflow assets instead of keeping useful agent behavior trapped in one person’s chat history.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="masonry-card" data-published-date="2026-08-13" href="https://help.openai.com/en/articles/6825453-release-notes#august-13-2026-google-drive-is-now-in-library" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week33/02-openai-drive-library.svg" alt="Google Drive files available inside ChatGPT Library"><span class="masonry-card-rank">Top pick · 2</span></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">OpenAI · August 13</div>
+            <h3 class="masonry-card-title">ChatGPT Library Now Surfaces Connected Google Drive Files</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> OpenAI added Google Drive to Library so connected Docs, Sheets, Slides, and folders can be browsed, attached, and kept open beside a conversation without re-uploading files.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> Research and design-review workflows become more continuous because source documents stay live, navigable, and easier to reference while an agent drafts or analyzes.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="masonry-card" data-published-date="2026-08-11" href="https://www.figma.com/release-notes/#aug-11-2026-figma-mcp-run-weave-tools-right-from-your-favorite-agent" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week33/03-figma-weave-mcp.svg" alt="Figma Weave tools running through an MCP client"><span class="masonry-card-rank">Top pick · 3</span></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">Figma · August 11</div>
+            <h3 class="masonry-card-title">Figma MCP Can Now Run Weave Tools from ChatGPT, Claude, and Cursor</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> Figma expanded its MCP server so external agents can discover and run Figma Weave tools directly from the conversation, returning results without switching apps.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> Teams can keep prompts, brand context, and tool execution in one loop, which makes multi-step prototyping workflows easier to inspect and reuse.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="masonry-card" data-published-date="2026-08-14" href="https://www.figma.com/release-notes/#aug-14-2026-get-responsive-text-across-screens-with-text-wrap" target="_blank" rel="noopener noreferrer">
+          <div class="masonry-card-image"><img src="assets/week33/04-figma-text-wrap.svg" alt="Responsive text wrapping options across multiple screen widths"></div>
+          <div class="masonry-card-body">
+            <div class="masonry-card-source">Figma · August 14</div>
+            <h3 class="masonry-card-title">Figma Adds Better Responsive Text Wrapping for Slides, Sites, and Buzz</h3>
+            <div class="masonry-card-summary"><p class="masonry-card-summary-update"><strong>What is the update:</strong> Figma introduced Balance and Pretty text-wrap options so headlines and paragraphs can distribute more gracefully across lines and screen sizes.</p><p class="masonry-card-summary-value"><strong>Why it’s valuable for UXers:</strong> Designers can preserve readability and visual rhythm across responsive layouts with less manual copy tuning, especially in presentation and marketing surfaces.</p></div>
+            <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a></div>
+    </div>
+    <template id="week-report-2026-W32" data-week-start="2026-08-04" data-week-end="2026-08-10" data-week-range="August 4 to 10, 2026">
       <div class="section-header"><h2 class="section-title">Internal Updates</h2></div>
       <svg class="slack-symbols" aria-hidden="true"><symbol id="slack-symbol" viewBox="0 0 24 24"><rect x="9.5" y="1" width="5" height="10" rx="2.5" fill="#36C5F0"/><rect x="13" y="9.5" width="10" height="5" rx="2.5" fill="#2EB67D"/><rect x="9.5" y="13" width="5" height="10" rx="2.5" fill="#ECB22E"/><rect x="1" y="9.5" width="10" height="5" rx="2.5" fill="#E01E5A"/></symbol></svg>
       <div class="filters">
@@ -557,7 +645,7 @@
             <span class="masonry-card-action">Read article <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
           </div>
         </a></div>
-    </div>
+    </template>
     <template id="week-report-2026-W31" data-week-start="2026-07-27" data-week-end="2026-08-02" data-week-range="July 27 to August 2, 2026">
 <div class="section-header"><h2 class="section-title">Internal Updates</h2></div>
       <svg class="slack-symbols" aria-hidden="true"><symbol id="slack-symbol" viewBox="0 0 24 24"><rect x="9.5" y="1" width="5" height="10" rx="2.5" fill="#36C5F0"/><rect x="13" y="9.5" width="10" height="5" rx="2.5" fill="#2EB67D"/><rect x="9.5" y="13" width="5" height="10" rx="2.5" fill="#ECB22E"/><rect x="1" y="9.5" width="10" height="5" rx="2.5" fill="#E01E5A"/></symbol></svg>

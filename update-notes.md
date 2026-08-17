@@ -1,5 +1,44 @@
 # Update Notes
 
+## 2026-08-17
+
+### Week 33 weekly refresh
+
+- Refreshed the latest website week to `Week 33` for `Aug 10-Aug 16, 2026` and archived the previous latest page as template `Week 32` without deleting any older archive templates.
+- Added 8 validated Week 33 cards: 4 internal Slack Spotlights and 4 public product/design updates, with all public cards backed by checked-in `assets/week33/` media.
+- Kept the refresh scoped to the completed Monday-Sunday window from `digest.md` even though the pre-existing `Week 32` page already used the irregular range `Aug 4-Aug 10, 2026`.
+
+### Source coverage checklist
+
+- Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, and Bolt.
+- Section A included: Figma release notes (`Community agent skills`, `Figma MCP for Weave tools`, `responsive text wrap`) and OpenAI release notes (`Google Drive in Library`).
+- Section A skipped: Anthropic had no fresh Aug 10-Aug 16 official product or release-note item after the Aug 6 skill/plugin scanning entry; Google Stitch had no fresh official in-window update in the configured sources; Miro had no new dated Aug 10-Aug 16 product or newsroom update stronger than the existing May and July archive coverage; Bolt had no fresh official Aug 10-Aug 16 post in the configured blog or changelog sources.
+- Section B checked: YouTube tutorial queries, UX Collective newsletter, and Medium Design Bootcamp.
+- Section B included: none. The in-window results were either absent, weakly sourced, or opinion-heavy compared with the stronger official-source product and internal workflow cards.
+- Section B skipped: YouTube did not surface a stronger completed Aug 10-Aug 16 tutorial artifact than the selected internal recordings and official Figma/OpenAI updates; UX Collective and Medium Design Bootcamp did not surface a qualifying in-window AI/UX article worth publishing as a standalone card.
+- Section C checked: Nielsen Norman Group, Lenny's Newsletter feed/archive, Google Design library, and Google PAIR.
+- Section C included: none. No configured Section C source produced a fresh Aug 10-Aug 16 item strong enough for publication.
+- Section C skipped: NN/g search and article/video checks did not surface a verified new Aug 10-Aug 16 item in the configured sources; Lenny's archive/feed showed no new qualifying in-window post after the earlier July items; Google Design and Google PAIR did not surface a fresh dated in-window library update.
+- Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Section D included: `#ai-studio-updates` unified evaluation for agents and inference configs; `#genai_engineering` Agent Fabric success stories; `#ai-design-curriculum` Session 9 and 10 recording release; and `#mp-ai-engineering` meetup recording plus AIAP Skills deck.
+- Section D skipped: `#ai-for-ux` was audited, but the strongest in-window post was a future summit announcement rather than a completed reusable artifact; `#dev-china` and `#china-ai-workstream` were checked, but the strongest digest-style items overlapped with already-selected original source posts or fell outside the strongest completed UX workflow threshold; `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` had no stronger completed in-window UX-facing AI update than the selected set.
+- Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study remained reference-only for this run and were not published as standalone cards.
+
+### Validation notes
+
+- Verified the target refresh window as `Aug 10-Aug 16, 2026` because Monday, August 17, 2026 should publish the completed previous Monday-Sunday week per `digest.md`.
+- Verified each included Slack card has a permalink, a named author, an original quoted snippet, and a public-safe visible summary aligned to the source message.
+- Verified each public card uses a checked-in local image under `assets/week33/` rather than a runtime preview dependency.
+- Used the official Figma and OpenAI release-notes URLs because the relevant entries are present on those pages and no cleaner stable direct-entry URLs were surfaced during validation.
+- Preserved the existing `Week 32` archive content exactly as it appeared before this run, even though its displayed range remains a pre-existing nonstandard bucket.
+
+### Known follow-ups
+
+- `Week 32` still shows the pre-existing irregular displayed range `Aug 4-Aug 10, 2026`; this run did not retcon the prior week because the request was to refresh the current target week only.
+- The mandatory finalizer still needs to complete commit, push, B.Pages publish, status-file update, and Slack notification before this refresh can be treated as published.
+
+## 2026-08-10
+
 ## 2026-08-12
 
 ### Three-week UI, content, and B.Pages handoff

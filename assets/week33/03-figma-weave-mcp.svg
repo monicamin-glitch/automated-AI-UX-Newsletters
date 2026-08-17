@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Figma Weave tools through MCP</title>
+  <desc id="desc">Abstract flow between an AI chat client and Figma Weave tools.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5f3ff"/>
+      <stop offset="100%" stop-color="#e0f2fe"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="104" y="110" width="340" height="450" rx="32" fill="#111827"/>
+  <text x="148" y="172" fill="#ffffff" font-family="Arial, sans-serif" font-size="34" font-weight="700">Chat client</text>
+  <rect x="148" y="210" width="252" height="92" rx="20" fill="#1f2937"/>
+  <rect x="148" y="326" width="252" height="92" rx="20" fill="#1f2937"/>
+  <rect x="148" y="442" width="192" height="18" rx="9" fill="#a78bfa"/>
+  <path d="M454 338h120" fill="none" stroke="#0f172a" stroke-width="12" stroke-linecap="round"/>
+  <path d="M550 306l52 32-52 32" fill="none" stroke="#0f172a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="628" y="108" width="468" height="454" rx="34" fill="#ffffff" stroke="#93c5fd" stroke-width="4"/>
+  <text x="680" y="178" fill="#111827" font-family="Arial, sans-serif" font-size="34" font-weight="700">Figma Weave tools</text>
+  <rect x="680" y="218" width="160" height="124" rx="22" fill="#dbeafe"/>
+  <rect x="860" y="218" width="160" height="124" rx="22" fill="#e9d5ff"/>
+  <rect x="770" y="372" width="160" height="124" rx="22" fill="#fef3c7"/>
+  <text x="660" y="610" fill="#111827" font-family="Arial, sans-serif" font-size="48" font-weight="700">Agents can run design tools without leaving chat</text>
+</svg>
