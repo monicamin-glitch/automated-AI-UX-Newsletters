@@ -5,7 +5,7 @@
 ### Week 33 weekly refresh
 
 - Refreshed the latest website week to `Week 33` for `Aug 10-Aug 16, 2026` and archived the previous latest page as template `Week 32` without deleting any older archive templates.
-- Added 13 validated Week 33 cards: 6 internal Slack Spotlights and 7 public product/design updates, with all public cards backed by checked-in `assets/week33/` media.
+- Added 14 validated Week 33 cards: 7 internal Slack Spotlights and 7 public product/design updates, with all public cards backed by checked-in `assets/week33/` media.
 - Kept the refresh scoped to the completed Monday-Sunday window from `digest.md` even though the pre-existing `Week 32` page already used the irregular range `Aug 4-Aug 10, 2026`.
 
 ### Source coverage checklist
@@ -20,8 +20,8 @@
 - Section C included: Lenny's Newsletter (`OpenAI's Head of Design: This is the best time in history to be a designer`).
 - Section C skipped: NN/g search and article/video checks did not surface a verified new Aug 10-Aug 16 item in the configured sources; the other Lenny Aug 11 candidate on startup storytelling remained below the AI x UX inclusion threshold; Google Design and Google PAIR did not surface a fresh dated in-window library update.
 - Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
-- Section D included: `#ai-studio-updates` unified evaluation for agents and inference configs; `#genai_engineering` Agent Fabric success stories; `#ai-design-curriculum` Session 9 and 10 recording release; `#mp-ai-engineering` meetup recording plus AIAP Skills deck; `#uxw-genai` a quantitative evaluation pipeline for AI-generated partner responses; and `#design-systems` the Aug 14 BUI Figma Library update with new icons, traveler illustrations, and stronger table defaults.
-- Section D skipped: `#ai-for-ux` was audited, but the strongest in-window post was a future summit announcement rather than a completed reusable artifact; `#dev-china` and `#china-ai-workstream` were checked, but the strongest digest-style items overlapped with already-selected original source posts or fell outside the strongest completed UX workflow threshold; `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design`, `#design-language`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` had no stronger completed in-window UX-facing AI update than the selected set.
+- Section D included: `#ai-studio-updates` unified evaluation for agents and inference configs; `#genai_engineering` Agent Fabric success stories; `#ai-design-curriculum` Session 9 and 10 recording release; `#mp-ai-engineering` meetup recording plus AIAP Skills deck; `#uxw-genai` a quantitative evaluation pipeline for AI-generated partner responses; `#design` the Aug 13 Design AI Summit programme announcement and branded event artifact; and `#design-systems` the Aug 14 BUI Figma Library update with new icons, traveler illustrations, and stronger table defaults.
+- Section D skipped: `#ai-for-ux` was audited, but the strongest in-window post was a future summit announcement rather than a completed reusable artifact; `#dev-china` and `#china-ai-workstream` were checked, but the strongest digest-style items overlapped with already-selected original source posts or fell outside the strongest completed UX workflow threshold; `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design-language`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` had no stronger completed in-window UX-facing AI update than the selected set.
 - Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study remained reference-only for this run and were not published as standalone cards.
 
 ### Validation notes
@@ -33,7 +33,8 @@
 - Re-audited external rows after publication and corrected the week by adding three initially missed cards: OpenAI's Aug 14 app experience updates, Bolt's Aug 13 dictation launch, and Lenny's Aug 16 Ian Silber interview.
 - Refined Week 33 external media after publication by replacing five generated fallback assets with source-native checked-in images from Figma release notes, Bolt, and Lenny's Newsletter; kept the OpenAI Aug 14 app-experience card on a generated fallback because the help-center release notes still did not expose a stronger item-specific hero.
 - Re-audited the internal Slack sources after publication and added one missed Week 33 Slack Spotlight from `#uxw-genai`: Andrew Matthews' Aug 14 quantitative response-evaluation workflow for Partner AI.
-- Re-checked `#design` and `#design-systems` after follow-up review: `#design` still did not yield a stronger completed in-window AI/UX artifact, but `#design-systems` did surface one missed qualifying item, Lena Zubareva's Aug 14 BUI Figma Library update, which was added to the latest week.
+- Re-checked `#design` and `#design-systems` after follow-up review: `#design-systems` surfaced Lena Zubareva's Aug 14 BUI Figma Library update; the `#design` Summit announcement was initially down-ranked as a future event, then included after editorial review confirmed its branded artifact, concrete programme, Figma workshop, participation modes, owner, and September 2 next action.
+- Verified the new `#design` card against Nicole Winestock's Aug 13 parent announcement and attached `Design AI Summit - brand.png`; the website keeps the standard channel tile for internal cards per `media-strategy.md`, while the card links to the original Slack post and its attachment.
 - Preserved the existing `Week 32` archive content exactly as it appeared before this run, even though its displayed range remains a pre-existing nonstandard bucket.
 
 ### Known follow-ups
