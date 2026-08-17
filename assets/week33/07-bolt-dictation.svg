@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Bolt dictation launch</title>
+  <desc id="desc">Abstract illustration of a microphone, voice waveform, and app-building panels for Bolt dictation.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff7ed"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="88" y="88" width="1024" height="499" rx="32" fill="#ffffff" stroke="#f59e0b" stroke-width="4"/>
+  <rect x="146" y="146" width="300" height="384" rx="30" fill="#1c1917"/>
+  <rect x="252" y="182" width="88" height="150" rx="44" fill="#f59e0b"/>
+  <rect x="226" y="322" width="140" height="28" rx="14" fill="#fbbf24"/>
+  <rect x="244" y="356" width="104" height="30" rx="15" fill="#fde68a"/>
+  <path d="M206 242c-18 0-32 14-32 32v6c0 58 47 105 105 105s105-47 105-105v-6c0-18-14-32-32-32" fill="none" stroke="#fcd34d" stroke-width="18" stroke-linecap="round"/>
+  <rect x="506" y="156" width="556" height="156" rx="28" fill="#fffbeb" stroke="#fcd34d" stroke-width="4"/>
+  <text x="544" y="214" fill="#1c1917" font-family="Arial, sans-serif" font-size="32" font-weight="700">Say the whole prompt</text>
+  <rect x="544" y="244" width="220" height="16" rx="8" fill="#f59e0b"/>
+  <rect x="544" y="278" width="448" height="18" rx="9" fill="#fde68a"/>
+  <rect x="506" y="346" width="556" height="184" rx="28" fill="#1c1917"/>
+  <path d="M560 442h24l18-52 28 104 34-156 30 124 26-72 22 52h28" fill="none" stroke="#fbbf24" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="544" y="584" fill="#1c1917" font-family="Arial, sans-serif" font-size="46" font-weight="700">Voice prompts make AI app building less terse</text>
+</svg>

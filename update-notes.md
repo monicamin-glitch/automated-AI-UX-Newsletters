@@ -5,20 +5,20 @@
 ### Week 33 weekly refresh
 
 - Refreshed the latest website week to `Week 33` for `Aug 10-Aug 16, 2026` and archived the previous latest page as template `Week 32` without deleting any older archive templates.
-- Added 8 validated Week 33 cards: 4 internal Slack Spotlights and 4 public product/design updates, with all public cards backed by checked-in `assets/week33/` media.
+- Added 11 validated Week 33 cards: 4 internal Slack Spotlights and 7 public product/design updates, with all public cards backed by checked-in `assets/week33/` media.
 - Kept the refresh scoped to the completed Monday-Sunday window from `digest.md` even though the pre-existing `Week 32` page already used the irregular range `Aug 4-Aug 10, 2026`.
 
 ### Source coverage checklist
 
 - Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, and Bolt.
-- Section A included: Figma release notes (`Community agent skills`, `Figma MCP for Weave tools`, `responsive text wrap`) and OpenAI release notes (`Google Drive in Library`).
-- Section A skipped: Anthropic had no fresh Aug 10-Aug 16 official product or release-note item after the Aug 6 skill/plugin scanning entry; Google Stitch had no fresh official in-window update in the configured sources; Miro had no new dated Aug 10-Aug 16 product or newsroom update stronger than the existing May and July archive coverage; Bolt had no fresh official Aug 10-Aug 16 post in the configured blog or changelog sources.
+- Section A included: Figma release notes (`Community agent skills`, `Figma MCP for Weave tools`, `responsive text wrap`), OpenAI release notes (`Google Drive in Library`, `ChatGPT app experience updates`), and Bolt blog (`Dictation is live, Bolt.new is ready to listen`).
+- Section A skipped: Anthropic had no fresh Aug 10-Aug 16 official product or release-note item after the Aug 6 skill/plugin scanning entry; Google Stitch had no fresh official in-window update in the configured sources; Miro had no new dated Aug 10-Aug 16 product or newsroom update stronger than the existing May and July archive coverage.
 - Section B checked: YouTube tutorial queries, UX Collective newsletter, and Medium Design Bootcamp.
 - Section B included: none. The in-window results were either absent, weakly sourced, or opinion-heavy compared with the stronger official-source product and internal workflow cards.
 - Section B skipped: YouTube did not surface a stronger completed Aug 10-Aug 16 tutorial artifact than the selected internal recordings and official Figma/OpenAI updates; UX Collective and Medium Design Bootcamp did not surface a qualifying in-window AI/UX article worth publishing as a standalone card.
 - Section C checked: Nielsen Norman Group, Lenny's Newsletter feed/archive, Google Design library, and Google PAIR.
-- Section C included: none. No configured Section C source produced a fresh Aug 10-Aug 16 item strong enough for publication.
-- Section C skipped: NN/g search and article/video checks did not surface a verified new Aug 10-Aug 16 item in the configured sources; Lenny's archive/feed showed no new qualifying in-window post after the earlier July items; Google Design and Google PAIR did not surface a fresh dated in-window library update.
+- Section C included: Lenny's Newsletter (`OpenAI's Head of Design: This is the best time in history to be a designer`).
+- Section C skipped: NN/g search and article/video checks did not surface a verified new Aug 10-Aug 16 item in the configured sources; the other Lenny Aug 11 candidate on startup storytelling remained below the AI x UX inclusion threshold; Google Design and Google PAIR did not surface a fresh dated in-window library update.
 - Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
 - Section D included: `#ai-studio-updates` unified evaluation for agents and inference configs; `#genai_engineering` Agent Fabric success stories; `#ai-design-curriculum` Session 9 and 10 recording release; and `#mp-ai-engineering` meetup recording plus AIAP Skills deck.
 - Section D skipped: `#ai-for-ux` was audited, but the strongest in-window post was a future summit announcement rather than a completed reusable artifact; `#dev-china` and `#china-ai-workstream` were checked, but the strongest digest-style items overlapped with already-selected original source posts or fell outside the strongest completed UX workflow threshold; `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` had no stronger completed in-window UX-facing AI update than the selected set.
@@ -30,6 +30,7 @@
 - Verified each included Slack card has a permalink, a named author, an original quoted snippet, and a public-safe visible summary aligned to the source message.
 - Verified each public card uses a checked-in local image under `assets/week33/` rather than a runtime preview dependency.
 - Used the official Figma and OpenAI release-notes URLs because the relevant entries are present on those pages and no cleaner stable direct-entry URLs were surfaced during validation.
+- Re-audited external rows after publication and corrected the week by adding three initially missed cards: OpenAI's Aug 14 app experience updates, Bolt's Aug 13 dictation launch, and Lenny's Aug 16 Ian Silber interview.
 - Preserved the existing `Week 32` archive content exactly as it appeared before this run, even though its displayed range remains a pre-existing nonstandard bucket.
 
 ### Known follow-ups

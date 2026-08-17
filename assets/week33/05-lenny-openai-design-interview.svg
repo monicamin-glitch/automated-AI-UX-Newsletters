@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Lenny interview on AI-era design leadership</title>
+  <desc id="desc">Abstract podcast card featuring a waveform, dialogue panel, and emphasis on changing UX roles in the AI era.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef2ff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="84" y="84" width="1032" height="507" rx="32" fill="#ffffff" stroke="#93c5fd" stroke-width="4"/>
+  <rect x="140" y="144" width="300" height="386" rx="30" fill="#0f172a"/>
+  <circle cx="290" cy="252" r="76" fill="#60a5fa"/>
+  <path d="M252 258c12-38 64-56 96-14 16 22 14 60-12 88-32 34-62 40-84 18-20-20-20-58 0-92z" fill="#bfdbfe"/>
+  <rect x="200" y="378" width="180" height="18" rx="9" fill="#60a5fa"/>
+  <rect x="176" y="412" width="228" height="18" rx="9" fill="#cbd5e1"/>
+  <rect x="176" y="446" width="198" height="18" rx="9" fill="#93c5fd"/>
+  <rect x="498" y="152" width="554" height="152" rx="28" fill="#f8fafc" stroke="#bfdbfe" stroke-width="4"/>
+  <text x="542" y="212" fill="#0f172a" font-family="Arial, sans-serif" font-size="34" font-weight="700">Best time in history</text>
+  <text x="542" y="254" fill="#0f172a" font-family="Arial, sans-serif" font-size="34" font-weight="700">to be a designer</text>
+  <rect x="542" y="274" width="216" height="14" rx="7" fill="#93c5fd"/>
+  <rect x="498" y="334" width="554" height="176" rx="28" fill="#0f172a"/>
+  <rect x="542" y="382" width="430" height="12" rx="6" fill="#60a5fa"/>
+  <rect x="542" y="416" width="360" height="12" rx="6" fill="#cbd5e1"/>
+  <rect x="542" y="450" width="392" height="12" rx="6" fill="#93c5fd"/>
+  <text x="140" y="592" fill="#0f172a" font-family="Arial, sans-serif" font-size="46" font-weight="700">Design leadership reframes AI-era UX roles</text>
+</svg>
