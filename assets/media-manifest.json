@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T04:10:16.083Z",
+  "generatedAt": "2026-08-17T03:00:32.725Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,343 @@
     ]
   },
   "summary": {
-    "cards": 85,
+    "cards": 108,
     "errors": 0,
-    "warnings": 4,
+    "warnings": 19,
     "counts": {
-      "embedded-img": 85
+      "embedded-img": 108
     }
   },
   "entries": [
+    {
+      "title": "Figma Lets Teams Discover, Create, and Publish Agent Skills in the Community",
+      "source": "Figma",
+      "date": "August 13",
+      "url": "https://www.figma.com/release-notes/#aug-13-2026-try-skills-from-the-community-and-make-your-own-with-the-figma-agent",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week33/01-figma-agent-skills.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 2021,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "ChatGPT Library Now Surfaces Connected Google Drive Files",
+      "source": "OpenAI",
+      "date": "August 13",
+      "url": "https://help.openai.com/en/articles/6825453-release-notes#august-13-2026-google-drive-is-now-in-library",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week33/02-openai-drive-library.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1916,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Figma MCP Can Now Run Weave Tools from ChatGPT, Claude, and Cursor",
+      "source": "Figma",
+      "date": "August 11",
+      "url": "https://www.figma.com/release-notes/#aug-11-2026-figma-mcp-run-weave-tools-right-from-your-favorite-agent",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week33/03-figma-weave-mcp.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1763,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Figma Adds Better Responsive Text Wrapping for Slides, Sites, and Buzz",
+      "source": "Figma",
+      "date": "August 14",
+      "url": "https://www.figma.com/release-notes/#aug-14-2026-get-responsive-text-across-screens-with-text-wrap",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week33/04-figma-text-wrap.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 2021,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Axe MCP Server Expands Automated Accessibility Coverage",
+      "source": "Deque",
+      "date": "August 5",
+      "url": "https://www.deque.com/blog/new-in-axe-mcp-server-more-automated-coverage-and-streamlined-developer-workflows/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/deque-axe-mcp.png",
+      "youtubeId": "",
+      "dimensions": "2560x1629",
+      "sizeBytes": 260542,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Figma Adds Per-User AI Credit Limits and Request Flows",
+      "source": "Figma",
+      "date": "August 5",
+      "url": "https://help.figma.com/hc/en-us/articles/41944442159767-Set-AI-credit-limits",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/figma-credit-limits.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1222,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "The PROVE Framework Tests Whether an AI Tool Is Worth Keeping",
+      "source": "Nielsen Norman Group",
+      "date": "August 7",
+      "url": "https://www.nngroup.com/articles/prove-framework/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/nng-prove-ai-tool.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 234919,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "ChatGPT Voice Can Work with Uploaded Files and Project Context",
+      "source": "OpenAI",
+      "date": "August 7",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/openai-voice-files.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1019,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Claude Adds Enterprise Security Scanning for Skills and Plugins",
+      "source": "Anthropic / Claude",
+      "date": "August 6",
+      "url": "https://support.claude.com/en/articles/12138966-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/claude-skill-scanning.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1001,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "GPT-5.6 Sol Adds More Focused Answers and a Thinking Slider",
+      "source": "OpenAI",
+      "date": "August 6",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/openai-model-controls.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1160,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Large Pasted Text Now Becomes an Attachment Across ChatGPT Plans",
+      "source": "OpenAI",
+      "date": "August 4",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/openai-large-paste.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1215,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Dogfooding Helps Reliability but Cannot Replace User Research",
+      "source": "Nielsen Norman Group",
+      "date": "August 7",
+      "url": "https://www.nngroup.com/articles/dogfooding/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/nng-dogfooding.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 151432,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Career Emergence Offers an Alternative to the Twenty-Year Plan",
+      "source": "Lenny's Newsletter",
+      "date": "August 4",
+      "url": "https://www.lennysnewsletter.com/p/what-if-youre-not-supposed-to-have",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/lenny-career-emergence.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 82239,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Accessibility Becomes Foundational Infrastructure for Agentic AI",
+      "source": "Deque",
+      "date": "July 29",
+      "url": "https://www.deque.com/blog/for-your-business-to-thrive-in-the-agentic-ai-era-treat-accessibility-as-foundational-to-your-ai-strategy/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/deque-agent-accessibility.png",
+      "youtubeId": "",
+      "dimensions": "2560x1629",
+      "sizeBytes": 102697,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "OpenAI Research Shows AI Expanding Work Across Role Boundaries",
+      "source": "OpenAI",
+      "date": "July 27",
+      "url": "https://openai.com/index/how-ai-is-expanding-what-people-do-at-work/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-work-frontier.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1158,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "ChatGPT Desktop Adds Faster Browsing, Multi-Repository Review, and Image Editing",
+      "source": "OpenAI",
+      "date": "July 30",
+      "url": "https://openai.com/products/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-desktop.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1115,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "GPT Transcribe and GPT Live Transcribe Expand Voice-Interface Building Blocks",
+      "source": "OpenAI",
+      "date": "July 28",
+      "url": "https://openai.com/products/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-transcribe.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 959,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "No New Name Has Replaced “UX”",
+      "source": "Nielsen Norman Group",
+      "date": "July 31",
+      "url": "https://www.nngroup.com/articles/no-new-name-ux/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/nng-ux-name.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 128820,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "ChatGPT for Academic Researchers Combines Model Access with Guided Support",
+      "source": "OpenAI",
+      "date": "July 29",
+      "url": "https://openai.com/index/chatgpt-for-academic-researchers/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-academic.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1091,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Three Steps Help Scope Broad Research Studies Before They Sprawl",
+      "source": "Nielsen Norman Group",
+      "date": "July 27",
+      "url": "https://www.nngroup.com/videos/scope-your-broad-research-study/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/nng-research-scope.jpg",
+      "youtubeId": "",
+      "dimensions": "1600x900",
+      "sizeBytes": 171871,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "OpenAI Sets an August Retirement Date for the DALL·E GPT",
+      "source": "OpenAI",
+      "date": "July 31",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-dalle.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1105,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Codex Announces Replacements for GPT-5.4 Models Ahead of Retirement",
+      "source": "OpenAI",
+      "date": "July 31",
+      "url": "https://learn.chatgpt.com/docs/changelog",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-codex-models.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1001,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Lenny’s Product Pass Expands Access to Creative and Product Tools",
+      "source": "Lenny's Newsletter",
+      "date": "July 28",
+      "url": "https://www.lennysnewsletter.com/p/productpass-summer2026launch",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/lenny-product-pass.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 90935,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Code Is a Design Material",
       "source": "Google Design",
