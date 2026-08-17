@@ -1830,6 +1830,7 @@
       renderMonthWeekPicker(targetMonth.getUTCFullYear(), targetMonth.getUTCMonth());
     }
 
+    const hostedAssetBaseUrl = 'https://raw.githubusercontent.com/monicamin-glitch/automated-AI-UX-Newsletters/main';
     const externalCardImagesByUrl = {
       'https://claude.com/blog/new-in-claude-managed-agents': 'assets/external/claude-managed-agents.jpg',
       'https://help.figma.com/hc/en-us/articles/40219873508247-Release-notes-roundup-May-2026': 'assets/external/figma-release-notes-may-2026.jpg',
@@ -1860,6 +1861,25 @@
       }
     }
 
+    function shouldUseHostedAssetUrls() {
+      return /(^|\.)bpages\.booking\.com$/i.test(window.location.hostname);
+    }
+
+    function resolveHostedAssetUrl(value) {
+      const source = String(value || '').trim();
+      if (!source || !source.startsWith('assets/')) return source;
+      return hostedAssetBaseUrl.replace(/\/$/, '') + '/' + source.replace(/^\//, '');
+    }
+
+    function hydrateAssetImages(root = document) {
+      if (!shouldUseHostedAssetUrls()) return;
+      root.querySelectorAll?.('img[src]').forEach(image => {
+        const currentSrc = image.getAttribute('src') || '';
+        const hostedSrc = resolveHostedAssetUrl(currentSrc);
+        if (hostedSrc && hostedSrc !== currentSrc) image.setAttribute('src', hostedSrc);
+      });
+    }
+
     function showExternalCardFallback(container, card) {
       const rank = container.querySelector('.masonry-card-rank');
       const source = card.querySelector('.masonry-card-source')?.textContent.split('·')[0].trim() || 'External update';
@@ -1881,6 +1901,8 @@
 
       const existingImage = container.querySelector('img');
       if (existingImage) {
+        const hostedSrc = resolveHostedAssetUrl(existingImage.getAttribute('src') || '');
+        if (hostedSrc && hostedSrc !== existingImage.getAttribute('src')) existingImage.setAttribute('src', hostedSrc);
         existingImage.addEventListener('error', () => showExternalCardFallback(container, card), { once: true });
         if (existingImage.isConnected && existingImage.complete && existingImage.naturalWidth === 0) {
           showExternalCardFallback(container, card);
@@ -1895,7 +1917,7 @@
       }
 
       const image = document.createElement('img');
-      image.src = imagePath;
+      image.src = resolveHostedAssetUrl(imagePath);
       image.alt = (card.querySelector('.masonry-card-title')?.textContent || 'External article') + ' visual';
       image.addEventListener('error', () => showExternalCardFallback(container, card), { once: true });
       container.replaceChildren(image);
@@ -1942,6 +1964,7 @@
         if (!node) return;
         const clone = node.cloneNode(true);
         clone.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
+        hydrateAssetImages(clone);
         if (node === slackCards) clone.querySelectorAll('.slack-card').forEach(prepareSlackCard);
         if (node === externalGrid) clone.querySelectorAll('.masonry-card').forEach(prepareExternalCardImage);
         fragment.appendChild(clone);
@@ -2266,6 +2289,7 @@
 
     renderTopicCard(topicCardIndex);
     renderWeekPicker(weekPickerDisplayYear);
+    hydrateAssetImages(document);
     document.querySelectorAll('#page-latest .slack-card').forEach(prepareSlackCard);
     document.querySelectorAll('#page-latest .masonry-card').forEach(prepareExternalCardImage);
     syncSlackFilterPills(document.getElementById('page-latest'));
