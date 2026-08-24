@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T02:44:45.490Z",
+  "generatedAt": "2026-08-24T03:03:41.387Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,11 +15,11 @@
     ]
   },
   "summary": {
-    "cards": 112,
+    "cards": 115,
     "errors": 0,
     "warnings": 23,
     "counts": {
-      "embedded-img": 112
+      "embedded-img": 115
     }
   },
   "entries": [
@@ -29,14 +29,12 @@
       "date": "August 20",
       "url": "https://www.figma.com/blog/sightlines-issue-no2/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week34/01-figma-agent-leadership.svg",
+      "localImage": "assets/week34/01-figma-sightlines.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 2420,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "1200x630",
+      "sizeBytes": 24239,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "OpenAI Extends Zero Data Retention to Frontier-Model Safety Processing",
@@ -52,6 +50,19 @@
       "issues": [
         "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
       ]
+    },
+    {
+      "title": "Miro Reframes Jobs to Be Done as an AI-Era Innovation Operating System",
+      "source": "Miro",
+      "date": "August 18",
+      "url": "https://miro.com/blog/rebuilding-jobs-to-be-done-jtbd-with-ai-the-innovation-operating-system/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week34/05-miro-jtbd-ai.jpg",
+      "youtubeId": "",
+      "dimensions": "1600x900",
+      "sizeBytes": 185227,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "ChatGPT for Teens Adds Learning-Specific Guidance and Stronger Safeguards",
@@ -82,6 +93,34 @@
       "issues": [
         "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
       ]
+    },
+    {
+      "title": "Miro Adds More AI Capabilities to Enterprise Licenses at No Extra Cost",
+      "source": "Miro",
+      "date": "August 17",
+      "url": "https://miro.com/blog/enterprise-pricing-miro/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week34/06-miro-enterprise-ai.png",
+      "youtubeId": "",
+      "dimensions": "1400x792",
+      "sizeBytes": 702782,
+      "status": "warning",
+      "issues": [
+        "Large image file: 686 KB. Compress before B.Pages upload."
+      ]
+    },
+    {
+      "title": "Figma Can Recommend the Best Resource for the Job",
+      "source": "Figma",
+      "date": "August 17",
+      "url": "https://www.figma.com/release-notes/#aug-17-2026-recommend-the-best-resource-for-the-job",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week34/07-figma-resource-recommendation.svg",
+      "youtubeId": "",
+      "dimensions": "1600x1000",
+      "sizeBytes": 3697,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "Figma Lets Teams Discover, Create, and Publish Agent Skills in the Community",

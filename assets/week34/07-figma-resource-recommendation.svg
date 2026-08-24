@@ -1,0 +1,31 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1000" fill="#F6F1E8"/>
+  <rect x="70" y="70" width="1460" height="860" rx="42" fill="#FFFDF8"/>
+  <rect x="130" y="150" width="540" height="700" rx="30" fill="#183153"/>
+  <text x="185" y="230" fill="#F6F1E8" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700">Figma</text>
+  <text x="185" y="308" fill="#BFD7FF" font-family="'Helvetica Neue', Arial, sans-serif" font-size="30">Recommend the best resource for the job</text>
+  <rect x="185" y="370" width="430" height="150" rx="28" fill="#274A7A"/>
+  <text x="225" y="432" fill="#FFFDF8" font-family="'Helvetica Neue', Arial, sans-serif" font-size="26">Prompt</text>
+  <text x="225" y="474" fill="#DCE9FF" font-family="'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="700">"Help me map this onboarding</text>
+  <text x="225" y="516" fill="#DCE9FF" font-family="'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="700">flow and choose the right</text>
+  <text x="225" y="558" fill="#DCE9FF" font-family="'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="700">research artifact."</text>
+  <rect x="185" y="610" width="430" height="170" rx="28" fill="#D7E7FF"/>
+  <text x="225" y="672" fill="#183153" font-family="'Helvetica Neue', Arial, sans-serif" font-size="24">AI Recommendation</text>
+  <text x="225" y="720" fill="#183153" font-family="'Helvetica Neue', Arial, sans-serif" font-size="42" font-weight="700">Use a journey map +</text>
+  <text x="225" y="768" fill="#183153" font-family="'Helvetica Neue', Arial, sans-serif" font-size="42" font-weight="700">supporting interview guide</text>
+  <rect x="760" y="170" width="660" height="180" rx="34" fill="#FFF3D8" stroke="#E6C889" stroke-width="4"/>
+  <text x="815" y="245" fill="#725113" font-family="'Helvetica Neue', Arial, sans-serif" font-size="28">Why it matters</text>
+  <text x="815" y="295" fill="#3A2A09" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700">Figma is steering teams toward</text>
+  <text x="815" y="348" fill="#3A2A09" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700">the right design artifact faster.</text>
+  <rect x="760" y="410" width="300" height="180" rx="30" fill="#E7F5E8"/>
+  <text x="810" y="478" fill="#205A36" font-family="'Helvetica Neue', Arial, sans-serif" font-size="24">Suggested resource</text>
+  <text x="810" y="532" fill="#0F3120" font-family="'Helvetica Neue', Arial, sans-serif" font-size="36" font-weight="700">Journey map</text>
+  <text x="810" y="574" fill="#0F3120" font-family="'Helvetica Neue', Arial, sans-serif" font-size="36" font-weight="700">Interview guide</text>
+  <rect x="1120" y="410" width="300" height="180" rx="30" fill="#FDE6E0"/>
+  <text x="1170" y="478" fill="#8B3A2B" font-family="'Helvetica Neue', Arial, sans-serif" font-size="24">Design signal</text>
+  <text x="1170" y="532" fill="#4D1B11" font-family="'Helvetica Neue', Arial, sans-serif" font-size="36" font-weight="700">Less artifact drift</text>
+  <text x="1170" y="574" fill="#4D1B11" font-family="'Helvetica Neue', Arial, sans-serif" font-size="36" font-weight="700">More shared clarity</text>
+  <rect x="760" y="650" width="660" height="150" rx="34" fill="#E8ECF8"/>
+  <text x="815" y="718" fill="#183153" font-family="'Helvetica Neue', Arial, sans-serif" font-size="24">Week 34 AI × Design Digest</text>
+  <text x="815" y="772" fill="#183153" font-family="'Helvetica Neue', Arial, sans-serif" font-size="42" font-weight="700">AI-guided resource choice became a UX workflow signal.</text>
+</svg>

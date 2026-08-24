@@ -5,14 +5,15 @@
 ### Week 34 weekly refresh
 
 - Refreshed the latest website week to `Week 34` for `Aug 17-Aug 23, 2026` and archived the former latest week as template `Week 33` without deleting or renumbering any earlier history.
-- Added 8 validated Week 34 cards: 4 internal Slack Spotlights and 4 external updates, each latest external card backed by checked-in `assets/week34/` media.
+- Corrected the initial Week 34 pass after a full source re-audit: the latest week now carries 14 validated cards total, with 7 internal Slack Spotlights and 7 external updates.
+- Rechecked the image inventory against `media-strategy.md` and replaced the latest external set with checked-in `assets/week34/` media, including source-native Figma and Miro images plus a local fallback only where an item-specific official image was not cleanly exposed.
 - Preserved the collaborator UI contract: top navigation, `AI × Design` with `Shanghai`, the Latest Week topic module, `.slack-card`, `.masonry-card`, the calendar archive, the shared detail dialog, All Weeks, and the Resources Hub.
 
 ### Source coverage checklist
 
 - Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, and Bolt.
-- Section A included: Figma blog (`Sightlines issue no.2`) and OpenAI blog (`Zero Data Retention`, `ChatGPT for Teens`, and `ChatGPT Ads expands across Europe`).
-- Section A skipped: Anthropic had no stronger Aug 17-Aug 23 official product or workflow update in the configured sources; Google Stitch had no fresh official in-window update; Miro had no stronger in-window AI or newsroom item than prior archived coverage; Bolt had no qualifying in-window blog or changelog item.
+- Section A included: Figma blog (`Sightlines issue no.2`) plus the Aug 17 Figma release-note item (`Recommend the best resource for the job`); OpenAI blog (`Zero Data Retention`, `ChatGPT for Teens`, and `ChatGPT Ads expands across Europe`); and Miro blog (`Rebuilding Jobs to Be Done with AI`, `New Enterprise pricing`).
+- Section A skipped: Anthropic had no stronger Aug 17-Aug 23 official product or workflow update in the configured sources; Google Stitch had no fresh official in-window update; Bolt had no qualifying in-window blog or changelog item.
 - Section B checked: YouTube tutorial queries plus the configured Community sources.
 - Section B included: none. No in-window workflow tutorial or community write-up was stronger than the selected official-source and internal artifacts.
 - Section B skipped: YouTube did not surface a stronger completed Aug 17-Aug 23 reusable workflow artifact; the configured community sources did not produce a qualifying in-window AI x UX article worth publishing as a standalone card.
@@ -20,8 +21,8 @@
 - Section C included: none. No configured Section C source produced a fresh Aug 17-Aug 23 item strong enough for publication.
 - Section C skipped: NN/g had no verified in-window item strong enough for this digest; Lenny's feed/archive had no qualifying Aug 17-Aug 23 AI x UX post; Google Design and Google PAIR did not surface a fresh dated in-window library update.
 - Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-sdlc`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
-- Section D included: `#ai-studio-updates` token streaming for Flow Builder; `#genai_engineering` Fabric App `v0.0.25`; `#genai_engineering` Documentation Updater Agent; and `#uxw-genai` AI Guidelines for UX Writing.
-- Section D skipped: `#ai-for-ux` was audited, but the strongest in-window item was a call for Dieter testing volunteers rather than a completed reusable artifact; `#dev-china` and `#china-ai-sdlc` were checked, but the strongest items were training amplification or reference material rather than a stronger completed UX-facing update; `#mp-ai-engineering` mainly contained MR review requests and open workflow questions; `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design-language`, `#ai-design-curriculum`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` had no in-window posts in the target range; `#design` and `#design-systems` had useful discussion, but the strongest AI-related posts were future-event promotion or implementation support rather than a completed reusable artifact.
+- Section D included: `#ai-studio-updates` token streaming for Flow Builder; `#genai_engineering` Fabric App `v0.0.25`; `#genai_engineering` Documentation Updater Agent; `#genai_engineering` Review Readiness skill; `#uxw-genai` AI Guidelines for UX Writing; `#design` Design AI Summit workshop registration and helpdesk opening; and `#dev-china` the Arize observability SOP share.
+- Section D skipped: `#ai-for-ux` was audited, but the strongest in-window item was a call for Dieter testing volunteers rather than a completed reusable artifact; `#china-ai-sdlc` was checked, but the strongest items were training amplification or reference material rather than a stronger completed UX-facing update; `#mp-ai-engineering` mainly contained MR review requests and open workflow questions; `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design-language`, `#ai-design-curriculum`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` had no in-window posts in the target range; `#design-systems` had useful discussion, but the strongest AI-related posts were implementation support rather than a completed reusable artifact.
 - Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study remained reference-only for this run and were not published as standalone cards.
 
 ### Validation notes
@@ -29,6 +30,7 @@
 - Verified the target refresh window as `Aug 17-Aug 23, 2026`, because Monday, August 24, 2026 should publish the completed previous Monday-Sunday week per `digest.md`.
 - Verified each included Slack card has a permalink, named author, exact parent-message timestamp, reply count, verified original parent-message excerpt, and a public-safe visible summary.
 - Verified every latest external card uses checked-in local media under `assets/week34/` rather than runtime-only preview dependencies.
+- Reconciled the authoritative draft JSON with the corrected website so the structured card inventory, coverage checklist, and latest UI now describe the same 14-card Week 34 set.
 - Added a publish-path fix so the finalizer stages current collaborator `src="assets/..."` media and generates a cleaner week-based commit message.
 
 ### Known follow-ups
