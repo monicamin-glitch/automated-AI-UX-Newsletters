@@ -52,6 +52,7 @@
 
 - Refreshed the latest website week to `Week 33` for `Aug 10-Aug 16, 2026` and archived the previous latest page as template `Week 32` without deleting any older archive templates.
 - Added 14 validated Week 33 cards: 7 internal Slack Spotlights and 7 public product/design updates, with all public cards backed by checked-in `assets/week33/` media.
+- Restored the complete 14-card Week 33 report on Aug 24 after the Week 34 archive step was found to have copied an outdated 8-card snapshot; the repair reinstates the six later verified additions and their final source-native media without changing Week 34 or older history.
 - Kept the refresh scoped to the completed Monday-Sunday window from `digest.md` even though the pre-existing `Week 32` page already used the irregular range `Aug 4-Aug 10, 2026`.
 
 ### Source coverage checklist
