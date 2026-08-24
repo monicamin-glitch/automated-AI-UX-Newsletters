@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T03:03:41.387Z",
+  "generatedAt": "2026-08-24T03:31:27.477Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,11 +15,11 @@
     ]
   },
   "summary": {
-    "cards": 115,
+    "cards": 116,
     "errors": 0,
-    "warnings": 23,
+    "warnings": 21,
     "counts": {
-      "embedded-img": 115
+      "embedded-img": 116
     }
   },
   "entries": [
@@ -70,14 +70,12 @@
       "date": "August 18",
       "url": "https://openai.com/index/introducing-chatgpt-for-teens/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week34/03-openai-teens.svg",
+      "localImage": "assets/week34/03-openai-teens-official.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1995,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "1200x630",
+      "sizeBytes": 416681,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "OpenAI’s Europe Ads Rollout Makes Monetized AI UI Patterns Harder to Ignore",
@@ -85,14 +83,12 @@
       "date": "August 18",
       "url": "https://openai.com/index/chatgpt-ads-expands-across-europe/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week34/04-openai-ads-europe.svg",
+      "localImage": "assets/week34/04-openai-ads-official.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 2178,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "1200x630",
+      "sizeBytes": 303406,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "Miro Adds More AI Capabilities to Enterprise Licenses at No Extra Cost",
@@ -115,10 +111,23 @@
       "date": "August 17",
       "url": "https://www.figma.com/release-notes/#aug-17-2026-recommend-the-best-resource-for-the-job",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week34/07-figma-resource-recommendation.svg",
+      "localImage": "assets/week34/07-figma-release-notes.png",
       "youtubeId": "",
-      "dimensions": "1600x1000",
-      "sizeBytes": 3697,
+      "dimensions": "1200x630",
+      "sizeBytes": 38233,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Lenny’s Jobs Embeds AI Guidance Across the Job-Search Journey",
+      "source": "Lenny's Newsletter",
+      "date": "August 18",
+      "url": "https://www.lennysnewsletter.com/p/announcing-lennys-jobs-the-best-place",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week34/08-lenny-jobs.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 81264,
       "status": "ok",
       "issues": []
     },
