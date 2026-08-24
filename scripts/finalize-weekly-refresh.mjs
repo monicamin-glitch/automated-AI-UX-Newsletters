@@ -5,12 +5,15 @@ import {
   buildRefreshStatus,
   defaultBpagesBin,
   defaultBpagesId,
+  defaultBpagesTitle,
   defaultBpagesUrl,
+  defaultSlackReviewerId,
   gitCommitMessage,
   gitInfo,
   latestDigestSnapshot,
   repoRoot,
   runCommand,
+  slackConfig,
   stagedFilesForLatest,
   validateLatestSnapshot,
   writeRefreshStatus,
@@ -33,6 +36,17 @@ try {
     throw new Error(`Latest week structure failed:\n- ${snapshotErrors.join('\n- ')}`);
   }
 
+  console.log('Building public-safe GitHub and Booking-only B.Pages artifacts...');
+  const artifactArgs = ['scripts/build-publish-artifacts.mjs'];
+  if (options.commit || options.push) artifactArgs.push('--write-public');
+  runCommand('node', artifactArgs, { stdio: 'inherit' });
+
+  const publishSnapshot = latestDigestSnapshot();
+  const publishSnapshotErrors = validateLatestSnapshot(publishSnapshot);
+  if (publishSnapshotErrors.length) {
+    throw new Error(`Public-safe latest week structure failed:\n- ${publishSnapshotErrors.join('\n- ')}`);
+  }
+
   console.log('Checking whitespace/conflict markers...');
   runCommand('git', ['diff', '--check'], { stdio: 'inherit' });
 
@@ -43,6 +57,9 @@ try {
     bpages: {
       id: options.bpagesId,
       url: options.bpagesUrl,
+      title: options.bpagesTitle,
+      access: 'booking',
+      contentPolicy: 'verified Slack originals; credentials redacted',
       updated: false,
     },
   });
@@ -75,7 +92,9 @@ try {
       'update',
       options.bpagesId,
       '--content',
-      path.join(repoRoot, 'index.html'),
+      path.join(repoRoot, 'automation-status', 'bpages-index.html'),
+      '--title',
+      options.bpagesTitle,
     ], { stdio: 'inherit' });
     bpagesUpdated = true;
   }
@@ -89,6 +108,9 @@ try {
     bpages: {
       id: options.bpagesId,
       url: options.bpagesUrl,
+      title: options.bpagesTitle,
+      access: 'booking',
+      contentPolicy: 'verified Slack originals; credentials redacted',
       updated: bpagesUpdated,
     },
   });
@@ -105,6 +127,9 @@ try {
     bpages: {
       id: options.bpagesId,
       url: options.bpagesUrl,
+      title: options.bpagesTitle,
+      access: 'booking',
+      contentPolicy: 'verified Slack originals; credentials redacted',
       updated: false,
     },
   });
@@ -115,11 +140,13 @@ try {
 }
 
 async function notifyReviewer(status) {
-  const token = process.env.SLACK_BOT_TOKEN;
-  const reviewerId = process.env.SLACK_REVIEWER_ID || 'U07UFBBSZ9D';
-  if (!token || !reviewerId) {
-    console.log('Skipped Slack status DM because SLACK_BOT_TOKEN or reviewer ID is missing.');
+  const slack = slackConfig();
+  if (!slack.readyForNotify) {
+    console.log('Skipped Slack status DM because SLACK_BOT_TOKEN is missing.');
     return;
+  }
+  if (slack.reviewerIdSource === 'default') {
+    console.log(`Slack status DM is using the default reviewer fallback (${defaultSlackReviewerId}). Set SLACK_REVIEWER_ID in the automation runtime to make the target explicit.`);
   }
   const ok = status.status === 'published';
   const text = ok
@@ -144,11 +171,11 @@ async function notifyReviewer(status) {
   const response = await fetch('https://slack.com/api/chat.postMessage', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`,
       'Content-Type': 'application/json; charset=utf-8',
     },
     body: JSON.stringify({
-      channel: reviewerId,
+      channel: slack.reviewerId,
       text,
       unfurl_links: false,
       unfurl_media: false,
@@ -170,6 +197,7 @@ function parseArgs(args) {
     bpagesBin: defaultBpagesBin,
     bpagesId: defaultBpagesId,
     bpagesUrl: defaultBpagesUrl,
+    bpagesTitle: defaultBpagesTitle,
   };
 
   for (let index = 0; index < args.length; index += 1) {
@@ -195,6 +223,9 @@ function parseArgs(args) {
       index += 1;
     } else if (arg === '--bpages-url') {
       options.bpagesUrl = next;
+      index += 1;
+    } else if (arg === '--bpages-title') {
+      options.bpagesTitle = next;
       index += 1;
     } else if (arg === '--help' || arg === '-h') {
       printHelp();

@@ -11,17 +11,22 @@ import {
   repoRoot,
 } from './slack-weekly-lib.mjs';
 
+try { process.loadEnvFile(path.join(repoRoot, '.env')); } catch {}
+
 export const statusDir = path.join(repoRoot, 'automation-status');
 export const statusPath = path.join(statusDir, 'weekly-refresh-status.json');
 export const defaultBpagesId = '4de2388206';
 export const defaultBpagesUrl = defaultDigestUrl;
 export const defaultBpagesBin = '/Users/ymin/.bpages/bin/bpages';
+export const defaultBpagesTitle = 'Wang Zi';
+export const defaultSlackReviewerId = 'C0BJTN197PH';
 export { repoRoot };
 
 export function latestDigestSnapshot() {
   const html = readHtml();
   const week = parseLatestWeek(html);
   const cards = parseCards(week.html, { fullHtml: html, weekId: week.id });
+  const parsedCards = [...cards.internal, ...cards.external];
   const range = latestHeroRange(week.html);
   return {
     html,
@@ -30,15 +35,14 @@ export function latestDigestSnapshot() {
     internalCount: cards.internal.length,
     externalCount: cards.external.length,
     cardCount: cards.internal.length + cards.external.length,
-    slackLinkCount: cards.internal.filter(card => card.link).length,
-    updateLabelCount: (week.html.match(/What is the update:/g) || []).length,
-    whyLabelCount: (week.html.match(/Why it(?:'|’|&#x27;)s valuable for UXers:/g) || []).length,
+    slackLinkCount: cards.internal.filter(card => Boolean(card.link)).length,
+    updateLabelCount: parsedCards.filter(card => Boolean(card.update)).length,
+    whyLabelCount: parsedCards.filter(card => Boolean(card.why)).length,
   };
 }
 
 export function latestHeroRange(pageHtml) {
-  const heading = firstMatch(pageHtml, /<div class="page-header">[\s\S]*?<h1>Week\s+\d+\s*-\s*([^<]+)<\/h1>/);
-  return heading || firstMatch(pageHtml, /<p class="hero-subtitle">([^<]+)<\/p>/);
+  return firstMatch(pageHtml, /<p class="hero-subtitle">([^<]+)<\/p>/) || normalizedWeekRangeFromHeader(pageHtml);
 }
 
 export function buildRefreshStatus(overrides = {}) {
@@ -63,9 +67,13 @@ export function buildRefreshStatus(overrides = {}) {
     },
     contentFingerprint: digestFingerprint(snapshot),
     git: gitInfo(),
+    slack: slackConfig(),
     bpages: {
       id: defaultBpagesId,
       url: defaultBpagesUrl,
+      title: defaultBpagesTitle,
+      access: 'booking',
+      contentPolicy: 'verified Slack originals; credentials redacted',
       updated: false,
     },
     errors: [],
@@ -144,6 +152,18 @@ export function gitInfo() {
   };
 }
 
+export function slackConfig(env = process.env) {
+  const hasToken = Boolean(env.SLACK_BOT_TOKEN);
+  const reviewerId = env.SLACK_REVIEWER_ID || defaultSlackReviewerId;
+  return {
+    botTokenPresent: hasToken,
+    reviewerIdPresent: Boolean(env.SLACK_REVIEWER_ID),
+    reviewerId,
+    reviewerIdSource: env.SLACK_REVIEWER_ID ? 'env' : (reviewerId ? 'default' : 'missing'),
+    readyForNotify: hasToken && Boolean(reviewerId),
+  };
+}
+
 export function changedFiles() {
   const result = spawnSync('git', ['diff', '--name-only'], { cwd: repoRoot, encoding: 'utf8' });
   if (result.status !== 0) return [];
@@ -152,19 +172,12 @@ export function changedFiles() {
 
 export function stagedFilesForLatest() {
   const snapshot = latestDigestSnapshot();
-  const assetMatches = [
-    ...snapshot.week.html.matchAll(/data-img="([^"]+)"/g),
-    ...snapshot.week.html.matchAll(/<img[^>]+src="([^"]+)"/g),
-  ]
+  const assetMatches = [...snapshot.week.html.matchAll(/(?:data-img|src)="([^"]+)"/g)]
     .map(match => match[1])
     .filter(value => value.startsWith('assets/'));
   return unique([
     'index.html',
     'update-notes.md',
-    'sources.md',
-    'digest.md',
-    'design-spec.md',
-    'media-strategy.md',
     'assets/media-manifest.json',
     ...assetMatches,
   ]).filter(relativePath => fs.existsSync(path.join(repoRoot, relativePath)));
@@ -201,6 +214,13 @@ function optionalGit(args) {
 
 function firstMatch(source, pattern) {
   return String(source || '').match(pattern)?.[1] || '';
+}
+
+function normalizedWeekRangeFromHeader(pageHtml) {
+  const heading = firstMatch(pageHtml, /<div class="page-header">\s*<h1>([\s\S]*?)<\/h1>/);
+  const match = String(heading).replace(/\s+/g, ' ').trim().match(/^Week\s+\d+\s*-\s*(.+)$/i);
+  if (!match) return '';
+  return match[1].replace(/\s+to\s+/i, ' – ');
 }
 
 function unique(values) {

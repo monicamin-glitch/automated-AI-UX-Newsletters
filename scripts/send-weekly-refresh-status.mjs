@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 import {
+  defaultSlackReviewerId,
   readRefreshStatus,
+  slackConfig,
   statusPath,
 } from './weekly-refresh-status.mjs';
 
@@ -10,10 +12,12 @@ if (!status) {
   throw new Error(`Missing refresh status file: ${statusPath}`);
 }
 
-const token = process.env.SLACK_BOT_TOKEN;
-const reviewerId = process.env.SLACK_REVIEWER_ID || 'U07UFBBSZ9D';
-if (!token) {
+const slack = slackConfig();
+if (!slack.botTokenPresent) {
   throw new Error('Missing SLACK_BOT_TOKEN. Cannot send the status DM.');
+}
+if (slack.reviewerIdSource === 'default') {
+  console.log(`Using default reviewer fallback ${defaultSlackReviewerId}. Set SLACK_REVIEWER_ID in the automation runtime to make the DM target explicit.`);
 }
 
 const isPublished = status.status === 'published';
@@ -36,11 +40,11 @@ const text = isPublished
 const response = await fetch('https://slack.com/api/chat.postMessage', {
   method: 'POST',
   headers: {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`,
     'Content-Type': 'application/json; charset=utf-8',
   },
   body: JSON.stringify({
-    channel: reviewerId,
+    channel: slack.reviewerId,
     text,
     unfurl_links: false,
     unfurl_media: false,
@@ -52,4 +56,27 @@ if (!response.ok || !body.ok) {
   throw new Error(`Slack API chat.postMessage failed: ${JSON.stringify(body)}`);
 }
 
-console.log(`Sent weekly refresh status to ${reviewerId}`);
+console.log(`Sent weekly refresh status to ${slack.reviewerId}`);
+
+const groupChatId = process.env.SLACK_PICKER_CHANNEL_ID;
+if (groupChatId && groupChatId !== slack.reviewerId) {
+  const groupResponse = await fetch('https://slack.com/api/chat.postMessage', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`,
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+    body: JSON.stringify({
+      channel: groupChatId,
+      text,
+      unfurl_links: false,
+      unfurl_media: false,
+    }),
+  });
+  const groupBody = await groupResponse.json();
+  if (!groupResponse.ok || !groupBody.ok) {
+    console.error(`Warning: failed to send status to group chat ${groupChatId}: ${JSON.stringify(groupBody)}`);
+  } else {
+    console.log(`Sent weekly refresh status to group chat ${groupChatId}`);
+  }
+}

@@ -56,22 +56,32 @@ function parsePublicCards(source) {
   }
 
   const cards = [];
-  const staticMarkup = source.slice(0, source.indexOf('<script>') === -1 ? source.length : source.indexOf('<script>'));
-  const cardPattern = /<a\s+class="article-card"([\s\S]*?)<\/a>/g;
+  const latestStart = source.match(/<div class="page active" id="page-latest"[^>]*>/)?.index ?? -1;
+  const latestEnd = source.indexOf('<template id="week-report-', latestStart);
+  const staticMarkup = latestStart >= 0 && latestEnd > latestStart
+    ? source.slice(latestStart, latestEnd)
+    : source.slice(0, source.indexOf('<script>') === -1 ? source.length : source.indexOf('<script>'));
+  const cardPattern = /<a\s+class="(?:article-card|masonry-card)"([^>]*)>([\s\S]*?)<\/a>/g;
   let match;
   while ((match = cardPattern.exec(staticMarkup)) !== null) {
     const block = match[0];
     const openAttrs = match[1];
     const imageMatch = block.match(/<div\s+class="article-card-image"([^>]*)>/);
     const imageAttrs = imageMatch ? parseAttrs(imageMatch[1]) : {};
+    const imgAttrs = parseAttrs(firstMatch(block, /<img([^>]*)>/));
+    const masonryMeta = textContent(firstMatch(block, /<div\s+class="masonry-card-source">([\s\S]*?)<\/div>/));
+    const [masonrySource = '', masonryDate = ''] = masonryMeta.split('·').map(value => value.trim());
     cards.push({
-      title: textContent(firstMatch(block, /<h3\s+class="article-card-title">([\s\S]*?)<\/h3>/)),
+      title: textContent(
+        firstMatch(block, /<h3\s+class="article-card-title">([\s\S]*?)<\/h3>/) ||
+        firstMatch(block, /<h3\s+class="masonry-card-title">([\s\S]*?)<\/h3>/)
+      ),
       url: decodeHtml(parseAttrs(openAttrs).href || ''),
-      source: textContent(firstMatch(block, /<div\s+class="article-card-meta"><span>([\s\S]*?)<\/span>/)),
-      date: textContent(firstMatch(block, /<div\s+class="article-card-meta">[\s\S]*?<span>[\s\S]*?<\/span><span>([\s\S]*?)<\/span>/)),
+      source: textContent(firstMatch(block, /<div\s+class="article-card-meta"><span>([\s\S]*?)<\/span>/)) || masonrySource,
+      date: textContent(firstMatch(block, /<div\s+class="article-card-meta">[\s\S]*?<span>[\s\S]*?<\/span><span>([\s\S]*?)<\/span>/)) || masonryDate,
       section: imageAttrs['data-section'] || '',
-      label: imageAttrs['data-label'] || '',
-      dataImg: imageAttrs['data-img'] || '',
+      label: imageAttrs['data-label'] || masonrySource,
+      dataImg: imageAttrs['data-img'] || imgAttrs.src || '',
       youtubeId: imageAttrs['data-yt-id'] || '',
     });
   }

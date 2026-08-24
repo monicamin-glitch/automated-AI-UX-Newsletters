@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T05:42:16.235Z",
+  "generatedAt": "2026-08-24T02:44:45.490Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,50 +15,84 @@
     ]
   },
   "summary": {
-    "cards": 111,
+    "cards": 112,
     "errors": 0,
-    "warnings": 16,
+    "warnings": 23,
     "counts": {
-      "embedded-img": 111
+      "embedded-img": 112
     }
   },
   "entries": [
+    {
+      "title": "Figma’s Sightlines Brief Gives Leaders a Practical Trust Frame for Agents",
+      "source": "Figma",
+      "date": "August 20",
+      "url": "https://www.figma.com/blog/sightlines-issue-no2/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week34/01-figma-agent-leadership.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 2420,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "OpenAI Extends Zero Data Retention to Frontier-Model Safety Processing",
+      "source": "OpenAI",
+      "date": "August 19",
+      "url": "https://openai.com/index/our-commitment-to-zero-data-retention/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week34/02-openai-zdr.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 2011,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "ChatGPT for Teens Adds Learning-Specific Guidance and Stronger Safeguards",
+      "source": "OpenAI",
+      "date": "August 18",
+      "url": "https://openai.com/index/introducing-chatgpt-for-teens/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week34/03-openai-teens.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1995,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "OpenAI’s Europe Ads Rollout Makes Monetized AI UI Patterns Harder to Ignore",
+      "source": "OpenAI",
+      "date": "August 18",
+      "url": "https://openai.com/index/chatgpt-ads-expands-across-europe/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week34/04-openai-ads-europe.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 2178,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
     {
       "title": "Figma Lets Teams Discover, Create, and Publish Agent Skills in the Community",
       "source": "Figma",
       "date": "August 13",
       "url": "https://www.figma.com/release-notes/#aug-13-2026-try-skills-from-the-community-and-make-your-own-with-the-figma-agent",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week33/01-figma-agent-skills.png",
-      "youtubeId": "",
-      "dimensions": "542x305",
-      "sizeBytes": 84255,
-      "status": "ok",
-      "issues": []
-    },
-    {
-      "title": "OpenAI's Head of Design Argues AI Expands What Strong Designers Can Own",
-      "source": "Lenny's Newsletter",
-      "date": "August 16",
-      "url": "https://www.lennysnewsletter.com/p/openais-head-of-design-this-is-the",
-      "mediaSource": "embedded-img",
-      "localImage": "assets/week33/05-lenny-openai-design-interview.jpg",
-      "youtubeId": "",
-      "dimensions": "1200x600",
-      "sizeBytes": 115513,
-      "status": "ok",
-      "issues": []
-    },
-    {
-      "title": "ChatGPT App Updates Bring Quizzes, Project Memory Controls, and Linux Desktop Preview",
-      "source": "OpenAI",
-      "date": "August 14",
-      "url": "https://help.openai.com/en/articles/6825453-release-notes#august-14-2026-chatgpt-app-experience-updates",
-      "mediaSource": "embedded-img",
-      "localImage": "assets/week33/06-openai-app-experience.svg",
+      "localImage": "assets/week33/01-figma-agent-skills.svg",
       "youtubeId": "",
       "dimensions": "1200x675",
-      "sizeBytes": 2438,
+      "sizeBytes": 2021,
       "status": "warning",
       "issues": [
         "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
@@ -70,12 +104,14 @@
       "date": "August 13",
       "url": "https://help.openai.com/en/articles/6825453-release-notes#august-13-2026-google-drive-is-now-in-library",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week33/02-openai-drive-library.png",
+      "localImage": "assets/week33/02-openai-drive-library.svg",
       "youtubeId": "",
-      "dimensions": "2560x1440",
-      "sizeBytes": 199056,
-      "status": "ok",
-      "issues": []
+      "dimensions": "1200x675",
+      "sizeBytes": 1916,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
     },
     {
       "title": "Figma MCP Can Now Run Weave Tools from ChatGPT, Claude, and Cursor",
@@ -83,25 +119,14 @@
       "date": "August 11",
       "url": "https://www.figma.com/release-notes/#aug-11-2026-figma-mcp-run-weave-tools-right-from-your-favorite-agent",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week33/03-figma-weave-mcp.png",
+      "localImage": "assets/week33/03-figma-weave-mcp.svg",
       "youtubeId": "",
-      "dimensions": "540x304",
-      "sizeBytes": 57936,
-      "status": "ok",
-      "issues": []
-    },
-    {
-      "title": "Bolt Adds Dictation So Builders Can Speak Full Prompts Instead of Typing Them",
-      "source": "Bolt",
-      "date": "August 13",
-      "url": "https://bolt.new/blog/dictation-bolt-new",
-      "mediaSource": "embedded-img",
-      "localImage": "assets/week33/07-bolt-dictation.webp",
-      "youtubeId": "",
-      "dimensions": "1920x1080",
-      "sizeBytes": 48512,
-      "status": "ok",
-      "issues": []
+      "dimensions": "1200x675",
+      "sizeBytes": 1763,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
     },
     {
       "title": "Figma Adds Better Responsive Text Wrapping for Slides, Sites, and Buzz",
@@ -109,12 +134,14 @@
       "date": "August 14",
       "url": "https://www.figma.com/release-notes/#aug-14-2026-get-responsive-text-across-screens-with-text-wrap",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week33/04-figma-text-wrap.png",
+      "localImage": "assets/week33/04-figma-text-wrap.svg",
       "youtubeId": "",
-      "dimensions": "542x305",
-      "sizeBytes": 237709,
-      "status": "ok",
-      "issues": []
+      "dimensions": "1200x675",
+      "sizeBytes": 2021,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
     },
     {
       "title": "Axe MCP Server Expands Automated Accessibility Coverage",

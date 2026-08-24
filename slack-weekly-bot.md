@@ -30,11 +30,14 @@ Invite the bot to the target internal UX channel, then keep these values outside
 export SLACK_BOT_TOKEN="xoxb-..."
 export SLACK_CHANNEL_ID="C03NSF0EGFQ"
 export SLACK_REVIEWER_ID="U07UFBBSZ9D"
+export SLACK_PICKER_CHANNEL_ID="C0BJTN197PH"
 ```
+
+If the Monday automation runs in a different shell or launch context than your interactive terminal, export the same variables there as well. The scripts can fall back to reviewer `U07UFBBSZ9D`, but that fallback is only a safety net and should not be treated as the normal configuration.
 
 The current target channel is `#china-ux-group-internal` (`C03NSF0EGFQ`).
 Use the channel ID instead of the channel name so posting stays stable if the channel is renamed.
-Use the reviewer ID for the private approval picker before the final channel share is created.
+Use `SLACK_PICKER_CHANNEL_ID` for the collaborative approval picker. `SLACK_REVIEWER_ID` remains the direct status-notification fallback.
 
 ---
 
@@ -44,12 +47,18 @@ The main newsletter website refresh runs every Monday at 10:00. Generate the Sla
 
 For the next weekly share, use the Canvas version represented by `https://booking.enterprise.slack.com/docs/T0AMUUBC7/F0BEHNEPZT9`: two columns for Internal Slack updates and External AI updates, concise headlines, one `Why UXers care` line per item, direct Slack message links for internal items, source links/media-preview links for external items, and an `SH` title prefix.
 
-The active Codex automation for the Monday picker is `weekly-ai-ux-slack-highlights-picker`. It runs after the website refresh and sends Monica the private candidate picker. Final sharing to `#china-ux-group-internal` still requires Monica's selected item numbers and approval.
+The active Codex automation for the Monday picker is `weekly-ai-ux-slack-highlights-picker`. It runs after the website refresh and sends the complete candidate picker to the review group chat `C0BJTN197PH`. Final sharing to `#china-ux-group-internal` still requires explicit selected item numbers and approval in that group chat.
 
 1. Confirm the website refresh completed:
 
 ```bash
 node scripts/check-weekly-refresh-ready.mjs
+```
+
+Optional preflight checks before sending the picker:
+
+```bash
+node scripts/check-source-access.mjs
 ```
 
 If this fails, do not generate a picker. Send Monica the status failure and rerun or repair the website refresh first.
@@ -69,21 +78,21 @@ drafts/slack-weekly-highlights-YYYY-MM-DD.md
 
 By default, the draft includes up to 50 candidates per category so the private picker acts as a complete weekly review list, not only a short auto-ranked shortlist. The generator reads both static website cards and cards injected from the website's backfilled source arrays.
 
-3. Send Monica a private picker message:
+3. Send the picker to the review group chat:
 
 ```bash
-node scripts/generate-slack-weekly-picker.mjs --post --reviewer-id U07UFBBSZ9D drafts/slack-weekly-highlights-YYYY-MM-DD.json
+node scripts/generate-slack-weekly-picker.mjs --post --reviewer-id C0BJTN197PH drafts/slack-weekly-highlights-YYYY-MM-DD.json
 ```
 
-The private picker is a simple numbered list based on all candidates fetched into the refreshed website. Monica can reply in Slack with:
+The picker is a numbered list based on all candidates parsed from the refreshed public-safe website. A reviewer can reply in Slack with:
 
 ```text
 Internal: 1, 3, 6
 External: 2, 4, 5
-Output: message
+Output: canvas
 ```
 
-Use `Output: canvas` when the final share should be a Slack Canvas instead of a compact channel message. For `#china-ux-group-internal`, Canvas is the default output format unless Monica explicitly asks for a message-only share.
+Canvas is the required default for `#china-ux-group-internal`. Do not offer or generate the final message-only format unless Monica explicitly requests an exception.
 If the complete weekly picker is too long for one Slack message, the sender splits it into numbered preview parts while keeping the item numbers stable.
 
 To preview the picker locally without sending:

@@ -32,7 +32,7 @@ if (!options.post) {
 }
 
 const token = process.env.SLACK_BOT_TOKEN;
-const reviewerId = options.reviewerId || process.env.SLACK_REVIEWER_ID;
+const reviewerId = options.reviewerId || process.env.SLACK_PICKER_CHANNEL_ID || process.env.SLACK_REVIEWER_ID;
 
 if (!token) {
   throw new Error('Missing SLACK_BOT_TOKEN. Store the bot token in the environment; do not commit it.');

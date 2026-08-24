@@ -1,6 +1,50 @@
 # Update Notes
 
+## 2026-08-24
+
+### Week 34 weekly refresh
+
+- Refreshed the latest website week to `Week 34` for `Aug 17-Aug 23, 2026` and archived the former latest week as template `Week 33` without deleting or renumbering any earlier history.
+- Added 8 validated Week 34 cards: 4 internal Slack Spotlights and 4 external updates, each latest external card backed by checked-in `assets/week34/` media.
+- Preserved the collaborator UI contract: top navigation, `AI × Design` with `Shanghai`, the Latest Week topic module, `.slack-card`, `.masonry-card`, the calendar archive, the shared detail dialog, All Weeks, and the Resources Hub.
+
+### Source coverage checklist
+
+- Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, and Bolt.
+- Section A included: Figma blog (`Sightlines issue no.2`) and OpenAI blog (`Zero Data Retention`, `ChatGPT for Teens`, and `ChatGPT Ads expands across Europe`).
+- Section A skipped: Anthropic had no stronger Aug 17-Aug 23 official product or workflow update in the configured sources; Google Stitch had no fresh official in-window update; Miro had no stronger in-window AI or newsroom item than prior archived coverage; Bolt had no qualifying in-window blog or changelog item.
+- Section B checked: YouTube tutorial queries plus the configured Community sources.
+- Section B included: none. No in-window workflow tutorial or community write-up was stronger than the selected official-source and internal artifacts.
+- Section B skipped: YouTube did not surface a stronger completed Aug 17-Aug 23 reusable workflow artifact; the configured community sources did not produce a qualifying in-window AI x UX article worth publishing as a standalone card.
+- Section C checked: Nielsen Norman Group, Lenny's Newsletter, Google Design, and Google PAIR.
+- Section C included: none. No configured Section C source produced a fresh Aug 17-Aug 23 item strong enough for publication.
+- Section C skipped: NN/g had no verified in-window item strong enough for this digest; Lenny's feed/archive had no qualifying Aug 17-Aug 23 AI x UX post; Google Design and Google PAIR did not surface a fresh dated in-window library update.
+- Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-sdlc`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Section D included: `#ai-studio-updates` token streaming for Flow Builder; `#genai_engineering` Fabric App `v0.0.25`; `#genai_engineering` Documentation Updater Agent; and `#uxw-genai` AI Guidelines for UX Writing.
+- Section D skipped: `#ai-for-ux` was audited, but the strongest in-window item was a call for Dieter testing volunteers rather than a completed reusable artifact; `#dev-china` and `#china-ai-sdlc` were checked, but the strongest items were training amplification or reference material rather than a stronger completed UX-facing update; `#mp-ai-engineering` mainly contained MR review requests and open workflow questions; `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design-language`, `#ai-design-curriculum`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` had no in-window posts in the target range; `#design` and `#design-systems` had useful discussion, but the strongest AI-related posts were future-event promotion or implementation support rather than a completed reusable artifact.
+- Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study remained reference-only for this run and were not published as standalone cards.
+
+### Validation notes
+
+- Verified the target refresh window as `Aug 17-Aug 23, 2026`, because Monday, August 24, 2026 should publish the completed previous Monday-Sunday week per `digest.md`.
+- Verified each included Slack card has a permalink, named author, exact parent-message timestamp, reply count, verified original parent-message excerpt, and a public-safe visible summary.
+- Verified every latest external card uses checked-in local media under `assets/week34/` rather than runtime-only preview dependencies.
+- Added a publish-path fix so the finalizer stages current collaborator `src="assets/..."` media and generates a cleaner week-based commit message.
+
+### Known follow-ups
+
+- The guarded finalizer still needs to complete fetch integration with any newer remote GitHub commits, commit/push, B.Pages publish, status-file update, and Slack notification before this refresh can be treated as published.
+
 ## 2026-08-17
+
+### Canonical definitions and scheduler alignment
+
+- Replaced the retired sidebar/article-card documentation with the collaborator top-navigation, calendar-template, Slack-card, masonry-card, and Resources Hub contracts.
+- Defined a two-artifact publish boundary: public GitHub receives summary-only Slack dialogs; Booking-only B.Pages receives verified parent messages from an ignored private store.
+- Added `scripts/build-publish-artifacts.mjs` and wired the finalizer to generate `automation-status/bpages-index.html`, enforce B.Pages title `Wang Zi`, preserve access `booking`, use absolute GitHub Pages media, and sanitize the public artifact before staging.
+- Updated date-bucket and media validators for the current collaborator markup.
+- Aligned the Monday/Thursday 09:00 auth preflight, Monday 10:00 refresh, and Monday 11:30 Slack picker definitions and live automation prompts.
+- Preserved the B.Pages website header contract: `AI × Design`, `Shanghai`, and far-right `Created by Monica Min · Wang Zi`.
 
 ### Week 33 weekly refresh
 
@@ -274,7 +318,7 @@
 - Added `digest.md` Monday auto-refresh logic so future runs know how to fetch, archive, validate, and deploy the weekly site update.
 - Updated the filter-chip generation rule so `Product Updates` displays last after `All`, `Workflows`, `Deeper Thinking`, and `Slack Spotlights`.
 - Added Week 5 as the latest digest for Jun 2-Jun 8, 2026.
-- Archived the previous latest week as Week 4 while preserving Week 3, Week 2, and Week 1.
+- Archived the previous latest Week 4 page while preserving Week 3, Week 2, and Week 1.
 - Kept the June refresh scoped to the completed Jun 2-Jun 8 window; Jun 9+ updates belong to the following week.
 
 ### Manual Jun 9-Jun 12 source refresh

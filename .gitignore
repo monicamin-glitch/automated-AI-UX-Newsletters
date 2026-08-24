@@ -4,3 +4,4 @@ drafts/
 automation-status/
 .worktrees/
 .superpowers/
+.env
