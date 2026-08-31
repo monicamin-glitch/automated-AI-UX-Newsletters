@@ -5,7 +5,7 @@
 ### Week 35 weekly refresh
 
 - Refreshed the latest website week to `Week 35` for `Aug 24-Aug 30, 2026` and archived the former latest week as template `Week 34` without deleting or renumbering earlier history.
-- Rebuilt the latest set around 12 validated cards total, with 5 internal Slack Spotlights and 7 external updates that all belong to the completed Monday-Sunday window.
+- Rebuilt the latest set around 14 validated cards total, with 6 internal Slack Spotlights and 8 external updates that all belong to the completed Monday-Sunday window.
 - Kept the collaborator UI contract unchanged: top navigation, `AI × Design` with `Shanghai`, the Latest Week topic module, `.slack-card`, `.masonry-card`, calendar archive templates, the shared detail dialog, All Weeks, and the Resources Hub.
 - Added checked-in local media under `assets/week35/` for every external card and kept the Booking-only publish path ready to swap summary dialogs for verified Slack originals at artifact build time.
 
@@ -18,10 +18,10 @@
 - Section B included: none. No in-window workflow tutorial or community write-up was stronger than the selected official product updates and internal reusable artifacts.
 - Section B skipped: YouTube did not surface a stronger completed Aug 24-Aug 30 workflow artifact; UX Collective and Medium Design Bootcamp did not produce a qualifying in-window AI x UX article worth publishing as a standalone card.
 - Section C checked: Nielsen Norman Group, Lenny's Newsletter feed/archive, Google Design, and Google PAIR.
-- Section C included: Nielsen Norman Group (`The Custodial Era of UX: Cleaning Up After AI`) because it is a dated in-window strategic read with direct implications for AI evaluation, quality control, and UX practice.
-- Section C skipped: Lenny's Newsletter did not surface a stronger dated Aug 24-Aug 30 AI x UX item than the selected set; Google Design and Google PAIR did not surface a fresh dated in-window library update.
+- Section C included: Nielsen Norman Group (`The Custodial Era of UX: Cleaning Up After AI`) because it is a dated in-window strategic read with direct implications for AI evaluation, quality control, and UX practice; and Lenny's Newsletter (`I spent $20,000 on Devin in a month. Here’s what I learned | Ryan Carson (solo founder)`) because it documents a concrete Devin / Claude / Codex workflow with direct frontend and design-spec implications.
+- Section C skipped: Google Design and Google PAIR did not surface a fresh dated in-window library update.
 - Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
-- Section D included: `#ai-for-ux` the animation toolkit tester call and the Design AI Summit update; `#dev-china` the Cross-BU learning session deck and recording share; `#mp-ai-engineering` the meetup artifacts covering skills telemetry, architecture support, and `bctl`; and `#ai-studio-updates` the Atlassian MCP retirement workaround for Flow Builder.
+- Section D included: `#ai-for-ux` the animation toolkit tester call and the Design AI Summit update; `#dev-china` the Cross-BU learning session deck and recording share; `#mp-ai-engineering` the meetup artifacts covering skills telemetry, architecture support, and `bctl`; `#ai-studio-updates` the Atlassian MCP retirement workaround for Flow Builder; and `#genai_engineering` the AI Tips notification launch.
 - Section D skipped: `#genai_engineering`, `#china-ai-workstream`, `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` were audited but did not surface a stronger completed UX-relevant update than the selected cards; duplicate or older-context Design AI Summit mentions were deduplicated in favor of the Aug 26 `#ai-for-ux` update that included the registration-rule change and recording confirmation.
 - Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study remained reference-only for this run and were not published as standalone cards.
 
@@ -30,7 +30,7 @@
 - Verified the target refresh window as `Aug 24-Aug 30, 2026` because Monday, August 31, 2026 should publish the completed previous Monday-Sunday week per `digest.md`.
 - Verified each included Slack card has a permalink, named author, exact parent-thread timestamp context, date, and reply count, and stored a Booking-only original-message excerpt in `automation-status/private-slack-originals.json` with credentials redacted where needed.
 - Verified every latest external card uses checked-in local media under `assets/week35/` rather than runtime-only preview dependencies.
-- Reconciled the authoritative draft JSON with the latest website so the structured card inventory and latest UI now describe the same 12-card Week 35 set.
+- Reconciled the authoritative draft JSON with the latest website so the structured card inventory and latest UI now describe the same 14-card Week 35 set.
 - Updated the archive picker state so All Weeks opens on archived `Week 34` while still allowing `Week 35` to render from the live latest page.
 
 ### Known follow-ups
@@ -51,7 +51,7 @@
 - `#ai-for-ux` did not surface a missed qualifying card beyond the two already published items: Flora Thiam's animation toolkit tester call and Matthew Pennell's Design AI Summit update with the recording confirmation in-thread.
 - `#design` was rechecked and contained the same Design AI Summit cross-post already covered from `#ai-for-ux`, plus non-newsletter-eligible items such as a general Design Newsletter issue share, non-AI research recruitment, and non-AI platform/design updates. No additional Week 35 internal card cleared the Slack Spotlight eligibility rules.
 - `#design-systems` was rechecked and did not surface a completed AI-related or UX-AI workflow artifact in the target window. The visible posts were component support, chart-pattern discussion, and illustration maintenance rather than a qualifying AI x UX update.
-- Rechecked Lenny's Newsletter archive for `Aug 24-Aug 30, 2026`. The visible Aug 25 post was a career-planning piece rather than a stronger AI x UX update, so no Week 35 Lenny card was missed. Google Stitch, Miro, Google Design, and Google PAIR were also rechecked; none produced a stronger in-window UX-relevant update than the published Week 35 set.
+- Rechecked Lenny's Newsletter archive and `How I AI` feed for `Aug 24-Aug 30, 2026`. The visible Aug 25 career-planning post remained out of scope, but the Aug 24 Ryan Carson workflow episode qualified and was added because it documents a concrete Devin / Claude / Codex split that affects frontend and design-system work. Google Stitch, Miro, Google Design, and Google PAIR were also rechecked; none produced a stronger in-window UX-relevant update than the published Week 35 set.
 
 ## 2026-08-31 (question-driven correction)
 
@@ -61,6 +61,14 @@
 - Audited that bot digest against `slack-spotlight.md` and kept it out of the published Week 35 cards on purpose: it repackaged earlier source threads such as Documentation Updater Agent, Fabric `v0.0.25`, the Atlassian/Sourcegraph MCP migration note, Arize observability, and Review Readiness. Per the internal rules, a rewritten digest is not treated as the original source and duplicate weekly signals should not be republished as a second Slack card.
 - Replaced the Week 35 `Scheduled tasks can respond to app updates and be shared` fallback visual with the official OpenAI Help Center Scheduled Tasks product image at `assets/week35/02-openai-scheduled-tasks-official.webp`.
 - Kept the separate Week 35 `ChatGPT Work can now complete tasks on signed-in websites` card on its local fallback for now. The official cloud-browser Help Center page did not expose a usable image through automation fetch, so the next better replacement would be a checked-in screenshot of the real OpenAI article page captured from a browser session rather than another generated image.
+
+## 2026-08-31 (source recheck expansion)
+
+### Added missed external and internal cards
+
+- Added a new Week 35 external card from Lenny's Newsletter: `I spent $20,000 on Devin in a month. Here’s what I learned | Ryan Carson (solo founder)`, published `2026-08-24`, using checked-in source-native media at `assets/week35/07-lenny-ryan-carson.jpg`.
+- Added a new Week 35 internal Slack Spotlight from `#genai_engineering`: `AI Tips Notifications Make Internal AI Discoveries Easier to Follow`, based on Deborah Davis-DeWitt's `2026-08-27` parent message announcing notification support for `tips.booking.com`.
+- Rechecked Lenny's Newsletter more broadly than the archive list alone. The Aug 24 AI workflow item qualified; the Aug 25 career piece and other non-UX or non-in-window items stayed out.
 
 ## 2026-08-24
 

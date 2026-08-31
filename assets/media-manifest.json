@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T03:13:45.128Z",
+  "generatedAt": "2026-08-31T03:25:25.548Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,11 +15,11 @@
     ]
   },
   "summary": {
-    "cards": 126,
+    "cards": 127,
     "errors": 0,
     "warnings": 19,
     "counts": {
-      "embedded-img": 126
+      "embedded-img": 127
     }
   },
   "entries": [
@@ -113,6 +113,19 @@
       "youtubeId": "",
       "dimensions": "1200x630",
       "sizeBytes": 19334,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "I spent $20,000 on Devin in a month. Here’s what I learned | Ryan Carson (solo founder)",
+      "source": "Lenny's Newsletter",
+      "date": "August 24",
+      "url": "https://www.lennysnewsletter.com/p/i-spent-20000-on-devin-in-a-month",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week35/07-lenny-ryan-carson.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x600",
+      "sizeBytes": 100504,
       "status": "ok",
       "issues": []
     },
