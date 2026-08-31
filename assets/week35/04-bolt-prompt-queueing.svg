@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Bolt prompt queueing illustration</title>
+  <desc id="desc">Branded illustration for Bolt prompt queueing.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#eef2ff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="92" y="92" width="1016" height="491" rx="40" fill="#111827"/>
+  <rect x="154" y="150" width="410" height="66" rx="18" fill="#1f2937"/>
+  <rect x="154" y="260" width="410" height="66" rx="18" fill="#1f2937"/>
+  <rect x="154" y="370" width="410" height="66" rx="18" fill="#1f2937"/>
+  <rect x="154" y="480" width="410" height="66" rx="18" fill="#1f2937"/>
+  <rect x="640" y="150" width="312" height="314" rx="28" fill="#2563eb"/>
+  <path d="M714 312h162" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+  <path d="m814 242 70 70-70 70" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="154" y="618" fill="#312e81" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="30" font-weight="800">Bolt.new</text>
+  <text x="154" y="656" fill="#0f172a" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="44" font-weight="800">Prompt queueing is live</text>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Anthropic memory and Cowork illustration</title>
+  <desc id="desc">Branded illustration for Claude Cowork memory and editable topics.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fafaf9"/>
+      <stop offset="100%" stop-color="#e7e5e4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="110" y="100" width="980" height="475" rx="36" fill="#ffffff" stroke="#d6d3d1" stroke-width="4"/>
+  <rect x="168" y="162" width="298" height="340" rx="28" fill="#f5f5f4"/>
+  <rect x="526" y="162" width="430" height="72" rx="24" fill="#f5f5f4"/>
+  <rect x="526" y="274" width="392" height="20" rx="10" fill="#d6d3d1"/>
+  <rect x="526" y="316" width="362" height="20" rx="10" fill="#d6d3d1"/>
+  <rect x="526" y="358" width="408" height="20" rx="10" fill="#d6d3d1"/>
+  <path d="M318 248c52 0 94 42 94 94s-42 94-94 94-94-42-94-94 42-94 94-94Z" fill="#111827"/>
+  <path d="M318 290c29 0 52 23 52 52s-23 52-52 52-52-23-52-52 23-52 52-52Z" fill="#ffffff"/>
+  <path d="m980 210-54 54 54 54" fill="none" stroke="#78716c" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m858 210 54 54-54 54" fill="none" stroke="#78716c" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="168" y="612" fill="#44403c" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="30" font-weight="800">Anthropic</text>
+  <text x="168" y="652" fill="#0f172a" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="40" font-weight="800">Memory in Claude Cowork, editable topics, and a sensitive topics setting</text>
+</svg>

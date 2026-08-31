@@ -1,5 +1,42 @@
 # Update Notes
 
+## 2026-08-31
+
+### Week 35 weekly refresh
+
+- Refreshed the latest website week to `Week 35` for `Aug 24-Aug 30, 2026` and archived the former latest week as template `Week 34` without deleting or renumbering earlier history.
+- Rebuilt the latest set around 12 validated cards total, with 5 internal Slack Spotlights and 7 external updates that all belong to the completed Monday-Sunday window.
+- Kept the collaborator UI contract unchanged: top navigation, `AI × Design` with `Shanghai`, the Latest Week topic module, `.slack-card`, `.masonry-card`, calendar archive templates, the shared detail dialog, All Weeks, and the Resources Hub.
+- Added checked-in local media under `assets/week35/` for every external card and kept the Booking-only publish path ready to swap summary dialogs for verified Slack originals at artifact build time.
+
+### Source coverage checklist
+
+- Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, and Bolt.
+- Section A included: Figma release notes (`Enterprise-managed authorization for MCP is now generally available`, `Open the agent chat panel in a new window`); OpenAI release notes (`Scheduled tasks can respond to app updates and be shared`, `ChatGPT Work can now complete tasks on signed-in websites`); Anthropic release notes (`Memory in Claude Cowork, editable topics, and a sensitive topics setting`); and Bolt blog (`Prompt queueing is live: queue your next idea while Bolt.new builds`).
+- Section A skipped: Google Stitch had no fresh official Aug 24-Aug 30 update in the configured sources; Miro AI/blog and newsroom checks did not surface a stronger in-window UX-relevant update than the selected set.
+- Section B checked: YouTube tutorial queries plus the configured Community sources.
+- Section B included: none. No in-window workflow tutorial or community write-up was stronger than the selected official product updates and internal reusable artifacts.
+- Section B skipped: YouTube did not surface a stronger completed Aug 24-Aug 30 workflow artifact; UX Collective and Medium Design Bootcamp did not produce a qualifying in-window AI x UX article worth publishing as a standalone card.
+- Section C checked: Nielsen Norman Group, Lenny's Newsletter feed/archive, Google Design, and Google PAIR.
+- Section C included: Nielsen Norman Group (`The Custodial Era of UX: Cleaning Up After AI`) because it is a dated in-window strategic read with direct implications for AI evaluation, quality control, and UX practice.
+- Section C skipped: Lenny's Newsletter did not surface a stronger dated Aug 24-Aug 30 AI x UX item than the selected set; Google Design and Google PAIR did not surface a fresh dated in-window library update.
+- Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Section D included: `#ai-for-ux` the animation toolkit tester call and the Design AI Summit update; `#dev-china` the Cross-BU learning session deck and recording share; `#mp-ai-engineering` the meetup artifacts covering skills telemetry, architecture support, and `bctl`; and `#ai-studio-updates` the Atlassian MCP retirement workaround for Flow Builder.
+- Section D skipped: `#genai_engineering`, `#china-ai-workstream`, `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` were audited but did not surface a stronger completed UX-relevant update than the selected cards; duplicate or older-context Design AI Summit mentions were deduplicated in favor of the Aug 26 `#ai-for-ux` update that included the registration-rule change and recording confirmation.
+- Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study remained reference-only for this run and were not published as standalone cards.
+
+### Validation notes
+
+- Verified the target refresh window as `Aug 24-Aug 30, 2026` because Monday, August 31, 2026 should publish the completed previous Monday-Sunday week per `digest.md`.
+- Verified each included Slack card has a permalink, named author, exact parent-thread timestamp context, date, and reply count, and stored a Booking-only original-message excerpt in `automation-status/private-slack-originals.json` with credentials redacted where needed.
+- Verified every latest external card uses checked-in local media under `assets/week35/` rather than runtime-only preview dependencies.
+- Reconciled the authoritative draft JSON with the latest website so the structured card inventory and latest UI now describe the same 12-card Week 35 set.
+- Updated the archive picker state so All Weeks opens on archived `Week 34` while still allowing `Week 35` to render from the live latest page.
+
+### Known follow-ups
+
+- The mandatory finalizer still needs to integrate newer remote commits safely, commit/push, publish the Booking-only B.Pages artifact `4de2388206`, update status, and notify review group `C0BJTN197PH` before this refresh can be treated as published.
+
 ## 2026-08-24
 
 ### Week 34 weekly refresh

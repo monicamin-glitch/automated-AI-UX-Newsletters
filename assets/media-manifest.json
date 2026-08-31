@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T06:55:01.408Z",
+  "generatedAt": "2026-08-31T02:38:13.526Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,105 @@
     ]
   },
   "summary": {
-    "cards": 119,
+    "cards": 126,
     "errors": 0,
     "warnings": 18,
     "counts": {
-      "embedded-img": 119
+      "embedded-img": 126
     }
   },
   "entries": [
+    {
+      "title": "Enterprise-managed authorization for MCP is now generally available",
+      "source": "Figma",
+      "date": "August 24",
+      "url": "https://www.figma.com/release-notes/#aug-24-2026-enterprise-managed-authorization-for-mcp-is-now-generally-available",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week35/01-figma-mcp-auth.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1977,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Scheduled tasks can respond to app updates and be shared",
+      "source": "OpenAI",
+      "date": "August 25",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week35/02-openai-scheduled-tasks.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1884,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "The Custodial Era of UX: Cleaning Up After AI",
+      "source": "Nielsen Norman Group",
+      "date": "August 28",
+      "url": "https://www.nngroup.com/articles/ai-ux-debt/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week35/03-nng-custodial-era.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1870,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Prompt queueing is live: queue your next idea while Bolt.new builds",
+      "source": "Bolt.new",
+      "date": "August 27",
+      "url": "https://bolt.new/blog/prompt-queueing",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week35/04-bolt-prompt-queueing.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1463,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Open the agent chat panel in a new window",
+      "source": "Figma",
+      "date": "August 26",
+      "url": "https://www.figma.com/release-notes/#aug-26-2026-open-the-agent-chat-panel-in-a-new-window",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week35/05-figma-agent-chat-window.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1806,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "ChatGPT Work can now complete tasks on signed-in websites",
+      "source": "OpenAI",
+      "date": "August 25",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week35/02-openai-scheduled-tasks.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1884,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Memory in Claude Cowork, editable topics, and a sensitive topics setting",
+      "source": "Anthropic",
+      "date": "August 25",
+      "url": "https://support.claude.com/en/articles/12138966-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week35/06-anthropic-memory-cowork.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1793,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Figma’s Sightlines Brief Gives Leaders a Practical Trust Frame for Agents",
       "source": "Figma",
