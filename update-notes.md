@@ -53,6 +53,15 @@
 - `#design-systems` was rechecked and did not surface a completed AI-related or UX-AI workflow artifact in the target window. The visible posts were component support, chart-pattern discussion, and illustration maintenance rather than a qualifying AI x UX update.
 - Rechecked Lenny's Newsletter archive for `Aug 24-Aug 30, 2026`. The visible Aug 25 post was a career-planning piece rather than a stronger AI x UX update, so no Week 35 Lenny card was missed. Google Stitch, Miro, Google Design, and Google PAIR were also rechecked; none produced a stronger in-window UX-relevant update than the published Week 35 set.
 
+## 2026-08-31 (question-driven correction)
+
+### China workstream digest and OpenAI media follow-up
+
+- Rechecked `#dev-china` specifically for `Aug 24-Aug 30, 2026` after the follow-up question about the China workstream bot and found the `China AI Workstream Bot` digest posted on `2026-08-24`.
+- Audited that bot digest against `slack-spotlight.md` and kept it out of the published Week 35 cards on purpose: it repackaged earlier source threads such as Documentation Updater Agent, Fabric `v0.0.25`, the Atlassian/Sourcegraph MCP migration note, Arize observability, and Review Readiness. Per the internal rules, a rewritten digest is not treated as the original source and duplicate weekly signals should not be republished as a second Slack card.
+- Replaced the Week 35 `Scheduled tasks can respond to app updates and be shared` fallback visual with the official OpenAI Help Center Scheduled Tasks product image at `assets/week35/02-openai-scheduled-tasks-official.webp`.
+- Kept the separate Week 35 `ChatGPT Work can now complete tasks on signed-in websites` card on its local fallback for now. The official cloud-browser Help Center page did not expose a usable image through automation fetch, so the next better replacement would be a checked-in screenshot of the real OpenAI article page captured from a browser session rather than another generated image.
+
 ## 2026-08-24
 
 ### Week 34 weekly refresh

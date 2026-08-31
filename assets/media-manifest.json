@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T02:58:32.793Z",
+  "generatedAt": "2026-08-31T03:13:45.128Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -17,7 +17,7 @@
   "summary": {
     "cards": 126,
     "errors": 0,
-    "warnings": 18,
+    "warnings": 19,
     "counts": {
       "embedded-img": 126
     }
@@ -42,12 +42,14 @@
       "date": "August 25",
       "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week35/02-openai-scheduled-tasks.svg",
+      "localImage": "assets/week35/02-openai-scheduled-tasks-official.webp",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 1884,
-      "status": "ok",
-      "issues": []
+      "dimensions": "1344x381",
+      "sizeBytes": 20908,
+      "status": "warning",
+      "issues": [
+        "Unusual card aspect ratio: 3.53."
+      ]
     },
     {
       "title": "The Custodial Era of UX: Cleaning Up After AI",
