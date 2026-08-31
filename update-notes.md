@@ -37,6 +37,22 @@
 
 - The mandatory finalizer still needs to integrate newer remote commits safely, commit/push, publish the Booking-only B.Pages artifact `4de2388206`, update status, and notify review group `C0BJTN197PH` before this refresh can be treated as published.
 
+## 2026-08-31 (follow-up)
+
+### Media re-audit and source coverage check
+
+- Re-audited every Week 35 external card against `media-strategy.md` after follow-up feedback about repeated first-version image issues.
+- Replaced four generated Week 35 fallback visuals with checked-in first-party assets from the original source websites: Figma release-notes imagery for the MCP authorization and agent-chat cards, the NN/g article artwork for `The Custodial Era of UX`, Bolt's product visual for prompt queueing, and Anthropic's Help Center release-notes OG image.
+- OpenAI remains the only Week 35 image-source exception. Rechecked the official release-notes URL plus the feature-specific Help Center pages for Scheduled Tasks and Cloud Browser, but direct CLI fetches still returned a Cloudflare challenge page instead of the article HTML or screenshots. The two OpenAI cards therefore remain on the local generated fallback until a source-native asset can be captured from an authenticated browser path.
+
+### Missed-source re-audit
+
+- Re-read the target week directly in `#ai-for-ux`, `#design`, and `#design-systems` for `Aug 24-Aug 30, 2026` instead of relying only on earlier search passes.
+- `#ai-for-ux` did not surface a missed qualifying card beyond the two already published items: Flora Thiam's animation toolkit tester call and Matthew Pennell's Design AI Summit update with the recording confirmation in-thread.
+- `#design` was rechecked and contained the same Design AI Summit cross-post already covered from `#ai-for-ux`, plus non-newsletter-eligible items such as a general Design Newsletter issue share, non-AI research recruitment, and non-AI platform/design updates. No additional Week 35 internal card cleared the Slack Spotlight eligibility rules.
+- `#design-systems` was rechecked and did not surface a completed AI-related or UX-AI workflow artifact in the target window. The visible posts were component support, chart-pattern discussion, and illustration maintenance rather than a qualifying AI x UX update.
+- Rechecked Lenny's Newsletter archive for `Aug 24-Aug 30, 2026`. The visible Aug 25 post was a career-planning piece rather than a stronger AI x UX update, so no Week 35 Lenny card was missed. Google Stitch, Miro, Google Design, and Google PAIR were also rechecked; none produced a stronger in-window UX-relevant update than the published Week 35 set.
+
 ## 2026-08-24
 
 ### Week 34 weekly refresh
