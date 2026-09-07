@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T03:25:25.548Z",
+  "generatedAt": "2026-09-07T05:16:44.742Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,178 @@
     ]
   },
   "summary": {
-    "cards": 127,
+    "cards": 139,
     "errors": 0,
-    "warnings": 19,
+    "warnings": 23,
     "counts": {
-      "embedded-img": 127
+      "embedded-img": 139
     }
   },
   "entries": [
+    {
+      "title": "GPT-6 Astra brings stronger computer use and professional artifact creation",
+      "source": "OpenAI",
+      "date": "September 3",
+      "url": "https://openai.com/index/gpt-6-astra/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/02-openai-astra.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 735,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Claude Fable 5.1 and Mythos 5.1 advance long-running agent work",
+      "source": "Anthropic",
+      "date": "September 1",
+      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-1",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/01-anthropic-fable-mythos.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 44864,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Visual Edits lets builders change a running app by clicking on it",
+      "source": "Bolt",
+      "date": "September 3",
+      "url": "https://bolt.new/blog/visual-edits",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/08-bolt-visual-edits.webp",
+      "youtubeId": "",
+      "dimensions": "1376x768",
+      "sizeBytes": 62684,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Zendesk and OneNote plugins connect support context and shared notes",
+      "source": "OpenAI",
+      "date": "September 3",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/03-openai-plugins.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 872,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "ChatGPT Sites adds named external viewer sharing",
+      "source": "OpenAI",
+      "date": "September 3",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/04-openai-sites.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1072,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Website tools let ChatGPT Work and Codex act through WebMCP",
+      "source": "OpenAI",
+      "date": "August 31",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/05-openai-webmcp.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1095,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Figma’s design agent can publish generative plugins and interactive shaders",
+      "source": "Figma",
+      "date": "September 1",
+      "url": "https://www.figma.com/blog/how-we-built-generative-plugins-and-shaders/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/06-figma-generative-plugins.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 151111,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Miroverse spotlights AI workflows for discovery and team alignment",
+      "source": "Miro",
+      "date": "September 4",
+      "url": "https://miro.com/blog/miroverse-august-2026/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/07-miroverse-august.png",
+      "youtubeId": "",
+      "dimensions": "1200x627",
+      "sizeBytes": 117403,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Bolt publishes eight prompting habits for less rework and token spend",
+      "source": "Bolt",
+      "date": "September 2",
+      "url": "https://bolt.new/blog/prompting-guide",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/09-bolt-prompting.webp",
+      "youtubeId": "",
+      "dimensions": "1600x900",
+      "sizeBytes": 94376,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "When the canvas starts acting, who is really in control?",
+      "source": "UX Collective",
+      "date": "September 6",
+      "url": "https://newsletter.uxdesign.cc/p/when-the-canvas-starts-acting-whos",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/10-ux-collective.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 82579,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "NN/g assembles a study guide for using AI across UX work",
+      "source": "Nielsen Norman Group",
+      "date": "September 4",
+      "url": "https://www.nngroup.com/articles/ai-work-study-guide/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/11-nng-study-guide.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 103048,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "An end-to-end process pushes AI design beyond generic output",
+      "source": "Lenny's Newsletter",
+      "date": "September 1",
+      "url": "https://www.lennysnewsletter.com/p/how-to-turn-your-ai-into-a-world",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/12-lenny-world-class-designer.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 53840,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Enterprise-managed authorization for MCP is now generally available",
       "source": "Figma",

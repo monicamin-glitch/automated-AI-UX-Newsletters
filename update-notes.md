@@ -1,5 +1,41 @@
 # Update Notes
 
+## 2026-09-07
+
+### Week 36 weekly refresh
+
+- Refreshed Latest Week to `Week 36` for `Aug 31-Sep 6, 2026` and archived the former latest as template `Week 35` without deleting or renumbering history.
+- Published 21 verified cards: 9 internal Slack Spotlights and 12 external AI-and-design updates, all within the completed Monday-Sunday window.
+- Preserved the collaborator UI contract: top navigation, `AI × Design` with `Shanghai`, Latest Week topics, `.slack-card`, `.masonry-card`, calendar archives, shared detail dialog, All Weeks, and Resources Hub.
+
+### Source coverage checklist
+
+- Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, and Bolt.
+- Section A included: Anthropic (`Claude Fable 5.1 and Mythos 5.1`); OpenAI (`GPT-6 Astra`, `Zendesk & OneNote Plugins`, named external sharing for ChatGPT Sites, and WebMCP website tools); Figma (generative plugin and interactive shader publishing); Miro (August Miroverse AI workflow templates); and Bolt (Visual Edits and its prompting workflow guide).
+- Section A skipped: Google Stitch had no verified in-window official update. Figma's Sep 3 opacity-at-scale release was verified but skipped because it was not materially AI-related. OpenAI's sticker packs, lock-screen voice content, broader browser-extension support, pronunciation help, and Healthcare Public Data were verified but stayed below the UX-work relevance threshold or were too domain-specific.
+- Section B checked: YouTube tutorial queries, UX Collective, and Medium Design Bootcamp.
+- Section B included: UX Collective (`When the canvas starts acting, who’s really in control?`).
+- Section B skipped: YouTube and Medium Design Bootcamp did not surface a verified in-window workflow artifact strong enough for inclusion.
+- Section C checked: Nielsen Norman Group, Lenny's Newsletter, Google Design, and Google PAIR.
+- Section C included: NN/g (`Using AI for UX Work: Study Guide`) and Lenny's Newsletter (`How to turn your AI into a world-class designer`).
+- Section C skipped: Google Design and Google PAIR did not surface a fresh, dated in-window update.
+- Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-sdlc` (the active channel matching the configured China workstream), `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Section D included: `#ai-for-ux` (UX AI Hub and /washup); `#agent-fabric` as the original source for the Google Docs MCP announcement forwarded into a watched channel; `#genai_engineering` (Fabric App 0.0.30, Project Lightning, and the EM Agentic Profile success story); `#design` (Page Builder workshop); `#ai-gateway-updates` (Google generative media models); and `#unlock-order-program-all` as the original source for the Unlock Knowledge Assistant forwarded into a watched channel.
+- Section D skipped: `#dev-china` contained a China AI Workstream Bot digest and event material, but the digest rewrote other parents and was not treated as an original; `#china-ai-sdlc` contained planning and amplification rather than a completed UX artifact; `#mp-ai-engineering` contained operational review requests and open questions; `#design-systems` contained an unfinished AI-label discussion and a duplicate Page Builder share; `#uxw-genai` duplicated the UX AI Hub and included an operational model-setup workaround; `#ai-uxers-of-fintech` contained questions and lower-signal links; `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#design-language`, `#ai-design-curriculum`, and `#conversational-ai-traveller-all-ux` had no qualifying in-window parent post.
+- Stable internal reference sources checked: AI-UX Hub @ Fintech, UX AI Use Case Sharing, and Claude Code Case Study remained reference-only except where the new cross-UX UX AI Hub launch qualified as a current update.
+
+### Validation notes
+
+- Verified every included Slack card against its exact parent message, named author, timestamp, permalink, date, and reply count. Cross-posts and rewritten bot digests were deduplicated in favor of original parents.
+- Stored verified parent text only in the Booking-only build path; public GitHub dialogs are generated as labeled newsletter summaries. No credentials or reply-thread secrets were included.
+- Added checked-in media under `assets/week36/` for every external card. First-party article artwork is used where fetchable; the four OpenAI cards use distinct local branded fallbacks because automated OpenAI page fetches exposed no usable item media.
+- The local source-access preflight returned warnings for YouTube, Figma, Anthropic, OpenAI, NN/g, Lenny, and Bolt in the restricted runtime. Dates and claims were therefore verified through authenticated web access, and first-party media was downloaded only from the verified article metadata where available.
+- GitHub origin was fetched before editing and was already synchronized with local `main`; unrelated collaborator changes and untracked files were preserved.
+
+### Known follow-ups
+
+- The mandatory finalizer must still validate, commit, push, publish Booking-only B.Pages artifact `4de2388206`, enforce `Wang Zi` / `booking` / `Created by Monica Min · Wang Zi`, and notify review group `C0BJTN197PH` before this run is complete.
+
 ## 2026-08-31
 
 ### Week 35 weekly refresh
