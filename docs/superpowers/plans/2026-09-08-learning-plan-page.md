@@ -239,10 +239,10 @@ Expected: the new Learning Plan test passes and no failure is attributable to `p
 Run:
 
 ```bash
-node scripts/finalize-weekly-refresh.mjs --validate-only
+node scripts/finalize-weekly-refresh.mjs
 ```
 
-Expected: validation completes without a Learning Plan-related error and leaves weekly content unchanged.
+Expected: the script finishes with `Weekly refresh validated.`. With no `--commit`, `--push`, `--publish-bpages`, or `--notify` flags, it performs the repository's validation/build checks without publishing, pushing, committing, or messaging Slack; weekly source content remains unchanged.
 
 - [ ] **Step 4: Review the page at desktop and 390px widths**
 
