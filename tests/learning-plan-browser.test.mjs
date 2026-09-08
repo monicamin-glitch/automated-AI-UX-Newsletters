@@ -137,37 +137,86 @@ test('browser gates Learning Plan desktop, mobile, navigation, and keyboard cont
       const intersects = (first, second) => { const a = first.getBoundingClientRect(); const b = second.getBoundingClientRect(); return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top; };
       const rail = document.querySelector('.learning-month-label');
       const agenda = document.querySelector('.learning-list');
-      const actionOverlaps = [...document.querySelectorAll('.learning-row')].flatMap((row, rowIndex) => {
-        const action = row.querySelector('.learning-action, .learning-action-disabled');
-        return [...row.children]
-          .filter(cell => cell !== action && intersects(action, cell))
-          .map(cell => ({ rowIndex, cell: cell.className }));
+      const rows = [...document.querySelectorAll('.learning-row')].map(row => {
+        const topic = row.querySelector('.learning-topic-wrap');
+        const presenter = row.querySelector('.learning-presenter');
+        const fields = [
+          ['date', row.querySelector('.learning-date')],
+          ['topic', topic],
+          ['duration', row.querySelector('.learning-duration')],
+          ['type', row.querySelector('.learning-type-wrap')],
+          ['action', row.querySelector('.learning-action, .learning-action-disabled')]
+        ];
+        const overlaps = fields.flatMap(([name, field], index) => fields.slice(index + 1)
+          .filter(([, other]) => intersects(field, other))
+          .map(([otherName]) => name + '/' + otherName));
+        const topicBox = topic.getBoundingClientRect();
+        const presenterBox = presenter?.getBoundingClientRect();
+        return {
+          overlaps,
+          presenterInsideTopic: !presenter || (presenterBox.width > 0 && presenterBox.height > 0 && presenterBox.left >= topicBox.left && presenterBox.right <= topicBox.right && presenterBox.top >= topicBox.top && presenterBox.bottom <= topicBox.bottom)
+        };
       });
-      return { rail: rect(rail), agenda: rect(agenda), actionOverlaps };
+      return { rail: rect(rail), agenda: rect(agenda), rows };
     })()`);
     assert.ok(desktop.rail.right < desktop.agenda.left, 'desktop month rail must remain before the agenda');
-    assert.deepEqual(desktop.actionOverlaps, [], 'desktop actions must not overlap row content');
+    const desktopRowsValid = desktop.rows.every(row => row.overlaps.length === 0 && row.presenterInsideTopic);
+    assert.equal(desktopRowsValid, true, 'desktop field geometry must reject overlapping fields or presenter overflow');
+    assert.deepEqual(desktop.rows.map(row => row.overlaps), Array.from({ length: 11 }, () => []), 'desktop date/topic/duration/type/action fields must never overlap');
+    assert.deepEqual(desktop.rows.map(row => row.presenterInsideTopic), Array.from({ length: 11 }, () => true), 'desktop presenter metadata must remain visible inside its topic wrapper');
 
     await browser.setViewport(390, 844);
     const mobile = await browser.evaluate(`(() => {
+      const intersects = (first, second) => { const a = first.getBoundingClientRect(); const b = second.getBoundingClientRect(); return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top; };
+      const geometry = element => {
+        const box = element.getBoundingClientRect();
+        return { left: box.left, top: box.top, right: box.right, bottom: box.bottom, visible: box.width > 0 && box.height > 0, inBounds: box.left >= 0 && box.right <= document.documentElement.clientWidth };
+      };
       const label = document.querySelector('.learning-month-label').getBoundingClientRect();
       const agenda = document.querySelector('.learning-list').getBoundingClientRect();
       const actions = [...document.querySelectorAll('.learning-action, .learning-action-disabled')].map(action => {
         const box = action.getBoundingClientRect();
         return { visible: box.width > 0 && box.height > 0, inBounds: box.left >= 0 && box.right <= document.documentElement.clientWidth };
       });
+      const rows = [...document.querySelectorAll('.learning-row')].map(row => {
+        const date = row.querySelector('.learning-date');
+        const topicColumn = row.querySelector('.learning-topic-wrap');
+        const topic = row.querySelector('.learning-topic');
+        const presenter = row.querySelector('.learning-presenter');
+        const duration = row.querySelector('.learning-duration');
+        const type = row.querySelector('.learning-type');
+        const action = row.querySelector('.learning-action, .learning-action-disabled');
+        const topicColumnBox = topicColumn.getBoundingClientRect();
+        const presenterBox = presenter?.getBoundingClientRect();
+        return {
+          dateLeftOfTopic: date.getBoundingClientRect().right <= topicColumnBox.left,
+          fieldsVisible: [date, topic, duration, type, action].every(field => { const value = geometry(field); return value.visible && value.inBounds; }),
+          presenterInsideTopic: !presenter || (presenterBox.width > 0 && presenterBox.height > 0 && presenterBox.left >= topicColumnBox.left && presenterBox.right <= topicColumnBox.right && presenterBox.top >= topicColumnBox.top && presenterBox.bottom <= topicColumnBox.bottom),
+          flowTopToBottom: topicColumnBox.bottom <= duration.getBoundingClientRect().top && duration.getBoundingClientRect().bottom <= type.getBoundingClientRect().top && type.getBoundingClientRect().bottom <= action.getBoundingClientRect().top,
+          flowNonOverlapping: !intersects(topicColumn, duration) && !intersects(duration, type) && !intersects(type, action)
+        };
+      });
       return {
         scrollWidth: document.documentElement.scrollWidth,
         clientWidth: document.documentElement.clientWidth,
         labelAboveAgenda: label.bottom <= agenda.top,
         actionCount: actions.length,
-        actions
+        actions,
+        rows
       };
     })()`);
     assert.equal(mobile.scrollWidth, mobile.clientWidth, '390px page must not overflow horizontally');
     assert.equal(mobile.labelAboveAgenda, true, '390px month label must sit above its agenda');
     assert.equal(mobile.actionCount, 11, '390px page must render all 11 Learning Plan actions');
     assert.deepEqual(mobile.actions, Array.from({ length: 11 }, () => ({ visible: true, inBounds: true })), '390px actions must be visible and in bounds');
+    assert.equal(mobile.rows.length, 11, '390px page must retain all 11 Learning Plan rows');
+    const mobileRowsValid = mobile.rows.every(row => row.dateLeftOfTopic && row.fieldsVisible && row.presenterInsideTopic && row.flowTopToBottom && row.flowNonOverlapping);
+    assert.equal(mobileRowsValid, true, '390px row geometry must reject missing, overlapping, or misplaced fields');
+    assert.deepEqual(mobile.rows.map(row => row.dateLeftOfTopic), Array.from({ length: 11 }, () => true), '390px dates must remain visibly left of the topic column');
+    assert.deepEqual(mobile.rows.map(row => row.fieldsVisible), Array.from({ length: 11 }, () => true), '390px topic, duration, type, and action fields must remain visible and in bounds');
+    assert.deepEqual(mobile.rows.map(row => row.presenterInsideTopic), Array.from({ length: 11 }, () => true), '390px presenter metadata must remain visible inside its topic wrapper');
+    assert.deepEqual(mobile.rows.map(row => row.flowTopToBottom), Array.from({ length: 11 }, () => true), '390px topic, duration, type, and action fields must flow top to bottom');
+    assert.deepEqual(mobile.rows.map(row => row.flowNonOverlapping), Array.from({ length: 11 }, () => true), '390px topic, duration, type, and action fields must not overlap');
 
     const navigation = await browser.evaluate(`(() => ['latest', 'all', 'resources', 'learning'].map(page => { const tab = document.querySelector('.nav-tab[data-page="' + page + '"]'); tab.click(); return { page: document.querySelector('.page.active')?.id, tab: document.querySelector('.nav-tab.active')?.dataset.page }; }))()`);
     assert.deepEqual(navigation, [
