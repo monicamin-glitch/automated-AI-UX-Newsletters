@@ -27,6 +27,8 @@ The visible tab label is **Learning Plan**. The corresponding page identifier is
 
 No existing newsletter, archive, or resource content changes as part of this feature.
 
+The Learning Plan page container is inserted immediately before the Resources Hub container so the existing Resources Hub parser continues to treat Resources Hub as the final page container. This source order does not change the visible navigation order.
+
 ## Page structure
 
 The page follows an agenda-style archive inspired by the earlier Google Calendar agenda view.

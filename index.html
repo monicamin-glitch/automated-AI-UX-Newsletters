@@ -247,6 +247,32 @@
     .resource-link svg { width: 14px; height: 14px; min-width: 14px; color: var(--text-muted); transition: color 0.15s ease, transform 0.15s ease; }
     .resource-link:hover svg { color: var(--primary); transform: translate(1px, -1px); }
 
+    /* Learning Plan */
+    .learning-plan-page { display: flex; flex-direction: column; gap: 34px; }
+    .learning-page-header { margin-bottom: 2px; }
+    .learning-month { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 28px; padding-top: 26px; border-top: 1px solid var(--border); }
+    .learning-month:first-of-type { padding-top: 0; border-top: 0; }
+    .learning-month-label { position: sticky; top: 86px; align-self: start; }
+    .learning-month-name { display: block; color: var(--text-primary); font-size: 22px; font-weight: 700; line-height: 1.15; }
+    .learning-month-year { display: block; margin-top: 5px; color: var(--text-muted); font-size: 13px; line-height: 1.4; }
+    .learning-list { overflow: hidden; border: 1px solid var(--border); border-radius: 16px; background: var(--card-bg); }
+    .learning-list-header, .learning-row { display: grid; grid-template-columns: 84px minmax(240px, 1fr) 108px 150px 112px; align-items: center; column-gap: 18px; }
+    .learning-list-header { min-height: 45px; padding: 0 20px; color: var(--text-muted); background: var(--surface-subtle, #f8fafc); font-size: 12px; font-weight: 600; }
+    .learning-row { min-height: 92px; padding: 16px 20px; border-top: 1px solid var(--border-light); }
+    .learning-date { color: var(--primary); font-size: 14px; font-weight: 650; }
+    .learning-topic { margin: 0; color: var(--text-primary); font-size: 16px; font-weight: 650; line-height: 1.4; }
+    .learning-presenter { margin: 4px 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.4; }
+    .learning-duration { color: var(--text-secondary); font-size: 14px; }
+    .learning-type { width: fit-content; padding: 6px 10px; border-radius: 999px; color: var(--primary); background: var(--primary-tint); font-size: 12px; font-weight: 500; white-space: nowrap; }
+    .learning-type-internal { color: #15803d; background: #dcfce7; }
+    .learning-type-ddp { color: #7e22ce; background: #f3e8ff; }
+    .learning-type-roundtable { color: #c2410c; background: #ffedd5; }
+    .learning-action, .learning-action-disabled { display: inline-flex; align-items: center; justify-content: center; min-height: 34px; padding: 7px 12px; border-radius: 9px; font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap; }
+    .learning-action { color: #fff; background: var(--primary); text-decoration: none; transition: background 0.15s ease, transform 0.15s ease; }
+    .learning-action:hover { background: var(--primary-dark, #1d4ed8); transform: translateY(-1px); }
+    .learning-action:focus-visible { outline: 3px solid rgba(var(--primary-rgb), 0.25); outline-offset: 2px; }
+    .learning-action-disabled { border: 0; color: var(--text-muted); background: #f1f5f9; cursor: not-allowed; }
+
     /* Responsive */
     @media (max-width: 768px) {
       .top-nav { height: auto; padding: 0; flex-direction: column; align-items: stretch; overflow: hidden; }
@@ -268,6 +294,18 @@
       .resource-categories { grid-template-columns: 1fr; }
       .resource-category--wide { grid-column: auto; }
       .resource-category--wide .resource-links { grid-template-columns: 1fr; }
+      .learning-plan-page { gap: 28px; }
+      .learning-month { grid-template-columns: 1fr; gap: 14px; padding-top: 24px; }
+      .learning-month-label { position: static; }
+      .learning-month-name { display: inline; font-size: 20px; }
+      .learning-month-year { display: inline; margin: 0 0 0 6px; }
+      .learning-list-header { display: none; }
+      .learning-row { grid-template-columns: 58px minmax(0, 1fr); gap: 8px 12px; padding: 16px; }
+      .learning-date { grid-column: 1; grid-row: 1 / span 3; align-self: start; }
+      .learning-topic-wrap { grid-column: 2; }
+      .learning-duration { grid-column: 2; }
+      .learning-type-wrap { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+      .learning-action, .learning-action-disabled { min-height: 36px; grid-column: 2; }
     }
     @media (max-width: 520px) {
       .weekly-topic { height: 280px; padding: 22px 14px 24px; }
@@ -318,6 +356,7 @@
       <a class="nav-tab active" data-page="latest" onclick="showPage('latest', this)">Latest Week</a>
       <a class="nav-tab" data-page="all" onclick="showPage('all', this)">All Weeks</a>
       <a class="nav-tab" data-page="resources" onclick="showPage('resources', this)">Resources Hub</a>
+      <a class="nav-tab" data-page="learning" onclick="showPage('learning', this)">Learning Plan</a>
     </div>
   </nav>
 
@@ -2007,6 +2046,111 @@
       <div id="archive-week-content"></div>
     </div>
 
+    <!-- PAGE: Learning Plan -->
+    <div class="page" id="page-learning">
+      <div class="page-header learning-page-header">
+        <h1>Learning Plan</h1>
+        <p>Design CN monthly learning archive</p>
+      </div>
+
+      <div class="learning-plan-page">
+        <section class="learning-month" aria-labelledby="learning-september-2026">
+          <div class="learning-month-label">
+            <h2 class="learning-month-name" id="learning-september-2026">September 2026</h2>
+          </div>
+          <div class="learning-list">
+            <div class="learning-list-header" aria-hidden="true"><span>Date</span><span>Learning topic</span><span>Time</span><span>Type</span><span>Action</span></div>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-09-01">Sep 1</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-september-1">Rebuilding booking.com guest experience pages with code-first</h3></div>
+              <span class="learning-duration">25 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-watch">Watch video</span></div>
+              <a class="learning-action" href="https://drive.google.com/drive/folders/1VaNwxBUOhNfyCJ7U0c4249cU0o-LXqhJ" target="_blank" rel="noopener noreferrer" aria-labelledby="learning-topic-september-1 learning-action-label-september-1"><span id="learning-action-label-september-1">View</span></a>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-09-08">Sep 8</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-september-8">PP Demand Page Prototype First Workflow</h3><p class="learning-presenter">Shared by Echo</p></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-internal">Internal Sharing</span></div>
+              <button class="learning-action-disabled" type="button" disabled aria-disabled="true">Link coming soon</button>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-09-15">Sep 15</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-september-15">How I use Obsidian + Claude Code to run my life (Part 1)</h3></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-watch">Watch video</span></div>
+              <button class="learning-action-disabled" type="button" disabled aria-disabled="true">Link coming soon</button>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-09-18">Sep 18</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-september-18">AI Product Sharing</h3><p class="learning-presenter">Shared by Alroy and Allen</p></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-ddp">Sharing in DDP</span></div>
+              <button class="learning-action-disabled" type="button" disabled aria-disabled="true">Link coming soon</button>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-09-22">Sep 22</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-september-22">How I use Obsidian + Claude Code to run my life (Part 2)</h3></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-watch">Watch video</span></div>
+              <button class="learning-action-disabled" type="button" disabled aria-disabled="true">Link coming soon</button>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-09-29">Sep 29</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-september-29">Using Claude Code to Create Animations for YIT</h3><p class="learning-presenter">Shared by Shiwen</p></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-internal">Internal Sharing</span></div>
+              <button class="learning-action-disabled" type="button" disabled aria-disabled="true">Link coming soon</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="learning-month" aria-labelledby="learning-august-2026">
+          <div class="learning-month-label">
+            <h2 class="learning-month-name" id="learning-august-2026">August 2026</h2>
+          </div>
+          <div class="learning-list">
+            <div class="learning-list-header" aria-hidden="true"><span>Date</span><span>Learning topic</span><span>Time</span><span>Type</span><span>Action</span></div>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-07-28">Jul 28</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-august-1">Write a well-structured prompt</h3></div>
+              <span class="learning-duration">20 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-watch">Watch video</span></div>
+              <a class="learning-action" href="https://drive.google.com/file/d/17awpWPaVAt9FRTKKRI_x1TWryk0Zf86e/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-labelledby="learning-topic-august-1 learning-action-label-august-1"><span id="learning-action-label-august-1">Watch</span></a>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-08-04">Aug 4</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-august-4">Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 1)</h3></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-watch">Watch video</span></div>
+              <a class="learning-action" href="https://drive.google.com/file/d/1J7uIh1-cy2QfKf-TEIRx-KJINfV_YRwM/view" target="_blank" rel="noopener noreferrer" aria-labelledby="learning-topic-august-4 learning-action-label-august-4"><span id="learning-action-label-august-4">Watch</span></a>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-08-11">Aug 11</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-august-11">Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 2)</h3></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-watch">Watch video</span></div>
+              <a class="learning-action" href="https://drive.google.com/file/d/1J7uIh1-cy2QfKf-TEIRx-KJINfV_YRwM/view" target="_blank" rel="noopener noreferrer" aria-labelledby="learning-topic-august-11 learning-action-label-august-11"><span id="learning-action-label-august-11">Watch</span></a>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-08-18">Aug 18</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-august-18">Discussion: How to eliminate manual fixing of AI-generated Figma designs</h3></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-roundtable">Roundtable Discussion</span></div>
+              <button class="learning-action-disabled" type="button" disabled aria-disabled="true">Link coming soon</button>
+            </article>
+            <article class="learning-row">
+              <time class="learning-date" datetime="2026-08-25">Aug 25</time>
+              <div class="learning-topic-wrap"><h3 class="learning-topic" id="learning-topic-august-25">Turning a Rough Idea into Reality with AI Page Builder</h3></div>
+              <span class="learning-duration">30 min</span>
+              <div class="learning-type-wrap"><span class="learning-type learning-type-watch">Watch video</span></div>
+              <a class="learning-action" href="https://drive.google.com/file/d/1NmLID0vCYnoV3naLds5idkKAp-VOpGEw/view?t=1.482" target="_blank" rel="noopener noreferrer" aria-labelledby="learning-topic-august-25 learning-action-label-august-25"><span id="learning-action-label-august-25">Watch</span></a>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+
     <!-- PAGE: Resources Hub -->
     <div class="page" id="page-resources">
       <div class="page-header resource-page-header">
@@ -2547,7 +2691,7 @@
     function activateInitialPageFromQuery() {
       const initialPage = new URLSearchParams(window.location.search).get('page');
       const initialPickerState = new URLSearchParams(window.location.search).get('picker');
-      if (!['latest', 'all', 'resources'].includes(initialPage)) return;
+      if (!['latest', 'all', 'resources', 'learning'].includes(initialPage)) return;
       const tab = document.querySelector('.nav-tab[data-page="' + initialPage + '"]');
       if (tab) showPage(initialPage, tab);
       if (initialPage === 'all' && initialPickerState === 'open') toggleWeekPicker(true);

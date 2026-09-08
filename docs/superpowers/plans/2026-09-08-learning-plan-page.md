@@ -42,7 +42,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const page = html.match(/<!-- PAGE: Learning Plan -->[\s\S]*?<div class="page" id="page-learning">([\s\S]*?)<\/div>\s*<\/div>\s*<script>/)?.[1] ?? '';
+const page = html.match(/<!-- PAGE: Learning Plan -->[\s\S]*?<div class="page" id="page-learning">([\s\S]*?)<!-- PAGE: Resources Hub -->/)?.[1] ?? '';
 
 const topics = [
   'Rebuilding booking.com guest experience pages with code-first',
@@ -161,7 +161,7 @@ Add this tab immediately after Resources Hub:
 <a class="nav-tab" data-page="learning" onclick="showPage('learning', this)">Learning Plan</a>
 ```
 
-Add `<!-- PAGE: Learning Plan -->` and `<div class="page" id="page-learning">` after `page-resources`. Inside it:
+Add `<!-- PAGE: Learning Plan -->` and `<div class="page" id="page-learning">` immediately before `<!-- PAGE: Resources Hub -->`. This preserves the existing Resources Hub parser's assumption that Resources Hub is the final page container while the visible navigation still places Learning Plan fourth. Inside it:
 
 - Render the page heading `Learning Plan` and subtitle `Design CN monthly learning archive`.
 - Render two `<section class="learning-month" aria-labelledby="learning-september-2026">` month groups in September-then-August order.
