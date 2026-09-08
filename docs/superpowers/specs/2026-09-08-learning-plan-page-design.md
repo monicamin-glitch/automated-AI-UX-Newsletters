@@ -45,39 +45,42 @@ The month rail is the visual anchor, not a separate card or illustrated banner. 
 
 ## Learning rows
 
-Each row contains four fields:
+Each row contains five fields:
 
 1. Date
 2. Learning topic
 3. Estimated time
 4. Type
+5. Action
 
 The date is displayed as a compact day block. The topic is the strongest text in the row. Presenter information, when supplied, appears as muted supporting text below the topic. Estimated time is regular body text. Type appears as a low-emphasis status pill.
 
-The initial content is static and non-interactive. Values such as `Watch video` are labels, not links or buttons, until real destination URLs are provided.
+The Action column contains one compact course-resource control. Use `Watch` for video destinations and `View` for folders or other learning materials. Active actions are links that open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`. When the source spreadsheet identifies the learning-plan row but does not provide an embedded resource URL, show a disabled `Link coming soon` control instead of guessing a destination.
+
+The Type pill remains non-interactive and separate from the Action link.
 
 ## Content
 
 ### September 2026
 
-| Date | Learning topic | Estimated time | Type |
-|---|---|---:|---|
-| Sep 1 | Rebuilding booking.com guest experience pages with code-first | 25 min | Watch video |
-| Sep 8 | PP Demand Page Prototype First Workflow — Shared by Echo | 30 min | Internal Sharing |
-| Sep 15 | How I use Obsidian + Claude Code to run my life (Part 1) | 30 min | Watch video |
-| Sep 18 | AI Product Sharing — Shared by Alroy and Allen | 30 min | Sharing in DDP |
-| Sep 22 | How I use Obsidian + Claude Code to run my life (Part 2) | 30 min | Watch video |
-| Sep 29 | Using Claude Code to Create Animations for YIT — Shared by Shiwen | 30 min | Internal Sharing |
+| Date | Learning topic | Estimated time | Type | Action |
+|---|---|---:|---|---|
+| Sep 1 | Rebuilding booking.com guest experience pages with code-first | 25 min | Watch video | [View](https://drive.google.com/drive/folders/1VaNwxBUOhNfyCJ7U0c4249cU0o-LXqhJ) |
+| Sep 8 | PP Demand Page Prototype First Workflow — Shared by Echo | 30 min | Internal Sharing | Link coming soon |
+| Sep 15 | How I use Obsidian + Claude Code to run my life (Part 1) | 30 min | Watch video | Link coming soon |
+| Sep 18 | AI Product Sharing — Shared by Alroy and Allen | 30 min | Sharing in DDP | Link coming soon |
+| Sep 22 | How I use Obsidian + Claude Code to run my life (Part 2) | 30 min | Watch video | Link coming soon |
+| Sep 29 | Using Claude Code to Create Animations for YIT — Shared by Shiwen | 30 min | Internal Sharing | Link coming soon |
 
 ### August 2026
 
-| Date | Learning topic | Estimated time | Type |
-|---|---|---:|---|
-| Jul 28 | Write a well-structured prompt | 20 min | Watch video |
-| Aug 4 | Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 1) | 30 min | Watch video |
-| Aug 11 | Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 2) | 30 min | Watch video |
-| Aug 18 | Discussion: How to eliminate manual fixing of AI-generated Figma designs | 30 min | Roundtable Discussion |
-| Aug 25 | Turning a Rough Idea into Reality with AI Page Builder | 30 min | Watch video |
+| Date | Learning topic | Estimated time | Type | Action |
+|---|---|---:|---|---|
+| Jul 28 | Write a well-structured prompt | 20 min | Watch video | [Watch](https://drive.google.com/file/d/17awpWPaVAt9FRTKKRI_x1TWryk0Zf86e/view?usp=sharing) |
+| Aug 4 | Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 1) | 30 min | Watch video | [Watch](https://drive.google.com/file/d/1J7uIh1-cy2QfKf-TEIRx-KJINfV_YRwM/view) |
+| Aug 11 | Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 2) | 30 min | Watch video | [Watch](https://drive.google.com/file/d/1J7uIh1-cy2QfKf-TEIRx-KJINfV_YRwM/view) |
+| Aug 18 | Discussion: How to eliminate manual fixing of AI-generated Figma designs | 30 min | Roundtable Discussion | Link coming soon |
+| Aug 25 | Turning a Rough Idea into Reality with AI Page Builder | 30 min | Watch video | [Watch](https://drive.google.com/file/d/1NmLID0vCYnoV3naLds5idkKAp-VOpGEw/view?t=1.482) |
 
 ## Visual system
 
@@ -103,6 +106,7 @@ At mobile widths:
 - Keep the date in a compact left column
 - Place the topic in the main column
 - Wrap estimated time and type below the topic
+- Keep the Action control reachable without horizontal scrolling
 - Avoid horizontal page scrolling
 - Keep all text readable without truncating topic names
 
@@ -113,6 +117,8 @@ The navigation retains the site's existing horizontally scrollable mobile behavi
 - Use semantic headings for the page and each month
 - Represent each month schedule with semantic list or table markup; prefer a list when the mobile transformation would make a table misleading
 - Treat type pills as text because they are not interactive
+- Render unavailable actions as disabled buttons with `aria-disabled="true"`; do not use empty or placeholder links
+- Give active Action links a visible keyboard focus state and a meaningful accessible name that includes the course topic
 - Preserve visible keyboard focus on the navigation tab
 - Maintain WCAG AA contrast for all text and status labels
 - Do not communicate session type through color alone; always show its text label
@@ -148,9 +154,12 @@ Acceptance criteria:
 - `?page=learning` opens the new page directly
 - September 2026 appears before August 2026
 - All eleven supplied learning entries are present once
-- Every row displays date, topic, time, and type
+- Every row displays date, topic, time, type, and action
 - Presenter information is displayed for the three supplied sharing entries
 - Type pills are non-interactive
+- Five rows use the four verified source URLs from the `AI topic` sheet; the two Preserving Learning rows intentionally share one recording URL
+- Six rows without verified source URLs display disabled `Link coming soon` controls
+- Active links open in a new tab and disabled controls cannot navigate
 - Existing Latest Week, All Weeks, and Resources Hub pages remain available
 - The layout fits a 390px-wide viewport without horizontal page overflow
 - The production validation/build completes without introducing new failures
