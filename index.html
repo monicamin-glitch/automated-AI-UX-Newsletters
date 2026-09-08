@@ -250,16 +250,16 @@
     /* Learning Plan */
     .learning-plan-page { display: flex; flex-direction: column; gap: 34px; }
     .learning-page-header { margin-bottom: 2px; }
-    .learning-month { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 28px; padding-top: 26px; border-top: 1px solid var(--border); }
+    .learning-month { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 20px; padding-top: 26px; border-top: 1px solid var(--border); }
     .learning-month:first-of-type { padding-top: 0; border-top: 0; }
     .learning-month-label { position: sticky; top: 86px; align-self: start; }
     .learning-month-name { display: block; color: var(--text-primary); font-size: 22px; font-weight: 700; line-height: 1.15; }
     .learning-month-year { display: block; margin-top: 5px; color: var(--text-muted); font-size: 13px; line-height: 1.4; }
     .learning-list { overflow: hidden; border: 1px solid var(--border); border-radius: 16px; background: var(--card-bg); }
     .learning-list-items { margin: 0; padding: 0; list-style: none; }
-    .learning-list-header, .learning-row { display: grid; grid-template-columns: 84px minmax(240px, 1fr) 108px 150px 112px; align-items: center; column-gap: 18px; }
-    .learning-list-header { min-height: 45px; padding: 0 20px; color: var(--text-muted); background: var(--surface-subtle, #f8fafc); font-size: 12px; font-weight: 600; }
-    .learning-row { min-height: 92px; padding: 16px 20px; border-top: 1px solid var(--border-light); }
+    .learning-list-header, .learning-row { display: grid; grid-template-columns: 68px minmax(180px, 1fr) 72px 140px 116px; align-items: center; column-gap: 12px; }
+    .learning-list-header { min-height: 45px; padding: 0 14px; color: var(--text-muted); background: var(--surface-subtle, #f8fafc); font-size: 12px; font-weight: 600; }
+    .learning-row { min-height: 92px; padding: 16px 14px; border-top: 1px solid var(--border-light); }
     .learning-date { color: var(--primary); font-size: 14px; font-weight: 650; }
     .learning-topic { margin: 0; color: var(--text-primary); font-size: 16px; font-weight: 650; line-height: 1.4; }
     .learning-presenter { margin: 4px 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.4; }
@@ -271,10 +271,14 @@
     .learning-action, .learning-action-disabled { display: inline-flex; align-items: center; justify-content: center; min-height: 34px; padding: 7px 12px; border-radius: 9px; font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap; }
     .learning-action { color: #fff; background: var(--primary); text-decoration: none; transition: background 0.15s ease, transform 0.15s ease; }
     .learning-action:hover { background: var(--primary-dark, #1d4ed8); transform: translateY(-1px); }
-    .learning-action:focus-visible { outline: 3px solid rgba(var(--primary-rgb), 0.25); outline-offset: 2px; }
+    .learning-action:focus-visible { outline: 3px solid var(--primary-dark); outline-offset: 2px; }
     .learning-action-disabled { border: 0; color: var(--text-muted); background: #f1f5f9; cursor: not-allowed; }
 
     /* Responsive */
+    @media (max-width: 1024px) {
+      .learning-month { grid-template-columns: 1fr; gap: 14px; }
+      .learning-month-label { position: static; }
+    }
     @media (max-width: 768px) {
       .top-nav { height: auto; padding: 0; flex-direction: column; align-items: stretch; overflow: hidden; }
       .nav-logo { height: 52px; flex: none; margin: 0; padding: 0 16px; }
@@ -354,10 +358,10 @@
       </div>
     </div>
     <div class="nav-tabs">
-      <a class="nav-tab active" data-page="latest" onclick="showPage('latest', this)">Latest Week</a>
-      <a class="nav-tab" data-page="all" onclick="showPage('all', this)">All Weeks</a>
-      <a class="nav-tab" data-page="resources" onclick="showPage('resources', this)">Resources Hub</a>
-      <a class="nav-tab" data-page="learning" onclick="showPage('learning', this)">Learning Plan</a>
+      <a class="nav-tab active" data-page="latest" href="?page=latest" onclick="showPage('latest', this); return false;">Latest Week</a>
+      <a class="nav-tab" data-page="all" href="?page=all" onclick="showPage('all', this); return false;">All Weeks</a>
+      <a class="nav-tab" data-page="resources" href="?page=resources" onclick="showPage('resources', this); return false;">Resources Hub</a>
+      <a class="nav-tab" data-page="learning" href="?page=learning" onclick="showPage('learning', this); return false;">Learning Plan</a>
     </div>
   </nav>
 
