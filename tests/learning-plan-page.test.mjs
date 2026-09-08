@@ -54,3 +54,14 @@ test('keeps type and action as separate fields and defines mobile layout', () =>
   assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.learning-month \{[^}]*grid-template-columns: 1fr/);
   assert.match(html, /\.learning-action:focus-visible/);
 });
+
+test('uses semantic monthly lists around every learning row', () => {
+  const months = page.match(/<section class="learning-month"[\s\S]*?<\/section>/g) ?? [];
+  assert.equal(months.length, 2);
+  [6, 5].forEach((expectedRows, index) => {
+    const month = months[index];
+    assert.match(month, /<ol class="learning-list-items">/);
+    assert.equal((month.match(/<li class="learning-list-item">/g) ?? []).length, expectedRows);
+    assert.equal((month.match(/<article class="learning-row">/g) ?? []).length, expectedRows);
+  });
+});
