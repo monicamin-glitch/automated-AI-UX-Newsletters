@@ -72,6 +72,5 @@ Visual and interaction rules live in [`design-spec.md`](design-spec.md). In summ
 1. Update this file first.
 2. Mirror the approved content in `index.html` without changing weekly reports or Resources Hub content.
 3. Add or update tests for any new action URL or behavior.
-4. Run the focused Learning Plan tests and the repository validation suite.
+4. Run the guarded Learning Plan validation: `node scripts/finalize-weekly-refresh.mjs --learning`.
 5. Update the existing B.Pages artifact; do not create a second newsletter URL.
-

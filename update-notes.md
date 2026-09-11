@@ -11,6 +11,8 @@
 - Added verified actions for Echo's PP Demand Page slides and both Obsidian + Claude Code sessions, with the two sessions intentionally sharing one YouTube recording.
 - Added [`learning-plan.md`](learning-plan.md) as the single source of truth for manually maintained Learning Plan content, while routine weekly refreshes preserve the page unchanged.
 - Added focused source and real-browser coverage for navigation, resource destinations, visual hierarchy, desktop/tablet/mobile geometry, and keyboard accessibility.
+- Synchronized tab selection with the shareable `page` URL, browser Back/Forward state, and `aria-current`, and darkened small year/presenter text to meet the intended accessible contrast.
+- Added a guarded `--learning` release mode that runs the focused source and real-browser tests and stages Learning Plan files without broadening the routine weekly staging scope.
 
 ## 2026-09-07
 

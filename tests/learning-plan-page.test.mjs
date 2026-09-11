@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { stagedFilesForLatest } from '../scripts/weekly-refresh-status.mjs';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const page = html.match(/<!-- PAGE: Learning Plan -->[\s\S]*?<div class="page" id="page-learning">([\s\S]*?)<!-- PAGE: Resources Hub -->/)?.[1] ?? '';
@@ -32,8 +33,13 @@ const expectedActionUrls = [
 
 test('adds the fourth Learning Plan route and page', () => {
   const nav = html.match(/<div class="nav-tabs">([\s\S]*?)<\/div>/)?.[1] ?? '';
-  const links = [...nav.matchAll(/<a class="nav-tab(?: active)?" data-page="([^"]+)" href="([^"]+)" onclick="([^"]+)">([^<]+)<\/a>/g)]
-    .map(([, pageId, href, onclick, label]) => ({ pageId, href, onclick, label }));
+  const links = [...nav.matchAll(/<a class="nav-tab(?: active)?" data-page="([^"]+)" href="([^"]+)"([^>]*)>([^<]+)<\/a>/g)]
+    .map(([, pageId, href, attributes, label]) => ({
+      pageId,
+      href,
+      onclick: attributes.match(/onclick="([^"]+)"/)?.[1] ?? '',
+      label,
+    }));
   assert.deepEqual(links.map(({ pageId, href, label }) => ({ pageId, href, label })), [
     { pageId: 'latest', href: '?page=latest', label: 'Latest Week' },
     { pageId: 'all', href: '?page=all', label: 'All Weeks' },
@@ -45,7 +51,8 @@ test('adds the fourth Learning Plan route and page', () => {
     assert.match(onclick, /return false/);
   });
   assert.match(html, /id="page-learning"/);
-  assert.match(html, /\['latest', 'all', 'resources', 'learning'\]\.includes\(initialPage\)/);
+  assert.match(html, /const validPageIds = \['latest', 'all', 'resources', 'learning'\]/);
+  assert.match(html, /validPageIds\.includes\(initialPage\)/);
 });
 
 test('shows the latest month first and every supplied course once', () => {
@@ -98,5 +105,20 @@ test('uses semantic monthly lists around every learning row', () => {
     assert.match(month, /<ol class="learning-list-items">/);
     assert.equal((month.match(/<li class="learning-list-item">/g) ?? []).length, expectedRows);
     assert.equal((month.match(/<article class="learning-row">/g) ?? []).length, expectedRows);
+  });
+});
+
+test('stages canonical Learning Plan files only when learning mode is requested', () => {
+  const weeklyFiles = stagedFilesForLatest();
+  const learningFiles = stagedFilesForLatest({ includeLearningPlan: true });
+  const requiredLearningFiles = [
+    'learning-plan.md',
+    'design-spec.md',
+    'tests/learning-plan-page.test.mjs',
+    'tests/learning-plan-browser.test.mjs',
+  ];
+  requiredLearningFiles.forEach(file => {
+    assert.equal(weeklyFiles.includes(file), false, `${file} must not be staged by a routine weekly refresh`);
+    assert.equal(learningFiles.includes(file), true, `${file} must be staged in Learning Plan mode`);
   });
 });

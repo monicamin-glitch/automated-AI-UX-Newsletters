@@ -149,6 +149,8 @@ Do not use newsletter-sequence labels such as “Week 10 — 14 updates”. Do n
 - Active page: primary-blue text and bottom border
 - Hover: primary-blue text
 - Support direct preview URLs such as `?page=all`, `?page=resources`, and `?page=learning`
+- Tab changes update the `page` query parameter and browser history; Back/Forward restores the matching page.
+- The active tab uses `aria-current="page"` and inactive tabs omit the attribute.
 
 ### Popular-topic experience
 
@@ -336,6 +338,7 @@ Content comes from [`learning-plan.md`](learning-plan.md).
 - Separate month groups with 44px desktop / 28px mobile whitespace and no divider line.
 - Each course is an independent white agenda card with a neutral border, 14px radius, and restrained hover lift.
 - Card hierarchy: compact blue date; 16px topic; optional 12px presenter; 13px duration; 12px type badge; optional action.
+- The 12px year and presenter text use `--text-secondary`, not `--text-muted`, to maintain readable contrast on white and light-grey surfaces.
 - `Video Course` uses the default pale-blue type badge.
 - Every internal sharing session uses the same green `Internal Sharing` badge. Do not create a DDP-specific label or color variant.
 - `Roundtable Discussion` uses the soft orange type badge.

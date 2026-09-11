@@ -276,6 +276,17 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       })), 'all sharing sessions must use the same Internal Sharing label and green badge style');
     });
 
+    await t.test('keeps small Learning Plan text at accessible contrast', async () => {
+      const colors = await browser.evaluate(`(() => ({
+        year: getComputedStyle(document.querySelector('.learning-month-year')).color,
+        presenter: getComputedStyle(document.querySelector('.learning-presenter')).color
+      }))()`);
+      assert.deepEqual(colors, {
+        year: 'rgb(71, 85, 105)',
+        presenter: 'rgb(71, 85, 105)'
+      });
+    });
+
     await t.test('opens the supplied September learning resources in new tabs', async () => {
       const actions = await browser.evaluate(`(() => [
         'learning-topic-september-8',
@@ -406,6 +417,41 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       assert.equal(mobile.rows.length, 11, '390px page must retain all 11 Learning Plan rows');
       const mobileRowsValid = mobile.rows.every(row => row.dateLeftOfTopic && row.fieldsVisible && row.presenterInsideTopic && row.flowTopToBottom && row.flowNonOverlapping);
       assert.equal(mobileRowsValid, true, '390px row geometry must reject missing, overlapping, or misplaced fields');
+    });
+
+    await t.test('synchronizes active navigation with URL history and aria-current', async () => {
+      const initial = await browser.evaluate(`({
+        search: location.search,
+        activePage: document.querySelector('.page.active')?.id,
+        currentTab: document.querySelector('.nav-tab[aria-current="page"]')?.dataset.page
+      })`);
+      assert.deepEqual(initial, {
+        search: '?page=learning',
+        activePage: 'page-learning',
+        currentTab: 'learning'
+      });
+
+      await browser.evaluate(`document.querySelector('.nav-tab[data-page="resources"]').click()`);
+      await settleLayout(browser);
+      assert.deepEqual(await browser.evaluate(`({
+        search: location.search,
+        activePage: document.querySelector('.page.active')?.id,
+        currentTab: document.querySelector('.nav-tab[aria-current="page"]')?.dataset.page
+      })`), {
+        search: '?page=resources',
+        activePage: 'page-resources',
+        currentTab: 'resources'
+      });
+
+      await browser.evaluate('history.back()');
+      await waitFor(async () => await browser.evaluate('location.search') === '?page=learning');
+      assert.deepEqual(await browser.evaluate(`({
+        activePage: document.querySelector('.page.active')?.id,
+        currentTab: document.querySelector('.nav-tab[aria-current="page"]')?.dataset.page
+      })`), {
+        activePage: 'page-learning',
+        currentTab: 'learning'
+      });
     });
 
     await t.test('focuses and activates Learning Plan through keyboard navigation', async () => {

@@ -50,6 +50,12 @@ Read only the documents needed for the requested operation.
 Do not read or rewrite [`resources-hub.md`](resources-hub.md) during a routine weekly refresh. It is manually curated and changes only after explicit human direction.
 Apply the same preservation rule to [`learning-plan.md`](learning-plan.md). It is also manually curated and changes only after explicit human direction.
 
+For a Learning Plan release, use the guarded learning mode so its canonical source, visual specification, and focused tests are included without changing the routine weekly staging scope:
+
+```bash
+node scripts/finalize-weekly-refresh.mjs --learning --commit --push --publish-bpages
+```
+
 ---
 
 ## Execution phases and checkpoints

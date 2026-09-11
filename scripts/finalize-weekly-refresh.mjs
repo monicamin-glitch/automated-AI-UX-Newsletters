@@ -24,6 +24,15 @@ const statusBase = buildRefreshStatus({ status: 'running', startedAt: new Date()
 writeRefreshStatus(statusBase);
 
 try {
+  if (options.learning) {
+    console.log('Running Learning Plan source and browser checks...');
+    runCommand('node', ['--test', 'tests/learning-plan-page.test.mjs'], { stdio: 'inherit' });
+    runCommand('node', ['--test', 'tests/learning-plan-browser.test.mjs'], {
+      stdio: 'inherit',
+      env: { RUN_BROWSER_TESTS: '1' },
+    });
+  }
+
   console.log('Preparing media manifest...');
   runCommand('node', ['scripts/prepare-media.mjs', '--html', 'index.html', '--write-manifest'], { stdio: 'inherit' });
 
@@ -66,7 +75,7 @@ try {
   writeRefreshStatus(finalStatus);
 
   if (options.commit || options.push) {
-    const files = stagedFilesForLatest();
+    const files = stagedFilesForLatest({ includeLearningPlan: options.learning });
     console.log(`Staging ${files.length} refresh file(s)...`);
     runCommand('git', ['add', ...files], { stdio: 'inherit' });
 
@@ -193,6 +202,7 @@ function parseArgs(args) {
     push: false,
     publishBpages: false,
     notify: false,
+    learning: false,
     message: '',
     bpagesBin: defaultBpagesBin,
     bpagesId: defaultBpagesId,
@@ -212,6 +222,8 @@ function parseArgs(args) {
       options.publishBpages = true;
     } else if (arg === '--notify') {
       options.notify = true;
+    } else if (arg === '--learning') {
+      options.learning = true;
     } else if (arg === '--message') {
       options.message = next;
       index += 1;
@@ -244,8 +256,10 @@ function printHelp() {
 Usage:
   node scripts/finalize-weekly-refresh.mjs
   node scripts/finalize-weekly-refresh.mjs --commit --push --publish-bpages --notify
+  node scripts/finalize-weekly-refresh.mjs --learning --commit --push --publish-bpages
 
 This validates media, date buckets, labels, Slack links, writes automation-status/weekly-refresh-status.json,
-and optionally commits, pushes, and updates B.Pages.
+and optionally commits, pushes, and updates B.Pages. Learning mode also runs the focused Learning Plan
+source/browser gates and stages its canonical content, visual spec, and tests.
 `);
 }

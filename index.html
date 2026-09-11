@@ -253,7 +253,7 @@
     .learning-month-label { position: sticky; top: 86px; align-self: start; }
     .learning-month-heading { margin: 0; padding-left: 14px; border-left: 3px solid var(--primary-soft); }
     .learning-month-name { display: block; color: var(--text-primary); font-size: 22px; font-weight: 750; line-height: 1.15; letter-spacing: -0.4px; }
-    .learning-month-year { display: block; margin-top: 7px; color: var(--text-muted); font-size: 12px; font-weight: 500; line-height: 1.3; letter-spacing: 0.08em; }
+    .learning-month-year { display: block; margin-top: 7px; color: var(--text-secondary); font-size: 12px; font-weight: 500; line-height: 1.3; letter-spacing: 0.08em; }
     .learning-list { min-width: 0; }
     .learning-list-items { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
     .learning-list-item { min-width: 0; }
@@ -262,7 +262,7 @@
     .learning-date { grid-area: date; align-self: start; padding-top: 2px; color: var(--primary); font-size: 14px; font-weight: 650; }
     .learning-topic-wrap { grid-area: topic; min-width: 0; }
     .learning-topic { margin: 0; color: var(--text-primary); font-size: 16px; font-weight: 650; line-height: 1.4; }
-    .learning-presenter { margin: 4px 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.4; }
+    .learning-presenter { margin: 4px 0 0; color: var(--text-secondary); font-size: 12px; line-height: 1.4; }
     .learning-meta { grid-area: meta; display: flex; flex-wrap: wrap; align-items: center; gap: 7px 12px; min-width: 0; }
     .learning-duration { color: var(--text-secondary); font-size: 13px; }
     .learning-type { width: fit-content; padding: 6px 10px; border-radius: 999px; color: var(--primary); background: var(--primary-tint); font-size: 12px; font-weight: 500; white-space: nowrap; }
@@ -353,7 +353,7 @@
       </div>
     </div>
     <div class="nav-tabs">
-      <a class="nav-tab active" data-page="latest" href="?page=latest" onclick="showPage('latest', this); return false;">Latest Week</a>
+      <a class="nav-tab active" data-page="latest" href="?page=latest" aria-current="page" onclick="showPage('latest', this); return false;">Latest Week</a>
       <a class="nav-tab" data-page="all" href="?page=all" onclick="showPage('all', this); return false;">All Weeks</a>
       <a class="nav-tab" data-page="resources" href="?page=resources" onclick="showPage('resources', this); return false;">Resources Hub</a>
       <a class="nav-tab" data-page="learning" href="?page=learning" onclick="showPage('learning', this); return false;">Learning Plan</a>
@@ -2195,11 +2195,26 @@
   </div>
 
   <script>
-    function showPage(pageId, tabEl) {
+    const validPageIds = ['latest', 'all', 'resources', 'learning'];
+
+    function showPage(pageId, tabEl, options = {}) {
+      if (!validPageIds.includes(pageId) || !tabEl) return;
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(t => {
+        t.classList.remove('active');
+        t.removeAttribute('aria-current');
+      });
       document.getElementById('page-' + pageId).classList.add('active');
       tabEl.classList.add('active');
+      tabEl.setAttribute('aria-current', 'page');
+      if (options.updateHistory !== false) {
+        const nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set('page', pageId);
+        if (pageId !== 'all') nextUrl.searchParams.delete('picker');
+        if (nextUrl.href !== window.location.href) {
+          window.history.pushState({ page: pageId }, '', nextUrl);
+        }
+      }
       if (pageId === 'all') {
         renderMonthWeekPicker(weekPickerDisplayYear, weekPickerDisplayMonth);
         syncArchiveWeekContent();
@@ -2685,11 +2700,18 @@
     function activateInitialPageFromQuery() {
       const initialPage = new URLSearchParams(window.location.search).get('page');
       const initialPickerState = new URLSearchParams(window.location.search).get('picker');
-      if (!['latest', 'all', 'resources', 'learning'].includes(initialPage)) return;
+      if (!validPageIds.includes(initialPage)) return;
       const tab = document.querySelector('.nav-tab[data-page="' + initialPage + '"]');
-      if (tab) showPage(initialPage, tab);
+      if (tab) showPage(initialPage, tab, { updateHistory: false });
       if (initialPage === 'all' && initialPickerState === 'open') toggleWeekPicker(true);
     }
+
+    window.addEventListener('popstate', () => {
+      const requestedPage = new URLSearchParams(window.location.search).get('page');
+      const pageId = validPageIds.includes(requestedPage) ? requestedPage : 'latest';
+      const tab = document.querySelector('.nav-tab[data-page="' + pageId + '"]');
+      if (tab) showPage(pageId, tab, { updateHistory: false });
+    });
 
     const weeklyTopics = [
       { word: 'Design AI Summit', mentions: '5', channels: 3 },
