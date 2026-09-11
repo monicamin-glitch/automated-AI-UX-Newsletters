@@ -1,6 +1,6 @@
 # Learning Plan Page Design
 
-**Status:** Approved for implementation  
+**Status:** Implemented; canonical content moved to [`../../../learning-plan.md`](../../../learning-plan.md)
 **Date:** September 8, 2026  
 **Project:** AI × Design Weekly
 
@@ -33,56 +33,34 @@ The Learning Plan page container is inserted immediately before the Resources Hu
 
 The page follows an agenda-style archive inspired by the earlier Google Calendar agenda view.
 
-1. Page heading: `Learning Plan`
-2. Supporting text: `Design CN monthly learning archive`
-3. September 2026 month group
-4. August 2026 month group
+The page begins directly with September 2026, followed by August 2026. It does not render a page-level heading, supporting subtitle, hero, or illustration.
 
 Each month group uses two desktop columns:
 
 - A narrow left rail containing the month and year
 - A wider right column containing the month's learning rows
 
-The month rail is the visual anchor, not a separate card or illustrated banner. Month groups are separated with neutral rules and spacing. The page does not repeat a large hero image for every month.
+The month rail is the visual anchor, not a separate card or illustrated banner. Month groups are separated with whitespace and no divider rules.
 
 ## Learning rows
 
-Each row contains five fields:
+Each row contains four required fields and one optional action:
 
 1. Date
 2. Learning topic
 3. Estimated time
 4. Type
-5. Action
+5. Action, when a verified destination exists
 
 The date is displayed as a compact day block. The topic is the strongest text in the row. Presenter information, when supplied, appears as muted supporting text below the topic. Estimated time is regular body text. Type appears as a low-emphasis status pill.
 
-The Action column contains one compact course-resource control. Use `Watch` for video destinations and `View` for folders or other learning materials. Active actions are links that open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`. When the source spreadsheet identifies the learning-plan row but does not provide an embedded resource URL, show a disabled `Link coming soon` control instead of guessing a destination.
+The optional action contains one compact course-resource control. Use `Watch` for video destinations and `View` for slides, folders, or other learning materials. Active actions are links that open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`. When no verified URL exists, omit the action instead of guessing a destination or showing a disabled placeholder.
 
 The Type pill remains non-interactive and separate from the Action link.
 
 ## Content
 
-### September 2026
-
-| Date | Learning topic | Estimated time | Type | Action |
-|---|---|---:|---|---|
-| Sep 1 | Rebuilding booking.com guest experience pages with code-first | 25 min | Watch video | [View](https://drive.google.com/drive/folders/1VaNwxBUOhNfyCJ7U0c4249cU0o-LXqhJ) |
-| Sep 8 | PP Demand Page Prototype First Workflow — Shared by Echo | 30 min | Internal Sharing | Link coming soon |
-| Sep 15 | How I use Obsidian + Claude Code to run my life (Part 1) | 30 min | Watch video | Link coming soon |
-| Sep 18 | AI Product Sharing — Shared by Alroy and Allen | 30 min | Sharing in DDP | Link coming soon |
-| Sep 22 | How I use Obsidian + Claude Code to run my life (Part 2) | 30 min | Watch video | Link coming soon |
-| Sep 29 | Using Claude Code to Create Animations for YIT — Shared by Shiwen | 30 min | Internal Sharing | Link coming soon |
-
-### August 2026
-
-| Date | Learning topic | Estimated time | Type | Action |
-|---|---|---:|---|---|
-| Jul 28 | Write a well-structured prompt | 20 min | Watch video | [Watch](https://drive.google.com/file/d/17awpWPaVAt9FRTKKRI_x1TWryk0Zf86e/view?usp=sharing) |
-| Aug 4 | Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 1) | 30 min | Watch video | [Watch](https://drive.google.com/file/d/1J7uIh1-cy2QfKf-TEIRx-KJINfV_YRwM/view) |
-| Aug 11 | Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 2) | 30 min | Watch video | [Watch](https://drive.google.com/file/d/1J7uIh1-cy2QfKf-TEIRx-KJINfV_YRwM/view) |
-| Aug 18 | Discussion: How to eliminate manual fixing of AI-generated Figma designs | 30 min | Roundtable Discussion | Link coming soon |
-| Aug 25 | Turning a Rough Idea into Reality with AI Page Builder | 30 min | Watch video | [Watch](https://drive.google.com/file/d/1NmLID0vCYnoV3naLds5idkKAp-VOpGEw/view?t=1.482) |
+Course content and verified destinations live only in [`learning-plan.md`](../../../learning-plan.md). This implementation record does not duplicate that inventory.
 
 ## Visual system
 
@@ -91,16 +69,16 @@ Reuse the existing website design tokens and typography from `design-spec.md`:
 - Apple system font stack
 - `#2563EB` primary blue
 - Existing neutral page background, text, border, and card colors
-- 26px page heading
+- 22px month name on desktop and 20px on mobile
 - 16px learning-topic text
 - 14px supporting copy
 - 12px metadata and type labels
 
-Use blue as the default type-label accent. Green distinguishes internal sharing, purple distinguishes DDP sharing, and orange distinguishes roundtable discussion. These colors remain soft supporting signals and must not compete with the month and topic hierarchy.
+Use blue as the default type-label accent. Green distinguishes every internal sharing session and orange distinguishes roundtable discussion. There is no separate DDP variant. These colors remain soft supporting signals and must not compete with the month and topic hierarchy.
 
 ## Responsive behavior
 
-At desktop widths, preserve the month rail and four-field row structure.
+At desktop widths, preserve the month rail and agenda-card structure.
 
 At mobile widths:
 
@@ -116,10 +94,10 @@ The navigation retains the site's existing horizontally scrollable mobile behavi
 
 ## Accessibility
 
-- Use semantic headings for the page and each month
+- Use semantic headings for each month; the active navigation item provides the page label
 - Represent each month schedule with semantic list or table markup; prefer a list when the mobile transformation would make a table misleading
 - Treat type pills as text because they are not interactive
-- Render unavailable actions as disabled buttons with `aria-disabled="true"`; do not use empty or placeholder links
+- Omit unavailable actions; do not use disabled placeholders, empty links, or guessed destinations
 - Give active Action links a visible keyboard focus state and a meaningful accessible name that includes the course topic
 - Preserve visible keyboard focus on the navigation tab
 - Maintain WCAG AA contrast for all text and status labels
@@ -156,12 +134,12 @@ Acceptance criteria:
 - `?page=learning` opens the new page directly
 - September 2026 appears before August 2026
 - All eleven supplied learning entries are present once
-- Every row displays date, topic, time, type, and action
+- Every row displays date, topic, time, and type; verified resources also display an action
 - Presenter information is displayed for the three supplied sharing entries
 - Type pills are non-interactive
-- Five rows use the four verified source URLs from the `AI topic` sheet; the two Preserving Learning rows intentionally share one recording URL
-- Six rows without verified source URLs display disabled `Link coming soon` controls
-- Active links open in a new tab and disabled controls cannot navigate
+- Eight rows use verified resource links; the two Obsidian sessions intentionally share one YouTube URL
+- Three rows without verified source URLs omit the action entirely
+- Active links open in a new tab
 - Existing Latest Week, All Weeks, and Resources Hub pages remain available
 - The layout fits a 390px-wide viewport without horizontal page overflow
 - The production validation/build completes without introducing new failures

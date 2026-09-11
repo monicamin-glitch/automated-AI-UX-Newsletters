@@ -1,5 +1,7 @@
 # Learning Plan Page Implementation Plan
 
+> Historical plan: implementation is complete. The final content and maintenance contract lives in [`../../../learning-plan.md`](../../../learning-plan.md); later reviewed UI refinements intentionally supersede some early values below.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add a responsive, static Learning Plan page with September and August 2026 schedules, verified course-resource actions, and disabled fallbacks for missing URLs.

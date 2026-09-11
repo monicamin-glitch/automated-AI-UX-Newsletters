@@ -164,7 +164,7 @@ async function measureLearningLayout(browser, width, height) {
           ['duration', row.querySelector('.learning-duration')],
           ['type', row.querySelector('.learning-type-wrap')],
           ['action', row.querySelector('.learning-action, .learning-action-disabled')]
-        ];
+        ].filter(([, field]) => field);
         const overlaps = fields.flatMap(([name, field], index) => fields.slice(index + 1)
           .filter(([, other]) => intersects(field, other))
           .map(([otherName]) => name + '/' + otherName));
@@ -222,6 +222,140 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       }
     });
 
+    await t.test('presents relaxed month hierarchy and separated agenda cards', async () => {
+      await browser.setViewport(1440, 1000);
+      await settleLayout(browser);
+      const presentation = await browser.evaluate(`(() => {
+        const month = document.querySelector('.learning-month-name');
+        const year = document.querySelector('.learning-month-year');
+        const pageBox = document.querySelector('#page-learning').getBoundingClientRect();
+        const monthLabel = document.querySelector('.learning-month-label').getBoundingClientRect();
+        const items = [...document.querySelectorAll('.learning-month:first-of-type .learning-list-item')];
+        const first = items[0].getBoundingClientRect();
+        const second = items[1].getBoundingClientRect();
+        const rowStyle = getComputedStyle(items[0].querySelector('.learning-row'));
+        return {
+          tableHeaders: document.querySelectorAll('.learning-list-header').length,
+          monthText: month.textContent.trim(),
+          yearText: year.textContent.trim(),
+          monthSize: parseFloat(getComputedStyle(month).fontSize),
+          yearSize: parseFloat(getComputedStyle(year).fontSize),
+          pageToMonthGap: monthLabel.top - pageBox.top,
+          cardGap: second.top - first.bottom,
+          cardRadius: parseFloat(rowStyle.borderRadius),
+          cardBackground: rowStyle.backgroundColor
+        };
+      })()`);
+      assert.equal(presentation.tableHeaders, 0, 'agenda list must not expose a table-style header');
+      assert.deepEqual([presentation.monthText, presentation.yearText], ['September', '2026'], 'month and year must have separate typography roles');
+      assert.ok(presentation.monthSize >= 20 && presentation.monthSize <= 22, 'month name must remain readable without acting as a second page-level title');
+      assert.ok(presentation.yearSize <= 13, 'year must remain supporting text');
+      assert.ok(Math.abs(presentation.pageToMonthGap) < 1, 'the latest month must begin at the top of the Learning Plan page');
+      assert.ok(presentation.cardGap >= 8, 'agenda cards must be visually separated rather than joined as table rows');
+      assert.ok(presentation.cardRadius >= 12, 'agenda items must read as individual cards');
+      assert.equal(presentation.cardBackground, 'rgb(255, 255, 255)', 'agenda cards must retain a clear surface against the page');
+    });
+
+    await t.test('uses one green Internal Sharing badge treatment', async () => {
+      const badges = await browser.evaluate(`(() => {
+        const sharingBadges = [...document.querySelectorAll('.learning-type')]
+          .filter(badge => badge.textContent.trim().toLowerCase().includes('sharing'));
+        return sharingBadges.map(badge => {
+          const style = getComputedStyle(badge);
+          return {
+            label: badge.textContent.trim(),
+            color: style.color,
+            backgroundColor: style.backgroundColor
+          };
+        });
+      })()`);
+      assert.deepEqual(badges, Array.from({ length: 3 }, () => ({
+        label: 'Internal Sharing',
+        color: 'rgb(21, 128, 61)',
+        backgroundColor: 'rgb(220, 252, 231)'
+      })), 'all sharing sessions must use the same Internal Sharing label and green badge style');
+    });
+
+    await t.test('opens the supplied September learning resources in new tabs', async () => {
+      const actions = await browser.evaluate(`(() => [
+        'learning-topic-september-8',
+        'learning-topic-september-15',
+        'learning-topic-september-22'
+      ].map(topicId => {
+        const action = document.getElementById(topicId)?.closest('.learning-row')?.querySelector('.learning-action');
+        return action ? {
+          label: action.textContent.trim(),
+          href: action.href,
+          target: action.target,
+          rel: action.rel
+        } : null;
+      }))()`);
+      assert.deepEqual(actions, [
+        {
+          label: 'View',
+          href: 'https://docs.google.com/presentation/d/1kMiVRRVZslieJJZruMM0s4f35s5t6meCGRqQY9EiPfA/edit?usp=sharing',
+          target: '_blank',
+          rel: 'noopener noreferrer'
+        },
+        {
+          label: 'Watch',
+          href: 'https://www.youtube.com/watch?v=6MBq1paspVU',
+          target: '_blank',
+          rel: 'noopener noreferrer'
+        },
+        {
+          label: 'Watch',
+          href: 'https://www.youtube.com/watch?v=6MBq1paspVU',
+          target: '_blank',
+          rel: 'noopener noreferrer'
+        }
+      ]);
+    });
+
+    await t.test('starts directly with the latest month and no page-level title', async () => {
+      const start = await browser.evaluate(`(() => {
+        const page = document.querySelector('#page-learning');
+        const pageBox = page.getBoundingClientRect();
+        const month = page.querySelector('.learning-month-label');
+        const firstHeading = page.querySelector('h1, h2, h3');
+        return {
+          pageHeadingCount: page.querySelectorAll('h1').length,
+          heroCount: page.querySelectorAll('.learning-hero').length,
+          firstHeading: firstHeading?.getAttribute('aria-label') || firstHeading?.textContent.replace(/\s+/g, ' ').trim(),
+          monthStartsPage: Math.abs(month.getBoundingClientRect().top - pageBox.top) < 1
+        };
+      })()`);
+      assert.deepEqual(start, {
+        pageHeadingCount: 0,
+        heroCount: 0,
+        firstHeading: 'September 2026',
+        monthStartsPage: true
+      });
+    });
+
+    await t.test('separates months with whitespace instead of divider lines', async t => {
+      for (const [width, expectedGap] of [[1440, 44], [390, 28]]) {
+        await t.test(`${width}px`, async () => {
+          await browser.setViewport(width, 1000);
+          await settleLayout(browser);
+          const spacing = await browser.evaluate(`(() => {
+            const months = [...document.querySelectorAll('.learning-month')];
+            const first = months[0].getBoundingClientRect();
+            const second = months[1].getBoundingClientRect();
+            const secondLabel = months[1].querySelector('.learning-month-label').getBoundingClientRect();
+            return {
+              dividerWidth: parseFloat(getComputedStyle(months[1]).borderTopWidth),
+              monthGap: second.top - first.bottom,
+              labelInset: secondLabel.top - second.top
+            };
+          })()`);
+          assert.equal(spacing.dividerWidth, 0, `${width}px month sections must not render divider lines`);
+          assert.ok(Math.abs(spacing.monthGap - expectedGap) < 1, `${width}px month sections must use the page rhythm for separation`);
+          assert.ok(Math.abs(spacing.labelInset) < 1, `${width}px month labels must not keep divider-related padding`);
+        });
+      }
+    });
+
     await t.test('preserves the 390px mobile flow', async () => {
       await browser.setViewport(390, 844);
       await settleLayout(browser);
@@ -242,17 +376,18 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
         const topicColumn = row.querySelector('.learning-topic-wrap');
         const topic = row.querySelector('.learning-topic');
         const presenter = row.querySelector('.learning-presenter');
+        const meta = row.querySelector('.learning-meta');
         const duration = row.querySelector('.learning-duration');
         const type = row.querySelector('.learning-type');
-        const action = row.querySelector('.learning-action, .learning-action-disabled');
+        const action = row.querySelector('.learning-action');
         const topicColumnBox = topicColumn.getBoundingClientRect();
         const presenterBox = presenter?.getBoundingClientRect();
         return {
           dateLeftOfTopic: date.getBoundingClientRect().right <= topicColumnBox.left,
-          fieldsVisible: [date, topic, duration, type, action].every(field => { const value = geometry(field); return value.visible && value.inBounds; }),
+          fieldsVisible: [date, topic, duration, type, action].filter(Boolean).every(field => { const value = geometry(field); return value.visible && value.inBounds; }),
           presenterInsideTopic: !presenter || (presenterBox.width > 0 && presenterBox.height > 0 && presenterBox.left >= topicColumnBox.left && presenterBox.right <= topicColumnBox.right && presenterBox.top >= topicColumnBox.top && presenterBox.bottom <= topicColumnBox.bottom),
-          flowTopToBottom: topicColumnBox.bottom <= duration.getBoundingClientRect().top && duration.getBoundingClientRect().bottom <= type.getBoundingClientRect().top && type.getBoundingClientRect().bottom <= action.getBoundingClientRect().top,
-          flowNonOverlapping: !intersects(topicColumn, duration) && !intersects(duration, type) && !intersects(type, action)
+          flowTopToBottom: topicColumnBox.bottom <= meta.getBoundingClientRect().top && (!action || meta.getBoundingClientRect().bottom <= action.getBoundingClientRect().top),
+          flowNonOverlapping: !intersects(topicColumn, meta) && (!action || !intersects(meta, action))
         };
       });
       return {
@@ -266,8 +401,8 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       })()`);
       assert.equal(mobile.scrollWidth, mobile.clientWidth, '390px page must not overflow horizontally');
       assert.equal(mobile.labelAboveAgenda, true, '390px month label must sit above its agenda');
-      assert.equal(mobile.actionCount, 11, '390px page must render all 11 Learning Plan actions');
-      assert.deepEqual(mobile.actions, Array.from({ length: 11 }, () => ({ visible: true, inBounds: true })), '390px actions must be visible and in bounds');
+      assert.equal(mobile.actionCount, 8, '390px page must render all eight available Learning Plan actions');
+      assert.deepEqual(mobile.actions, Array.from({ length: 8 }, () => ({ visible: true, inBounds: true })), '390px available actions must be visible and in bounds');
       assert.equal(mobile.rows.length, 11, '390px page must retain all 11 Learning Plan rows');
       const mobileRowsValid = mobile.rows.every(row => row.dateLeftOfTopic && row.fieldsVisible && row.presenterInsideTopic && row.flowTopToBottom && row.flowNonOverlapping);
       assert.equal(mobileRowsValid, true, '390px row geometry must reject missing, overlapping, or misplaced fields');
@@ -313,7 +448,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
         document.body.removeAttribute('tabindex');
       })()`);
       const actionStops = [];
-      for (let index = 0; index < 5; index += 1) {
+      for (let index = 0; index < 8; index += 1) {
       await browser.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
       await browser.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
         actionStops.push(await browser.evaluate(`(() => {
@@ -330,10 +465,10 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
         })()`));
       }
       await browser.evaluate(`document.querySelector('.nav-tabs').inert = false`);
-      assert.deepEqual(actionStops.map(stop => stop.actionIndex), [0, 1, 2, 3, 4], 'Tab must reach exactly the five active actions in order');
-      assert.deepEqual(actionStops.map(stop => stop.disabled), Array.from({ length: 5 }, () => false), 'disabled actions must be skipped');
-      assert.deepEqual(actionStops.map(stop => [stop.outlineStyle, stop.outlineWidth, stop.outlineOffset, stop.outlineColor]), Array.from({ length: 5 }, () => ['solid', '3px', '2px', 'rgb(29, 78, 216)']), 'each active action must use the opaque primary-dark focus outline with at least 3:1 contrast against white');
-      assert.equal(await browser.evaluate(`document.querySelectorAll('.learning-action-disabled[disabled]').length`), 6, 'six disabled actions must remain unavailable');
+      assert.deepEqual(actionStops.map(stop => stop.actionIndex), [0, 1, 2, 3, 4, 5, 6, 7], 'Tab must reach exactly the eight active actions in order');
+      assert.deepEqual(actionStops.map(stop => stop.disabled), Array.from({ length: 8 }, () => false), 'disabled actions must be skipped');
+      assert.deepEqual(actionStops.map(stop => [stop.outlineStyle, stop.outlineWidth, stop.outlineOffset, stop.outlineColor]), Array.from({ length: 8 }, () => ['solid', '3px', '2px', 'rgb(29, 78, 216)']), 'each active action must use the opaque primary-dark focus outline with at least 3:1 contrast against white');
+      assert.equal(await browser.evaluate(`document.querySelectorAll('.learning-action-disabled, #page-learning button[disabled]').length`), 0, 'unavailable actions must not render as disabled buttons');
     });
 
     assert.deepEqual(browser.runtimeErrors(), [], 'browser runtime must remain error-free');

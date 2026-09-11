@@ -21,6 +21,9 @@ const topics = [
 
 const expectedActionUrls = [
   'https://drive.google.com/drive/folders/1VaNwxBUOhNfyCJ7U0c4249cU0o-LXqhJ',
+  'https://docs.google.com/presentation/d/1kMiVRRVZslieJJZruMM0s4f35s5t6meCGRqQY9EiPfA/edit?usp=sharing',
+  'https://www.youtube.com/watch?v=6MBq1paspVU',
+  'https://www.youtube.com/watch?v=6MBq1paspVU',
   'https://drive.google.com/file/d/17awpWPaVAt9FRTKKRI_x1TWryk0Zf86e/view?usp=sharing',
   'https://drive.google.com/file/d/1J7uIh1-cy2QfKf-TEIRx-KJINfV_YRwM/view',
   'https://drive.google.com/file/d/1J7uIh1-cy2QfKf-TEIRx-KJINfV_YRwM/view',
@@ -53,14 +56,28 @@ test('shows the latest month first and every supplied course once', () => {
   assert.equal((page.match(/class="learning-row"/g) ?? []).length, 11);
 });
 
-test('uses only verified links and accessible disabled fallbacks', () => {
+test('uses only verified links and omits unavailable actions', () => {
   const actionUrls = [...page.matchAll(/<a class="learning-action" href="([^"]+)"/g)].map(match => match[1]);
   assert.deepEqual(actionUrls, expectedActionUrls);
-  assert.equal((page.match(/class="learning-action"/g) ?? []).length, 5);
-  assert.equal((page.match(/class="learning-action-disabled"/g) ?? []).length, 6);
-  assert.equal((page.match(/target="_blank" rel="noopener noreferrer"/g) ?? []).length, 5);
-  assert.equal((page.match(/aria-disabled="true"/g) ?? []).length, 6);
+  assert.equal((page.match(/class="learning-action"/g) ?? []).length, 8);
+  assert.equal((page.match(/target="_blank" rel="noopener noreferrer"/g) ?? []).length, 8);
+  assert.doesNotMatch(page, /learning-action-disabled|Link coming soon/);
   assert.doesNotMatch(page, /href=""|href="#"/);
+});
+
+test('uses official video type copy', () => {
+  assert.equal((page.match(/>Video Course<\/span>/g) ?? []).length, 7);
+  assert.doesNotMatch(page, />Watch video<\/span>/i);
+});
+
+test('uses split month labels and an agenda list without table headers', () => {
+  assert.equal((page.match(/class="learning-month-heading"/g) ?? []).length, 2);
+  assert.deepEqual([...page.matchAll(/<span class="learning-month-name">([^<]+)<\/span>\s*<span class="learning-month-year">([^<]+)<\/span>/g)]
+    .map(([, month, year]) => ({ month, year })), [
+    { month: 'September', year: '2026' },
+    { month: 'August', year: '2026' },
+  ]);
+  assert.doesNotMatch(page, /class="learning-list-header"/);
 });
 
 test('keeps type and action as separate fields and defines mobile layout', () => {

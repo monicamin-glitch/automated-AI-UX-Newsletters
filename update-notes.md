@@ -1,5 +1,17 @@
 # Update Notes
 
+## 2026-09-11
+
+### Learning Plan page
+
+- Added `Learning Plan` as the fourth top-navigation page with direct `?page=learning` routing.
+- Added a manually curated September-and-August 2026 archive using a quiet month rail and independent responsive agenda cards instead of a table.
+- Removed the page-level Learning Plan title, illustration, month dividers, and unavailable-action placeholders after visual review.
+- Standardized video type copy to `Video Course` and consolidated all internal sessions under one green `Internal Sharing` badge; removed the DDP-specific variant.
+- Added verified actions for Echo's PP Demand Page slides and both Obsidian + Claude Code sessions, with the two sessions intentionally sharing one YouTube recording.
+- Added [`learning-plan.md`](learning-plan.md) as the single source of truth for manually maintained Learning Plan content, while routine weekly refreshes preserve the page unchanged.
+- Added focused source and real-browser coverage for navigation, resource destinations, visual hierarchy, desktop/tablet/mobile geometry, and keyboard accessibility.
+
 ## 2026-09-07
 
 ### Week 36 weekly refresh
