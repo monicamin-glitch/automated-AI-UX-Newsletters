@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T06:55:11.850Z",
+  "generatedAt": "2026-09-14T02:39:57.292Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,119 @@
     ]
   },
   "summary": {
-    "cards": 139,
+    "cards": 146,
     "errors": 0,
-    "warnings": 23,
+    "warnings": 30,
     "counts": {
-      "embedded-img": 139
+      "embedded-img": 146
     }
   },
   "entries": [
+    {
+      "title": "ChatGPT Images 2.5 adds templates, sketch input, comments, and prompt sharing",
+      "source": "OpenAI",
+      "date": "September 8",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week37/01-openai-images-25.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 787,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Test Complex Interactions Earlier with AI Prototyping",
+      "source": "Nielsen Norman Group",
+      "date": "September 11",
+      "url": "https://www.nngroup.com/articles/test-earlier-with-ai/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week37/02-nng-ai-prototyping.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 801,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "AI Can Help Write an Article, but It Can’t Stand Behind It",
+      "source": "Nielsen Norman Group",
+      "date": "September 11",
+      "url": "https://www.nngroup.com/articles/ai-editorial-process/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week37/03-nng-editorial-ai.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 803,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Build your own company brain: the enterprise AI playbook from Stripe’s engineering team",
+      "source": "Lenny's Newsletter",
+      "date": "September 7",
+      "url": "https://www.lennysnewsletter.com/p/build-your-own-company-brain-the",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week37/04-lenny-company-brain.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 803,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Data plugin turns connected business questions into interactive reports",
+      "source": "OpenAI",
+      "date": "September 10",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week37/05-openai-data-plugin.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 787,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Library adds Box, Dropbox, and SharePoint alongside Google Drive",
+      "source": "OpenAI",
+      "date": "September 10",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week37/06-openai-library.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 787,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "How we built Grok Bot in a month",
+      "source": "Lenny's Newsletter",
+      "date": "September 8",
+      "url": "https://www.lennysnewsletter.com/p/how-we-built-grok-bot-in-a-month",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week37/07-lenny-grok-bot.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 790,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
     {
       "title": "GPT-6 Astra brings stronger computer use and professional artifact creation",
       "source": "OpenAI",

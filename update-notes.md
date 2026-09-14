@@ -1,5 +1,37 @@
 # Update Notes
 
+## 2026-09-14
+
+### Week 37 weekly refresh
+
+- Refreshed Latest Week to `Week 37` for `Sep 7-Sep 13, 2026` and archived the former Latest Week as template `Week 36` without deleting or renumbering history.
+- Published 13 verified cards: 6 internal Slack Spotlights and 7 external AI-and-design updates, all within the completed Monday-Sunday window.
+- Preserved the collaborator UI contract, including the newly merged Learning Plan page: top navigation, `AI × Design` with `Shanghai`, Latest Week topics, `.slack-card`, `.masonry-card`, calendar archives, shared detail dialog, All Weeks, Resources Hub, and Learning Plan.
+
+### Source coverage checklist
+
+- Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, and Bolt.
+- Section A included: OpenAI (`ChatGPT Images 2.5`, `Data plugin in ChatGPT Work and Codex`, and Box/Dropbox/SharePoint in Library).
+- Section A skipped: Anthropic's Sep 10 misuse report did not clear the UX-practice threshold; Figma's Sep 11 Japan data-residency announcement was infrastructure without a distinct AI-design workflow change; Google Stitch, Miro, and Bolt had no verified in-window official UX-relevant update.
+- Section B checked: all configured YouTube tutorial queries, UX Collective, and Medium Design Bootcamp. None surfaced a reliably dated in-window workflow artifact strong enough to publish.
+- Section C checked: Nielsen Norman Group, Lenny's Newsletter feed/archive, Google Design, and Google PAIR.
+- Section C included: NN/g (`Test Complex Interactions Earlier with AI Prototyping`, `AI Can Help Write an Article, but It Can't Stand Behind It`) and Lenny's Newsletter (`Build your own company brain`, `How we built Grok Bot in a month`).
+- Section C skipped: Google Design and Google PAIR had no fresh, dated in-window publication. Lenny's Sep 7 roundup was deduplicated in favor of its original episode pages.
+- Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-sdlc`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Section D included: `#ai-for-ux` (media-library-to-Figma MCP plugin POC and cross-craft Astra benchmark); `#ai-studio-updates` (navigation and information-architecture redesign); `#ai-gateway-updates` (Fable 5.1 and GPT-6 Astra availability and restrictions); `#china-ai-sdlc` (Temper specification-driven tool deep dive); and the original `#breview` parent shared into `#genai_engineering` (rich Markdown, Mermaid, and synchronized review comments).
+- Section D skipped: the China AI Workstream Bot post was a rewritten digest and was not treated as an original; Agent Serving 2.0 and experiment/SSH skills lacked a stronger direct UX implication than the selected set; routine access questions, maintenance, generic links, cross-posts, and planning-only messages were excluded. Channels without a qualifying parent were recorded as checked with no eligible update.
+
+### Validation notes
+
+- Verified each included Slack parent, real profile author, timestamp, permalink, date, and reply count by reading the parent thread. Stored only the parent body for Booking-only dialogs; public cards contain labeled newsletter summaries and no rewritten summary is represented as an original.
+- Added checked-in local Week 37 media for every external card. Official OpenAI pages exposed no stable item-specific media through automation; the selected source pages therefore use distinct deterministic local title-card fallbacks, which pass the publication gate with review warnings.
+- Fetched and merged ten newer collaborator commits before the weekly build. The merge preserves the new Learning Plan page and unrelated untracked files; the pre-existing local publication safeguards were retained without force-push.
+- Media preparation and target-week date validation pass with zero errors. The readiness status intentionally remains tied to Week 36 until the guarded finalizer writes Week 37 status.
+
+### Known follow-ups
+
+- The mandatory finalizer must commit and push the publish artifacts, update Booking-only B.Pages artifact `4de2388206` with `Wang Zi` / `booking` / `Created by Monica Min · Wang Zi`, and notify review group `C0BJTN197PH`. The picker must not proceed on any failure.
+
 ## 2026-09-11
 
 ### Learning Plan page
