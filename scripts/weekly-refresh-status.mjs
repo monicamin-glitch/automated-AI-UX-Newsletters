@@ -170,7 +170,7 @@ export function changedFiles() {
   return result.stdout.split('\n').map(line => line.trim()).filter(Boolean);
 }
 
-export function stagedFilesForLatest() {
+export function stagedFilesForLatest({ includeLearningPlan = false } = {}) {
   const snapshot = latestDigestSnapshot();
   const assetMatches = [...snapshot.week.html.matchAll(/(?:data-img|src)="([^"]+)"/g)]
     .map(match => match[1])
@@ -179,6 +179,13 @@ export function stagedFilesForLatest() {
     'index.html',
     'update-notes.md',
     'assets/media-manifest.json',
+    ...(includeLearningPlan ? [
+      'learning-plan.md',
+      'design-spec.md',
+      'tests/learning-plan-page.test.mjs',
+      'tests/learning-plan-browser.test.mjs',
+      'docs/superpowers/specs/2026-09-08-learning-plan-page-design.md',
+    ] : []),
     ...assetMatches,
   ]).filter(relativePath => fs.existsSync(path.join(repoRoot, relativePath)));
 }

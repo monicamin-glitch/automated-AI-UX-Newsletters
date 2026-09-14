@@ -78,5 +78,5 @@ test('keeps the two shared resources in only the requested categories', () => {
 });
 
 test('supports a direct Resources Hub preview URL', () => {
-  assert.match(html, /\['latest', 'all', 'resources'\]\.includes\(initialPage\)/);
+  assert.match(html, /\['latest', 'all', 'resources', 'learning'\]\.includes\(initialPage\)/);
 });

@@ -27,6 +27,7 @@ UX designers, researchers, writers, design technologists, design-system teams, a
 /digest fetch internal # checkpoint Internal Updates and Popular Topics only
 /digest build         # render the latest checkpoint and validate local media
 /digest publish       # run the guarded publication flow for the built website
+/digest learning      # update Learning Plan only after explicit human edits
 ```
 
 `full` is the default weekly mode.
@@ -43,9 +44,17 @@ Read only the documents needed for the requested operation.
 | External Updates only | [`sources.md`](sources.md), external-card and media sections of [`design-spec.md`](design-spec.md) and [`media-strategy.md`](media-strategy.md) |
 | Internal Updates / Popular Topics only | [`slack-spotlight.md`](slack-spotlight.md), relevant Slack and topic sections of [`design-spec.md`](design-spec.md) |
 | Resources Hub change | [`resources-hub.md`](resources-hub.md), Resources Hub section of [`design-spec.md`](design-spec.md) |
+| Learning Plan change | [`learning-plan.md`](learning-plan.md), Learning Plan section of [`design-spec.md`](design-spec.md) |
 | Slack channel share after website publication | [`slack-weekly-bot.md`](slack-weekly-bot.md) |
 
 Do not read or rewrite [`resources-hub.md`](resources-hub.md) during a routine weekly refresh. It is manually curated and changes only after explicit human direction.
+Apply the same preservation rule to [`learning-plan.md`](learning-plan.md). It is also manually curated and changes only after explicit human direction.
+
+For a Learning Plan release, use the guarded learning mode so its canonical source, visual specification, and focused tests are included without changing the routine weekly staging scope:
+
+```bash
+node scripts/finalize-weekly-refresh.mjs --learning --commit --push --publish-bpages
+```
 
 ---
 
@@ -194,6 +203,7 @@ Update the published HTML while preserving the approved structure and visual rul
 - Keep unavailable calendar weeks disabled.
 - Render only Internal Updates and External Updates in the selected archive report. Popular Topics remains exclusive to Latest Week.
 - Preserve the Resources Hub exactly as-is unless the run mode is `resources` and a human has supplied explicit changes.
+- Preserve the Learning Plan exactly as-is unless the run mode is `learning` and a human has supplied explicit changes.
 
 ### 7. Append the written digest
 
@@ -316,6 +326,16 @@ If a previously published date range is wrong, correct only that week’s metada
 - When a person requests a Resource Hub change, update the canonical resource once and keep category placements as ID references.
 - Validate that every link opens in a safe new tab.
 
+## Learning Plan behavior
+
+[`learning-plan.md`](learning-plan.md) is the sole content source for the Learning Plan page.
+
+- It is manually curated and occasionally updated.
+- It is independent of Latest Week and All Weeks and must be preserved during routine weekly refreshes.
+- Do not search for, invent, or automatically add courses or resource URLs.
+- When a person supplies a Learning Plan change, update the canonical content once and render it using the Learning Plan section of [`design-spec.md`](design-spec.md).
+- Validate every supplied action link and open it in a safe new tab.
+
 ---
 
 ## Deployment
@@ -324,7 +344,7 @@ If a previously published date range is wrong, correct only that week’s metada
 
 - Include all website files changed by the refresh, including relevant assets and documentation.
 - Use the ISO week in the commit message, for example `Digest: Week 28 (July 6–12, 2026)`.
-- Confirm Latest Week, All Weeks, Resources Hub, links, images, filters, and calendar states after deployment.
+- Confirm Latest Week, All Weeks, Resources Hub, Learning Plan, links, images, filters, and calendar states after deployment.
 
 ### B.Pages
 
@@ -367,6 +387,7 @@ Every successful or blocked run ends with:
 | [`sources.md`](sources.md) | Public External Updates sources and coverage rules |
 | [`slack-spotlight.md`](slack-spotlight.md) | Slack channels, filtering, scoring, Popular Topics, and Internal Update fields |
 | [`resources-hub.md`](resources-hub.md) | Manually curated Resource Hub content |
+| [`learning-plan.md`](learning-plan.md) | Manually curated monthly Learning Plan content |
 | [`design-spec.md`](design-spec.md) | Approved page structure, components, visual system, and interactions |
 | [`media-strategy.md`](media-strategy.md) | External images, popular-topic illustration, and media verification |
 | [`slack-weekly-bot.md`](slack-weekly-bot.md) | Human-approved Slack distribution after website publication |

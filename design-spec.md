@@ -4,19 +4,20 @@ Authoritative visual and interaction specification for the newsletter website.
 
 **Owner:** zwang5
 
-**Updated:** July 22, 2026
+**Updated:** September 11, 2026
 
-Content and discovery rules live in [`digest.md`](digest.md), [`slack-spotlight.md`](slack-spotlight.md), and [`resources-hub.md`](resources-hub.md). This file defines presentation only.
+Content and discovery rules live in [`digest.md`](digest.md), [`slack-spotlight.md`](slack-spotlight.md), [`resources-hub.md`](resources-hub.md), and [`learning-plan.md`](learning-plan.md). This file defines presentation only.
 
 ---
 
 ## Information architecture
 
-Use a sticky top navigation with three pages:
+Use a sticky top navigation with four pages:
 
 1. **Latest Week** — the most recent ISO calendar week
 2. **All Weeks** — a calendar-week picker and the selected week’s complete report
 3. **Resources Hub** — the manually curated Booking.com UX AI Knowledge Hub
+4. **Learning Plan** — the manually curated Design CN monthly learning archive
 
 The navigation remains unchanged as weeks change. Weekly content is the primary variable.
 
@@ -35,6 +36,11 @@ All Weeks:
 2. Internal Updates
 3. External Updates
 
+Learning Plan:
+
+1. Newest month
+2. Previous months in reverse chronological order
+
 The popular-topic experience is exclusive to Latest Week. It appears below the Latest Week heading and above Internal Updates. All Weeks never renders a Popular Topic block; each selected archive report begins with Internal Updates.
 
 ---
@@ -52,7 +58,7 @@ The popular-topic experience is exclusive to Latest Week. It appears below the L
 ### Responsive behavior
 
 - At tablet widths, External Updates uses two columns.
-- At mobile widths, External Updates and Resource Hub use one column.
+- At mobile widths, External Updates and Resource Hub use one column; Learning Plan stacks the month label above its agenda.
 - Top navigation stays available; reduce horizontal padding before allowing text to wrap.
 - Slack cards retain the channel tile at the start of each card; reduce card padding and gap on narrow screens.
 - The popular-topic illustration remains decorative and secondary to the topic card.
@@ -139,10 +145,12 @@ Do not use newsletter-sequence labels such as “Week 10 — 14 updates”. Do n
 ### Top navigation
 
 - Left: AI × Design identity and Shanghai badge
-- Right: Latest Week, All Weeks, Resources Hub
+- Right: Latest Week, All Weeks, Resources Hub, Learning Plan
 - Active page: primary-blue text and bottom border
 - Hover: primary-blue text
-- Support direct preview URLs such as `?page=all` and `?page=resources`
+- Support direct preview URLs such as `?page=all`, `?page=resources`, and `?page=learning`
+- Tab changes update the `page` query parameter and browser history; Back/Forward restores the matching page.
+- The active tab uses `aria-current="page"` and inactive tabs omit the attribute.
 
 ### Popular-topic experience
 
@@ -320,6 +328,25 @@ Content comes from [`resources-hub.md`](resources-hub.md).
 - Link rows are compact, equal width, and include an external-link icon
 - Mobile stacks all categories and changes Foundations to one link column
 
+### Learning Plan
+
+Content comes from [`learning-plan.md`](learning-plan.md).
+
+- Do not render a page-level title, subtitle, hero, or illustration; begin directly with the newest month.
+- Desktop month groups use a quiet 144px left rail and a flexible agenda column.
+- Month name uses 22px desktop / 20px mobile; year uses 12px muted supporting text.
+- Separate month groups with 44px desktop / 28px mobile whitespace and no divider line.
+- Each course is an independent white agenda card with a neutral border, 14px radius, and restrained hover lift.
+- Card hierarchy: compact blue date; 16px topic; optional 12px presenter; 13px duration; 12px type badge; optional action.
+- The 12px year and presenter text use `--text-secondary`, not `--text-muted`, to maintain readable contrast on white and light-grey surfaces.
+- `Video Course` uses the default pale-blue type badge.
+- Every internal sharing session uses the same green `Internal Sharing` badge. Do not create a DDP-specific label or color variant.
+- `Roundtable Discussion` uses the soft orange type badge.
+- When a verified URL exists, show `Watch` for a video and `View` for slides, folders, or other material. Open it in a new tab with `rel="noopener noreferrer"`.
+- When no verified URL exists, omit the action. Do not show `Link coming soon`, disabled placeholders, empty links, or guessed destinations.
+- At widths up to 1024px, move the month label above the agenda. At widths up to 768px, keep the date in a compact left column and stack topic, metadata, and optional action without horizontal overflow.
+- Action links use an opaque `--primary-dark` 3px keyboard-focus outline with 2px offset.
+
 ---
 
 ## Media and image behavior
@@ -351,6 +378,7 @@ Content comes from [`resources-hub.md`](resources-hub.md).
 | Public discovery sources | [`sources.md`](sources.md) |
 | Internal Updates and Popular Topics | [`slack-spotlight.md`](slack-spotlight.md) |
 | Resource Hub links and categories | [`resources-hub.md`](resources-hub.md) |
+| Learning Plan months, courses, types, presenters, and resource links | [`learning-plan.md`](learning-plan.md) |
 | Images and asset validation | [`media-strategy.md`](media-strategy.md) |
 
 Do not duplicate content URLs or discovery rules in this visual specification.
