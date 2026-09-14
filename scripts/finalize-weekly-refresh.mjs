@@ -115,7 +115,13 @@ try {
     },
   });
   writeRefreshStatus(publishedStatus);
-  if (options.notify) await notifyReviewer(publishedStatus);
+  if (options.notify) {
+    try {
+      await notifyReviewer(publishedStatus);
+    } catch (notifyError) {
+      console.error(`Warning: ${notifyError.message}`);
+    }
+  }
   console.log(`Weekly refresh ${publishedStatus.status}.`);
   console.log(`Status file: ${path.relative(repoRoot, path.join(repoRoot, 'automation-status/weekly-refresh-status.json'))}`);
 } catch (error) {
@@ -134,7 +140,13 @@ try {
     },
   });
   writeRefreshStatus(failedStatus);
-  if (options.notify) await notifyReviewer(failedStatus);
+  if (options.notify) {
+    try {
+      await notifyReviewer(failedStatus);
+    } catch (notifyError) {
+      console.error(`Warning: ${notifyError.message}`);
+    }
+  }
   console.error(error.message);
   process.exit(1);
 }
