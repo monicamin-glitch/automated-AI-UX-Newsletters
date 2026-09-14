@@ -24,7 +24,8 @@
 ### Validation notes
 
 - Verified each included Slack parent, real profile author, timestamp, permalink, date, and reply count by reading the parent thread. Stored only the parent body for Booking-only dialogs; public cards contain labeled newsletter summaries and no rewritten summary is represented as an original.
-- Added checked-in local Week 37 media for every external card. Official OpenAI pages exposed no stable item-specific media through automation; the selected source pages therefore use distinct deterministic local title-card fallbacks, which pass the publication gate with review warnings.
+- Added checked-in local Week 37 media for every external card. A follow-up image-strategy audit replaced all seven generic title cards: the two NN/g cards and two Lenny's Newsletter cards now use their source-native article artwork, the OpenAI Data plugin card uses its official product dashboard, and Images 2.5 plus Library use distinct topic-specific generated illustrations because suitable item-specific source art was unavailable.
+- Visually inspected all seven replacements at publication size and added descriptive alt text that identifies the actual artwork rather than repeating card titles. No homepage, login, error, cookie, logo-only, or unrelated imagery is used.
 - Fetched and merged ten newer collaborator commits before the weekly build. The merge preserves the new Learning Plan page and unrelated untracked files; the pre-existing local publication safeguards were retained without force-push.
 - Media preparation and target-week date validation pass with zero errors. The readiness status intentionally remains tied to Week 36 until the guarded finalizer writes Week 37 status.
 
