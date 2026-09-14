@@ -5,7 +5,7 @@
 ### Week 37 weekly refresh
 
 - Refreshed Latest Week to `Week 37` for `Sep 7-Sep 13, 2026` and archived the former Latest Week as template `Week 36` without deleting or renumbering history.
-- Published 13 verified cards: 6 internal Slack Spotlights and 7 external AI-and-design updates, all within the completed Monday-Sunday window.
+- Published 15 verified cards: 8 internal Slack Spotlights and 7 external AI-and-design updates, all within the completed Monday-Sunday window.
 - Preserved the collaborator UI contract, including the newly merged Learning Plan page: top navigation, `AI × Design` with `Shanghai`, Latest Week topics, `.slack-card`, `.masonry-card`, calendar archives, shared detail dialog, All Weeks, Resources Hub, and Learning Plan.
 
 ### Source coverage checklist
@@ -18,8 +18,8 @@
 - Section C included: NN/g (`Test Complex Interactions Earlier with AI Prototyping`, `AI Can Help Write an Article, but It Can't Stand Behind It`) and Lenny's Newsletter (`Build your own company brain`, `How we built Grok Bot in a month`).
 - Section C skipped: Google Design and Google PAIR had no fresh, dated in-window publication. Lenny's Sep 7 roundup was deduplicated in favor of its original episode pages.
 - Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-sdlc`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
-- Section D included: `#ai-for-ux` (media-library-to-Figma MCP plugin POC and cross-craft Astra benchmark); `#ai-studio-updates` (navigation and information-architecture redesign); `#ai-gateway-updates` (Fable 5.1 and GPT-6 Astra availability and restrictions); `#china-ai-sdlc` (Temper specification-driven tool deep dive); and the original `#breview` parent shared into `#genai_engineering` (rich Markdown, Mermaid, and synchronized review comments).
-- Section D skipped: the China AI Workstream Bot post was a rewritten digest and was not treated as an original; Agent Serving 2.0 and experiment/SSH skills lacked a stronger direct UX implication than the selected set; routine access questions, maintenance, generic links, cross-posts, and planning-only messages were excluded. Channels without a qualifying parent were recorded as checked with no eligible update.
+- Section D included: `#ai-for-ux` (media-library-to-Figma MCP plugin POC and cross-craft Astra benchmark); `#ai-studio-updates` (navigation and information-architecture redesign); `#ai-gateway-updates` (Fable 5.1 and GPT-6 Astra availability and restrictions); `#china-ai-sdlc` (Temper specification-driven tool deep dive); `#uxw-genai` (ET MCP copy-tag search and CDF-assisted experiment analysis); `#design` (Design AI Summit recording, slides, and feedback path); and the original `#breview` parent shared into `#genai_engineering` (rich Markdown, Mermaid, and synchronized review comments).
+- Section D skipped: the China AI Workstream Bot post was a rewritten digest and was not treated as an original; the Design AI Summit photo album was deduplicated against the stronger recording-and-slides parent; Agent Serving 2.0 and experiment/SSH skills lacked a stronger direct UX implication than the selected set; routine access questions, maintenance, generic links, cross-posts, and planning-only messages were excluded. Channels without another qualifying parent were recorded as checked with no eligible update.
 
 ### Validation notes
 
