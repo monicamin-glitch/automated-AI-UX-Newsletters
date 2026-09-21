@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T03:36:31.166Z",
+  "generatedAt": "2026-09-21T02:43:37.833Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,79 @@
     ]
   },
   "summary": {
-    "cards": 146,
+    "cards": 151,
     "errors": 0,
     "warnings": 23,
     "counts": {
-      "embedded-img": 146
+      "embedded-img": 151
     }
   },
   "entries": [
+    {
+      "title": "Figma Frames Can Now Drive On-Brand Weave Workflows",
+      "source": "Figma",
+      "date": "September 17",
+      "url": "https://www.figma.com/release-notes/#sep-17-2026-create-on-brand-content-with-your-figma-designs-in-weave-workflows",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/01-figma-weave-node.png",
+      "youtubeId": "",
+      "dimensions": "542x305",
+      "sizeBytes": 237709,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Teams Can Publish Generative Weave Tools to Figma Community",
+      "source": "Figma",
+      "date": "September 16",
+      "url": "https://www.figma.com/release-notes/#sep-16-2026-publish-weave-tools-to-the-figma-community",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/03-figma-weave-community.png",
+      "youtubeId": "",
+      "dimensions": "540x304",
+      "sizeBytes": 57936,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "ChatGPT Arrives in Microsoft Word",
+      "source": "OpenAI",
+      "date": "September 17",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/04-openai-word.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1498,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Bolt Forge Offers a High-Usage Open-Model Prototyping Agent",
+      "source": "Bolt",
+      "date": "September 14",
+      "url": "https://bolt.new/blog/what-is-bolt-forge",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/05-bolt-forge.webp",
+      "youtubeId": "",
+      "dimensions": "1260x709",
+      "sizeBytes": 48782,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Figma Folders Add Visual Previews, Clearer Colors, and Duplication",
+      "source": "Figma",
+      "date": "September 16",
+      "url": "https://www.figma.com/release-notes/#sep-16-2026-preview-whats-inside-folders",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/02-figma-folder-preview.png",
+      "youtubeId": "",
+      "dimensions": "542x305",
+      "sizeBytes": 84255,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "ChatGPT Images 2.5 adds templates, sketch input, comments, and prompt sharing",
       "source": "OpenAI",

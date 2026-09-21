@@ -1,5 +1,31 @@
 # Update Notes
 
+## 2026-09-21
+
+### Week 38 weekly refresh
+
+- Refreshed Latest Week to `Week 38` for `Sep 14-Sep 20, 2026` and archived the former Latest Week as template `Week 37` without deleting or renumbering any history.
+- Published 13 verified cards: 8 internal Slack Spotlights and 5 external updates. Preserved the full collaborator UI contract, Resources Hub, and Learning Plan.
+
+### Source coverage checklist
+
+- Section A checked: Anthropic / Claude, OpenAI, Figma, Google Stitch, Miro, and Bolt.
+- Section A included: OpenAI (`ChatGPT for Word`); Figma (`Create on-brand content with your Figma designs in Weave workflows`, `Publish Weave tools to the Figma Community`, and `Preview what's inside folders`); Bolt (`What is Bolt Forge?`).
+- Section A skipped: Anthropic's Salesforce plugin was sales-specific, its frontier-lab metrics and Accenture evaluation announcements did not provide a direct enough UX-practice workflow, and no qualifying Google Stitch or Miro update was verified in the window.
+- Section B checked: all configured YouTube workflow queries, UX Collective, and Medium Design Bootcamp. Search results either fell outside the window or lacked a reliably dated, source-verifiable artifact; none were included as filler.
+- Section C checked: Nielsen Norman Group, Lenny's Newsletter feed/archive, Google Design, and Google PAIR.
+- Section C skipped: NN/g's latest qualifying AI-prototyping article was dated Sep 11; Lenny's Sep 15 growth-ideas article was not an AI × UX update; Google Design and Google PAIR had no fresh dated publication in the window.
+- Section D checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Section D included: `#ai-for-ux` (three Design AI Summit recordings, B.Pages pixel commenting); original `#dieter` parent (Shape v0.1.3); `#uxw-genai` (Agent Fabric App onboarding); `#ai-studio-updates` (EvalSuite 2.0 and EaaS); and `#genai_engineering` (Skills invocation and performance dashboard).
+- Section D skipped: the China AI Workstream Bot digest was a rewritten summary and not an original; `#design` duplicated the stronger Summit parent; `#mp-ai-engineering` contained a resolved skill-registration support issue; `#ai-gateway-updates` contained model opinions and an API migration notice without a distinct UX artifact; `#design-systems` had an open AI-assistant icon question but no completed outcome; `#uxw-genai` multilingual-evaluation meeting notes were covered by the stronger EvalSuite parent; routine support, access, invitations, speculative questions, and channels with no in-window result were excluded.
+
+### Validation notes
+
+- Verified every included internal parent, author, timestamp, permalink, date, reply count, and thread context. Credentials were excluded; the Zoom passcode found in an unselected invitation was never copied into publication data.
+- Added five checked-in Week 38 media assets. Figma and Bolt cards use official source-native images; ChatGPT for Word uses a deterministic local fallback because the official release note exposed no item-specific source art.
+- GitHub origin was fetched before editing and was already synchronized (`HEAD...origin/main` = `0 0`), so no collaborator merge was required. Unrelated untracked files were preserved.
+- Media preparation, target-week date validation, and `git diff --check` pass with zero errors. The guarded finalizer remains responsible for commit, push, public/private artifact separation, B.Pages update, and reviewer notification.
+
 ## 2026-09-14
 
 ### Week 37 weekly refresh
