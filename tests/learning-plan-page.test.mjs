@@ -10,7 +10,6 @@ const topics = [
   'Rebuilding booking.com guest experience pages with code-first',
   'PP Demand Page Prototype First Workflow',
   'How I use Obsidian + Claude Code to run my life (Part 1)',
-  'AI Product Sharing',
   'How I use Obsidian + Claude Code to run my life (Part 2)',
   'Using Claude Code to Create Animations for YIT',
   'Write a well-structured prompt',
@@ -60,7 +59,7 @@ test('shows the latest month first and every supplied course once', () => {
   topics.forEach(topic => {
     assert.equal((page.match(new RegExp(topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) ?? []).length, 1, topic);
   });
-  assert.equal((page.match(/class="learning-row"/g) ?? []).length, 11);
+  assert.equal((page.match(/class="learning-row"/g) ?? []).length, 10);
 });
 
 test('uses only verified links and omits unavailable actions', () => {
@@ -88,7 +87,7 @@ test('uses split month labels and an agenda list without table headers', () => {
 });
 
 test('keeps type and action as separate fields and defines mobile layout', () => {
-  assert.equal((page.match(/class="learning-type /g) ?? []).length, 11);
+  assert.equal((page.match(/class="learning-type /g) ?? []).length, 10);
   assert.match(html, /@media \(max-width: 1024px\) \{[\s\S]*?\.learning-month \{[^}]*grid-template-columns: 1fr/);
   assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.learning-month \{[^}]*grid-template-columns: 1fr/);
   const focusRule = html.match(/\.learning-action:focus-visible\s*\{([^}]*)\}/)?.[1] ?? '';
@@ -100,7 +99,7 @@ test('keeps type and action as separate fields and defines mobile layout', () =>
 test('uses semantic monthly lists around every learning row', () => {
   const months = page.match(/<section class="learning-month"[\s\S]*?<\/section>/g) ?? [];
   assert.equal(months.length, 2);
-  [6, 5].forEach((expectedRows, index) => {
+  [5, 5].forEach((expectedRows, index) => {
     const month = months[index];
     assert.match(month, /<ol class="learning-list-items">/);
     assert.equal((month.match(/<li class="learning-list-item">/g) ?? []).length, expectedRows);

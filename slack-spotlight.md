@@ -179,177 +179,268 @@ Required display behavior is defined in [`design-spec.md`](design-spec.md). Cont
 
 ## Current week output
 
-Replace this section on each successful weekly refresh. Do not append historical weeks here; the website archive remains the historical source.
-
 ```yaml
-week:
+period:
   iso_year: 2026
-  iso_week: 30
-  start_date: 2026-07-20
-  end_date: 2026-07-26
+  iso_week: 38
+  start_date: 2026-09-14
+  end_date: 2026-09-20
+  timezone: Asia/Shanghai
 
 popular_topics:
-  - { word: 'Codex Lab', mentions: '10', channels: 8 }
-  - { word: 'Fabric MCP Gateway', mentions: '7', channels: 5 }
-  - { word: 'Design AI Summit', mentions: '3', channels: 2 }
-  - { word: 'Structural Clarity', mentions: '2', channels: 1 }
-  - { word: 'GenAI Upskill China', mentions: '1', channels: 1 }
+  - word: Design AI Summit
+    mentions: 6
+    channels: 2
+  - word: Agent Fabric App
+    mentions: 4
+    channels: 3
+  - word: EvalSuite & EaaS
+    mentions: 4
+    channels: 3
+  - word: Fabric Skills Insights
+    mentions: 3
+    channels: 3
+  - word: Juno
+    mentions: 1
+    channels: 1
 
-internal_updates:
-  - title: Structural Clarity Judge Measures Whether AI Answers Are Easy to Scan
+internal:
+  - title: Design AI Summit: Writing Skills for Yourself Frames AI Knowledge Debt
+    category: learning
+    channel: ai-for-ux
+    author: Nicole Winestock
+    date: 2026-09-18
+    replies: 0
+    permalink: https://booking.enterprise.slack.com/archives/C0B4CV2EVL6/p1789733629042729
+    original_message: |-
+      Happy Friday, <!channel>. :shibe_nerd:
+      Last share-out for the week. We'll be back next week with more content, including our summit workshop recordings.
+      Stay tuned and thanks for keeping the discussions going :heart:
+
+      And now, let's talk about:
+
+      Writing Skills for Yourself!
+
+      Does AI lead to knowledge debt? We know AI execution is not cheap, but then there might be an additional fee we are paying when we skip the learning experience.
+
+      <@WFP9VE40H|Sarthak Pranit> is here to discuss the risks of lost knowledge through AI-execution and the costly impact it has, not only deliverable quality, but our communication with stakeholders and teammates. His hot take about the matter - Designers should understand how things work. :eyes:
+
+      And while the concerns he raises are valid, Sarthak also has a solution that can counter these issues and enable you to learn in a way that fits your standard.
+
+      Watch the entire talk to find out: <https://docs.google.com/videos/d/1NFp7LuJDqScnNMqJOjOOxHwde1F-W9OuMEB9gc2L54s/play|Writing Skills for Yourself>
+
+      What is your opinion about the risks?
+      Do you see this resonating with other crafts?
+      Or to counter that, maybe you’d like to share cool new things you learned while using AI?
+    what_is_the_update: Design AI Summit published Sarthak Pranit’s “Writing Skills for Yourself” recording, which examines the knowledge debt designers may accumulate when AI performs the work without preserving understanding.
+    why_valuable_for_uxers: It gives UXers a practical lens for balancing execution speed with craft knowledge, deliverable quality, and confident communication with teammates and stakeholders.
+  - title: A Miro-to-React Workflow Turns Rough Ideas into Products Without Figma
     category: practices
-    channel: uxw-genai
-    author: Niall Hurley
-    date: 2026-07-22
-    replies: 4
-    permalink: https://booking.enterprise.slack.com/archives/C070U2AADCZ/p1784723511399259?thread_ts=1784723511.399259&cid=C070U2AADCZ
-    posted_at: 2026-07-22T20:31:51+08:00
+    channel: ai-for-ux
+    author: Nicole Winestock
+    date: 2026-09-16
+    replies: 6
+    permalink: https://booking.enterprise.slack.com/archives/C0B4CV2EVL6/p1789559989149019?thread_ts=1789559989.149019&cid=C0B4CV2EVL6
     original_message: |-
-      Hey gang – a custom judge I created, Structural Clarity™ is now out in the wild 🐕
-      • AI Registry: https://bdx.booking.com/ml/asset/configurations/details?asset_id=structural_clarity (structural_clarity v0.3.0) — Prompt: https://bdx.booking.com/ml/asset/prompts/details?asset_id=structural_clarity-agent-system-prompt
-      • That means its available in AI Studio/Flow Builder (although I haven't tried using it there)
-      • And also available for Eval-suite eval runs as a custom judge - this is where my team and I will be using it (instructions on how to add it that way in the thread)
+      Hey <!channel>! Time for another talk!
 
-      What/why is it?
-      Scan-ability and basic information design. It's a judge that mostly catches "lazily" structured responses (sans headings, breaks, bullets) and responses that bury the answer. Over in property Q&A Companion (Soon to be dot), user research told us that, amongst other things, our responses were annoyingly structured (or not at all structured, just walls of text). We wanted to guard against that in our new prompt and felt we needed a custom judge to measure any potential gains.
+      So here is a scenario:
+      You open a blank page and…
 
-      What the scores mean in a nutshell:
-      • 3 — Structurally clear (structure matches question/context scope, leads with the answer)
-      • 2 — Mostly clear, one issue (has some structure but doesn't fully meet the bar)
-      • 1 — Wall of text answer (single paragraph, zero formatting) - pleasantries/sign offs like "You're welcome..." are exempt
-      (there are more details, exceptions within the prompt itself)
+      Nothing, nada, zilch!
 
-      Why am I sharing it here?
-      • I'm interested to know if you think it could apply to any use cases you might have, and to see if it "has enough legs" to become a permanent or first-class evaluator.
-      • Also keen to know what you think of it in general, any feedback for future versions, etc.
+      You don’t know where to start, and from the blankness, a little whisper comes telling you that everyone will soon find out that you are basically a fake.
 
-      So yeah, if it makes sense for your work, try using it and let me know how it goes!
-    what_is_the_update: Structural Clarity v0.3.0 launched in AI Registry as a custom evaluator for scanability, answer-first structure, and basic information design.
-    why_valuable_for_uxers: Teams can now measure whether AI responses avoid walls of text and buried answers instead of relying only on subjective review.
-  - title: Fabric MCP Gateway Beta Makes Internal Tools Point-and-Click
-    category: tools
-    channel: agent-fabric
-    author: Rami Heikel
-    date: 2026-07-23
-    replies: 21
-    permalink: https://booking.enterprise.slack.com/archives/C0ABNJ4NWG6/p1784801781561099?thread_ts=1784801781.561099&cid=C0ABNJ4NWG6
-    posted_at: 2026-07-23T18:16:21+08:00
-    original_message: |-
-      🚀 Fabric MCP Gateway BETA App is open!
+      “Faking it” is not really a bad thing according to <@WFP9WDFUH|Oleksii Drozdenko> who, in this sincere and practical talk, demonstrates how a “fake” Miro board, turned into an interactive react prototype and eventually ended as tangible products.
 
-      Agent Fabric App is ready for you to try: one MCP gateway for Codex, Claude Code, and Cursor. Connect your clients to Booking's MCP catalog without the setup hassle: no terminal commands, no manual auth, no guesswork.
+      And here is the catch - no Figma was used during the process :open_mouth: !!!
+      Watch the entire talk in this link: <https://docs.google.com/videos/d/102ra3E60PcwyyC7CGylUpLZMaZcmy-4Z5hFcSc4PGnc/play?usp=sharing|Fake it till you Make it>
 
-      What's in it for you
-      • Set up once, everything works
-      • Point and click, not command line
-      • Less time lost to sign-ins: Fabric Authenticate using IAM authentication, with auto-auth on by default
-      • Want to save tokens? Toggle Tool Search on and off with a single click, no config edits
-      • No additional dependencies
-
-      👉 Download the beta: https://fabric.booking.com/app
-      macOS 13+, Apple Silicon. Windows support coming.
-
-      💬 Help us polish it: it's a beta, so you might hit a rough edge here and there. When you do, use Send feedback in the app: open Agent Fabric from your menu bar and click Send feedback… Every report goes straight to the team and shapes what we fix next.
-
-      🙏 Huge thanks to the people who made this happen: Matt Sexton and Paulo Pinheiro, incredible work, team!
-
-      Try it, break it, and tell us what you think. We're just getting started! ⚡
-    what_is_the_update: The Fabric MCP Gateway beta provides one desktop app for connecting Codex, Claude Code, and Cursor to Booking’s MCP catalogue with IAM authentication and a Tool Search toggle.
-    why_valuable_for_uxers: Designers and prototypers can access internal tools without terminal setup while gaining clearer control over context and token use.
-  - title: Design AI Summit Confirms September 2 and Opens Community Participation
+      How do you feel about this process?
+      Are there similar case studies you’d like to share following Oleksii's presentation?
+      Or maybe you want to ask him more questions?
+    what_is_the_update: “Fake it till you Make it” demonstrates how a rough Miro board became an interactive React prototype and then a shipped product, without using Figma in the core workflow.
+    why_valuable_for_uxers: The accompanying eight-step method gives UXers a reusable way to move from wireframe to scalable components, refine visual quality later, and introduce BUI at handoff.
+  - title: Design AI Summit Opens a Conversation About AI-Assisted Collaboration
     category: learning
     channel: design
-    author: Aga Stupkiewicz
-    date: 2026-07-20
+    author: Nicole Winestock
+    date: 2026-09-14
     replies: 1
-    permalink: https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1784560890110689?thread_ts=1784560890.110689&cid=C0DBLGXMJ
-    posted_at: 2026-07-20T23:21:30+08:00
+    permalink: https://booking.enterprise.slack.com/archives/C0DBLGXMJ/p1789389019497569?thread_ts=1789389019.497569&cid=C0DBLGXMJ
     original_message: |-
-      Hi everyone <!channel> Dear Design Community, I've been receiving a lot of requests about the event placeholder on the 29th July. We're working with Florian together with IT to remove it from everyone's calendar. It looks like there is a glitch or an error in google calendar and we can't remove it ourselves. Sorry about that! The correct date for our Design AI Summit is the 2nd of September and with our project team we're working on creating an unforgettable experience for you all 🙂
-    what_is_the_update: The Design AI Summit confirmed September 2 as the correct date, with the project team continuing to shape talks, workshops, and participation.
-    why_valuable_for_uxers: UXers have a clear moment to share real AI workflows and turn individual experiments into reusable community learning.
-  - title: China Plans a Multi-Day GenAI Upskilling Programme for October
+      Hello <!channel>, let's have a chat. :coffee:
+      Over the next week, or so, we'll unpack Design AI Summit. Every day a byte or highlight.
+      We are curious to hear your thoughts and to dive further into the ideas presented in the summit.
+      Engage with it at your pace. Let's go!
+
+      In the first episode, “Boring by Design”, <@U02QM68HWH0|Sam White> and <@WFPQJ0GUT|Leif Parker>, are opening up a sensitive topic - the way AI is reshaping our SDLC process, the potential risks, the trade-offs, and the unavoidable anxiety.
+
+      But instead of giving into the fear, they share a sneak peek into a new AI assisted collaboration process, which according to them, solidifies UXs' space in the beginning of the process.
+
+      Do you agree that AI can empower craft and collaborations rather than dissolving them?
+      What is your take on the new way of working together as demonstrated in the talk?
+      And In terms of shaping UX - do you agree with the idea that AI makes UX more visible than before?
+
+      Feel free to share your thoughts.
+      Watch the session: <https://docs.google.com/videos/d/1zTWIdWlAHELkibc8QDa1JTs_TzvMm1XNQ2sz1SaVocE/play?usp=sharing|here>
+    what_is_the_update: The Design AI Summit released “Boring by Design,” a session about how AI is reshaping the SDLC, the trade-offs and anxiety involved, and a collaboration model that brings UX earlier into the process.
+    why_valuable_for_uxers: It gives teams a concrete starting point for discussing how AI can strengthen craft and collaboration while keeping UX visible when ways of working change.
+  - title: EvalSuite 2.0 and EaaS Create a Shared, Reproducible Evaluation Stack
+    category: tools
+    channel: ai-studio-updates
+    author: Bjorn Burscher
+    date: 2026-09-14
+    replies: 0
+    permalink: https://booking.enterprise.slack.com/archives/C09GMG8AL1L/p1789387833637739
+    original_message: |-
+      The GEAR (Marketplace AI) and AI Studio (DML) teams have been joining forces on evaluation, consolidating our packages and workflows and now jointly owning EvalSuite and EaaS. Big kudos to everyone across both teams who helped turn this into one shared evaluation stack.
+
+      So, what's new?
+
+      Evaluation as a Service + Unified Eval Config
+
+      Eval SVC
+      Introducing Evaluation as a Service (EaaS), a new service for evaluating LLM- and agent-based applications at Booking.com, built on EvalSuite. EaaS lets you load data from custom files, Snowflake, Arize, or AI Studio; run inference against a model, workflow, or agent; score outputs with judges and metrics; and publish evaluation datasets and results.
+      Jobs can be submitted and monitored through the Python client, with reports and artifacts available for retrieval. So yes, you can finally close your laptop while that long evaluation job is running.
+
+      Read the docs: https://booking.atlassian.net/wiki/spaces/DMLPBD/pages/1962017441/AI+Evaluation+Service
+
+      Unified Eval Config
+      EaaS also supports the new Unified Evaluation Config: one YAML format and one entry point for defining reproducible evaluation pipelines. A version 2 config follows five ordered stages — data → preprocessing → inference → evaluation → post_evaluation — with one or more runs defined over the pipeline. This makes evaluations easier to automate, reuse, and integrate across tools and use cases.
+
+      Read the docs: https://booking-com.gitlab.io/core/content-intelligence/eval-suite/config-reference-v2.html
+
+      EvalSuite 2.0
+
+      BookingBench
+      Benchmarks are now governed, versioned tables. All benchmark data has been moved out of the repository and stored into booking_bench_published.shared. It can be read via the GenAI Data SDK. If a data_version is pinned, the evaluation run will be fully reproducible.
+
+      Support for Unified Eval Config
+      The important bit: evaluator resolution is explicit now. v1's six-level cascade is replaced by one three-layer merge: use-case defaults → defaults.stages → the run's own stages. A bad config fails at load, naming the fix.
+
+      Translation Fixes
+      This transition also fixed some previous issues with fields of the datasets not being reachable or not translating in a synchronised way. Specifically workflow requests and Arize sources are now more robust. Rows are also translated from their own language instead of assuming English: those with no usable language are dropped, and the new lost_in_translation_ratio (default 0.1) fails the run rather than quietly shrinking your eval set. Any valid ISO 639 tag works now.
+
+      Special shout-out to <@U06PMSHU5S8|Amir Bitaraf>, <@U04EPT6BE5V|Ilkcan Keles>, <@U057MLFHC4D|Anastasiia Barchukova>, <@U09L95PQCUD|Shay Arbiv>, <@U09DBJQU0JU|Aratrika Das>, <@U07MBT9S4GJ|Gilad Ilsar>, <@U03MDRBCWFL|Alex Umnov>.
+    what_is_the_update: Marketplace AI and AI Studio jointly launched Evaluation as a Service, a unified evaluation configuration, versioned BookingBench data, and stronger multilingual handling in EvalSuite 2.0.
+    why_valuable_for_uxers: UX teams working on AI products gain a more reproducible way to compare quality, automate evaluations, expose translation loss, and preserve evidence across models and releases.
+  - title: Fabric Skills Dashboard Makes Adoption and Performance Visible
+    category: tools
+    channel: agent-fabric
+    author: Mansi Mittal
+    date: 2026-09-14
+    replies: 9
+    permalink: https://booking.enterprise.slack.com/archives/C0ABNJ4NWG6/p1789395105344869?thread_ts=1789395105.344869&cid=C0ABNJ4NWG6
+    original_message: |-
+      Launch: Skills invocation & performance data is live: https://grafana.booking.com/d/fabric-ai-traces-skills-v2/fabric-ai-traces-skill-invocations
+
+      Access required. Request subscription to FABRIC_AI_TRACES_REDACTED_V1 in BDX; approval within about one business day. No Immuta access? Request the linked Passport policy first.
+
+      For months, one of the most common asks: how are Skills actually being used, and how well do they perform? Fabric has finally shipped Skills insights in Grafana — real usage and performance data across Claude Code, Cursor, and Codex.
+
+      First look at the data
+      • 1,250 unique Skills invoked across 37.5K traces and 5.3K sessions
+      • See not only skills invocation volume, but also latency, token usage, and models used when skills are invoked
+      • BPages is currently the #1 most-invoked Skill followed by Artifact Design and Using Superpower skill
+      • Dashboard shows the top 10 Skills from the last 7 days
+
+      So check out the Skills leaderboard, and big kudos to the BPages team for leading the pack.
+    what_is_the_update: A new Grafana dashboard exposes Fabric skill invocation volume, latency, token use, models, and the top skills across 37.5K traces and 5.3K sessions.
+    why_valuable_for_uxers: UXers and skill authors can replace anecdotes with evidence about adoption, cost, and performance—and use that evidence to improve reusable workflows over time.
+  - title: Juno Can Read Inline Slack Previews to Draft Better Tickets
+    category: tools
+    channel: genai_engineering
+    author: Johanna Longmuir
+    date: 2026-09-14
+    replies: 0
+    permalink: https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1789380349096649
+    original_message: |-
+      Juno Update :cherry_blossom:!
+
+      Juno release features:
+      • Support reading Slack preview
+        ◦ Juno will read the Slack preview of a message shared to help support context/ticket writing.
+        ◦ Juno will ONLY see that individual preview and not any other messages around it.
+        ◦ Juno will ONLY see that message if the preview is inline/showing.
+      • Minor tweaks to wording on feedback flows for users to help understand who consumes that feedback
+
+      Reminder: Juno helps create structured tickets for your team, based on context from Slack threads. Please have a go and keep sending feedback in #juno-support or through the feedback functionality.
+
+      To get started just add Juno to your channel and tag it to get a response.
+
+      Happy ticket creation :cherry_blossom:
+    what_is_the_update: Juno can now read an inline Slack message preview as context for ticket writing, alongside clearer feedback-flow wording about who receives submitted feedback.
+    why_valuable_for_uxers: It reduces the work of converting a conversation into a structured ticket while making the tool’s visibility boundary explicit: only the single visible preview is read.
+  - title: ServiceNow MCP Brings Incident and Change Workflows to Fabric
+    category: tools
+    channel: genai_engineering
+    author: Anushka Bhandari
+    date: 2026-09-17
+    replies: 12
+    permalink: https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1789638883809539?thread_ts=1789638883.809539&cid=C08F5QRGFDG
+    original_message: |-
+      New: ServiceNow MCP Server now available on Fabric!
+
+      The ServiceNow MCP Server is now available for teams working with Incident, Request and Change Management processes.
+      Use it from your agent workflow to investigate tickets, create and update requests, analyze changes, add comments or work notes, and look up assignment groups and eligible users.
+
+      Get started by downloading the Fabric app, now available on both macOS and Windows: https://fabric.booking.com/app
+
+      Huge thanks to the ServiceNow team, especially <@U04JW4UGVNZ|Chander Bhushan>, <@U06JDQ2RLSG|Özgün Alphan>, <@U0ASF4NJAUW|Rami Heikel> for making this happen.
+
+      Looking forward to building an even more seamless, agentic ServiceNow experience on Fabric.
+
+      Read the thread for more instructions.
+    what_is_the_update: Fabric added a ServiceNow MCP server for incident, request, and change-management tasks, including ticket investigation, updates, summaries, comments, work notes, and assignment lookups.
+    why_valuable_for_uxers: It shows how operational workflows can become agent-accessible while the active thread also makes current capability gaps, access requirements, and feedback paths visible.
+  - title: Review Readiness Skill Prepares Merge Requests Before Review
+    category: tools
+    channel: genai_engineering
+    author: Nilesh Reddy
+    date: 2026-09-15
+    replies: 0
+    permalink: https://booking.enterprise.slack.com/archives/C08F5QRGFDG/p1789476086080049
+    original_message: |-
+      Hi everyone!
+
+      We’re working to improve the code review experience by reducing long review cycles, avoidable back-and-forth, and unclear reviewer focus.
+
+      As an early step, we’ve built the Review Readiness skill:
+      https://fabric.booking.com/skills/common/review-readiness
+
+      Install it through profiles:
+      bk plugins:install @bookingcom/genai@latest
+      bk genai:profile:install common/review-readiness --global
+
+      It helps authors prepare review-ready MRs by:
+      - Running local checks/Unit tests
+      - Invoking Claude Code Review
+      - Validating CI and eligible issues
+      - Generating a clear summary and reviewer focus areas
+
+      We’re looking for teams to test it on real, everyday changes and tell us where it helps—or creates friction.
+
+      Join #code-review-experience to share feedback and help shape the broader experience.
+
+      I’m happy to support your first run or arrange a short walkthrough!
+    what_is_the_update: The new Review Readiness skill runs local checks and unit tests, invokes Claude Code Review, validates CI and eligible issues, and generates a reviewer-focused summary.
+    why_valuable_for_uxers: UX engineers and design technologists can reduce avoidable review cycles and make handoffs easier to assess by surfacing readiness and reviewer focus before asking for feedback.
+  - title: UX Writing Community Shares Practical Notes on Multilingual AI Evaluation
     category: learning
-    channel: china-ai-workstream
-    author: Yiyang Lin
-    date: 2026-07-21
-    replies: 6
-    permalink: https://booking.enterprise.slack.com/archives/C0AKE5B4KGU/p1784621359191079?thread_ts=1784621359.191079&cid=C0AKE5B4KGU
-    posted_at: 2026-07-21T16:09:19+08:00
+    channel: uxw-genai
+    author: Chris Cameron
+    date: 2026-09-17
+    replies: 0
+    permalink: https://booking.enterprise.slack.com/archives/C070U2AADCZ/p1789659521501769
     original_message: |-
-      Hey Clyde Li, Yini Bao FYI I have been talking with Deborah on bringing GenAI upskill trainings to China. Currently we have agreed on Oct 19 - 22 for their trip to Shanghai.
-
-      The current agenda is:
-      • Shanghai (3 Days)
-        ◦ 2 Days, 5 session per day 20 people per sessions ~ 200 people
-        ◦ 1 Day - train the trainer session for new ambassadors
-
-      There will be 5 trainers coming so we can host more sessions if needed.
-
-      Let me know if you have any thoughts / concerns.
-
-      Next Step:
-      Will launch survey in China to see if ppl are interested in any other topics not covered in current list.
-
-      Forwarded message from Deborah Davis-DeWitt:
-      Good morning team, due to holidays schedules and local holidays we will be moving the training travel for the ambassadors to October. We will only cover advanced topics listed above. We will also provide virtual sessions for the 101 training in Q3. Based on conversations. I would like to confirm the dates for Bangalore, Shanghai and Singapore.
-
-      Can we confirm:
-      Shanghai - Oct 19 - 22
-      Singapore Oct 21 -23
-      Bangalore Oct 26 - 30
-
-      Let me know if this works. We will cover 3 topics in Intermediate and 3-4 topics in more advanced subjects. We are looking to launch SDD sooner and do hybrid sessions once available.
-    what_is_the_update: A tentative October GenAI upskilling programme is being planned for Shanghai, combining small-group advanced sessions with a train-the-trainer day.
-    why_valuable_for_uxers: The format could widen practical AI enablement beyond engineering, while the planned survey gives local teams a way to shape the curriculum.
-  - title: Codex Lab Pairs Extra Credits with a Hands-On Learning Day
-    category: learning
-    channel: codex_all
-    author: Deborah Davis-DeWitt
-    date: 2026-07-23
-    replies: 8
-    permalink: https://booking.enterprise.slack.com/archives/C09LCDNRK0F/p1784806678410369?thread_ts=1784806678.410369&cid=C09LCDNRK0F
-    posted_at: 2026-07-23T19:37:58+08:00
-    original_message: |-
-      🚀 We Have $1.6 Million Worth of Codex Credits Available — Use Them Before They Run Out!
-
-      Great news! We currently have $1.6 million worth additional Codex credits available now for teams to use. Now's the perfect time to try Codex even more and see how it can boost your workflow. These credits are short lived and will expire in mid-August, so jump in while you can!
-
-      What's coming up?
-      • August 11: We're also hosting a Codex Lab, where you are welcome to join, learn practical tips and best practices, and discover how to use Codex and the extra credits more effectively in your day-to-day development work.
-        ◦ AMS20-0-002 Auditorium [Video Conferencing]
-        ◦ Time: 09:30 - 16:30
-      Only 100 spots available—don't miss out! Register now before they're gone or by August 10, whichever comes first: https://docs.google.com/forms/d/1p8DXOGpo1I1SssjQiJV_LHhKT6WhcK6VdQEAjIICg0Y/edit
-
-      Why use Codex?
-      Codex can help you:
-      ⚡ Generate code, functions, and boilerplate in seconds.
-      🐞 Debug issues by explaining errors and suggesting fixes.
-      🧪 Create and improve unit tests to increase code quality.
-      📝 Understand unfamiliar codebases with clear explanations.
-      🔄 Refactor and optimize existing code.
-      📚 Explore new frameworks, libraries, and APIs with practical examples.
-      🚀 Prototype ideas and features much faster.
-
-      Why use the available tokens?
-      Since these tokens are already allocated to us:
-      ✅ They're available for everyone to use.
-      ⏳ The current allocation expires on August 17, so any unused tokens will be forfeited.
-      💡 This is a great opportunity to experiment with AI-assisted development at no additional cost.
-      📈 The more we use Codex, the better we can identify high-value use cases and improve our engineering workflows.
-
-      Whether you're building a new feature, fixing bugs, writing tests, refactoring code, or learning a new part of the codebase, now is a great time to put Codex to work.
-
-      Make the most of the current $1.6 million dollars worth of credits before mid August, and don't miss the Codex Lab on August 11 to learn with the OpenAI team on how to get the most value from them!
-
-      GenAI for Engineering Program Team
-    what_is_the_update: Booking teams received a short-lived pool of additional Codex credits, paired with a 100-seat hands-on Codex Lab on August 11.
-    why_valuable_for_uxers: UX technologists can test faster prototype and implementation workflows while learning practical patterns before the credit window closes.
+      Hi all, todays Biweekly was a great discussion about several things: multi-lingual content generation, judges and evaluation frameworks, identifying obvious mistranslations, as well as info on the Agent Fabric app and the forthcoming Claude desktop app. Thanks to those who made it! Checkout the summary in the meeting notes here: https://docs.google.com/document/d/1tPXo9eRUp12Ahz6k_rmaKMBJPQa4qyiG3pO8FRluRVU/edit?tab=t.0
+    what_is_the_update: The UX Writing GenAI biweekly shared notes on multilingual content generation, judges and evaluation frameworks, obvious mistranslations, Agent Fabric, and the forthcoming Claude desktop app.
+    why_valuable_for_uxers: Content designers get a reusable record of current evaluation questions and tools, helping teams compare multilingual quality and identify failures more consistently.
 
 coverage:
-  checked_channels: [ai-for-ux, genai_engineering, dev-china, china-ai-workstream, mp-ai-engineering, mp-tpch-ai-guild-weekly, ai-studio-updates, ai-gateway-updates, design, design-systems, design-language, ai-design-curriculum, uxw-genai, ai-uxers-of-fintech, conversational-ai-traveller-all-ux, agent-fabric]
-  included_items: 5
-  skipped_channels: [ai-for-ux, dev-china, mp-ai-engineering, mp-tpch-ai-guild-weekly, ai-studio-updates, ai-gateway-updates, design-systems, design-language, ai-design-curriculum, ai-uxers-of-fintech, conversational-ai-traveller-all-ux]
+  checked_channels: [ai-for-ux, genai_engineering, dev-china, china-ai-sdlc, mp-ai-engineering, mp-tpch-ai-guild-weekly, ai-studio-updates, ai-gateway-updates, design, design-systems, design-language, ai-design-curriculum, uxw-genai, ai-uxers-of-fintech, conversational-ai-traveller-all-ux, agent-fabric]
+  included_items: 9
   blocked_access: []
-  manual_review: [Popular-topic counts are observed normalized Slack search results; China training dates remain tentative pending schedule confirmation.]
+  manual_review: [Public channels only; no private-channel search was performed. Popular-topic counts are normalized observations across qualifying public messages.]
 ```

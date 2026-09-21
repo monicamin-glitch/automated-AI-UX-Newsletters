@@ -1,5 +1,35 @@
 # Update Notes
 
+## 2026-09-21
+
+### Learning Plan maintenance
+
+- Removed the cancelled Sep 18 `AI Product Sharing` session from the canonical Learning Plan source and rendered page.
+
+## 2026-09-14
+
+### Week 37 weekly refresh
+
+- Refreshed Latest Week to `Week 37` for `Sep 7-Sep 13, 2026` and archived the former latest report as template `Week 36` without duplicating or deleting history.
+- Expanded the completed Week 37 report to 17 verified cards: 9 internal Slack Spotlights and 8 external AI-and-UX updates, after the initial run proved too restrictive.
+- Preserved Resources Hub, Learning Plan, navigation, archive picker, Slack detail-dialog behavior, responsive rules, and empty-filter hiding.
+
+### Source coverage checklist
+
+- Internal watchlist checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`.
+- Internal items included: AI Studio navigation and information-architecture redesign, ET MCP copy-tag search, Design AI Summit recording and slides, the craft-led Astra UX benchmark, the Media Library-to-Figma plugin proof of concept, the LPS Destination Performance Copilot UX/accessibility refresh, AI-powered booking-flow test automation, BReview's cross-functional Markdown review workflow, and the Trip Grouping human-evaluation tool.
+- External sources checked: OpenAI, Anthropic, Figma, Google Design and PAIR, Miro, Bolt, Nielsen Norman Group, UX Collective, Lenny's Newsletter, Medium Design Bootcamp, and workflow-tutorial searches.
+- External items included: OpenAI GPT-Live-1 for full-duplex voice interaction, Nielsen Norman Group's human-accountable AI editorial workflow, OpenAI's Agents API for durable agent experiences, UX Magazine's agentic-interface patterns, Eidos Design's product-design comparison of Claude Fable 5.1 and GPT-6 Astra, OpenAI's perspective on newly reachable work, 1Password's Codex operating model, and Cognition's evidence-led agent testing workflow.
+- The expansion relaxed source breadth and the inclusion threshold for distinct workflow evidence, while preserving the exact date window, direct-link checks, UX-relevance requirement, deduplication, and no-filler rule.
+
+### Validation and publication
+
+- Verified the ISO week, exact date range, Slack authors, dates, reply counts, reactions, permalinks, full original-message dialogs, external publication dates, article links, local image fallbacks, archive uniqueness, responsive CSS, hidden empty filters, and guarded production build.
+- Reused already checked-in, source-compatible media for all eight external cards so the no-GitHub-push B.Pages run could resolve every image through the existing public asset paths.
+- Published the Booking-only artifact to the stable `AI UX Newsletter` destination at `https://bpages.booking.com/rbpQL/ai-ux-newsletter`.
+- Created a new English Week 37 Slack Canvas and an attached English draft in `#china-ux-group-internal`; the draft was not sent or scheduled.
+- Media validation completed with no errors. Existing archive warnings remain for generated title-card fallbacks, one unusually wide historical image, and one historical large image; no warning blocks publication.
+
 ## 2026-09-11
 
 ### Learning Plan page
@@ -488,3 +518,5 @@
 - Verified Explore All Week 4 in headless Chrome: 13 cards and 13 rendered images.
 - Verified archive navigation shows Week 3, Week 2, and Week 1.
 - Verified `git diff --check` passes.
+
+- 2026-09-21: Generated Week 38 (September 14–20), archived Week 37, refreshed internal Slack spotlights and popular topics, added eight verified external updates with local media, and prepared the stable B.Pages publication workflow.

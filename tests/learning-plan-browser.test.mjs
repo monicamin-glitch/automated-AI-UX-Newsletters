@@ -269,7 +269,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
           };
         });
       })()`);
-      assert.deepEqual(badges, Array.from({ length: 3 }, () => ({
+      assert.deepEqual(badges, Array.from({ length: 2 }, () => ({
         label: 'Internal Sharing',
         color: 'rgb(21, 128, 61)',
         backgroundColor: 'rgb(220, 252, 231)'
@@ -414,7 +414,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       assert.equal(mobile.labelAboveAgenda, true, '390px month label must sit above its agenda');
       assert.equal(mobile.actionCount, 8, '390px page must render all eight available Learning Plan actions');
       assert.deepEqual(mobile.actions, Array.from({ length: 8 }, () => ({ visible: true, inBounds: true })), '390px available actions must be visible and in bounds');
-      assert.equal(mobile.rows.length, 11, '390px page must retain all 11 Learning Plan rows');
+      assert.equal(mobile.rows.length, 10, '390px page must retain all 10 Learning Plan rows');
       const mobileRowsValid = mobile.rows.every(row => row.dateLeftOfTopic && row.fieldsVisible && row.presenterInsideTopic && row.flowTopToBottom && row.flowNonOverlapping);
       assert.equal(mobileRowsValid, true, '390px row geometry must reject missing, overlapping, or misplaced fields');
     });

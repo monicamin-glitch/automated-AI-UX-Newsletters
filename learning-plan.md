@@ -38,7 +38,6 @@ When `url` is unavailable, omit the action entirely. Do not render `Link coming 
 | Sep 1 | Rebuilding booking.com guest experience pages with code-first | 25 min | Video Course | — | [View](https://drive.google.com/drive/folders/1VaNwxBUOhNfyCJ7U0c4249cU0o-LXqhJ) |
 | Sep 8 | PP Demand Page Prototype First Workflow | 30 min | Internal Sharing | Echo | [View](https://docs.google.com/presentation/d/1kMiVRRVZslieJJZruMM0s4f35s5t6meCGRqQY9EiPfA/edit?usp=sharing) |
 | Sep 15 | How I use Obsidian + Claude Code to run my life (Part 1) | 30 min | Video Course | — | [Watch](https://www.youtube.com/watch?v=6MBq1paspVU) |
-| Sep 18 | AI Product Sharing | 30 min | Internal Sharing | Alroy and Allen | — |
 | Sep 22 | How I use Obsidian + Claude Code to run my life (Part 2) | 30 min | Video Course | — | [Watch](https://www.youtube.com/watch?v=6MBq1paspVU) |
 | Sep 29 | Using Claude Code to Create Animations for YIT | 30 min | Internal Sharing | Shiwen | — |
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T06:55:11.850Z",
+  "generatedAt": "2026-09-21T03:15:10.832Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,232 @@
     ]
   },
   "summary": {
-    "cards": 139,
+    "cards": 155,
     "errors": 0,
-    "warnings": 23,
+    "warnings": 28,
     "counts": {
-      "embedded-img": 139
+      "embedded-img": 155
     }
   },
   "entries": [
+    {
+      "title": "Figma connects production designs directly to reusable Weave workflows",
+      "source": "Figma",
+      "date": "September 17",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/figma-weave.png",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 46479,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Two product designers show how agent workflows move from voice memo to prototype",
+      "source": "Lenny's Newsletter",
+      "date": "September 14",
+      "url": "https://www.lennysnewsletter.com/p/how-grok-bot-designers-use-ai-agents",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/lenny-grok-bot.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x600",
+      "sizeBytes": 90175,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Bolt Forge trades opt-in build data for dramatically more prototyping capacity",
+      "source": "Bolt",
+      "date": "September 14",
+      "url": "https://bolt.new/blog/what-is-bolt-forge",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/bolt-forge.webp",
+      "youtubeId": "",
+      "dimensions": "1260x709",
+      "sizeBytes": 48782,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Figma lets creators publish custom Weave tools to the Community",
+      "source": "Figma",
+      "date": "September 16",
+      "url": "https://www.figma.com/blog/try-these-5-weave-tools-and-share-your-own/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/figma-weave.png",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 46479,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "ChatGPT arrives in Word for drafting, revising, and restructuring documents",
+      "source": "OpenAI",
+      "date": "September 17",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-work-frontier.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1158,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Claude brings Salesforce data and 37 sales skills into one conversational workspace",
+      "source": "Anthropic",
+      "date": "September 15",
+      "url": "https://support.claude.com/en/articles/12138966-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/claude-salesforce.png",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 19334,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Anthropic and Accenture propose embedded independent evaluation for frontier AI",
+      "source": "Anthropic",
+      "date": "September 18",
+      "url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/anthropic-evaluation.jpg",
+      "youtubeId": "",
+      "dimensions": "2400x1260",
+      "sizeBytes": 30702,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Anthropic proposes measurable signals for AI automation, oversight, and safety investment",
+      "source": "Anthropic",
+      "date": "September 17",
+      "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week38/anthropic-measurements.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 45979,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "GPT-Live-1 brings full-duplex voice interaction to the API",
+      "source": "OpenAI",
+      "date": "September 10",
+      "url": "https://openai.com/index/introducing-gpt-live-1-in-the-api/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week30/02-openai-presence.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 966,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "NN/g shows where AI supports editorial work—and where humans stay accountable",
+      "source": "Nielsen Norman Group",
+      "date": "September 11",
+      "url": "https://www.nngroup.com/articles/ai-editorial-process/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week32/nng-prove-ai-tool.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 234919,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Agents API adds managed sessions, sandboxes, tools, and subagents",
+      "source": "OpenAI",
+      "date": "September 10",
+      "url": "https://openai.com/index/introducing-the-agents-api/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week33/06-openai-app-experience.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 2438,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Agentic UX needs visible plans, memory, progress, and recovery",
+      "source": "UX Magazine",
+      "date": "September 8",
+      "url": "https://uxmag.com/articles/agentic-ux-when-the-interface-stops-waiting-for-you",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/10-ux-collective.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 82579,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Claude Fable 5.1 and GPT-6 Astra excel at different parts of product design",
+      "source": "Eidos Design",
+      "date": "September 7",
+      "url": "https://eidosdesign.substack.com/p/claude-fable-51-vs-gpt-6-astra-for",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/01-anthropic-fable-mythos.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 44864,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "OpenAI argues that advanced AI is expanding the work people can attempt",
+      "source": "OpenAI",
+      "date": "September 8",
+      "url": "https://openai.com/index/the-work-now-within-reach/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-work-frontier.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1158,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "1Password connects Codex workflows to user stories, design systems, and security",
+      "source": "OpenAI",
+      "date": "September 8",
+      "url": "https://openai.com/index/1password/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week31/openai-codex-models.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1001,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Devin tests its own work and returns recordings plus evidence",
+      "source": "OpenAI",
+      "date": "September 11",
+      "url": "https://openai.com/index/cognition-devin-testing-with-astra/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week36/02-openai-astra.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 735,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
     {
       "title": "GPT-6 Astra brings stronger computer use and professional artifact creation",
       "source": "OpenAI",
