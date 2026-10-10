@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#f3eee7"/>
+  <circle cx="975" cy="105" r="220" fill="#d97757" opacity=".18"/>
+  <circle cx="155" cy="610" r="300" fill="#c9b8a3" opacity=".35"/>
+  <text x="84" y="132" fill="#6b6259" font-family="Arial, sans-serif" font-size="30" font-weight="700">ANTHROPIC</text>
+  <text x="84" y="330" fill="#241f1a" font-family="Arial, sans-serif" font-size="84" font-weight="700">Claude Sonnet 5.5</text>
+  <text x="84" y="410" fill="#5b5148" font-family="Arial, sans-serif" font-size="36">Faster agentic work with lower task cost</text>
+  <path d="M84 486h520" stroke="#d97757" stroke-width="12" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#eef4ff"/>
+  <circle cx="170" cy="125" r="72" fill="#f24e1e"/>
+  <circle cx="170" cy="269" r="72" fill="#a259ff"/>
+  <circle cx="170" cy="413" r="72" fill="#1abcfe"/>
+  <rect x="170" y="53" width="72" height="288" rx="36" fill="#ff7262"/>
+  <circle cx="242" cy="413" r="72" fill="#0acf83"/>
+  <rect x="390" y="116" width="340" height="470" rx="48" fill="#fff" stroke="#182230" stroke-width="14"/>
+  <rect x="430" y="176" width="260" height="44" rx="12" fill="#dbeafe"/>
+  <rect x="430" y="252" width="220" height="118" rx="18" fill="#bfdbfe"/>
+  <rect x="430" y="398" width="260" height="28" rx="10" fill="#cbd5e1"/>
+  <rect x="430" y="446" width="205" height="28" rx="10" fill="#e2e8f0"/>
+  <text x="780" y="278" fill="#0f172a" font-family="Arial, sans-serif" font-size="48" font-weight="700">Figma mobile</text>
+  <text x="780" y="346" fill="#475569" font-family="Arial, sans-serif" font-size="30">Smoother navigation,</text>
+  <text x="780" y="390" fill="#475569" font-family="Arial, sans-serif" font-size="30">sharing, and export</text>
+</svg>

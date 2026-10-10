@@ -1,5 +1,21 @@
 # Update Notes
 
+## 2026-10-10
+
+### Week 40 weekly refresh
+
+- Refreshed Latest Week to ISO Week 40 for September 28-October 4, 2026 and archived the former Week 38 latest report without deleting or renumbering earlier history. Week 39 has no published report and remains disabled in the calendar.
+- Included six verified internal updates: two Design+AI Summit methods, the BUI-based Animation Kit, image-to-Lingo, the UX Writing GenAI workflow recap, and the Design AI success-story library. Stored exact parent-message metadata and Booking-only originals; redacted the Zoom passcode in the workflow recap.
+- Included six verified external updates: Anthropic Claude Sonnet 5.5; Figma Motion, Community riffs, and mobile collaboration updates; Miro MCP adoption evidence; and the Lenny & Friends Summit talk archive. Every card uses checked-in local media under `assets/week40/`.
+
+### Source coverage checklist
+
+- Internal checked: `#ai-for-ux`, `#genai_engineering`, `#dev-china`, `#china-ai-sdlc`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-studio-updates`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#uxw-genai`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux`. No watchlist channel was access-blocked.
+- Internal skipped: no in-range messages in the China AI SDLC, MP AI Engineering, TPCH AI Guild, AI Studio, Design Language, Fintech, or Conversational AI channels; `#dev-china` was operational/non-UX; `#design-systems` was non-AI support; other `#genai_engineering` posts were support questions, unshipped proposals, backend operations, or external links without a completed internal UX artifact.
+- External included: Anthropic / Claude, Figma, Miro, and Lenny's Newsletter.
+- External checked and skipped as `no new UX-relevant update`: OpenAI, Google Stitch, Bolt, Nielsen Norman Group, YouTube workflow searches, UX Collective, Medium Design Bootcamp, Google Design, and Google PAIR. Bolt's in-range acquisition was company news without a concrete UX workflow change. Google Design surfaced a relevant article but no verifiable in-range publication date.
+- External access notes: Figma's official release page was verified through its indexed release feed despite direct crawler restrictions; Lenny's archive and article pages were both checked. No filler cards were added.
+
 ## 2026-09-21
 
 ### Learning Plan maintenance

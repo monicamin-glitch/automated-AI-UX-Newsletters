@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T09:09:05.705Z",
+  "generatedAt": "2026-10-10T06:13:03.828Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,98 @@
     ]
   },
   "summary": {
-    "cards": 155,
+    "cards": 161,
     "errors": 0,
-    "warnings": 28,
+    "warnings": 31,
     "counts": {
-      "embedded-img": 155
+      "embedded-img": 161
     }
   },
   "entries": [
+    {
+      "title": "Claude Sonnet 5.5 Prioritizes Fast Iteration and Lower Task Cost",
+      "source": "Anthropic",
+      "date": "September 28",
+      "url": "https://www.anthropic.com/claude-sonnet-5-5",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/01-anthropic-sonnet-5-5.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 747,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Figma Motion Adds Reusable Styles, Audio, Text Animation, and Lottie Export",
+      "source": "Figma",
+      "date": "September 30",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/02-figma-motion.png",
+      "youtubeId": "",
+      "dimensions": "600x337",
+      "sizeBytes": 146633,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Figma Community Opens Riffs for Prototypes, Motion, and Experiments",
+      "source": "Figma",
+      "date": "September 30",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/03-figma-riffs.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x504",
+      "sizeBytes": 146049,
+      "status": "warning",
+      "issues": [
+        "Unusual card aspect ratio: 2.38."
+      ]
+    },
+    {
+      "title": "Figma Mobile Improves Navigation, Deep Sharing, Export, and Resume",
+      "source": "Figma",
+      "date": "September 30",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/04-figma-mobile.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1178,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Miro MCP Usage Shows Agents Moving Beyond Developer-Only Workflows",
+      "source": "Miro",
+      "date": "September 29",
+      "url": "https://miro.com/newsroom/momentum-grows-for-miro-mcp-as-users-embrace-the-canvas-for-ai-collaboration/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/05-miro-mcp.png",
+      "youtubeId": "",
+      "dimensions": "2168x1628",
+      "sizeBytes": 267092,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Lenny & Friends Publishes Its Full Main-Stage Talk Library",
+      "source": "Lenny's Newsletter",
+      "date": "September 29",
+      "url": "https://www.lennysnewsletter.com/p/all-of-the-lenny-and-friends-summit",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/06-lenny-summit.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 89778,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Figma connects production designs directly to reusable Weave workflows",
       "source": "Figma",
