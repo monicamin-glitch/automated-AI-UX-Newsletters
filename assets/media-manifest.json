@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T06:13:03.828Z",
+  "generatedAt": "2026-10-12T02:40:40.438Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,121 @@
     ]
   },
   "summary": {
-    "cards": 161,
+    "cards": 169,
     "errors": 0,
-    "warnings": 31,
+    "warnings": 33,
     "counts": {
-      "embedded-img": 161
+      "embedded-img": 169
     }
   },
   "entries": [
+    {
+      "title": "The Figma Agent Is Generally Available with Guidelines, Skills, and Shared Context",
+      "source": "Figma",
+      "date": "October 6",
+      "url": "https://www.figma.com/blog/3-ways-product-designers-use-the-figma-agent/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/01-figma-agent.png",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 195026,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Figma Plans Can Connect Multiple GitHub Organizations",
+      "source": "Figma",
+      "date": "October 5",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/02-figma-github-orgs.png",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 38233,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "GPT-6 Introduces Adaptive Intelligent UI in ChatGPT",
+      "source": "OpenAI",
+      "date": "October 7",
+      "url": "https://openai.com/index/gpt-6-for-everyone/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/03-openai-intelligent-ui.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1013,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "ChatGPT Adds Audio Uploads for Transcripts and Analysis",
+      "source": "OpenAI",
+      "date": "October 6",
+      "url": "https://help.openai.com/en/articles/8555545-uploading-files-and-audio-to-chatgpt",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/04-openai-audio.png",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 19334,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Codex Tests Editable Composer Predictions",
+      "source": "OpenAI",
+      "date": "October 9",
+      "url": "https://help.openai.com/en/articles/20001601-composer-predictions-in-codex",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/05-openai-composer.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1186,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Claude Haiku 5.5 Lowers the Cost of Fast Agent Workflows",
+      "source": "Anthropic",
+      "date": "October 7",
+      "url": "https://www.anthropic.com/claude-haiku-5-5",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/06-claude-api-credits.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1005,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Anthropic Documents Unintended Agent Actions and New Safeguards",
+      "source": "Anthropic",
+      "date": "October 9",
+      "url": "https://www.anthropic.com/news/investigating-unintended-model-actions",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/08-anthropic-agent-boundaries.svg",
+      "youtubeId": "",
+      "dimensions": "140x140",
+      "sizeBytes": 2592,
+      "status": "warning",
+      "issues": [
+        "Small image dimensions: 140x140.",
+        "Unusual card aspect ratio: 1.00."
+      ]
+    },
+    {
+      "title": "Miro MCP Passes 19 Million Calls as Non-Engineers Lead Adoption",
+      "source": "Miro",
+      "date": "October 7",
+      "url": "https://miro.com/blog/miro-mcp-server/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/07-miro-mcp.png",
+      "youtubeId": "",
+      "dimensions": "1200x799",
+      "sizeBytes": 328962,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Claude Sonnet 5.5 Prioritizes Fast Iteration and Lower Task Cost",
       "source": "Anthropic",
