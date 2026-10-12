@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T02:40:40.438Z",
+  "generatedAt": "2026-10-12T03:43:13.263Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,11 +15,11 @@
     ]
   },
   "summary": {
-    "cards": 169,
+    "cards": 190,
     "errors": 0,
-    "warnings": 33,
+    "warnings": 39,
     "counts": {
-      "embedded-img": 169
+      "embedded-img": 190
     }
   },
   "entries": [
@@ -131,19 +131,69 @@
       "issues": []
     },
     {
+      "title": "Build Live Dashboards and Animate Explainers with Claude",
+      "source": "Anthropic",
+      "date": "October 8",
+      "url": "https://claude.com/resources/articles/dashboards-and-motion",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/09-claude-dashboards.png",
+      "youtubeId": "",
+      "dimensions": "1920x1080",
+      "sizeBytes": 390355,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Claude Now Works with Google Docs, Sheets, and Slides",
+      "source": "Anthropic",
+      "date": "October 6",
+      "url": "https://claude.com/resources/articles/claude-now-works-in-google-docs-sheets-and-slides",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/10-claude-workspace.png",
+      "youtubeId": "",
+      "dimensions": "2400x1260",
+      "sizeBytes": 56585,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Context Libraries: How AI Power Users Manage Context Engineering",
+      "source": "Nielsen Norman Group",
+      "date": "October 9",
+      "url": "https://www.nngroup.com/articles/context-libraries/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/11-context-libraries.png",
+      "youtubeId": "",
+      "dimensions": "1280x670",
+      "sizeBytes": 488841,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "The New Siri’s Biggest Strength Is Not Intelligence",
+      "source": "Nielsen Norman Group",
+      "date": "October 9",
+      "url": "https://www.nngroup.com/articles/ai-assistant-context/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week41/12-assistant-context.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 549548,
+      "status": "ok",
+      "issues": []
+    },
+    {
       "title": "Claude Sonnet 5.5 Prioritizes Fast Iteration and Lower Task Cost",
       "source": "Anthropic",
       "date": "September 28",
       "url": "https://www.anthropic.com/claude-sonnet-5-5",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week40/01-anthropic-sonnet-5-5.svg",
+      "localImage": "assets/week40/01-anthropic-sonnet-original.jpg",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 747,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "1200x630",
+      "sizeBytes": 77390,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "Figma Motion Adds Reusable Styles, Audio, Text Animation, and Lottie Export",
@@ -211,6 +261,241 @@
       "youtubeId": "",
       "dimensions": "1200x675",
       "sizeBytes": 89778,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Create and Collaborate on Pages in ChatGPT Space",
+      "source": "OpenAI",
+      "date": "September 29",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/07-pages-space-original.webp",
+      "youtubeId": "",
+      "dimensions": "1600x910",
+      "sizeBytes": 64158,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Meet Your Dot",
+      "source": "OpenAI",
+      "date": "September 29",
+      "url": "https://help.openai.com/en/articles/20001530-getting-started-with-your-dot",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/08-dots-original.webp",
+      "youtubeId": "",
+      "dimensions": "1920x1081",
+      "sizeBytes": 49572,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Codex Cloud",
+      "source": "OpenAI",
+      "date": "September 29",
+      "url": "https://learn.chatgpt.com/docs/environments/cloud-environments",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/09-codex-cloud.png",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 139183,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Work with Interactive Plugin Extensions",
+      "source": "OpenAI",
+      "date": "September 29",
+      "url": "https://help.openai.com/en/articles/20001256-plugins-in-chatgpt",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/10-interactive-plugins-original.webp",
+      "youtubeId": "",
+      "dimensions": "1600x769",
+      "sizeBytes": 16316,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Meetings Plugin",
+      "source": "OpenAI",
+      "date": "September 29",
+      "url": "https://chatgpt.com/plugins/plugin_connector_1p_27af362d1a3c8191b38ba625f489d958",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/11-meetings.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1675,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "The New Big Ball of Mud: Why Agentic AI Systems Turn Fragile",
+      "source": "Nielsen Norman Group",
+      "date": "October 2",
+      "url": "https://www.nngroup.com/articles/big-ball-of-mud-ai/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week40/12-agent-fragility.png",
+      "youtubeId": "",
+      "dimensions": "1280x670",
+      "sizeBytes": 466358,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Introducing Claude Opus 5.5",
+      "source": "Anthropic",
+      "date": "September 22",
+      "url": "https://www.anthropic.com/claude-opus-5-5",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/01-claude-opus-original.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 88082,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Use Plugins in Voice and Get Work Done by Speaking",
+      "source": "OpenAI",
+      "date": "September 23",
+      "url": "https://help.openai.com/en/articles/20001274-chatgpt-voice",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/02-voice-plugins.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1667,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Advanced Evals: How to Find (and Fix) Hidden AI Failures in Your Product",
+      "source": "Lenny's Newsletter",
+      "date": "September 22",
+      "url": "https://www.lennysnewsletter.com/p/advanced-evals-how-to-find-and-fix",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/03-advanced-evals.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 70611,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Vertical Wrap Available in Auto Layout",
+      "source": "Figma",
+      "date": "September 25",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/04-figma-wrap.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1670,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Build Plugins for Claude",
+      "source": "Anthropic",
+      "date": "September 25",
+      "url": "https://claude.com/resources/articles/build-plugins-for-claude",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/05-claude-plugins.png",
+      "youtubeId": "",
+      "dimensions": "2048x1546",
+      "sizeBytes": 448738,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "GPT-6 Sol and Luna in Work and Codex",
+      "source": "OpenAI",
+      "date": "September 22",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/06-sol-luna.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1653,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Create Flashcards in ChatGPT",
+      "source": "OpenAI",
+      "date": "September 22",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/07-flashcards.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1684,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Privacy Center in ChatGPT",
+      "source": "OpenAI",
+      "date": "September 21",
+      "url": "https://help.openai.com/en/articles/20001488-privacy-center-in-chatgpt",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/08-privacy.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1670,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Security History in ChatGPT",
+      "source": "OpenAI",
+      "date": "September 25",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/09-security-history.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1663,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "When Should You Disclose AI Use? The PACED Framework",
+      "source": "Nielsen Norman Group",
+      "date": "September 25",
+      "url": "https://www.nngroup.com/articles/disclose-ai-paced/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/10-paced.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 528348,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "How AI Works and How Users Think About It: Study Guide",
+      "source": "Nielsen Norman Group",
+      "date": "September 25",
+      "url": "https://www.nngroup.com/articles/ai-functionality-study-guide/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week39/11-ai-mental-models.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 223015,
       "status": "ok",
       "issues": []
     },

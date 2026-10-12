@@ -1,5 +1,57 @@
 # Update Notes
 
+## 2026-10-12
+
+### Weeks 39–41 publication approval
+
+- User explicitly approved publishing the prepared 55-card catch-up batch and Week 39–40 source-original image refinements to the existing GitHub and Booking-only B.Pages destinations.
+- This approval supersedes the local-only boundary recorded below. Public GitHub content remains summary-only; verified Slack originals remain confined to the Booking-only build. Google Docs, Slack notifications, and automation schedules are outside this publication scope.
+- Publish only referenced batch assets and their provenance; preserve unrelated working-tree files and unreferenced fallback artwork. Publication outcome is recorded by the guarded finalizer and automation run memory.
+
+### Week 39–40 Anthropic and OpenAI image re-audit
+
+- Rechecked all 13 matching external cards against `media-strategy.md`, including original article HTML, embedded media, linked official product/developer pages, and actual image contents. Source-native media takes priority over generated fallbacks.
+- Replaced five generated SVGs with locally cached originals: Week 39 Claude Opus 5.5 launch OG artwork; Week 40 Claude Sonnet 5.5 launch OG artwork, OpenAI Space/Pages collaboration visual, Dots task-activity visual, and plugin-extension surface diagram. Anthropic's OG alt metadata misleadingly said "Anthropic logo"; visual inspection confirmed item-specific launch artwork. These official OG images should not have been rejected on metadata alone.
+- Retained two verified originals: Claude's plugin-submission interface and the page-specific Codex Cloud documentation OG image. No unrelated image, generic homepage logo, blocked-page screenshot, or third-party rehost was substituted.
+- Six OpenAI cards still use explicit local conceptual fallbacks: Voice plugins, Sol/Luna, Flashcards, Privacy Center, Security History, and Meetings. The Sol/Luna launch page was readable through indexed text but direct HTML/browser access was challenged, preventing retrieval of its original artwork. Other checked pages exposed no suitable item-specific image; the Education newsletter's images depict different features. This is a retrieval limitation, not a claim that no original artwork exists.
+- Recorded a per-card decision, source page, asset URL when available, and fallback reason in `assets/media-provenance-weeks39-40.json` and synchronized the two weekly checkpoints. Only five image paths and their alt text changed in `index.html`; all article text, destinations, dates, counts, other weeks, and UI remain unchanged. Superseded fallback files are retained but no longer referenced by these five cards.
+- Fresh validation: media audit reports 190 cards, 152 OK, 38 warnings, and 0 errors (five fewer fallback warnings). All 23 week date buckets, local artifact build, and whitespace check pass. Desktop/mobile archive checks confirm all images load, dialogs work, and no overflow or runtime errors occur. Local changes only; nothing published.
+
+### Weeks 39–41 catch-up batch (local preview; not published)
+
+- Reconciled all three completed ISO weeks: Week 39 (September 21–27) has 6 internal + 11 external updates; Week 40 (September 28–October 4) has 6 internal + 12 external; Week 41 (October 5–11) has 8 internal + 12 external. Total: 55 cards, including 20 internal and 35 external.
+- Added the missing Week 39 archive, expanded Week 40 by six external items and Week 41 by four, and corrected Latest Week Popular Topics to Week 41. Existing Week 40/41 selections were retained rather than duplicated. Earlier archives, Resources Hub, Learning Plan, CSS, navigation, and dialog behavior were preserved.
+- This audit supersedes the October 10 claim that OpenAI and NN/g had no in-range Week 40 updates. The September 29 OpenAI release bundle and October 2 NN/g article were missed previously and are included now. Week 39 is now available locally; the earlier note about its missing published report remains a historical publication record.
+- Audited all 15 configured Slack channels for each week. Selected exact dated parent messages, deduplicated cross-posts and bot rewrites, and excluded support questions, unshipped proposals, operational notices, and items without a concrete UX contribution. Reply/reaction counts reflect retrieval time, not historical week-end totals. Private parent text remains in the ignored Booking-only store with meeting credentials redacted; public dialogs contain labeled summaries only.
+
+### External source coverage, by week
+
+| Configured source | Week 39 | Week 40 | Week 41 |
+| --- | --- | --- | --- |
+| Anthropic / Claude | Included: Opus 5.5; plugin-building guide | Included: Sonnet 5.5 | Included: Haiku/credits; unintended actions; dashboards/motion; Google Workspace |
+| OpenAI | Included: five items covering voice plugins, Sol/Luna, flashcards, privacy, security history | Included: five items covering Pages/Space, Dots, cloud environments, interactive plugins, Meetings | Included: intelligent UI, audio, composer |
+| Figma | Included: vertical auto-layout wrap | Included: Motion, Community riffs, mobile collaboration | Included: Agent and multi-repository GitHub workflows |
+| Google Stitch | No verified new UX-relevant update | No verified new UX-relevant update | No verified new UX-relevant update |
+| Miro | No verified new UX-relevant update | Included: MCP adoption | Included: MCP update |
+| Bolt | No new UX-relevant update | Acquisition checked; no released UX workflow | Marketing comparison checked; no released UX workflow |
+| YouTube tutorials | Needs manual review: no exactly dated qualifying result verified | Needs manual review: no exactly dated qualifying result verified | Needs manual review: no exactly dated qualifying result verified |
+| UX Collective / Medium Bootcamp | Needs manual review: archive/article access incomplete | Needs manual review: candidate dates/content not verified | Needs manual review: candidate dates/content not verified |
+| Nielsen Norman Group | Included: PACED disclosure; AI-functionality study guide | Included: agentic-system fragility | Included: context libraries; assistant context |
+| Lenny's Newsletter | Included: advanced evals | Included: Summit talk archive | No verified new UX-relevant item in accessible archive; feed unavailable |
+| Google Design | Needs manual review: no verifiable in-window date | Needs manual review: no verifiable in-window date | Needs manual review: no verifiable in-window date |
+| Google PAIR | No verified new UX-relevant update | No verified new UX-relevant update | No verified new UX-relevant update |
+
+- Official dated release notes, article pages, archives, and date-bounded searches were used. Figma crawler restrictions were resolved through indexed releases and direct retrieval. Search and access limitations mean this is the verified curated set, not a claim of exhaustive internet coverage.
+- OpenAI reached the configured five-items-per-source cap in Weeks 39 and 40. Week 40 candidates not promoted include GPT-6.1 Sol, plan changes, Sites editing/scheduling, app events, code review, profile/sign-in improvements, shopping, and document scanning. Related Pages/Space changes were grouped. No filler cards were added for inaccessible sources.
+- Added 10 downloaded first-party/source-native images and 11 explicitly labeled conceptual SVG illustrations. Fallbacks were used where item-specific art was unavailable or direct image discovery was blocked. The Claude Workspace image is official article artwork, not a product screenshot.
+
+### Publication boundary
+
+- Fresh validation: all 23 weekly date buckets pass; media audit checks 190 external cards with 147 OK, 43 non-blocking fallback/aspect/size warnings, and 0 errors. Browser checks pass for Weeks 39, 40, and 41 at 1440px and 390px: expected card counts, all 35 current-batch images loaded, no horizontal overflow, functioning Slack dialogs, and no runtime errors. The HTML diff is exactly the four intended replacements; older archives and other pages remain byte-for-byte unchanged.
+- Existing test-suite baseline and current version both report 50 passed, 26 failed, 1 skipped, with the same failing-test names. These include stale Week 30 expectations and legacy parser fixtures; no new failing test was introduced. Those unrelated tests were not rewritten. The dedicated current-batch browser checks, full date validation, artifact build, and diff whitespace check pass.
+- Generated local public and Booking-only artifacts for review. No Git push, B.Pages deployment, Google Doc append, Slack message, or scheduling change is part of this approved batch.
+- The existing failed publication status remains unchanged; it must not be interpreted as a successfully published batch. Review the three local editions before authorizing publication.
+
 ## 2026-10-10
 
 ### Week 40 weekly refresh

@@ -1,0 +1,162 @@
+{
+  "reviewed_at": "2026-10-12",
+  "strategy": "media-strategy.md",
+  "scope": "Anthropic and OpenAI external cards in ISO weeks 39 and 40",
+  "summary": {
+    "reviewed": 13,
+    "replaced": 5,
+    "retained_original": 2,
+    "retained_fallback": 6
+  },
+  "items": [
+    {
+      "week": 39,
+      "title": "Introducing Claude Opus 5.5",
+      "article_url": "https://www.anthropic.com/claude-opus-5-5",
+      "asset": "assets/week39/01-claude-opus-original.jpg",
+      "decision": "replaced_with_original",
+      "image_source_page": "https://www.anthropic.com/claude-opus-5-5",
+      "image_source_url": "https://www-cdn.anthropic.com/images/4zrzovbb/website/f4d37a1d1f582f53f4e89440062b649b6273a093-1200x630.jpg",
+      "reason": "Verified official item-specific image; downloaded locally and visually inspected."
+    },
+    {
+      "week": 39,
+      "title": "Use Plugins in Voice and Get Work Done by Speaking",
+      "article_url": "https://help.openai.com/en/articles/20001274-chatgpt-voice",
+      "asset": "assets/week39/02-voice-plugins.svg",
+      "decision": "retained_fallback",
+      "checked_pages": [
+        "https://help.openai.com/en/articles/20001274-chatgpt-voice",
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes"
+      ],
+      "reason": "Voice help page and release section expose no item-specific plugin-in-Voice visual; generic logo and older unrelated voice screenshots excluded."
+    },
+    {
+      "week": 39,
+      "title": "Build Plugins for Claude",
+      "article_url": "https://claude.com/resources/articles/build-plugins-for-claude",
+      "asset": "assets/week39/05-claude-plugins.png",
+      "decision": "retained_original",
+      "image_source_page": "https://claude.com/resources/articles/build-plugins-for-claude",
+      "image_source_url": "https://assets.claude.com/032a9fa50ce34ebacad5fb53690eca559fea7a5a.png",
+      "reason": "Existing asset matches the source article's plugin-submission review interface."
+    },
+    {
+      "week": 39,
+      "title": "GPT-6 Sol and Luna in Work and Codex",
+      "article_url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "asset": "assets/week39/06-sol-luna.svg",
+      "decision": "retained_fallback",
+      "checked_pages": [
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+        "https://openai.com/index/introducing-gpt-6-sol-and-luna/"
+      ],
+      "reason": "Relevant launch art appears in indexed coverage, but original image metadata could not be retrieved: direct HTML and fresh public browser were challenged. Official RSS has no media. Did not substitute a third-party copy or claim no original exists."
+    },
+    {
+      "week": 39,
+      "title": "Create Flashcards in ChatGPT",
+      "article_url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "asset": "assets/week39/07-flashcards.svg",
+      "decision": "retained_fallback",
+      "checked_pages": [
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+        "https://help.openai.com/en/articles/20001533-flashcards-in-chatgpt",
+        "https://edunewsletter.openai.com/p/the-edu-prompt-issue-6"
+      ],
+      "reason": "Help page and release section expose no item-specific image. Official education newsletter mentions flashcards, but its substantive images depict other features; excluded as mismatched."
+    },
+    {
+      "week": 39,
+      "title": "Privacy Center in ChatGPT",
+      "article_url": "https://help.openai.com/en/articles/20001488-privacy-center-in-chatgpt",
+      "asset": "assets/week39/08-privacy.svg",
+      "decision": "retained_fallback",
+      "checked_pages": [
+        "https://help.openai.com/en/articles/20001488-privacy-center-in-chatgpt",
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+        "https://openai.com/consumer-privacy/"
+      ],
+      "reason": "Accessible help/product text exposes no suitable item-specific image; generic support logos excluded."
+    },
+    {
+      "week": 39,
+      "title": "Security History in ChatGPT",
+      "article_url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "asset": "assets/week39/09-security-history.svg",
+      "decision": "retained_fallback",
+      "checked_pages": [
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+        "https://help.openai.com/en/articles/8304786-keeping-your-openai-account-secure"
+      ],
+      "reason": "Release section and linked account-security guide expose no suitable item-specific image; generic support logos excluded."
+    },
+    {
+      "week": 40,
+      "title": "Claude Sonnet 5.5 Prioritizes Fast Iteration and Lower Task Cost",
+      "article_url": "https://www.anthropic.com/claude-sonnet-5-5",
+      "asset": "assets/week40/01-anthropic-sonnet-original.jpg",
+      "decision": "replaced_with_original",
+      "image_source_page": "https://www.anthropic.com/claude-sonnet-5-5",
+      "image_source_url": "https://www-cdn.anthropic.com/images/4zrzovbb/website/eaa6046f4ae8c88e368c3c530c4c1312f7ff6f2e-1200x630.jpg",
+      "reason": "Verified official item-specific image; downloaded locally and visually inspected."
+    },
+    {
+      "week": 40,
+      "title": "Create and Collaborate on Pages in ChatGPT Space",
+      "article_url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "asset": "assets/week40/07-pages-space-original.webp",
+      "decision": "replaced_with_original",
+      "image_source_page": "https://chatgpt.com/features/space/",
+      "image_source_url": "https://images.ctfassets.net/8su2tbn87fck/Z2uVjpDqSNUgScExYRlI2/df85340215bf6f11c2a9a534055506b0/module_3_Visualize-ideas-on-a-page_16x9.png?fm=webp&q=80&w=1600",
+      "reason": "Verified official item-specific image; downloaded locally and visually inspected."
+    },
+    {
+      "week": 40,
+      "title": "Meet Your Dot",
+      "article_url": "https://help.openai.com/en/articles/20001530-getting-started-with-your-dot",
+      "asset": "assets/week40/08-dots-original.webp",
+      "decision": "replaced_with_original",
+      "image_source_page": "https://chatgpt.com/features/dots/",
+      "image_source_url": "https://images.ctfassets.net/8su2tbn87fck/koe4nuXekXUfuUGqiAPCS/d8985552b4a8b25fd758373a7e3e4953/bento_goal_desktop.png?fm=webp&q=80&w=1920",
+      "reason": "Verified official item-specific image; downloaded locally and visually inspected."
+    },
+    {
+      "week": 40,
+      "title": "Codex Cloud",
+      "article_url": "https://learn.chatgpt.com/docs/environments/cloud-environments",
+      "asset": "assets/week40/09-codex-cloud.png",
+      "decision": "retained_original",
+      "image_source_page": "https://learn.chatgpt.com/docs/environments/cloud-environments",
+      "image_source_url": "https://learn.chatgpt.com/og/docs/environments/cloud-environments.png",
+      "reason": "Existing asset is the exact page-specific official OG artwork; documentation exposes no richer product screenshot."
+    },
+    {
+      "week": 40,
+      "title": "Work with Interactive Plugin Extensions",
+      "article_url": "https://help.openai.com/en/articles/20001256-plugins-in-chatgpt",
+      "asset": "assets/week40/10-interactive-plugins-original.webp",
+      "decision": "replaced_with_original",
+      "image_source_page": "https://developers.openai.com/plugins/build/extensions",
+      "image_source_url": "https://developers.openai.com/images/apps-sdk/extensions/chatgpt-plugin-surfaces.webp",
+      "reason": "Verified official item-specific image; downloaded locally and visually inspected."
+    },
+    {
+      "week": 40,
+      "title": "Meetings Plugin",
+      "article_url": "https://chatgpt.com/plugins/plugin_connector_1p_27af362d1a3c8191b38ba625f489d958",
+      "asset": "assets/week40/11-meetings.svg",
+      "decision": "retained_fallback",
+      "checked_pages": [
+        "https://chatgpt.com/plugins/plugin_connector_1p_27af362d1a3c8191b38ba625f489d958",
+        "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+        "https://help.openai.com/en/articles/20001546-the-meetings-plugin-in-chatgpt",
+        "https://openai.com/index/devday-2026-recap/"
+      ],
+      "reason": "Help page exposes no item-specific media; plugin directory/direct announcement rendering blocked. Did not reuse unrelated Space or calendar imagery."
+    }
+  ]
+}
