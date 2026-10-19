@@ -247,7 +247,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
         };
       })()`);
       assert.equal(presentation.tableHeaders, 0, 'agenda list must not expose a table-style header');
-      assert.deepEqual([presentation.monthText, presentation.yearText], ['September', '2026'], 'month and year must have separate typography roles');
+      assert.deepEqual([presentation.monthText, presentation.yearText], ['October', '2026'], 'month and year must have separate typography roles');
       assert.ok(presentation.monthSize >= 20 && presentation.monthSize <= 22, 'month name must remain readable without acting as a second page-level title');
       assert.ok(presentation.yearSize <= 13, 'year must remain supporting text');
       assert.ok(Math.abs(presentation.pageToMonthGap) < 1, 'the latest month must begin at the top of the Learning Plan page');
@@ -339,7 +339,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       assert.deepEqual(start, {
         pageHeadingCount: 0,
         heroCount: 0,
-        firstHeading: 'September 2026',
+        firstHeading: 'October 2026',
         monthStartsPage: true
       });
     });
@@ -412,9 +412,9 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       })()`);
       assert.equal(mobile.scrollWidth, mobile.clientWidth, '390px page must not overflow horizontally');
       assert.equal(mobile.labelAboveAgenda, true, '390px month label must sit above its agenda');
-      assert.equal(mobile.actionCount, 8, '390px page must render all eight available Learning Plan actions');
-      assert.deepEqual(mobile.actions, Array.from({ length: 8 }, () => ({ visible: true, inBounds: true })), '390px available actions must be visible and in bounds');
-      assert.equal(mobile.rows.length, 10, '390px page must retain all 10 Learning Plan rows');
+      assert.equal(mobile.actionCount, 10, '390px page must render all ten available Learning Plan actions');
+      assert.deepEqual(mobile.actions, Array.from({ length: 10 }, () => ({ visible: true, inBounds: true })), '390px available actions must be visible and in bounds');
+      assert.equal(mobile.rows.length, 11, '390px page must retain all 11 Learning Plan rows');
       const mobileRowsValid = mobile.rows.every(row => row.dateLeftOfTopic && row.fieldsVisible && row.presenterInsideTopic && row.flowTopToBottom && row.flowNonOverlapping);
       assert.equal(mobileRowsValid, true, '390px row geometry must reject missing, overlapping, or misplaced fields');
     });

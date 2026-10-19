@@ -31,6 +31,13 @@ url: https://verified-destination.example # optional
 
 When `url` is unavailable, omit the action entirely. Do not render `Link coming soon`, an empty link, or a disabled placeholder.
 
+## October 2026
+
+| Date | Topic | Duration | Type | Presenter | Action |
+|---|---|---:|---|---|---|
+| Oct 13 | Using Claude Code to Create Animations for YIT | 30 min | Internal Sharing | Shiwen | [View](https://docs.google.com/presentation/d/11lCVzJIL4pS7lBx_8M7crzed9oMQ-7se3BIh3JmAYEI/edit?slide=id.p1#slide=id.p1) |
+| Oct 20 | How AI Works: Understanding the Mechanisms Behind It | 30 min | Video Course | — | [Watch](https://drive.google.com/file/d/1jZ3QfEbW_1tAZQwEP0fcOyILzxFsuKc-/view) |
+
 ## September 2026
 
 | Date | Topic | Duration | Type | Presenter | Action |
@@ -39,7 +46,6 @@ When `url` is unavailable, omit the action entirely. Do not render `Link coming 
 | Sep 8 | PP Demand Page Prototype First Workflow | 30 min | Internal Sharing | Echo | [View](https://docs.google.com/presentation/d/1kMiVRRVZslieJJZruMM0s4f35s5t6meCGRqQY9EiPfA/edit?usp=sharing) |
 | Sep 15 | How I use Obsidian + Claude Code to run my life (Part 1) | 30 min | Video Course | — | [Watch](https://www.youtube.com/watch?v=6MBq1paspVU) |
 | Sep 22 | How I use Obsidian + Claude Code to run my life (Part 2) | 30 min | Video Course | — | [Watch](https://www.youtube.com/watch?v=6MBq1paspVU) |
-| Sep 29 | Using Claude Code to Create Animations for YIT | 30 min | Internal Sharing | Shiwen | — |
 
 ## August 2026
 
