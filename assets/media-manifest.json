@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T03:43:13.263Z",
+  "generatedAt": "2026-10-19T05:23:10.422Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,150 @@
     ]
   },
   "summary": {
-    "cards": 190,
+    "cards": 200,
     "errors": 0,
-    "warnings": 39,
+    "warnings": 42,
     "counts": {
-      "embedded-img": 190
+      "embedded-img": 200
     }
   },
   "entries": [
+    {
+      "title": "Synthetic Users vs. Human Respondents: Same Conclusion, Less Variation",
+      "source": "Nielsen Norman Group",
+      "date": "October 16",
+      "url": "https://www.nngroup.com/articles/synthetic-users-vs-human-respondents/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/01-nng-synthetic-users.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 179706,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Here's Everything from Config India 2026",
+      "source": "Figma",
+      "date": "October 15",
+      "url": "https://help.figma.com/hc/en-us/articles/43663368947863-What-s-new-from-Config-India-2026",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/02-figma-config-india.png",
+      "youtubeId": "",
+      "dimensions": "1200x646",
+      "sizeBytes": 125136,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Meta's New 'Muse Wonder' Model: Good for AI Agents, Bad for Design",
+      "source": "Lenny's Newsletter",
+      "date": "October 14",
+      "url": "https://www.lennysnewsletter.com/p/metas-new-muse-wonder-model-good",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/03-lenny-muse-wonder.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x600",
+      "sizeBytes": 115829,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "How Meta Designed Muse: An AI Agent People Actually Want to Talk To",
+      "source": "Lenny's Newsletter",
+      "date": "October 12",
+      "url": "https://www.lennysnewsletter.com/p/how-meta-designed-muse-an-ai-agent",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/04-lenny-meta-muse-design.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 66287,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "ChatGPT Slides Launches Collaborative AI Presentations",
+      "source": "OpenAI",
+      "date": "October 16",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/05-openai-chatgpt-slides.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1158,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "AI-Generated UI Is Fast Design, Not UX",
+      "source": "UX Collective",
+      "date": "October 12",
+      "url": "https://newsletter.uxdesign.cc/p/ai-generated-ui-is-fast-design-not",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/06-ux-collective-fast-design.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x600",
+      "sizeBytes": 96369,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Inside the Black Box of AI: How AI Models Actually Think",
+      "source": "Lenny's Newsletter",
+      "date": "October 18",
+      "url": "https://www.lennysnewsletter.com/p/inside-the-black-box-of-ai-how-ai",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/07-lenny-black-box-ai.png",
+      "youtubeId": "",
+      "dimensions": "592x592",
+      "sizeBytes": 19237,
+      "status": "warning",
+      "issues": [
+        "Unusual card aspect ratio: 1.00."
+      ]
+    },
+    {
+      "title": "Gemini 4 Argon Is Rolling Out in Figma Make",
+      "source": "Figma",
+      "date": "October 13",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/09-figma-make-gemini-argon.png",
+      "youtubeId": "",
+      "dimensions": "800x431",
+      "sizeBytes": 85365,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "GPT-6 Pro Gets Parallel Agents and Faster Tool Use",
+      "source": "OpenAI",
+      "date": "October 16",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/05-openai-chatgpt-slides.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 1158,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Build Your MVP in a Weekend: An AI-Building Playbook for Founders",
+      "source": "Bolt.new",
+      "date": "October 14",
+      "url": "https://bolt.new/blog/build-mvp-weekend-ai",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week42/08-bolt-mvp-weekend.webp",
+      "youtubeId": "",
+      "dimensions": "1672x941",
+      "sizeBytes": 165240,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "The Figma Agent Is Generally Available with Guidelines, Skills, and Shared Context",
       "source": "Figma",
