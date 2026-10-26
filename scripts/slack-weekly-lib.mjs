@@ -42,7 +42,7 @@ export function parseCards(pageHtml, options = {}) {
 }
 
 export function parseSlackCards(pageHtml, fullHtml = '', weekId = '') {
-  if (/<a class="slack-card"/.test(pageHtml)) {
+  if (/<(?:a|div) class="slack-card"/.test(pageHtml)) {
     return parseModernSlackCards(pageHtml);
   }
   const cards = [];
@@ -146,10 +146,10 @@ export function parseExternalCards(pageHtml, fullHtml = '', weekId = '') {
 
 function parseModernSlackCards(pageHtml) {
   const cards = [];
-  const pattern = /<a class="slack-card"([^>]*)>([\s\S]*?)<\/a>/g;
+  const pattern = /(?:<a class="slack-card"([^>]*)>([\s\S]*?)<\/a>|<div class="slack-card"([^>]*)>([\s\S]*?)\n\s{8}<\/div>)/g;
   let match;
   while ((match = pattern.exec(pageHtml)) !== null) {
-    const attrs = parseAttrs(match[1]);
+    const attrs = parseAttrs(match[1] || match[3]);
     const block = match[0];
     const title = textContent(firstMatch(block, /<h3 class="slack-card-title">([\s\S]*?)<\/h3>/));
     const summary = parseModernSummary(block, 'slack-card-desc');
@@ -163,7 +163,7 @@ function parseModernSlackCards(pageHtml) {
       source,
       author: textContent(firstMatch(block, /<span class="slack-sender-name">([\s\S]*?)<\/span>/)),
       date: timeAttrs.datetime || textContent(firstMatch(block, /<time[^>]*>([\s\S]*?)<\/time>/)),
-      link: attrs.href || '',
+      link: attrs.href || attrs['data-slack-link'] || '',
       image: '',
       update: summary.update,
       why: summary.why,

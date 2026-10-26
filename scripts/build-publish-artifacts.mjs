@@ -73,7 +73,7 @@ function harvestVerifiedOriginals(html, store) {
 }
 
 function transformSlackCards(html, transform) {
-  return html.replace(/<a class="slack-card"[^>]*>/g, tag => {
+  return html.replace(/<(?:a|div) class="slack-card"[^>]*>/g, tag => {
     const url = normalizeUrl(attr(tag, 'href') || attr(tag, 'data-slack-link'));
     return transform({ tag, url });
   });
