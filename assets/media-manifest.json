@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T02:09:25.295Z",
+  "generatedAt": "2026-10-26T02:29:11.271Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -79,12 +79,12 @@
       "title": "Claude Cowork and Chat Come Together for Enterprise",
       "source": "Anthropic",
       "date": "October 23",
-      "url": "https://claude.com/resources/articles/claude-cowork-and-chat-come-together-for-enterprise",
+      "url": "https://claude.com/resources/articles/unified-claude-enterprise",
       "mediaSource": "embedded-img",
       "localImage": "assets/week43/03-claude-cowork-chat.png",
       "youtubeId": "",
-      "dimensions": "2400x1260",
-      "sizeBytes": 14592,
+      "dimensions": "1000x526",
+      "sizeBytes": 525513,
       "status": "ok",
       "issues": []
     },
