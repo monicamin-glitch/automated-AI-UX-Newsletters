@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T06:15:47.496Z",
+  "generatedAt": "2026-10-26T02:02:00.769Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,74 @@
     ]
   },
   "summary": {
-    "cards": 200,
+    "cards": 204,
     "errors": 0,
-    "warnings": 42,
+    "warnings": 46,
     "counts": {
-      "embedded-img": 200
+      "embedded-img": 204
     }
   },
   "entries": [
+    {
+      "title": "AI in UX: Work Is Faster, But Practitioners Have Mixed Feelings",
+      "source": "Nielsen Norman Group",
+      "date": "October 23",
+      "url": "https://www.nngroup.com/articles/ai-in-ux-work-faster-mixed-feelings/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/01-nng-ai-in-ux.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 607,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Claude Duet Is Beautiful. I Still Forgot to Use It",
+      "source": "Lenny's Newsletter",
+      "date": "October 21",
+      "url": "https://www.lennysnewsletter.com/p/claude-duet-is-beautiful-i-still",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/02-lenny-claude-duet.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 586,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Donating Agent Skills to the Agentic AI Foundation",
+      "source": "Anthropic",
+      "date": "October 22",
+      "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/03-anthropic-agent-skills.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 604,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "New Controls for Enterprise Admins",
+      "source": "Figma",
+      "date": "October 22",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/04-figma-enterprise-ai-controls.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 790,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
     {
       "title": "Synthetic Users vs. Human Respondents: Same Conclusion, Less Variation",
       "source": "Nielsen Norman Group",
