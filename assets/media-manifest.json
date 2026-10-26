@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T02:03:46.693Z",
+  "generatedAt": "2026-10-26T02:09:25.295Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,58 +15,78 @@
     ]
   },
   "summary": {
-    "cards": 204,
+    "cards": 210,
     "errors": 0,
-    "warnings": 46,
+    "warnings": 42,
     "counts": {
-      "embedded-img": 204
+      "embedded-img": 210
     }
   },
   "entries": [
     {
+      "title": "Introducing Claude Duet",
+      "source": "Anthropic",
+      "date": "October 21",
+      "url": "https://claude.com/resources/articles/claude-duet",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/01-claude-duet.png",
+      "youtubeId": "",
+      "dimensions": "2400x1260",
+      "sizeBytes": 47621,
+      "status": "ok",
+      "issues": []
+    },
+    {
       "title": "AI in UX: Work Is Faster, But Practitioners Have Mixed Feelings",
       "source": "Nielsen Norman Group",
       "date": "October 23",
-      "url": "https://www.nngroup.com/articles/ai-in-ux-work-faster-mixed-feelings/",
+      "url": "https://www.nngroup.com/articles/ai-in-ux-survey-26/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week43/01-nng-ai-in-ux.svg",
+      "localImage": "assets/week43/07-nng-ai-in-ux.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 607,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "1920x1005",
+      "sizeBytes": 515407,
+      "status": "ok",
+      "issues": []
     },
     {
-      "title": "Claude Duet Is Beautiful. I Still Forgot to Use It",
-      "source": "Lenny's Newsletter",
-      "date": "October 21",
-      "url": "https://www.lennysnewsletter.com/p/claude-duet-is-beautiful-i-still",
+      "title": "Locked Chats Add a Reversible Privacy Boundary in ChatGPT",
+      "source": "OpenAI",
+      "date": "October 20",
+      "url": "https://help.openai.com/en/articles/20001411-using-locked-chats-in-chatgpt",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week43/02-lenny-claude-duet.svg",
+      "localImage": "assets/week43/04-openai-locked-chats.svg",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 586,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "1200x630",
+      "sizeBytes": 1586,
+      "status": "ok",
+      "issues": []
     },
     {
-      "title": "Donating Agent Skills to the Agentic AI Foundation",
+      "title": "Claude Duet Safety, Privacy, and Security",
       "source": "Anthropic",
-      "date": "October 22",
-      "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+      "date": "October 23",
+      "url": "https://claude.com/resources/articles/claude-duet-safety-privacy-and-security",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week43/03-anthropic-agent-skills.svg",
+      "localImage": "assets/week43/02-claude-duet-safety.png",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 604,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "dimensions": "2400x1260",
+      "sizeBytes": 46136,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Claude Cowork and Chat Come Together for Enterprise",
+      "source": "Anthropic",
+      "date": "October 23",
+      "url": "https://claude.com/resources/articles/claude-cowork-and-chat-come-together-for-enterprise",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/03-claude-cowork-chat.png",
+      "youtubeId": "",
+      "dimensions": "2400x1260",
+      "sizeBytes": 14592,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "New Controls for Enterprise Admins",
@@ -74,14 +94,64 @@
       "date": "October 22",
       "url": "https://www.figma.com/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week43/04-figma-enterprise-ai-controls.svg",
+      "localImage": "assets/week43/05-figma-release-notes.png",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 38233,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "New iPhone Frame Presets Across Design and Prototyping",
+      "source": "Figma",
+      "date": "October 23",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/06-figma-device-frames.svg",
+      "youtubeId": "",
+      "dimensions": "1200x630",
+      "sizeBytes": 1307,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Claude Duet Is Beautiful. I Still Forgot to Use It",
+      "source": "Lenny's Newsletter",
+      "date": "October 21",
+      "url": "https://www.lennysnewsletter.com/p/claude-duet-is-beautiful-i-still",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/08-lenny-duet.jpg",
+      "youtubeId": "",
+      "dimensions": "728x524",
+      "sizeBytes": 54301,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "“Claude Cuts My TikTok”: How This Creator Is Scaling Video with AI",
+      "source": "Lenny's Newsletter",
+      "date": "October 19",
+      "url": "https://www.lennysnewsletter.com/p/claude-cuts-my-tiktok-how-this-creator",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/09-lenny-video.jpg",
+      "youtubeId": "",
+      "dimensions": "728x524",
+      "sizeBytes": 53722,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Nobody Feels Heard by a Report",
+      "source": "UX Collective",
+      "date": "October 19",
+      "url": "https://newsletter.uxdesign.cc/p/nobody-feels-heard-by-a-report",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week43/10-ux-collective.jpg",
       "youtubeId": "",
       "dimensions": "1200x675",
-      "sizeBytes": 790,
-      "status": "warning",
-      "issues": [
-        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
-      ]
+      "sizeBytes": 31417,
+      "status": "ok",
+      "issues": []
     },
     {
       "title": "Synthetic Users vs. Human Respondents: Same Conclusion, Less Variation",
