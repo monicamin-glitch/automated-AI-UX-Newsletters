@@ -4,7 +4,7 @@
 
 ### Learning Plan: November 2026
 
-- Added November above October: Nov 3 Introduction to Dieter (Drive folder), Nov 10 Two Tools, Two Jobs (Drive video), Nov 17 Figma flows and annotations roundtable, and Nov 24 Partner Offer painpoints sharing. The last two have no link yet. Each session is 30 minutes. October through August stay in place.
+- Added November above October: Nov 3 Introduction to Dieter (Drive folder), Nov 10 Two Tools, Two Jobs (Drive video), Nov 17 Partner Offer painpoints sharing, and Nov 24 Figma flows and annotations roundtable. The last two have no link yet. Each session is 30 minutes. October through August stay in place.
 
 ## 2026-11-02
 
