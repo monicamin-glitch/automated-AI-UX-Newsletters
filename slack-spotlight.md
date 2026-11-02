@@ -26,6 +26,7 @@ This file owns Slack discovery, selection, topic extraction, output fields, and 
 | Marketplace TPCH AI Guild Weekly | `#mp-tpch-ai-guild-weekly` | Product AI practices, guild learnings, pilots | There is a reusable practice, case, recording, artifact, or UX learning |
 | AI Studio Updates | `#ai-studio-updates` | AI app surfaces, workflow builders, chat interfaces | The release changes how UX teams design, test, govern, or ship AI experiences |
 | AI Gateway Updates | `#ai-gateway-updates` | Models, guardrails, Agent Mesh, gateway releases | It unlocks a concrete UX, content, image, trust, prototyping, or feasibility capability |
+| Cursor AI Cost Saving Pilot | `#cursor_ai_cost_saving_pilot_program` | Pilot support, model access, workflow migration, evaluation, and participant feedback | The pilot materially changes UX tools, established workflows, quality, project commitments, or work experience |
 | Design | `#design` | Broad design-community AI tools, events, and demos | The message is directly AI-related and useful to UX practice |
 | Design Systems | `#design-systems` | AI and component systems, tokens, documentation | There is a concrete design-system or UI implementation implication |
 | Design Language | `#design-language` | AI implications for language, standards, and UI quality | There is a concrete content, quality, or governance implication |
@@ -39,8 +40,9 @@ This file owns Slack discovery, selection, topic extraction, output fields, and 
 1. Start with `#ai-for-ux`, `#genai_engineering`, `#dev-china` / `#china-ai-workstream`, and `#mp-ai-engineering`.
 2. Check `#mp-tpch-ai-guild-weekly`.
 3. Check `#ai-studio-updates`; use `#ai-gateway-updates` only when the UX implication is concrete.
-4. Check the broader UX channels in the watchlist.
-5. Use evergreen resources from [`resources-hub.md`](resources-hub.md) only to validate or contextualize a fresh Slack update. Do not republish an evergreen link as weekly news by itself.
+4. Check active pilot channels such as `#cursor_ai_cost_saving_pilot_program` when they affect the team's working environment.
+5. Check the broader UX channels in the watchlist.
+6. Use evergreen resources from [`resources-hub.md`](resources-hub.md) only to validate or contextualize a fresh Slack update. Do not republish an evergreen link as weekly news by itself.
 
 ## Eligibility rules
 
