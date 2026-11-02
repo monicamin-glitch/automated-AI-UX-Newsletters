@@ -10,7 +10,7 @@ const topics = [
   'Introduction to Dieter',
   'Two Tools, Two Jobs (from Design summit workshop)',
   'How to use AI to properly understand Figma flows and annotations',
-  'Using AI to dig user painpoints in Quest',
+  'Using AI in UX writing in partner performance',
   'Rebuilding booking.com guest experience pages with code-first',
   'PP Demand Page Prototype First Workflow',
   'How I use Obsidian + Claude Code to run my life (Part 1)',
@@ -76,13 +76,13 @@ test('shows the latest month first and every supplied course once', () => {
 
 test('adds the November plan above October and keeps missing links off the page', () => {
   const november = page.match(/<section class="learning-month"[^>]*aria-labelledby="learning-november-2026"[\s\S]*?<\/section>/)?.[0] ?? '';
-  assert.match(november, /datetime="2026-11-03"[\s\S]*Introduction to Dieter[\s\S]*Video Course[\s\S]*learning-action-label-november-3">View</);
+  assert.match(november, /datetime="2026-11-03"[\s\S]*Using AI in UX writing in partner performance[\s\S]*Internal Sharing/);
+  assert.doesNotMatch(november.match(/datetime="2026-11-03"[\s\S]*?datetime="2026-11-10"/)?.[0] ?? '', /class="learning-action"/);
+  assert.match(november, /datetime="2026-11-10"[\s\S]*Introduction to Dieter[\s\S]*Video Course[\s\S]*learning-action-label-november-10">View</);
   assert.match(november, /href="https:\/\/drive\.google\.com\/drive\/folders\/1gsFcJ8FG7fWEyyGtFj7jtdVVC7absWT-"/);
-  assert.match(november, /datetime="2026-11-10"[\s\S]*Two Tools, Two Jobs \(from Design summit workshop\)[\s\S]*Video Course[\s\S]*learning-action-label-november-10">Watch</);
+  assert.match(november, /datetime="2026-11-17"[\s\S]*Two Tools, Two Jobs \(from Design summit workshop\)[\s\S]*Video Course[\s\S]*learning-action-label-november-17">Watch</);
   assert.match(november, /href="https:\/\/drive\.google\.com\/file\/d\/1Q7Mn4Y_DRcqapBuiPa7IQ2Wen1Nck3Ff\/view"/);
-  assert.match(november, /datetime="2026-11-17"[\s\S]*Using AI to dig user painpoints in Quest[\s\S]*Internal Sharing/);
   assert.match(november, /datetime="2026-11-24"[\s\S]*How to use AI to properly understand Figma flows and annotations[\s\S]*Roundtable Discussion/);
-  assert.doesNotMatch(november, /datetime="2026-11-17"[\s\S]{0,400}class="learning-action"/);
   assert.doesNotMatch(november, /datetime="2026-11-24"[\s\S]{0,400}class="learning-action"/);
 });
 

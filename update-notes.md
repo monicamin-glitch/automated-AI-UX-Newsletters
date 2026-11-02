@@ -4,7 +4,7 @@
 
 ### Learning Plan: November 2026
 
-- Added November above October: Nov 3 Introduction to Dieter (Drive folder), Nov 10 Two Tools, Two Jobs (Drive video), Nov 17 Using AI to dig user painpoints in Quest, and Nov 24 Figma flows and annotations roundtable. The last two have no link yet. Each session is 30 minutes. October through August stay in place.
+- November sessions: Nov 3 Using AI in UX writing in partner performance (Internal Sharing, no link), Nov 10 Introduction to Dieter (Drive folder), Nov 17 Two Tools, Two Jobs (Drive video), and Nov 24 Figma flows and annotations roundtable (no link). Each session is 30 minutes. October through August stay in place.
 
 ## 2026-11-02
 
