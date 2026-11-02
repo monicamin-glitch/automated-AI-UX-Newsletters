@@ -1,5 +1,20 @@
 # Update Notes
 
+## 2026-11-02
+
+### Week 44 refresh
+
+- Promoted Week 44 (October 26–November 1, 2026) to Latest Week: 9 internal Slack cards and 12 external cards. Archived the colleague's Week 43 (October 19–25) and kept Week 42 and earlier weeks. Resources Hub and the October 27 Learning Plan row stay in place.
+- Popular topics on Latest Week are AI Summit, Fabric, BPages, Page Builder, and AI Use Case Library.
+- Public GitHub dialogs keep the rewritten summaries. Verified Slack originals stay on the Booking-only B.Pages build.
+
+## 2026-10-23
+
+### Learning Plan: Oct 27 Roundtable
+
+- Added a Tuesday Oct 27 Roundtable Discussion: Claude keeps asking clarifying yes/no questions mid-task and breaks the flow (at what stage should we let human make the decision). No action link yet. Mirrored in `learning-plan.md` and `index.html`; Learning Plan tests updated for 12 rows.
+- Published to Booking-only B.Pages artifact `bcdc64e0cb` at `https://bpages.booking.com/rbpQL/ai-ux-newsletter`. Pointed default publish ID/URL at this owner artifact (replacing Monica-owned `4de2388206` / `048eM`).
+
 ## 2026-10-12
 
 ### Weeks 39–41 publication approval

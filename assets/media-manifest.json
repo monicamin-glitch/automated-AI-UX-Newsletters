@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T02:30:01.003Z",
+  "generatedAt": "2026-11-02T02:55:20.424Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,172 @@
     ]
   },
   "summary": {
-    "cards": 210,
+    "cards": 222,
     "errors": 0,
-    "warnings": 42,
+    "warnings": 43,
     "counts": {
-      "embedded-img": 210
+      "embedded-img": 222
     }
   },
   "entries": [
+    {
+      "title": "The Role of UX in Agentic Software Factories",
+      "source": "Nielsen Norman Group",
+      "date": "October 30",
+      "url": "https://www.nngroup.com/articles/ux-agentic-software-factories/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/01-nng-agentic-sdlc.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 363916,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "GPT-6.1 Terra in ChatGPT Work, Codex, and the API",
+      "source": "OpenAI",
+      "date": "October 26",
+      "url": "https://openai.com/products/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/02-openai-terra.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 525,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Connect Google Drive to the Figma agent, available on all plans",
+      "source": "Figma",
+      "date": "October 30",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/03-figma-drive.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 525,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Why Reddit built its own AI prototyping tool",
+      "source": "Lenny's Newsletter",
+      "date": "October 26",
+      "url": "https://www.lennysnewsletter.com/p/why-reddit-built-its-own-ai-prototyping",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/04-lenny-reddit-proto.png",
+      "youtubeId": "",
+      "dimensions": "728x524",
+      "sizeBytes": 375221,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Experience Design: Dropping the “User” from “User Experience”",
+      "source": "Nielsen Norman Group",
+      "date": "October 30",
+      "url": "https://www.nngroup.com/articles/ux-vs-experience-design/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/05-nng-experience-design.png",
+      "youtubeId": "",
+      "dimensions": "1920x1005",
+      "sizeBytes": 622545,
+      "status": "warning",
+      "issues": [
+        "Large image file: 608 KB. Compress before B.Pages upload."
+      ]
+    },
+    {
+      "title": "Access video and image models from Figma Weave via the Figma MCP",
+      "source": "Figma",
+      "date": "October 26",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/06-figma-weave-mcp.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 529,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "The TL;DR on Figma Weave: Make your creative process repeatable",
+      "source": "Figma",
+      "date": "October 30",
+      "url": "https://www.figma.com/blog/the-tldr-on-figma-weave/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/07-figma-weave-blog.png",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 597048,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "View and restore previous versions of your generative plugins and shaders",
+      "source": "Figma",
+      "date": "October 27",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/08-figma-plugin-versions.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 528,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Internal publishing for Weave tools now available on Organization and Enterprise plans",
+      "source": "Figma",
+      "date": "October 30",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/09-figma-weave-tools.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 531,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "iCloud Mail and Calendar plugins in ChatGPT",
+      "source": "OpenAI",
+      "date": "October 27",
+      "url": "https://openai.com/products/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/10-openai-icloud.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 524,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Text your dot",
+      "source": "OpenAI",
+      "date": "October 26",
+      "url": "https://learn.chatgpt.com/docs/whats-new/october-26-30-2026.md",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/11-openai-text-dot.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 524,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Custom GPT creation cutoff for Enterprise",
+      "source": "OpenAI",
+      "date": "October 26",
+      "url": "https://openai.com/products/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week44/12-openai-custom-gpt.svg",
+      "youtubeId": "",
+      "dimensions": "1200x720",
+      "sizeBytes": 527,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Introducing Claude Duet",
       "source": "Anthropic",
