@@ -10,7 +10,7 @@ const topics = [
   'Introduction to Dieter',
   'Two Tools, Two Jobs (from Design summit workshop)',
   'How to use AI to properly understand Figma flows and annotations',
-  'Using AI to dig user painpoints',
+  'Using AI to dig user painpoints in Quest',
   'Rebuilding booking.com guest experience pages with code-first',
   'PP Demand Page Prototype First Workflow',
   'How I use Obsidian + Claude Code to run my life (Part 1)',
@@ -80,7 +80,7 @@ test('adds the November plan above October and keeps missing links off the page'
   assert.match(november, /href="https:\/\/drive\.google\.com\/drive\/folders\/1gsFcJ8FG7fWEyyGtFj7jtdVVC7absWT-"/);
   assert.match(november, /datetime="2026-11-10"[\s\S]*Two Tools, Two Jobs \(from Design summit workshop\)[\s\S]*Video Course[\s\S]*learning-action-label-november-10">Watch</);
   assert.match(november, /href="https:\/\/drive\.google\.com\/file\/d\/1Q7Mn4Y_DRcqapBuiPa7IQ2Wen1Nck3Ff\/view"/);
-  assert.match(november, /datetime="2026-11-17"[\s\S]*Using AI to dig user painpoints[\s\S]*Internal Sharing/);
+  assert.match(november, /datetime="2026-11-17"[\s\S]*Using AI to dig user painpoints in Quest[\s\S]*Internal Sharing/);
   assert.match(november, /datetime="2026-11-24"[\s\S]*How to use AI to properly understand Figma flows and annotations[\s\S]*Roundtable Discussion/);
   assert.doesNotMatch(november, /datetime="2026-11-17"[\s\S]{0,400}class="learning-action"/);
   assert.doesNotMatch(november, /datetime="2026-11-24"[\s\S]{0,400}class="learning-action"/);
