@@ -7,12 +7,17 @@ const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const page = html.match(/<!-- PAGE: Learning Plan -->[\s\S]*?<div class="page" id="page-learning">([\s\S]*?)<!-- PAGE: Resources Hub -->/)?.[1] ?? '';
 
 const topics = [
+  'Introduction to Dieter',
+  'Two Tools, Two Jobs (from Design summit workshop)',
+  'How to use AI to properly understand Figma flows and annotations',
+  'Using AI to dig partner offer user painpoints in Quest',
   'Rebuilding booking.com guest experience pages with code-first',
   'PP Demand Page Prototype First Workflow',
   'How I use Obsidian + Claude Code to run my life (Part 1)',
   'How I use Obsidian + Claude Code to run my life (Part 2)',
   'Using Claude Code to Create Animations for YIT',
   'How AI Works: Understanding the Mechanisms Behind It',
+  'Claude keeps asking clarifying yes/no questions mid-task and breaks the flow (at what stage should we let human make the decision)',
   'Write a well-structured prompt',
   'Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 1)',
   'Preserving Learning and Critical Thinking While Using Claude Code, Codex, and NotebookLM (Part 2)',
@@ -21,6 +26,8 @@ const topics = [
 ];
 
 const expectedActionUrls = [
+  'https://drive.google.com/drive/folders/1gsFcJ8FG7fWEyyGtFj7jtdVVC7absWT-',
+  'https://drive.google.com/file/d/1Q7Mn4Y_DRcqapBuiPa7IQ2Wen1Nck3Ff/view',
   'https://docs.google.com/presentation/d/11lCVzJIL4pS7lBx_8M7crzed9oMQ-7se3BIh3JmAYEI/edit?slide=id.p1#slide=id.p1',
   'https://drive.google.com/file/d/1jZ3QfEbW_1tAZQwEP0fcOyILzxFsuKc-/view',
   'https://drive.google.com/drive/folders/1VaNwxBUOhNfyCJ7U0c4249cU0o-LXqhJ',
@@ -58,12 +65,25 @@ test('adds the fourth Learning Plan route and page', () => {
 });
 
 test('shows the latest month first and every supplied course once', () => {
+  assert.ok(page.indexOf('November 2026') < page.indexOf('October 2026'));
   assert.ok(page.indexOf('October 2026') < page.indexOf('September 2026'));
   assert.ok(page.indexOf('September 2026') < page.indexOf('August 2026'));
   topics.forEach(topic => {
     assert.equal((page.match(new RegExp(topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) ?? []).length, 1, topic);
   });
-  assert.equal((page.match(/class="learning-row"/g) ?? []).length, 11);
+  assert.equal((page.match(/class="learning-row"/g) ?? []).length, 16);
+});
+
+test('adds the November plan above October and keeps missing links off the page', () => {
+  const november = page.match(/<section class="learning-month"[^>]*aria-labelledby="learning-november-2026"[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.match(november, /datetime="2026-11-03"[\s\S]*Introduction to Dieter[\s\S]*Video Course[\s\S]*learning-action-label-november-3">View</);
+  assert.match(november, /href="https:\/\/drive\.google\.com\/drive\/folders\/1gsFcJ8FG7fWEyyGtFj7jtdVVC7absWT-"/);
+  assert.match(november, /datetime="2026-11-10"[\s\S]*Two Tools, Two Jobs \(from Design summit workshop\)[\s\S]*Video Course[\s\S]*learning-action-label-november-10">Watch</);
+  assert.match(november, /href="https:\/\/drive\.google\.com\/file\/d\/1Q7Mn4Y_DRcqapBuiPa7IQ2Wen1Nck3Ff\/view"/);
+  assert.match(november, /datetime="2026-11-17"[\s\S]*How to use AI to properly understand Figma flows and annotations[\s\S]*Roundtable Discussion/);
+  assert.match(november, /datetime="2026-11-24"[\s\S]*Using AI to dig partner offer user painpoints in Quest[\s\S]*Internal Sharing/);
+  assert.doesNotMatch(november, /datetime="2026-11-17"[\s\S]{0,400}class="learning-action"/);
+  assert.doesNotMatch(november, /datetime="2026-11-24"[\s\S]{0,400}class="learning-action"/);
 });
 
 test('moves Shiwen sharing to October 13 and adds the October 20 video session', () => {
@@ -72,27 +92,29 @@ test('moves Shiwen sharing to October 13 and adds the October 20 video session',
   assert.match(october, /href="https:\/\/docs\.google\.com\/presentation\/d\/11lCVzJIL4pS7lBx_8M7crzed9oMQ-7se3BIh3JmAYEI\/edit\?slide=id\.p1#slide=id\.p1"/);
   assert.match(october, /datetime="2026-10-20"[\s\S]*How AI Works: Understanding the Mechanisms Behind It[\s\S]*Video Course/);
   assert.match(october, /href="https:\/\/drive\.google\.com\/file\/d\/1jZ3QfEbW_1tAZQwEP0fcOyILzxFsuKc-\/view"/);
+  assert.match(october, /datetime="2026-10-27"[\s\S]*Claude keeps asking clarifying yes\/no questions mid-task and breaks the flow \(at what stage should we let human make the decision\)[\s\S]*Roundtable Discussion/);
   assert.doesNotMatch(page, /datetime="2026-09-29"[\s\S]{0,500}Using Claude Code to Create Animations for YIT/);
 });
 
 test('uses only verified links and omits unavailable actions', () => {
   const actionUrls = [...page.matchAll(/<a class="learning-action" href="([^"]+)"/g)].map(match => match[1]);
   assert.deepEqual(actionUrls, expectedActionUrls);
-  assert.equal((page.match(/class="learning-action"/g) ?? []).length, 10);
-  assert.equal((page.match(/target="_blank" rel="noopener noreferrer"/g) ?? []).length, 10);
+  assert.equal((page.match(/class="learning-action"/g) ?? []).length, 12);
+  assert.equal((page.match(/target="_blank" rel="noopener noreferrer"/g) ?? []).length, 12);
   assert.doesNotMatch(page, /learning-action-disabled|Link coming soon/);
   assert.doesNotMatch(page, /href=""|href="#"/);
 });
 
 test('uses official video type copy', () => {
-  assert.equal((page.match(/>Video Course<\/span>/g) ?? []).length, 8);
+  assert.equal((page.match(/>Video Course<\/span>/g) ?? []).length, 10);
   assert.doesNotMatch(page, />Watch video<\/span>/i);
 });
 
 test('uses split month labels and an agenda list without table headers', () => {
-  assert.equal((page.match(/class="learning-month-heading"/g) ?? []).length, 3);
+  assert.equal((page.match(/class="learning-month-heading"/g) ?? []).length, 4);
   assert.deepEqual([...page.matchAll(/<span class="learning-month-name">([^<]+)<\/span>\s*<span class="learning-month-year">([^<]+)<\/span>/g)]
     .map(([, month, year]) => ({ month, year })), [
+    { month: 'November', year: '2026' },
     { month: 'October', year: '2026' },
     { month: 'September', year: '2026' },
     { month: 'August', year: '2026' },
@@ -101,7 +123,7 @@ test('uses split month labels and an agenda list without table headers', () => {
 });
 
 test('keeps type and action as separate fields and defines mobile layout', () => {
-  assert.equal((page.match(/class="learning-type /g) ?? []).length, 11);
+  assert.equal((page.match(/class="learning-type /g) ?? []).length, 16);
   assert.match(html, /@media \(max-width: 1024px\) \{[\s\S]*?\.learning-month \{[^}]*grid-template-columns: 1fr/);
   assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.learning-month \{[^}]*grid-template-columns: 1fr/);
   const focusRule = html.match(/\.learning-action:focus-visible\s*\{([^}]*)\}/)?.[1] ?? '';
@@ -112,8 +134,8 @@ test('keeps type and action as separate fields and defines mobile layout', () =>
 
 test('uses semantic monthly lists around every learning row', () => {
   const months = page.match(/<section class="learning-month"[\s\S]*?<\/section>/g) ?? [];
-  assert.equal(months.length, 3);
-  [2, 4, 5].forEach((expectedRows, index) => {
+  assert.equal(months.length, 4);
+  [4, 3, 4, 5].forEach((expectedRows, index) => {
     const month = months[index];
     assert.match(month, /<ol class="learning-list-items">/);
     assert.equal((month.match(/<li class="learning-list-item">/g) ?? []).length, expectedRows);

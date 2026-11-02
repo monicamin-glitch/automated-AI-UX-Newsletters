@@ -2,6 +2,12 @@
 
 ## 2026-11-02
 
+### Learning Plan: November 2026
+
+- Added November above October: Nov 3 Introduction to Dieter (Drive folder), Nov 10 Two Tools, Two Jobs (Drive video), Nov 17 Figma flows and annotations roundtable, and Nov 24 Partner Offer painpoints sharing. The last two have no link yet. Each session is 30 minutes. October through August stay in place.
+
+## 2026-11-02
+
 ### Week 44 refresh
 
 - Promoted Week 44 (October 26–November 1, 2026) to Latest Week: 9 internal Slack cards and 12 external cards. Archived the colleague's Week 43 (October 19–25) and kept Week 42 and earlier weeks. Resources Hub and the October 27 Learning Plan row stay in place.

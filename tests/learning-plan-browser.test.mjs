@@ -247,7 +247,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
         };
       })()`);
       assert.equal(presentation.tableHeaders, 0, 'agenda list must not expose a table-style header');
-      assert.deepEqual([presentation.monthText, presentation.yearText], ['October', '2026'], 'month and year must have separate typography roles');
+      assert.deepEqual([presentation.monthText, presentation.yearText], ['November', '2026'], 'month and year must have separate typography roles');
       assert.ok(presentation.monthSize >= 20 && presentation.monthSize <= 22, 'month name must remain readable without acting as a second page-level title');
       assert.ok(presentation.yearSize <= 13, 'year must remain supporting text');
       assert.ok(Math.abs(presentation.pageToMonthGap) < 1, 'the latest month must begin at the top of the Learning Plan page');
@@ -269,7 +269,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
           };
         });
       })()`);
-      assert.deepEqual(badges, Array.from({ length: 2 }, () => ({
+      assert.deepEqual(badges, Array.from({ length: 3 }, () => ({
         label: 'Internal Sharing',
         color: 'rgb(21, 128, 61)',
         backgroundColor: 'rgb(220, 252, 231)'
@@ -339,7 +339,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       assert.deepEqual(start, {
         pageHeadingCount: 0,
         heroCount: 0,
-        firstHeading: 'October 2026',
+        firstHeading: 'November 2026',
         monthStartsPage: true
       });
     });
@@ -412,9 +412,9 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
       })()`);
       assert.equal(mobile.scrollWidth, mobile.clientWidth, '390px page must not overflow horizontally');
       assert.equal(mobile.labelAboveAgenda, true, '390px month label must sit above its agenda');
-      assert.equal(mobile.actionCount, 10, '390px page must render all ten available Learning Plan actions');
-      assert.deepEqual(mobile.actions, Array.from({ length: 10 }, () => ({ visible: true, inBounds: true })), '390px available actions must be visible and in bounds');
-      assert.equal(mobile.rows.length, 11, '390px page must retain all 11 Learning Plan rows');
+      assert.equal(mobile.actionCount, 12, '390px page must render all twelve available Learning Plan actions');
+      assert.deepEqual(mobile.actions, Array.from({ length: 12 }, () => ({ visible: true, inBounds: true })), '390px available actions must be visible and in bounds');
+      assert.equal(mobile.rows.length, 16, '390px page must retain all 16 Learning Plan rows');
       const mobileRowsValid = mobile.rows.every(row => row.dateLeftOfTopic && row.fieldsVisible && row.presenterInsideTopic && row.flowTopToBottom && row.flowNonOverlapping);
       assert.equal(mobileRowsValid, true, '390px row geometry must reject missing, overlapping, or misplaced fields');
     });
@@ -494,7 +494,7 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
         document.body.removeAttribute('tabindex');
       })()`);
       const actionStops = [];
-      for (let index = 0; index < 8; index += 1) {
+      for (let index = 0; index < 12; index += 1) {
       await browser.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
       await browser.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
         actionStops.push(await browser.evaluate(`(() => {
@@ -511,9 +511,9 @@ test('browser gates Learning Plan layout, navigation, and keyboard contracts', {
         })()`));
       }
       await browser.evaluate(`document.querySelector('.nav-tabs').inert = false`);
-      assert.deepEqual(actionStops.map(stop => stop.actionIndex), [0, 1, 2, 3, 4, 5, 6, 7], 'Tab must reach exactly the eight active actions in order');
-      assert.deepEqual(actionStops.map(stop => stop.disabled), Array.from({ length: 8 }, () => false), 'disabled actions must be skipped');
-      assert.deepEqual(actionStops.map(stop => [stop.outlineStyle, stop.outlineWidth, stop.outlineOffset, stop.outlineColor]), Array.from({ length: 8 }, () => ['solid', '3px', '2px', 'rgb(29, 78, 216)']), 'each active action must use the opaque primary-dark focus outline with at least 3:1 contrast against white');
+      assert.deepEqual(actionStops.map(stop => stop.actionIndex), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 'Tab must reach exactly the twelve active actions in order');
+      assert.deepEqual(actionStops.map(stop => stop.disabled), Array.from({ length: 12 }, () => false), 'disabled actions must be skipped');
+      assert.deepEqual(actionStops.map(stop => [stop.outlineStyle, stop.outlineWidth, stop.outlineOffset, stop.outlineColor]), Array.from({ length: 12 }, () => ['solid', '3px', '2px', 'rgb(29, 78, 216)']), 'each active action must use the opaque primary-dark focus outline with at least 3:1 contrast against white');
       assert.equal(await browser.evaluate(`document.querySelectorAll('.learning-action-disabled, #page-learning button[disabled]').length`), 0, 'unavailable actions must not render as disabled buttons');
     });
 

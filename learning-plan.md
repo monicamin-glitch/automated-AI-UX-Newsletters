@@ -31,12 +31,22 @@ url: https://verified-destination.example # optional
 
 When `url` is unavailable, omit the action entirely. Do not render `Link coming soon`, an empty link, or a disabled placeholder.
 
+## November 2026
+
+| Date | Topic | Duration | Type | Presenter | Action |
+|---|---|---:|---|---|---|
+| Nov 3 | Introduction to Dieter | 30 min | Video Course | — | [View](https://drive.google.com/drive/folders/1gsFcJ8FG7fWEyyGtFj7jtdVVC7absWT-) |
+| Nov 10 | Two Tools, Two Jobs (from Design summit workshop) | 30 min | Video Course | — | [Watch](https://drive.google.com/file/d/1Q7Mn4Y_DRcqapBuiPa7IQ2Wen1Nck3Ff/view) |
+| Nov 17 | How to use AI to properly understand Figma flows and annotations | 30 min | Roundtable Discussion | — | — |
+| Nov 24 | Using AI to dig partner offer user painpoints in Quest | 30 min | Internal Sharing | — | — |
+
 ## October 2026
 
 | Date | Topic | Duration | Type | Presenter | Action |
 |---|---|---:|---|---|---|
 | Oct 13 | Using Claude Code to Create Animations for YIT | 30 min | Internal Sharing | Shiwen | [View](https://docs.google.com/presentation/d/11lCVzJIL4pS7lBx_8M7crzed9oMQ-7se3BIh3JmAYEI/edit?slide=id.p1#slide=id.p1) |
 | Oct 20 | How AI Works: Understanding the Mechanisms Behind It | 30 min | Video Course | — | [Watch](https://drive.google.com/file/d/1jZ3QfEbW_1tAZQwEP0fcOyILzxFsuKc-/view) |
+| Oct 27 | Claude keeps asking clarifying yes/no questions mid-task and breaks the flow (at what stage should we let human make the decision) | 30 min | Roundtable Discussion | — | — |
 
 ## September 2026
 
