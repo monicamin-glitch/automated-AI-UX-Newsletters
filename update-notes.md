@@ -7,6 +7,7 @@
 - Promoted Week 44 (October 26–November 1, 2026) to Latest Week: 9 internal Slack cards and 12 external cards. Archived the colleague's Week 43 (October 19–25) and kept Week 42 and earlier weeks. Resources Hub and the October 27 Learning Plan row stay in place.
 - Popular topics on Latest Week are AI Summit, Fabric, BPages, Page Builder, and AI Use Case Library.
 - Public GitHub dialogs keep the rewritten summaries. Verified Slack originals stay on the Booking-only B.Pages build.
+- Closed the Week 42 archive template. It had been left open, so the page script never ran and the topic button, filter chips, and page tabs did nothing.
 
 ## 2026-10-23
 
