@@ -35,7 +35,7 @@ When `url` is unavailable, omit the action entirely. Do not render `Link coming 
 
 | Date | Topic | Duration | Type | Presenter | Action |
 |---|---|---:|---|---|---|
-| Nov 3 | Using AI in UX writing in partner performance | 30 min | Internal Sharing | — | — |
+| Nov 3 | Using AI in UX writing in Partner Performance | 30 min | Internal Sharing | — | — |
 | Nov 10 | Introduction to Dieter | 30 min | Video Course | — | [View](https://drive.google.com/drive/folders/1gsFcJ8FG7fWEyyGtFj7jtdVVC7absWT-) |
 | Nov 17 | Two Tools, Two Jobs (from Design summit workshop) | 30 min | Video Course | — | [Watch](https://drive.google.com/file/d/1Q7Mn4Y_DRcqapBuiPa7IQ2Wen1Nck3Ff/view) |
 | Nov 24 | How to use AI to properly understand Figma flows and annotations | 30 min | Roundtable Discussion | — | — |
