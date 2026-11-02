@@ -8,6 +8,7 @@
 - Popular topics on Latest Week are AI Summit, Fabric, BPages, Page Builder, and AI Use Case Library.
 - Public GitHub dialogs keep the rewritten summaries. Verified Slack originals stay on the Booking-only B.Pages build.
 - Closed the Week 42 archive template. It had been left open, so the page script never ran and the topic button, filter chips, and page tabs did nothing.
+- Replaced six blank Week 44 external placeholders with official images: ChatGPT Computer Use for Terra, the Weave model canvas, the generative-plugin version-history video poster, the Weave tools panel, the Text your dot card, and the custom GPT migration card. Google Drive and iCloud Mail still have no item-specific official image.
 
 ## 2026-10-23
 

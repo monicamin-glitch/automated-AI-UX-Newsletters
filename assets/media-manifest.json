@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T02:55:20.424Z",
+  "generatedAt": "2026-11-02T03:23:30.266Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -17,7 +17,7 @@
   "summary": {
     "cards": 222,
     "errors": 0,
-    "warnings": 43,
+    "warnings": 44,
     "counts": {
       "embedded-img": 222
     }
@@ -42,10 +42,10 @@
       "date": "October 26",
       "url": "https://openai.com/products/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week44/02-openai-terra.svg",
+      "localImage": "assets/week44/02-openai-terra.png",
       "youtubeId": "",
-      "dimensions": "1200x720",
-      "sizeBytes": 525,
+      "dimensions": "1200x630",
+      "sizeBytes": 135961,
       "status": "ok",
       "issues": []
     },
@@ -96,10 +96,10 @@
       "date": "October 26",
       "url": "https://www.figma.com/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week44/06-figma-weave-mcp.svg",
+      "localImage": "assets/week44/06-figma-weave-mcp.jpg",
       "youtubeId": "",
-      "dimensions": "1200x720",
-      "sizeBytes": 529,
+      "dimensions": "1400x723",
+      "sizeBytes": 79192,
       "status": "ok",
       "issues": []
     },
@@ -122,10 +122,10 @@
       "date": "October 27",
       "url": "https://www.figma.com/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week44/08-figma-plugin-versions.svg",
+      "localImage": "assets/week44/08-figma-plugin-versions.jpg",
       "youtubeId": "",
-      "dimensions": "1200x720",
-      "sizeBytes": 528,
+      "dimensions": "1280x720",
+      "sizeBytes": 69147,
       "status": "ok",
       "issues": []
     },
@@ -135,12 +135,14 @@
       "date": "October 30",
       "url": "https://www.figma.com/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week44/09-figma-weave-tools.svg",
+      "localImage": "assets/week44/09-figma-weave-tools.png",
       "youtubeId": "",
-      "dimensions": "1200x720",
-      "sizeBytes": 531,
-      "status": "ok",
-      "issues": []
+      "dimensions": "1920x1920",
+      "sizeBytes": 444082,
+      "status": "warning",
+      "issues": [
+        "Unusual card aspect ratio: 1.00."
+      ]
     },
     {
       "title": "iCloud Mail and Calendar plugins in ChatGPT",
@@ -161,10 +163,10 @@
       "date": "October 26",
       "url": "https://learn.chatgpt.com/docs/whats-new/october-26-30-2026.md",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week44/11-openai-text-dot.svg",
+      "localImage": "assets/week44/11-openai-text-dot.png",
       "youtubeId": "",
-      "dimensions": "1200x720",
-      "sizeBytes": 524,
+      "dimensions": "1200x630",
+      "sizeBytes": 134509,
       "status": "ok",
       "issues": []
     },
@@ -174,10 +176,10 @@
       "date": "October 26",
       "url": "https://openai.com/products/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week44/12-openai-custom-gpt.svg",
+      "localImage": "assets/week44/12-openai-custom-gpt.png",
       "youtubeId": "",
-      "dimensions": "1200x720",
-      "sizeBytes": 527,
+      "dimensions": "1200x630",
+      "sizeBytes": 152542,
       "status": "ok",
       "issues": []
     },
