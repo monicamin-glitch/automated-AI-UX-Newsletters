@@ -4,7 +4,7 @@
 
 ### Learning Plan: November 2026
 
-- November sessions: Nov 3 Using AI in UX writing in Partner Performance (Internal Sharing, no link), Nov 10 Introduction to Dieter (Drive folder), Nov 17 Two Tools, Two Jobs (Drive video), and Nov 24 Figma flows and annotations roundtable (no link). Each session is 30 minutes. October through August stay in place.
+- November sessions: Nov 3 Peer group AI prompt use case + learnings and Smoothly transition from Codex / Claude to Cursor (both Internal Sharing, no link), Nov 10 Introduction to Dieter (Drive folder), Nov 17 Two Tools, Two Jobs (Drive video), and Nov 24 Figma flows and annotations roundtable (no link). Each session is 30 minutes. October through August stay in place.
 
 ## 2026-11-02
 

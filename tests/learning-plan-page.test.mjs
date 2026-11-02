@@ -10,7 +10,8 @@ const topics = [
   'Introduction to Dieter',
   'Two Tools, Two Jobs (from Design summit workshop)',
   'How to use AI to properly understand Figma flows and annotations',
-  'Using AI in UX writing in Partner Performance',
+  'Peer group AI prompt use case + learnings',
+  'Smoothly transition from Codex / Claude to Cursor',
   'Rebuilding booking.com guest experience pages with code-first',
   'PP Demand Page Prototype First Workflow',
   'How I use Obsidian + Claude Code to run my life (Part 1)',
@@ -71,12 +72,13 @@ test('shows the latest month first and every supplied course once', () => {
   topics.forEach(topic => {
     assert.equal((page.match(new RegExp(topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) ?? []).length, 1, topic);
   });
-  assert.equal((page.match(/class="learning-row"/g) ?? []).length, 16);
+  assert.equal((page.match(/class="learning-row"/g) ?? []).length, 17);
 });
 
 test('adds the November plan above October and keeps missing links off the page', () => {
   const november = page.match(/<section class="learning-month"[^>]*aria-labelledby="learning-november-2026"[\s\S]*?<\/section>/)?.[0] ?? '';
-  assert.match(november, /datetime="2026-11-03"[\s\S]*Using AI in UX writing in Partner Performance[\s\S]*Internal Sharing/);
+  assert.match(november, /datetime="2026-11-03"[\s\S]*Peer group AI prompt use case \+ learnings[\s\S]*Internal Sharing/);
+  assert.match(november, /datetime="2026-11-03"[\s\S]*Smoothly transition from Codex \/ Claude to Cursor[\s\S]*Internal Sharing/);
   assert.doesNotMatch(november.match(/datetime="2026-11-03"[\s\S]*?datetime="2026-11-10"/)?.[0] ?? '', /class="learning-action"/);
   assert.match(november, /datetime="2026-11-10"[\s\S]*Introduction to Dieter[\s\S]*Video Course[\s\S]*learning-action-label-november-10">View</);
   assert.match(november, /href="https:\/\/drive\.google\.com\/drive\/folders\/1gsFcJ8FG7fWEyyGtFj7jtdVVC7absWT-"/);
@@ -123,7 +125,7 @@ test('uses split month labels and an agenda list without table headers', () => {
 });
 
 test('keeps type and action as separate fields and defines mobile layout', () => {
-  assert.equal((page.match(/class="learning-type /g) ?? []).length, 16);
+  assert.equal((page.match(/class="learning-type /g) ?? []).length, 17);
   assert.match(html, /@media \(max-width: 1024px\) \{[\s\S]*?\.learning-month \{[^}]*grid-template-columns: 1fr/);
   assert.match(html, /@media \(max-width: 768px\) \{[\s\S]*?\.learning-month \{[^}]*grid-template-columns: 1fr/);
   const focusRule = html.match(/\.learning-action:focus-visible\s*\{([^}]*)\}/)?.[1] ?? '';
@@ -135,7 +137,7 @@ test('keeps type and action as separate fields and defines mobile layout', () =>
 test('uses semantic monthly lists around every learning row', () => {
   const months = page.match(/<section class="learning-month"[\s\S]*?<\/section>/g) ?? [];
   assert.equal(months.length, 4);
-  [4, 3, 4, 5].forEach((expectedRows, index) => {
+  [5, 3, 4, 5].forEach((expectedRows, index) => {
     const month = months[index];
     assert.match(month, /<ol class="learning-list-items">/);
     assert.equal((month.match(/<li class="learning-list-item">/g) ?? []).length, expectedRows);
