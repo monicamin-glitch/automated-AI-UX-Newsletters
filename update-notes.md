@@ -1,5 +1,16 @@
 # Update Notes
 
+## 2026-11-09
+
+### Week 45 refresh
+
+- Promoted Week 45 (November 2–8, 2026) to Latest Week with 9 verified internal Slack cards and 6 verified external cards. Archived Week 44 intact without deleting or renumbering history. Top navigation, `AI × Design` with `Shanghai`, Latest Week topics, `.slack-card`, `.masonry-card`, calendar archive templates, the shared detail dialog, All Weeks, Resources Hub, and Learning Plan remain in place.
+- Popular topics are Figma MCP, BUI Kit, Cursor Pilot, Self-Reflection Portal, and Eval Catalog. Public GitHub dialogs remain explicitly labeled newsletter summaries; exact verified Slack parents are stored only for the Booking-only artifact.
+- Internal source checklist — included: `#genai_engineering` (Figma MCP, Self-Reflection Portal, make-it-a-video), `#ai-for-ux` (BUI kit for Figma Make), `#uxw-genai` (image-to-Lingo and partner AI writing guidelines), `#cursor_ai_cost_saving_pilot_program` (Figma-to-SwiftUI benchmark and pilot timeline), and `#ai-studio-updates` (evaluation catalog). Checked and skipped: `#dev-china` (bot rewrite or non-UX operational material), `#china-ai-workstream`, `#mp-ai-engineering`, `#mp-tpch-ai-guild-weekly`, `#ai-gateway-updates`, `#design`, `#design-systems`, `#design-language`, `#ai-design-curriculum`, `#ai-uxers-of-fintech`, and `#conversational-ai-traveller-all-ux` had no additional distinct completed UX-facing artifact. Cross-posts of Figma MCP and the BUI kit were deduplicated to their original parents; support questions, proposals, and rewritten digests were excluded.
+- External source checklist — Anthropic / Claude: checked, no new in-range UX-facing release; OpenAI: included ChatGPT Images 2.6; Figma: included prototype-connection context for code layers, editable agent vectors, AI object selection, and higher-resolution shader/code-layer export; Google Stitch: checked, no new verified item; Miro: included the 9,500+ worker intelligent-collaboration study; Bolt: checked, no qualifying in-range product update; YouTube workflow tutorials: no exact-date standalone workflow verified; UX Collective / Medium Design Bootcamp: the in-range newsletter roundup was checked but skipped as an aggregate rather than a standalone update; Nielsen Norman Group: no in-range publication; Lenny's Newsletter: no verified in-range issue; Google Design: no exact in-range publication; Google PAIR: no new in-range update.
+- Media and safety: all six external cards use checked-in Week 45 media. Five images are source-native (four official Figma video posters and Miro article art); the OpenAI card uses a restrained local fallback because the verified Help Center page did not expose retrievable item media. All nine internal cards have exact parent author, timestamp, permalink, date, and reply count. No credentials or signed query parameters were stored.
+- Git safety: fetched `origin/main` before editing and fast-forwarded through collaborator commits `1b37af0` and `076bca4`, preserving all unrelated untracked files.
+
 ## 2026-11-02
 
 ### Learning Plan: November 2026

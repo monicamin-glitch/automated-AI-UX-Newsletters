@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T06:49:28.154Z",
+  "generatedAt": "2026-11-09T02:43:45.126Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,96 @@
     ]
   },
   "summary": {
-    "cards": 222,
+    "cards": 228,
     "errors": 0,
-    "warnings": 44,
+    "warnings": 46,
     "counts": {
-      "embedded-img": 222
+      "embedded-img": 228
     }
   },
   "entries": [
+    {
+      "title": "Prototype connections now guide Figma code layers",
+      "source": "Figma",
+      "date": "November 3",
+      "url": "https://www.figma.com/release-notes/your-prototype-connections-now-context-for-code-layers/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/03-figma-prototype-code.jpg",
+      "youtubeId": "",
+      "dimensions": "640x360",
+      "sizeBytes": 31707,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "ChatGPT Images 2.6 speeds up iterative visual editing",
+      "source": "OpenAI",
+      "date": "November 4",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/06-openai-images.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 1223,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Miro maps the gap between individual AI speed and team outcomes",
+      "source": "Miro",
+      "date": "November 3",
+      "url": "https://miro.com/blog/state-of-intelligent-collaboration-2026/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/05-miro-transformation-gap.png",
+      "youtubeId": "",
+      "dimensions": "1024x580",
+      "sizeBytes": 828798,
+      "status": "warning",
+      "issues": [
+        "Large image file: 809 KB. Compress before B.Pages upload."
+      ]
+    },
+    {
+      "title": "Figma agents produce more editable vectors",
+      "source": "Figma",
+      "date": "November 5",
+      "url": "https://www.figma.com/release-notes/improvements-agent-generated-vector/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/02-figma-vectors.jpg",
+      "youtubeId": "",
+      "dimensions": "640x360",
+      "sizeBytes": 20292,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Figma selects image objects without manual tracing",
+      "source": "Figma",
+      "date": "November 6",
+      "url": "https://www.figma.com/release-notes/select-objects-even-faster-with-figmas-ai-image-editing-tools/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/01-figma-select.jpg",
+      "youtubeId": "",
+      "dimensions": "640x360",
+      "sizeBytes": 22440,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Figma shaders move into higher-resolution code layers",
+      "source": "Figma",
+      "date": "November 2",
+      "url": "https://www.figma.com/release-notes/export-shaders-at-higher-resolutions-and-bring-them-into-code-layers/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/04-figma-shaders.jpg",
+      "youtubeId": "",
+      "dimensions": "640x360",
+      "sizeBytes": 18253,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "The Role of UX in Agentic Software Factories",
       "source": "Nielsen Norman Group",
