@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Figma and GitHub repository connection</title>
+  <desc id="desc">A restrained conceptual illustration of a repository being cloned into a Figma workspace.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4f1ff"/>
+      <stop offset="1" stop-color="#e9f8ff"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a259ff"/>
+      <stop offset="1" stop-color="#1abcfe"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="1080" cy="100" r="180" fill="#ffffff" opacity=".55"/>
+  <circle cx="105" cy="600" r="230" fill="#a259ff" opacity=".08"/>
+  <rect x="115" y="150" width="365" height="375" rx="34" fill="#17181c"/>
+  <circle cx="297.5" cy="257" r="70" fill="#fff"/>
+  <path d="M268 279c-22 6-22-11-31-14m62 28v-20c0-6 2-11 5-14-17-2-35-8-35-39 0-9 3-16 8-22-1-3-4-13 1-22 0 0 7-2 22 8a77 77 0 0 1 40 0c15-10 22-8 22-8 5 9 2 19 1 22 5 6 8 13 8 22 0 31-18 37-35 39 3 3 5 9 5 18v20" fill="none" stroke="#17181c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="297.5" y="395" fill="#fff" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">Connected repository</text>
+  <text x="297.5" y="439" fill="#b9bdc8" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">Clone enabled by default</text>
+  <path d="M510 337h178" fill="none" stroke="url(#flow)" stroke-width="18" stroke-linecap="round"/>
+  <path d="m650 292 53 45-53 45" fill="none" stroke="#1abcfe" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="720" y="150" width="365" height="375" rx="34" fill="#fff" stroke="#d6d3e6" stroke-width="3"/>
+  <g transform="translate(825 215)">
+    <rect x="0" y="0" width="64" height="64" rx="18" fill="#f24e1e"/>
+    <rect x="0" y="64" width="64" height="64" rx="18" fill="#a259ff"/>
+    <rect x="0" y="128" width="64" height="64" rx="18" fill="#0acf83"/>
+    <rect x="64" y="0" width="64" height="64" rx="18" fill="#ff7262"/>
+    <circle cx="96" cy="96" r="32" fill="#1abcfe"/>
+  </g>
+  <text x="902.5" y="444" fill="#24252a" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">Code context in Figma</text>
+  <text x="600" y="600" fill="#4b4d57" font-family="Arial, sans-serif" font-size="26" font-weight="600" text-anchor="middle">Repository-level controls remain with admins</text>
+</svg>

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T02:43:45.126Z",
+  "generatedAt": "2026-11-09T03:37:10.725Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,42 @@
     ]
   },
   "summary": {
-    "cards": 228,
+    "cards": 231,
     "errors": 0,
-    "warnings": 46,
+    "warnings": 48,
     "counts": {
-      "embedded-img": 228
+      "embedded-img": 231
     }
   },
   "entries": [
+    {
+      "title": "Agent Harness: Definition",
+      "source": "Nielsen Norman Group",
+      "date": "November 6",
+      "url": "https://www.nngroup.com/articles/agent-harness/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/08-nng-agent-harness.png",
+      "youtubeId": "",
+      "dimensions": "1600x837",
+      "sizeBytes": 1040026,
+      "status": "warning",
+      "issues": [
+        "Large image file: 1016 KB. Compress before B.Pages upload."
+      ]
+    },
+    {
+      "title": "🎙️ How I AI: Grok vs. Dot vs. Muse vs. Duet + How Figma’s PMs actually use AI every day",
+      "source": "Lenny’s Newsletter / How I AI",
+      "date": "November 2",
+      "url": "https://www.lennysnewsletter.com/p/how-i-ai-grok-vs-dot-vs-muse-vs-duet",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/09-lenny-how-i-ai.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 99944,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Prototype connections now guide Figma code layers",
       "source": "Figma",
@@ -35,6 +63,21 @@
       "sizeBytes": 31707,
       "status": "ok",
       "issues": []
+    },
+    {
+      "title": "Clone connected GitHub repositories into Figma by default",
+      "source": "Figma",
+      "date": "November 3",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week45/07-figma-github-clone.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 2644,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
     },
     {
       "title": "ChatGPT Images 2.6 speeds up iterative visual editing",
