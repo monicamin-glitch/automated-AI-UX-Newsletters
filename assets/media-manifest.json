@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16T02:36:53.412Z",
+  "generatedAt": "2026-11-16T02:42:12.802Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -29,10 +29,10 @@
       "date": "November 12",
       "url": "https://www.figma.com/release-notes/design-in-3d-natively-in-figma-and-ship-directly-to-code/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week46/01-figma-3d.svg",
+      "localImage": "assets/week46/01-figma-3d.jpg",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 926,
+      "dimensions": "1280x720",
+      "sizeBytes": 75632,
       "status": "ok",
       "issues": []
     },
@@ -55,10 +55,10 @@
       "date": "November 10",
       "url": "https://www.figma.com/release-notes/",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week46/03-figma-motion.svg",
+      "localImage": "assets/week46/03-figma-motion.jpg",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 928,
+      "dimensions": "1280x720",
+      "sizeBytes": 58759,
       "status": "ok",
       "issues": []
     },
@@ -68,10 +68,10 @@
       "date": "November 10",
       "url": "https://www.lennysnewsletter.com/p/state-of-the-tech-job-market-late",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week46/04-lenny-job-market.svg",
+      "localImage": "assets/week46/04-lenny-job-market.jpg",
       "youtubeId": "",
       "dimensions": "1200x675",
-      "sizeBytes": 946,
+      "sizeBytes": 78071,
       "status": "ok",
       "issues": []
     },
@@ -81,10 +81,10 @@
       "date": "November 9",
       "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
       "mediaSource": "embedded-img",
-      "localImage": "assets/week46/05-anthropic-models.svg",
+      "localImage": "assets/week46/05-anthropic-models.jpg",
       "youtubeId": "",
-      "dimensions": "1200x675",
-      "sizeBytes": 932,
+      "dimensions": "1200x630",
+      "sizeBytes": 42935,
       "status": "ok",
       "issues": []
     },
