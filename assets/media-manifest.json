@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T03:37:10.725Z",
+  "generatedAt": "2026-11-16T02:29:13.859Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,92 @@
     ]
   },
   "summary": {
-    "cards": 231,
+    "cards": 237,
     "errors": 0,
     "warnings": 48,
     "counts": {
-      "embedded-img": 231
+      "embedded-img": 237
     }
   },
   "entries": [
+    {
+      "title": "Design in 3D, natively in Figma, and ship directly to code",
+      "source": "Figma",
+      "date": "November 12",
+      "url": "https://www.figma.com/release-notes/design-in-3d-natively-in-figma-and-ship-directly-to-code/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/01-figma-3d.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 926,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Introducing ChatGPT Wallet",
+      "source": "OpenAI",
+      "date": "November 13",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/02-openai-wallet.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 930,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "New Figma Motion updates: physics based springs, style and Lottie export previews",
+      "source": "Figma",
+      "date": "November 10",
+      "url": "https://www.figma.com/release-notes/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/03-figma-motion.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 928,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "State of the tech job market: late 2026",
+      "source": "Lenny’s Newsletter",
+      "date": "November 10",
+      "url": "https://www.lennysnewsletter.com/p/state-of-the-tech-job-market-late",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/04-lenny-job-market.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 946,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+      "source": "Anthropic",
+      "date": "November 9",
+      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/05-anthropic-models.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 932,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Retiring Advanced and Standard Voice",
+      "source": "OpenAI",
+      "date": "November 10",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/06-openai-voice.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 931,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Agent Harness: Definition",
       "source": "Nielsen Norman Group",

@@ -1,5 +1,15 @@
 # Update Notes
 
+## 2026-11-16
+
+### Week 46 refresh
+
+- Promoted Week 46 (November 9–15, 2026) to Latest Week with 6 verified internal Slack cards and 6 verified external cards. Archived Week 45 intact without deleting or renumbering history. Preserved the collaborator navigation, AI × Design / Shanghai identity, Latest Week topic module, Slack and masonry cards, shared dialog, calendar archive, All Weeks, Resources Hub, and Learning Plan.
+- Internal source checklist — included: #design (Figma Make user-testing workflow), #genai_engineering (service-dashboard skill, Plannotator artifact review, Technology Radar practices), and #dev-china (Cursor pilot AMA and AI Summit workshop surveys). Checked and skipped: #ai-for-ux (single-prompt game share lacked a reusable internal method), #china-ai-workstream, #mp-ai-engineering, #mp-tpch-ai-guild-weekly, #ai-studio-updates, #ai-gateway-updates, #cursor_ai_cost_saving_pilot_program, #design-systems, #design-language, #ai-design-curriculum, #uxw-genai, #ai-uxers-of-fintech, and #conversational-ai-traveller-all-ux had no additional distinct completed UX-facing parent. The China AI Workstream Bot digest was audited but excluded as a rewrite of original threads. Support questions, maintenance, unshipped proposals, duplicates, and thread replies were not promoted as standalone cards.
+- External source checklist — Anthropic / Claude: included Fable 5.2 and Mythos 5.2; OpenAI: included ChatGPT Wallet and the Voice retirement; Figma: included native 3D transforms and Motion springs/previews; Google Stitch: no new verified in-range update; Miro: no new verified in-range update; Bolt: checked two in-range marketing/build-path articles and skipped them as promotional rather than a released UX workflow; YouTube: no exact-date standalone tutorial verified; Community: the Bootcamp Nov 9 aggregate was checked and skipped as a roundup; Nielsen Norman Group: no new in-range article; Lenny's Newsletter: included the Nov 10 tech-job-market analysis; Google Design: relevant pages lacked a verifiable in-range publication date and need manual review; Google PAIR: no new in-range update.
+- Media and safety: every latest external card uses a distinct checked-in local Week 46 asset. Exact Slack parents, authors, dates, permalinks, reactions, and reply counts were verified. Meeting credentials and signed Zoom parameters were redacted from the stored Cursor AMA original. Public GitHub remains summary-only; Booking-only publication uses verified originals.
+- Git safety: fetched origin/main before editing and confirmed no newer collaborator commits were pending. Preserved all unrelated pre-existing untracked files.
+
 ## 2026-11-09
 
 ### Week 45 refresh
