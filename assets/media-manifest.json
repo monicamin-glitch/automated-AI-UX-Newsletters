@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16T02:42:12.802Z",
+  "generatedAt": "2026-11-16T03:06:02.310Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,27 @@
     ]
   },
   "summary": {
-    "cards": 237,
+    "cards": 249,
     "errors": 0,
-    "warnings": 48,
+    "warnings": 50,
     "counts": {
-      "embedded-img": 237
+      "embedded-img": 249
     }
   },
   "entries": [
+    {
+      "title": "Research-In-The-Loop: How UXR Adapts to Development at AI Speed",
+      "source": "Nielsen Norman Group",
+      "date": "November 13",
+      "url": "https://www.nngroup.com/articles/research-in-the-loop/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/07-nng-research-loop.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x628",
+      "sizeBytes": 117900,
+      "status": "ok",
+      "issues": []
+    },
     {
       "title": "Design in 3D, natively in Figma, and ship directly to code",
       "source": "Figma",
@@ -35,6 +48,21 @@
       "sizeBytes": 75632,
       "status": "ok",
       "issues": []
+    },
+    {
+      "title": "Use Claude Meetings",
+      "source": "Anthropic / Claude",
+      "date": "November 12",
+      "url": "https://support.claude.com/en/articles/18325154-use-claude-meetings",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/08-claude-meetings.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 758,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
     },
     {
       "title": "Introducing ChatGPT Wallet",
@@ -98,6 +126,138 @@
       "youtubeId": "",
       "dimensions": "1200x675",
       "sizeBytes": 931,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "6 easy ways to use the Figma agent right now",
+      "source": "Figma",
+      "date": "November 9",
+      "url": "https://www.figma.com/blog/6-easy-ways-to-use-the-figma-agent-right-now/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/09-figma-agent-workflows.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 133453,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "How 3D transforms and Figma’s agent brought a launch video to life",
+      "source": "Figma",
+      "date": "November 12",
+      "url": "https://www.figma.com/blog/how-3d-transforms-and-figmas-agent-brought-a-launch-video-to-life/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/10-figma-3d-workflow.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 69555,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "AI’s role in the creative process",
+      "source": "Figma",
+      "date": "November 13",
+      "url": "https://www.figma.com/blog/ai-role-in-the-creative-process/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/11-figma-creative-process.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 199644,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Introducing Businesses in ChatGPT",
+      "source": "OpenAI",
+      "date": "November 10",
+      "url": "https://openai.com/index/introducing-businesses-chatgpt/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/12-openai-businesses.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 128938,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Work at the Frontier: AI’s effect on freelance work",
+      "source": "OpenAI",
+      "date": "November 10",
+      "url": "https://openai.com/index/ai-effect-on-freelance-work/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/13-openai-freelance.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 766,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "How this founder built a better Duolingo with Codex | William Imoh",
+      "source": "Lenny’s Newsletter / How I AI",
+      "date": "November 9",
+      "url": "https://www.lennysnewsletter.com/p/how-this-founder-built-a-better-duolingo",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/14-lenny-native-tutor.jpg",
+      "youtubeId": "",
+      "dimensions": "728x364",
+      "sizeBytes": 37932,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Claude Fable 5.2 review: fast, creative, and finally not annoying",
+      "source": "Lenny’s Newsletter / How I AI",
+      "date": "November 9",
+      "url": "https://www.lennysnewsletter.com/p/claude-fable-52-review-fast-creative",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/15-lenny-fable-review.jpg",
+      "youtubeId": "",
+      "dimensions": "728x364",
+      "sizeBytes": 37366,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Claude Code + Obsidian: My family’s AI brain | Scott Farrar",
+      "source": "Lenny’s Newsletter / How I AI",
+      "date": "November 11",
+      "url": "https://www.lennysnewsletter.com/p/claude-code-obsidian-my-familys-ai",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/16-lenny-obsidian.jpg",
+      "youtubeId": "",
+      "dimensions": "728x364",
+      "sizeBytes": 51506,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Meta’s Muse: How we launched the most successful consumer product this year | Mona Sarantakos",
+      "source": "Lenny’s Newsletter",
+      "date": "November 15",
+      "url": "https://www.lennysnewsletter.com/p/metas-muse-how-we-launched-the-most",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/17-lenny-muse.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x600",
+      "sizeBytes": 115889,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "MVP development in 2026: how to pick your build path",
+      "source": "Bolt",
+      "date": "November 12",
+      "url": "https://bolt.new/blog/mvp-development",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week46/18-bolt-mvp.webp",
+      "youtubeId": "",
+      "dimensions": "1671x941",
+      "sizeBytes": 106116,
       "status": "ok",
       "issues": []
     },
