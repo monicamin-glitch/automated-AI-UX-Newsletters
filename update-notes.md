@@ -1,5 +1,18 @@
 # Update Notes
 
+## 2026-11-23
+
+### Week 47 refresh
+
+- Promoted Week 47 (November 16–22, 2026) to Latest Week from the published Week 46 baseline. Archived Week 46 intact. Resources Hub and Learning Plan were preserved.
+- Internal cards: Cursor pilot model cutoff (#dev-china), run-ai-evaluation (#ai-studio-updates), four GenAI Gateway models (#ai-gateway-updates), Fable 5.2 / GPT-6.2 availability (#ai-for-ux), AI-UX Hub community list (#ai-for-ux, also posted in #design), and /dev-kvm-investigate (#genai_engineering).
+- Popular topics, ranked by mentions then channel spread: Cursor Pilot (3, 1 channel), AI Evaluation Service (3, 1 channel), AI-UX Hub (2, 2 channels), dev-kvm-investigate (1, 1), GenAI Gateway (1, 1).
+- External cards: NN/g synthesized-research study, Figma agent in Dev Mode, Stitch Loop, Claude computer use, Figma multi-image generation, Figma MCP OAuth allowlist, ChatGPT for Healthcare computer-use agents, Lenny’s November 16 token-fraud episode, Bolt’s idea-to-product playbook, and Claude text watermark. Top 3 are NN/g, the Figma Dev Mode agent, and Stitch Loop.
+- Checked with no qualifying new card: #mp-ai-engineering had one skills-review request; #china-ai-sdlc was session planning for November 24; #design had an open question about external Claude artifacts and a non-AI survey; #design-systems, #design-language, #uxw-genai, #mp-tpch-ai-guild-weekly, #ai-uxers-of-fintech, and #conversational-ai-traveller-all-ux had no qualifying parent. #ai-design-curriculum and #cursor_ai_cost_saving_pilot_program were not found as public channels. The China AI Workstream Bot digest was not republished.
+- External sources with no new qualifying card: Miro, Google Design, Google PAIR, YouTube, and the UX Collective November 16 roundup. GPT-6.2 Astra and Sol is covered internally because the public announcement page did not expose an exact publication day.
+- Public cards keep newsletter summaries. Verified parent messages for this week are stored for the Booking-only B.Pages dialog.
+
+
 ## 2026-11-16 — Week 46 completeness correction
 
 - Added all 12 verified external omissions from the final audit. Week 46 now contains 18 external cards: Figma 5, OpenAI 4, Anthropic/Claude 2, Lenny 5, NN/g 1, and Bolt 1. Lenny episode-announcement duplicates are excluded; the five-per-source cap is respected.

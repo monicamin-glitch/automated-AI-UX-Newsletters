@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16T03:06:02.310Z",
+  "generatedAt": "2026-11-23T03:14:02.729Z",
   "purpose": "Pre-publish media decisions for the AI x Design Weekly website.",
   "policy": {
     "preferred": [
@@ -15,14 +15,154 @@
     ]
   },
   "summary": {
-    "cards": 249,
+    "cards": 259,
     "errors": 0,
-    "warnings": 50,
+    "warnings": 55,
     "counts": {
-      "embedded-img": 249
+      "embedded-img": 259
     }
   },
   "entries": [
+    {
+      "title": "Can AI Generate Good Designs from Raw User Data?",
+      "source": "Nielsen Norman Group",
+      "date": "November 20",
+      "url": "https://www.nngroup.com/articles/raw-data-vs-synthesized-data/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/01-nng-synthesized-research.jpg",
+      "youtubeId": "",
+      "dimensions": "1400x733",
+      "sizeBytes": 94167,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Work with the Figma agent in dev mode",
+      "source": "Figma",
+      "date": "November 19",
+      "url": "https://www.figma.com/release-notes/?title=work-with-the-figma-agent-in-dev-mode",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/02-figma-dev-mode.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 748,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Introducing Stitch Loop: A new way to build and evolve products",
+      "source": "Google Stitch",
+      "date": "November 18",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-loop/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/03-stitch-loop.png",
+      "youtubeId": "",
+      "dimensions": "1300x731",
+      "sizeBytes": 170750,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Computer use (beta) for Team and Enterprise plans",
+      "source": "Anthropic / Claude",
+      "date": "November 20",
+      "url": "https://support.claude.com/en/articles/18483812-set-up-computer-use-for-team-and-enterprise-plans",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/04-claude-computer-use.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 750,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Generate multiple images from a single prompt",
+      "source": "Figma",
+      "date": "November 18",
+      "url": "https://www.figma.com/release-notes/?title=generate-multiple-images-from-a-single-prompt",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/05-figma-multi-image.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 743,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "Manage an allowlist of approved OAuth apps, including MCP clients",
+      "source": "Figma",
+      "date": "November 17",
+      "url": "https://www.figma.com/release-notes/?title=manage-an-allowlist-of-approved-oauth-apps-including-mcp-clients",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/06-figma-oauth.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 743,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
+    {
+      "title": "More ways to move care forward with ChatGPT for Healthcare",
+      "source": "OpenAI",
+      "date": "November 16",
+      "url": "https://openai.com/index/more-ways-to-move-care-forward-with-chatgpt-for-healthcare/",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/07-openai-healthcare.jpg",
+      "youtubeId": "",
+      "dimensions": "1400x787",
+      "sizeBytes": 74941,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "How I AI: Fable 5.2 Review + Building a Claude Code family OS + How I fight token fraud as a solo founder",
+      "source": "Lenny’s Newsletter",
+      "date": "November 16",
+      "url": "https://www.lennysnewsletter.com/p/how-i-ai-fable-52-review-how-i-fight",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/08-lenny-token-fraud.jpg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 118616,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Idea to product: The modern founder's playbook for shipping faster",
+      "source": "Bolt",
+      "date": "November 19",
+      "url": "https://bolt.new/blog/idea-to-product-the-modern-founder-s-playbook-for-shipping-faster",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/09-bolt-playbook.webp",
+      "youtubeId": "",
+      "dimensions": "1671x941",
+      "sizeBytes": 194566,
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "title": "Text watermark on supported Claude models",
+      "source": "Anthropic / Claude",
+      "date": "November 16",
+      "url": "https://platform.claude.com/docs/en/release-notes/overview",
+      "mediaSource": "embedded-img",
+      "localImage": "assets/week47/10-anthropic-watermark.svg",
+      "youtubeId": "",
+      "dimensions": "1200x675",
+      "sizeBytes": 747,
+      "status": "warning",
+      "issues": [
+        "Generated SVG title-card media. Prefer a source-native hero, screenshot, or cached OG image for public cards."
+      ]
+    },
     {
       "title": "Research-In-The-Loop: How UXR Adapts to Development at AI Speed",
       "source": "Nielsen Norman Group",
